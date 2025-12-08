@@ -39,3 +39,18 @@ document_begin();
         Le code de ces sous-programmes est très simple et ressemble à ce qui suit :
     </p>
     <?php do_geshi("code/asm_popcnt_32/intro2.cpp", "cpp" ); ?>
+    <p>La variable tab_process étant un tableau de booléens elle occupe en mé
+        moire 100_000 octets car un booléen possède une taille d’un octet. On utilise
+        donc 100_000/1024 ≃ 98 ko. Cependant sur ces 100_000 octets, seuls 100_000 bits
+        sont vraiment utiles car la constante true est en fait égale à 1 et false vaut 0. En
+        d’autres termes, 7 bits sur 8, soit 87,5 % sont inutiles car non utilisés, seul le bit de
+        poids faible code pour true ou false.</p>
+<?php subsection("Subsection"); ?>
+    <p>
+        Il est donc plus intéressant de ne pas perdre de mémoire et de coder chaque
+    valeur booléenne non pas par un octet mais par un bit. On parle alors de com
+    pactage des données. Dans ce cas le tabeau tab_process que nous renommons
+    alors tab_process_bits aura une taille de (100_000 + 7)/8 ≃ 12500 ≃ 12,2 ko.
+    L’expression 100_000 + 7 permet d’arrondir la taille à l’octet supérieur.
+    </p>
+    <?php do_geshi("code/asm_popcnt_32/intro3.cpp", "cpp" ); ?>
