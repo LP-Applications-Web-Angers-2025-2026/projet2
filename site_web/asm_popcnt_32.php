@@ -64,4 +64,10 @@ document_begin();
         sous-programme en assembleur x86 32 bits est la suivante:
     </p>
     <?php do_geshi("code/asm_popcnt_32/intro5.cpp", "cpp" ); ?>
+    <p>
+        La fonction count doit être réécrite en utilisant la fonction pop_count_8 qui
+        compte le nombre de bits à 1 dans un octet. Une version simple de cette fonction
+        qui nous servira de fonction de référence, est par exemple:
+    </p>
+    <?php do_geshi("code/asm_popcnt_32/intro6.cpp", "cpp" ); ?>
 
