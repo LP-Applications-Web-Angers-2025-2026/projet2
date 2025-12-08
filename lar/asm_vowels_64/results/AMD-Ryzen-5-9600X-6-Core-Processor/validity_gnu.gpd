@@ -1,0 +1,47 @@
+Validity test on 2025-07-28-09:12
+check methods execution...
+ + method  1 OK   cv_if
+ + method  2 OK   cv_switch
+ + method  3 OK   cv_letters
+ + method  4 OK   cv_letters_asm
+ + method  5 OK   cv_letters_asm_ur4_v1
+ + method  6 OK   cv_letters_asm_ur4_v2
+ + method  7 OK   cv_letters_asm_ur8_v1
+ + method  8 OK   cv_letters_asm_ur8_v2
+ + method  9 OK   cv_letters_asm_ur8_v3
+ + method 10 OK   cv_sse2_v1
+ + method 11 OK   cv_sse2_v2
+ + method 12 OK   cv_sse2_intrinsics
+ + method 13 OK   cv_avx
+ + method 14 OK   cv_avx2_v1
+ + method 15 OK   cv_avx2_v2
+ + method 16 OK   cv_avx2_v3
+ + method 17 OK   cv_avx2_u2_v1
+ + method 18 OK   cv_avx2_u2_v2
+ + method 19 OK   cv_avx2_v2_u4
+ + method 20 OK   cv_avx2_v2_u8
+ + method 21 OK   cv_avx2_intrinsics
+ + method 22 OK   cv_avx512_asm_v1
+ + method 23 OK   cv_avx512_asm_v2
+ + method 24 OK   cv_avx512_asm_v4
+ + method 25 OK   cv_avx512_asm_v5
+ + method 26 OK   cv_avx512_asm_v2_u8
+ + method 27 OK   cv_avx512_asm_v3_u8
+ + method 28 OK   cv_avx512_intrinsics_v1
+ + method 29 OK   cv_avx512_intrinsics_v2
+  64  OK
+ 128  OK
+ 192  OK
+ 256  OK
+ 320  OK
+ 384  OK
+ 448  OK
+ 512  OK
+ 576  OK
+ 640  OK
+ 704  OK
+ 768  OK
+ 832  OK
+ 896  OK
+ 960  OK
+number_of_errors=0

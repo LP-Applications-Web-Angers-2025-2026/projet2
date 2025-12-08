@@ -1,0 +1,204 @@
+=====================================================================
+author: Jean-Michel RICHER
+email: jean-michel.richer@univ-angers.fr
+date: April, 2019
+=====================================================================
+
+
+---------------------------------------------------------------------
+1. DESCRIPTION
+---------------------------------------------------------------------
+
+Comparison of different implementations of a function that computes
+the number of bits set to 1 in an array of bytes. This is known as
+the population count function implemented as the assembly popcnt
+instruction available since 2008 on modern processors.
+Note that the functions are implemented for a 32 bits architecture.
+
+The code uses two functions :
+- the main function that treats an array of bytes
+- the function that computes the number of bits set to 1 in a byte 
+
+/**
+ * Reference function that counts number of bits set to 1
+ * in a byte
+ * @return number of bits set to 1
+ * @param x byte
+ */
+u32 popcnt_reference_u8(u8 x) {
+	u32 count = 0;
+	
+	while (x) {
+		if ((x & 1) != 0) ++count;
+		n = n >> 1;
+	}
+	return count;
+}
+
+/**
+ * Reference function that counts number of bits set to 1
+ * in an array of bytes
+ */
+u32 u8_popcnt_reference(u8 *x, u32 size) {
+	u32 count = 0;
+	
+	for (u32 i = 0; i < size; ++i) {
+		count += popcnt_reference_u8(x[i]);
+	}
+	return count;
+}
+
+
+The different functions that are implemented are the following :
+
+-  1 u8_popcnt_reference : reference method written in C, count
+     population of each byte
+-  2 u8_popcnt_wegner : wegner's way of computing population
+     of each byte
+-  3 u32_popcnt_wegner : wegner's way of computing population
+     of each double word
+-  4 u8_popcnt_shift_v1 : use bits shifts to compute population
+     of each byte (version 1)
+-  5 u32_popcnt_shift_v1 : use bits shifts to compute population
+     of each double word (version 1)
+-  6 u8_popcnt_shift_v2 : use bits shifts to compute population
+     of each byte (version 2)
+-  7 u32_popcnt_shift_v2 : use bits shifts to compute population
+     of each double word (version 2)
+-  8 u32_popcnt_table_v1 : use table of bytes to compute population
+     considering double words (version 1 : while loop)
+-  9 u32_popcnt_table_v2 : use table of bytes to compute population
+     considering double words (version 2 : no loop)
+- 10 u8_asm_popcnt : use popcnt assembly instruction considering
+     bytes
+- 11 u32_asm_popcnt : use popcnt assembly instruction considering
+     double words
+- 12 u32_asm_popcnt_ur2 : use popcnt assembly instruction considering
+     double words and unroll loop by a factor of 2
+- 13 u32_asm_popcnt_ur4 : use popcnt assembly instruction considering
+     double words and unroll loop by a factor of 4
+- 14 u32_sse_popcnt : use sse register to load data then move them 
+     to low 32 bits of registers and use popcnt
+- 15 u32_avx2_popcnt : same as sse but with avx registers
+- 16 u8_popcnt_intrinsics : bits shifts in sse registers
+
+
+---------------------------------------------------------------------
+2. INSTALLATION
+---------------------------------------------------------------------
+
+2.a Prerequisite
+
+	You first need to install:
+	
+	- make 
+	- nasm (The Netwide Assembler https://www.nasm.us/) 
+	- g++ the GNU C++ compiler with multilib support
+	- gnuplot to generate graphics
+	- evince to view .pdf files
+	- php to run the performance and validity scripts
+	
+	- eventually you can install other compilers like 
+		-- icpc (Intel)
+		-- clang (LLVM)
+	  	-- pgc++ (PGI) 
+
+	  	
+	In a terminal type the following commands:
+	  	
+		> sudo apt install nasm make gcc-8 g++-8 
+		> sudo gcc-multilib g++-multilib gnuplot evince   	
+	  
+2.b Compilation
+
+	From the command line, just type 
+	
+		> make clean && make configure && make 
+		
+	or simply
+	
+		> make compile
+		
+	See INSTALL file if you wan to compile with debug options or 
+	another compiler.
+	
+		
+	All objects files and the binary will be sent to the 'build' 
+	subdirectory that will be created in the main directory of the 
+	project.
+	
+	Note that 'make configure' will generate the files 'src/cpp_config.h',
+	'src/asm_config.inc' that contain definitions of macro and the files
+	'cpu_technos_{compiler}.mak' that contains the vector technology 
+	available on the CPU used for the tests
+
+2.c Performance tests
+
+	Performance tests will be executed by the './performance_test.php'
+	script
+	
+	You can execute the compilation process followed by the test using 
+	the 'run' target of make :
+	
+		> make run
+		
+
+---------------------------------------------------------------------	
+3. RESULTS
+---------------------------------------------------------------------
+
+	All results will be put in the 'results/<cpu-name>' directory
+	where <cpu-name> will be evaluated from '/proc/cpuinfo' using
+	the './cpu_name.sh' script
+	
+	You can check the 'results' directory with some other results
+	obtained on different architectures
+	
+	You can create a table of results in csv, html or latex format
+	using the script './table.php'. By default you can select
+	all cpus but you can also specify a list of cpus and the 
+	compiler:
+	
+		> ./table.php  --compiler=gnu --format=latex 
+		
+	If you generate results for a new cpu not already present in the
+	list, you need to fill the 'processors.txt' file by providing a
+	new entry in the text file as follows:
+	
+		<name-of-cpu-from ./cpu_name.sh>|<brand>|Model|SubModel
+	
+	For example, for an Intel Core i5 7400 @ 3.00 GHz:
+	
+		Intel-Core-i5-7400-3_00GHz|Intel|i5|7400
+
+---------------------------------------------------------------------	
+3. VALIDITY TESTS
+---------------------------------------------------------------------
+
+ 	Run the ./validity_test.php script from the directory of 
+	the project. It will execute the program on different sizes
+	of string to test if all functions provide the same result.
+
+	You can also use make to run the test:
+	
+		> make validity
+		
+---------------------------------------------------------------------	
+5. PERFORMANCE TESTS
+---------------------------------------------------------------------
+
+	Run the ./performance_test.php script from the directory of 
+	the project. It will execute the program on different sizes
+	of the strings and report their execution times.
+	
+	You can also use make to run the test:
+	
+		> make performance
+		
+	After executing the different methods on a set of sizes	
+	two graphics in PDF format will be generated using gnuplot:
+	
+	- a first one with all implemented functions
+	- a second one with the best (or most efficient) functions
+
+

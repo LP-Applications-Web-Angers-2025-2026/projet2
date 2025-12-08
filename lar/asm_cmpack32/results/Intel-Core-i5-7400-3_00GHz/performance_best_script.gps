@@ -1,0 +1,12 @@
+set term pdfcairo font "sans,12" 
+set output "Intel-Core-i5-7400-3_00GHz_performance_best_gnu.pdf"
+set title "Best methods below average 0.52"
+set xlabel "sizes"
+set xtics rotate by -45
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+set grid y
+load 'palette.pal'
+set style data linespoints
+plot "method_cmpack_reference_rew_gnu.gpd" using 1:2 ls 2 pt 2 title "cmpack-reference-rew", "method_asm_cmpack_sse_v1_gnu.gpd" using 1:2 ls 4 pt 4 title "asm-cmpack-sse-v1", "method_asm_cmpack_sse_v2_gnu.gpd" using 1:2 ls 5 pt 5 title "asm-cmpack-sse-v2", "method_asm_cmpack_sse_compact_gnu.gpd" using 1:2 ls 6 pt 6 title "asm-cmpack-sse-compact", "method_asm_cmpack_avx2_gnu.gpd" using 1:2 ls 7 pt 7 title "asm-cmpack-avx2", "method_asm_cmpack_avx2_compact_gnu.gpd" using 1:2 ls 8 pt 8 title "asm-cmpack-avx2-compact"

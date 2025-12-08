@@ -1,0 +1,11 @@
+set term pdfcairo font "sans,12" 
+set output "Intel-Core-i3-6100-3_70GHz_performance_gnu.pdf"
+set title "Performance of all methods"
+set xlabel "sizes" 
+set xtics rotate by -45 
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+load 'palette.pal'
+set grid y
+plot "method_u8_popcnt_reference_gnu.gpd" with lines ls 1 title "u8-popcnt-reference", "method_u8_popcnt_wegner_gnu.gpd" with lines ls 2 title "u8-popcnt-wegner", "method_u32_popcnt_wegner_gnu.gpd" with lines ls 3 title "u32-popcnt-wegner", "method_u8_popcnt_shift_v1_gnu.gpd" with lines ls 4 title "u8-popcnt-shift-v1", "method_u32_popcnt_shift_v1_gnu.gpd" with lines ls 5 title "u32-popcnt-shift-v1", "method_u8_popcnt_shift_v2_gnu.gpd" with lines ls 6 title "u8-popcnt-shift-v2", "method_u32_popcnt_shift_v2_gnu.gpd" with lines ls 7 title "u32-popcnt-shift-v2", "method_u32_popcnt_table_v1_gnu.gpd" with lines ls 8 title "u32-popcnt-table-v1", "method_u32_popcnt_table_v2_gnu.gpd" with lines ls 9 title "u32-popcnt-table-v2", "method_u8_asm_popcnt_gnu.gpd" with lines ls 10 title "u8-asm-popcnt", "method_u32_asm_popcnt_gnu.gpd" with lines ls 11 title "u32-asm-popcnt", "method_u32_asm_popcnt_ur2_gnu.gpd" with lines ls 12 title "u32-asm-popcnt-ur2", "method_u32_asm_popcnt_ur4_gnu.gpd" with lines ls 13 title "u32-asm-popcnt-ur4", "method_u64_asm_popcnt_gnu.gpd" with lines ls 14 title "u64-asm-popcnt", "method_u64_asm_popcnt_ur2_gnu.gpd" with lines ls 15 title "u64-asm-popcnt-ur2", "method_u64_asm_popcnt_ur4_gnu.gpd" with lines ls 16 title "u64-asm-popcnt-ur4", "method_u32_sse_popcnt_gnu.gpd" with lines ls 17 title "u32-sse-popcnt", "method_u32_avx2_popcnt_v1_gnu.gpd" with lines ls 18 title "u32-avx2-popcnt-v1", "method_u32_avx2_popcnt_v2_gnu.gpd" with lines ls 19 title "u32-avx2-popcnt-v2", "method_u32_avx2_popcnt_v3_gnu.gpd" with lines ls 20 title "u32-avx2-popcnt-v3", "method_u8_popcnt_intrinsics_gnu.gpd" with lines ls 21 title "u8-popcnt-intrinsics"

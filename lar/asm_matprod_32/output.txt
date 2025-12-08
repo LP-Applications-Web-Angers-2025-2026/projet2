@@ -1,0 +1,16 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                            ASM_MATPROD32                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+A=0xecd59020
+B=0xebd58020
+C=0xead57020
+size=2048
+cycles=12382723821
+method.name=mp_tile_bxb_v4
+result=-15
+time=3.18;0:03.19;0.00;0;0;52540;8

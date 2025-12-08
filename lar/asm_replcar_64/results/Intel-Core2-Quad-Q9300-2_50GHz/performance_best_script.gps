@@ -1,0 +1,12 @@
+set term pdfcairo font "sans,12" 
+set output "Intel-Core2-Quad-Q9300-2_50GHz_performance_best_gnu.pdf"
+set title "Best methods below average 47.05"
+set xlabel "sizes"
+set xtics rotate by -45
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+set grid y
+load 'palette.pal'
+set style data linespoints
+plot "method_chr_repl_reference_gnu.gpd" using 1:2 ls 1 pt 1 title "chr-repl-reference"

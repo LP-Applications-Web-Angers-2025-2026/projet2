@@ -1,0 +1,13 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                             ASM_VOWELS64                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+str=0x7a5305e82040
+size=256000
+error SIGINT: Interactive attention signal, (usually ctrl+c)
+Command exited with non-zero status 1
+time=0.76;0:01.52;0.00

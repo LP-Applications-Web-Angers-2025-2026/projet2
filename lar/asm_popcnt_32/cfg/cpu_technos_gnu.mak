@@ -1,0 +1,1 @@
+ -mavx2  -mpopcnt  -mfma  -mbmi  -mbmi2 

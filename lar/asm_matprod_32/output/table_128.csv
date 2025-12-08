@@ -1,0 +1,12 @@
+"number", "method" , AMD , AMD , AMD , AMD , Intel , Intel , Intel , Intel , Intel , Intel
+,  , Ahtlon , X6 , Ryzen , Ryzen , Core2 , i3 , i5 , i5 , i7 , i7
+"number", "method" , 200GE , 1090T , 3600 , 1700X , Q9300 , 6100 , 3570K , 7400 , 4790 , 860
+1, "mp_reference", 0, 0.003, 0, 0, 0, 0, 0, 0, 0, 0.001
+2, "mp_inv_jk_O2", 0, 0.001, 0, 0, 0, 0, 0, 0, 0, 0.016
+3, "mp_inv_jk", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+4, "mp_inv_jk_sse", 0, 0.003, 0, 0, 0, 0, 0, 0, 0, 0.002
+5, "mp_inv_jk_avx", 0,"N/A", 0, 0,"N/A", 0, 0, 0, 0,"N/A"
+6, "mp_tile_4x4", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+7, "mp_tile_nxn_v1", 0, 0.002, 0, 0, 0, 0, 0, 0, 0, 0
+8, "mp_tile_nxn_v2", 0, 0.001, 0, 0, 0, 0, 0, 0, 0, 0.002
+9, "mp_tile_nxn_v3", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

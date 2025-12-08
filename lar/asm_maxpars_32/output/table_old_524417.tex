@@ -1,0 +1,22 @@
+\begin{table}[htb]
+\begin{center}
+\begin{tabular}{lrrrrrr}
+  & method  & AMD & Intel & Intel & Intel & Intel  \\
+  &        & X6 & Core2 & i7 & i5 & i7  \\
+  &        & 1090T & Q9300 & 860 & 3570K & 4790  \\
+1 & maxpars\_ref\_v1\_O2 & 22.18 & 33.69 & 58.59 & 28.06 & 20.54  \\
+2 & maxpars\_ref\_v1\_O3 & 1.838 & 2.713 & 5.16 & 0.859 & 0.527  \\
+3 & maxpars\_asm & 25.36 & 29.68 & 57.82 & 22.99 & 18.65  \\
+4 & maxpars\_no\_if\_asm & 10.41 & 19.63 & 29.12 & 9.53 & 8.06  \\
+5 & maxpars\_no\_if\_opt\_asm & 9.16 & 13.85 & 24.23 & 6.68 & 4.98  \\
+6 & maxpars\_no\_if\_opt\_ur4\_asm & 7.68 & 17.12 & 21.94 & 5.81 & 4.35  \\
+7 & maxpars\_no\_if\_opt\_ur8\_asm & 7.36 & 13.91 & 20.84 & 5.7 & 4.23  \\
+8 & maxpars\_sse2\_v1 & 2.36 & 1.541 & 4.75 & 0.898 & 0.721  \\
+9 & maxpars\_sse41 & N/A & 1.881 & 3.369 & 0.878 & 0.729  \\
+10 & maxpars\_avx2 & N/A & N/A & N/A & N/A & 0.376  \\
+11 & maxpars\_avx2\_intrinscs & N/A & N/A & N/A & N/A & N/A  \\
+\end{tabular}
+\end{center}
+\caption{Architectures anciennes : temps d'exécution en secondes du Maximum parcimonie pour 524417 bases}
+\label{table:maxpars32-2048-anc-arch}
+\end{table}

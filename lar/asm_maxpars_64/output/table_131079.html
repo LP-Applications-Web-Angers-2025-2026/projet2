@@ -1,0 +1,206 @@
+<html>
+<head>
+<style>
+html { font-family: Ubuntu, Helvetica, sans-serif; }table { border-collapse: collapse; }
+th, td { border: 1px solid black; padding: 4px; }
+td.right { text-align: right; }
+td.center { text-align: center; }
+.minimum_execution_time { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+<table>
+	<tr>
+		<th>number</th>
+		<th>method</th>
+		<th>AMD<br />X6<br />1090T</th>
+		<th>AMD<br />Ryzen<br />1700X</th>
+		<th>Intel<br />Celeron<br />N3050</th>
+		<th>Intel<br />Core2-Duo<br />P9500</th>
+		<th>Intel<br />Core2<br />Q9300</th>
+		<th>Intel<br />i3<br />2375M</th>
+		<th>Intel<br />i3<br />6100</th>
+		<th>Intel<br />i5<br />3570K</th>
+		<th>Intel<br />i5<br />7400</th>
+		<th>Intel<br />i5<br />7500</th>
+		<th>Intel<br />i7<br />3630QM</th>
+		<th>Intel<br />i7<br />4790</th>
+		<th>Intel<br />i7<br />4900MQ</th>
+		<th>Intel<br />i7<br />8700</th>
+		<th>Intel<br />Pentium-D<br />925</th>
+	</tr>
+	<tr>
+		<td class="center">1</td>
+		<td>maxpars_c_O2</td>
+		<td class="right">5.440</td>
+		<td class="right">5.090</td>
+		<td class="right">9.450</td>
+		<td class="right">8.270</td>
+		<td class="right">12.080</td>
+		<td class="right">13.990</td>
+		<td class="right">N/A</td>
+		<td class="right">6.750</td>
+		<td class="right">5.750</td>
+		<td class="right">5.770</td>
+		<td class="right">5.730</td>
+		<td class="right">5.170</td>
+		<td class="right">5.120</td>
+		<td class="right">4.340</td>
+		<td class="right">11.400</td>
+	</tr>
+	<tr>
+		<td class="center">2</td>
+		<td>maxpars_c_O3</td>
+		<td class="right">0.346</td>
+		<td class="right">0.147</td>
+		<td class="right">1.409</td>
+		<td class="right">0.851</td>
+		<td class="right">1.112</td>
+		<td class="right">0.532</td>
+		<td class="right">N/A</td>
+		<td class="right">0.220</td>
+		<td class="right">0.120</td>
+		<td class="right">5.630</td>
+		<td class="right">0.240</td>
+		<td class="right">0.127</td>
+		<td class="right">0.138</td>
+		<td class="right">0.110</td>
+		<td class="right">1.331</td>
+	</tr>
+	<tr>
+		<td class="center">3</td>
+		<td>maxpars_sse2</td>
+		<td class="right">0.198</td>
+		<td class="right">0.090</td>
+		<td class="right">0.509</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.354</td>
+		<td class="right">N/A</td>
+		<td class="right">0.240</td>
+		<td class="right">0.107</td>
+		<td class="right">0.190</td>
+		<td class="right">0.150</td>
+		<td class="right">0.105</td>
+		<td class="right">0.115</td>
+		<td class="right">0.150</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">4</td>
+		<td>maxpars_avx2</td>
+		<td class="right">N/A</td>
+		<td class="right">0.072</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.076</td>
+		<td class="right">0.080</td>
+		<td class="right">N/A</td>
+		<td class="right">0.086</td>
+		<td class="right">0.093</td>
+		<td class="right">0.060</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">5</td>
+		<td>maxpars_avx2_u2_v1</td>
+		<td class="right">N/A</td>
+		<td class="right">0.070</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.077</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.087</td>
+		<td class="right">0.092</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">6</td>
+		<td>maxpars_avx2_u2_v2</td>
+		<td class="right">N/A</td>
+		<td class="right">0.065</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.073</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.088</td>
+		<td class="right">0.091</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">7</td>
+		<td>maxpars_avx2_u2_v3</td>
+		<td class="right">N/A</td>
+		<td class="right">0.060</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.074</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.087</td>
+		<td class="right">0.090</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">8</td>
+		<td>maxpars_avx2_u4_v3</td>
+		<td class="right">N/A</td>
+		<td class="right">0.060</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.070</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.089</td>
+		<td class="right">0.092</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">9</td>
+		<td>maxpars_avx2_intrinsics</td>
+		<td class="right">N/A</td>
+		<td class="right">0.072</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.078</td>
+		<td class="right">0.070</td>
+		<td class="right">N/A</td>
+		<td class="right">0.089</td>
+		<td class="right">0.094</td>
+		<td class="right">0.060</td>
+		<td class="right">N/A</td>
+	</tr>
+<caption>asm_maxpars64 size=131079</caption>
+</table>
+</body>
+</html>

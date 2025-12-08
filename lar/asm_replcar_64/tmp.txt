@@ -1,0 +1,13 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                            ASM_REPLCAR64                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+size=524288
+cycles=20204899164
+method.name=chr_repl_reference
+total=889192448
+time=5.63

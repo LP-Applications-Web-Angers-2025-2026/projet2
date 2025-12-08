@@ -1,0 +1,16 @@
+"number", "method" , AMD , Intel , Intel , Intel , Intel , Intel , Intel , Intel , Intel , Intel
+,  , Ryzen , Celeron , Core2 , i3 , i5 , i7 , i7 , i7 , i7 , Pentium-D
+"number", "method" , 3600 , N3060 , Q9300 , 6100 , 7400 , 4790 , 4900MQ , 860 , 8700 , 925
+1, "maxpars_c_O2", 9.8, 0.497, 0.615, 0.28, 0.3, 0.26, 0.271, 0.592, 0.243, 0.697
+2, "maxpars_c_O3", 0.251, 0.089, 0.042, 0, 0, 0.004, 0.006, 0.023, 0.044, 0.077
+3, "maxpars_asm", 10.29, 0.5, 0.57, 0.26, 0.277, 0.24, 0.26, 0.747, 0.216, 0.679
+4, "maxpars_no_if_asm", 1.952, 0.27, 0.28, 0.059, 0.06, 0.068, 0.07, 0.351, 0.05, 0.269
+5, "maxpars_sse2", 0.174, 0.026,"N/A", 0, 0, 0, 0.001, 0.018, 0,"N/A"
+6, "maxpars_avx2", 0.088,"N/A","N/A", 0, 0, 0, 0,"N/A", 0,"N/A"
+7, "maxpars_avx2_vpblendvb", 0.089,"N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+8, "maxpars_avx2_u2", 0.112,"N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+9, "maxpars_avx2_u4", 0.114,"N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+10, "maxpars_avx2_u4_vpblendvb", 0.112,"N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+11, "maxpars_avx2_u4_vpblendvb_nodep", 0.088,"N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+12, "maxpars_avx2_intrinsics", 0.095,"N/A","N/A", 0, 0, 0, 0,"N/A", 0,"N/A"
+13, "maxpars_avx2_ez_ii", 0.095,"N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"

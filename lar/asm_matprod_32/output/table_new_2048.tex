@@ -1,0 +1,20 @@
+\begin{table}[htb]
+\begin{center}
+\begin{tabular}{lrrrrr}
+  & method  & AMD & AMD & Intel & Intel  \\
+  &        & Ryzen & Ryzen & i3 & i5  \\
+  &        & 1700X & 3600 & 6100 & 7400  \\
+1 & mp\_reference & 53.82 & \textbf{43.7} & 56.57 & 52.56  \\
+2 & mp\_inv\_jk\_O2 & 6.86 & \textbf{6.38} & 9.83 & 10.92  \\
+3 & mp\_inv\_jk & 1.537 & \textbf{0.963} & 1.749 & 1.796  \\
+4 & mp\_inv\_jk\_sse & 4.47 & 4.24 & \textbf{3.631} & 3.921  \\
+5 & mp\_inv\_jk\_avx & 1.764 & \textbf{1.058} & 1.818 & 1.859  \\
+6 & mp\_tile\_4x4 & 6.38 & \textbf{4.42} & 5.95 & 5.71  \\
+7 & mp\_tile\_nxn\_v1 & 122.02 & 37.31 & 19.13 & \textbf{18.97}  \\
+8 & mp\_tile\_nxn\_v2 & 26.57 & 27.59 & \textbf{12.5} & 13.38  \\
+9 & mp\_tile\_nxn\_v3 & 1.732 & \textbf{0.984} & 1.76 & 1.926  \\
+\end{tabular}
+\end{center}
+\caption{Architectures récentes : temps d'exécution en secondes du produit de matrice 2048 par 2048 en 32 bits}
+\label{table:matprod-2048-rec-arch}
+\end{table}

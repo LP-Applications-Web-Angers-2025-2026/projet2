@@ -1,0 +1,16 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                            ASM_MAXPARS32                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+x=0xf799c040
+y=0xf791b040
+z=0xf789a040
+size=524287
+cycles=253795694994
+result=256837
+method.name=maxpars_asm
+time=101.68;1:41.69;0.00

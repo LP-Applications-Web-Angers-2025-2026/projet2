@@ -1,0 +1,20 @@
+\begin{table}[htb]
+\begin{center}
+\begin{tabular}{lrrrrr}
+  & method  & Intel & Intel & Intel & AMD & AMD  \\
+  &        & i3 & i5 & i7 & Ryzen & Ryzen  \\
+  &        & 6100 & 7400 & 8700 & 1700X & 3600  \\
+1 & mp_reference & 0.207 & 0.249 & 0.177 & 0.376 & 0.313  \\
+2 & mp_inv_jk_O2 & 0.14 & 0.15 & 0.118 & 0.114 & 0.097  \\
+3 & mp_inv_jk & 0.007 & 0.009 & 0.01 & 0.015 & 0.014  \\
+4 & mp_inv_jk_sse & 0.04 & 0.048 & 0.039 & 0.089 & 0.07  \\
+5 & mp_inv_jk_avx & 0.01 & 0.01 & 0.01 & 0.017 & 0.009  \\
+6 & mp_tile_4x4 & 0.02 & 0.029 & 0.019 & 0.039 & 0.02  \\
+7 & mp_tile_nxn_v1 & 0.16 & 0.169 & 0.131 & 0.12 & 0.207  \\
+8 & mp_tile_nxn_v2 & 0.105 & 0.109 & 0.069 & 0.101 & 0.21  \\
+9 & mp_tile_nxn_v3 & 0.037 & 0.04 & 0.067 & 0.035 & 0.02  \\
+\end{tabular}
+\end{center}
+\caption{asm_matprod32  512}
+\label{tab_}
+\end{table}

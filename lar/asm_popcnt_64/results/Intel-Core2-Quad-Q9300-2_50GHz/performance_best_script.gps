@@ -1,0 +1,12 @@
+set term pdfcairo font "sans,12" 
+set output "Intel-Core2-Quad-Q9300-2_50GHz_performance_best_gnu.pdf"
+set title "Best methods below average 2.41"
+set xlabel "sizes"
+set xtics rotate by -45
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+set grid y
+load 'palette.pal'
+set style data linespoints
+plot "method_u8_popcnt_shift_v1_gnu.gpd" using 1:2 ls 4 pt 4 title "u8-popcnt-shift-v1", "method_u32_popcnt_shift_v1_gnu.gpd" using 1:2 ls 5 pt 5 title "u32-popcnt-shift-v1", "method_u8_popcnt_shift_v2_gnu.gpd" using 1:2 ls 6 pt 6 title "u8-popcnt-shift-v2", "method_u32_popcnt_shift_v2_gnu.gpd" using 1:2 ls 7 pt 7 title "u32-popcnt-shift-v2", "method_u32_popcnt_table_v1_gnu.gpd" using 1:2 ls 8 pt 8 title "u32-popcnt-table-v1", "method_u32_popcnt_table_v2_gnu.gpd" using 1:2 ls 9 pt 9 title "u32-popcnt-table-v2", "method_u8_popcnt_intrinsics_gnu.gpd" using 1:2 ls 21 pt 21 title "u8-popcnt-intrinsics"

@@ -1,0 +1,186 @@
+<html>
+<head>
+<style>
+html { font-family: Ubuntu, Helvetica, sans-serif; }table { border-collapse: collapse; }
+th, td { border: 1px solid black; padding: 4px; }
+td.right { text-align: right; }
+td.center { text-align: center; }
+.minimum_execution_time { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+<table>
+	<tr>
+		<th>number</th>
+		<th>method</th>
+		<th>AMD<br />X6<br />1090T</th>
+		<th>AMD<br />Ryzen<br />1700X</th>
+		<th>Intel<br />Celeron<br />N3050</th>
+		<th>Intel<br />Core2-Duo<br />P9500</th>
+		<th>Intel<br />Core2<br />Q6600</th>
+		<th>Intel<br />Core2<br />Q9300</th>
+		<th>Intel<br />i3<br />2375M</th>
+		<th>Intel<br />i3<br />6100</th>
+		<th>Intel<br />i5<br />7400</th>
+		<th>Intel<br />i7<br />3630QM</th>
+		<th>Intel<br />i7<br />4790</th>
+		<th>Intel<br />i7<br />4900MQ</th>
+		<th>Intel<br />Pentium-D<br />925</th>
+	</tr>
+	<tr>
+		<td class="center">1</td>
+		<td>mp_reference</td>
+		<td class="right">13.150</td>
+		<td class="right">7.430</td>
+		<td class="right">55.170</td>
+		<td class="right">13.730</td>
+		<td class="right">15.120</td>
+		<td class="right">21.630</td>
+		<td class="right">17.310</td>
+		<td class="right">5.180</td>
+		<td class="right">4.830</td>
+		<td class="right">7.580</td>
+		<td class="right">2.249</td>
+		<td class="right">N/A</td>
+		<td class="right">44.060</td>
+	</tr>
+	<tr>
+		<td class="center">2</td>
+		<td>mp_inv_jk_O2</td>
+		<td class="right">1.196</td>
+		<td class="right">0.874</td>
+		<td class="right">2.537</td>
+		<td class="right">1.759</td>
+		<td class="right">1.531</td>
+		<td class="right">2.031</td>
+		<td class="right">1.828</td>
+		<td class="right">0.908</td>
+		<td class="right">1.241</td>
+		<td class="right">0.780</td>
+		<td class="right">0.576</td>
+		<td class="right">0.614</td>
+		<td class="right">2.856</td>
+	</tr>
+	<tr>
+		<td class="center">3</td>
+		<td>mp_inv_jk</td>
+		<td class="right">0.576</td>
+		<td class="right">0.123</td>
+		<td class="right">1.186</td>
+		<td class="right">1.144</td>
+		<td class="right">1.055</td>
+		<td class="right">1.150</td>
+		<td class="right">0.539</td>
+		<td class="right">0.184</td>
+		<td class="right">0.104</td>
+		<td class="right">0.200</td>
+		<td class="right">0.114</td>
+		<td class="right">0.109</td>
+		<td class="right">1.131</td>
+	</tr>
+	<tr>
+		<td class="center">4</td>
+		<td>mp_inv_jk_sse</td>
+		<td class="right">2.090</td>
+		<td class="right">0.567</td>
+		<td class="right">2.515</td>
+		<td class="right">2.960</td>
+		<td class="right">1.191</td>
+		<td class="right">1.581</td>
+		<td class="right">1.224</td>
+		<td class="right">0.456</td>
+		<td class="right">0.416</td>
+		<td class="right">0.510</td>
+		<td class="right">0.409</td>
+		<td class="right">0.439</td>
+		<td class="right">2.364</td>
+	</tr>
+	<tr>
+		<td class="center">5</td>
+		<td>mp_inv_jk_avx</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.566</td>
+		<td class="right">0.190</td>
+		<td class="right">0.118</td>
+		<td class="right">0.220</td>
+		<td class="right">0.118</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">6</td>
+		<td>mp_tile_4x4</td>
+		<td class="right">2.000</td>
+		<td class="right">0.966</td>
+		<td class="right">4.910</td>
+		<td class="right">1.561</td>
+		<td class="right">2.685</td>
+		<td class="right">3.547</td>
+		<td class="right">1.468</td>
+		<td class="right">0.764</td>
+		<td class="right">0.431</td>
+		<td class="right">0.760</td>
+		<td class="right">0.352</td>
+		<td class="right">0.367</td>
+		<td class="right">3.590</td>
+	</tr>
+	<tr>
+		<td class="center">7</td>
+		<td>mp_tile_nxn_v1</td>
+		<td class="right">2.480</td>
+		<td class="right">6.950</td>
+		<td class="right">12.100</td>
+		<td class="right">13.590</td>
+		<td class="right">13.440</td>
+		<td class="right">17.020</td>
+		<td class="right">5.650</td>
+		<td class="right">2.028</td>
+		<td class="right">1.971</td>
+		<td class="right">2.370</td>
+		<td class="right">1.720</td>
+		<td class="right">2.130</td>
+		<td class="right">4.490</td>
+	</tr>
+	<tr>
+		<td class="center">8</td>
+		<td>mp_tile_nxn_v2</td>
+		<td class="right">1.652</td>
+		<td class="right">1.424</td>
+		<td class="right">7.450</td>
+		<td class="right">1.873</td>
+		<td class="right">2.158</td>
+		<td class="right">2.461</td>
+		<td class="right">3.247</td>
+		<td class="right">0.968</td>
+		<td class="right">1.146</td>
+		<td class="right">1.400</td>
+		<td class="right">0.720</td>
+		<td class="right">1.046</td>
+		<td class="right">3.023</td>
+	</tr>
+	<tr>
+		<td class="center">9</td>
+		<td>mp_tile_nxn_v3</td>
+		<td class="right">1.232</td>
+		<td class="right">0.381</td>
+		<td class="right">2.735</td>
+		<td class="right">1.684</td>
+		<td class="right">2.779</td>
+		<td class="right">2.278</td>
+		<td class="right">1.675</td>
+		<td class="right">0.781</td>
+		<td class="right">0.683</td>
+		<td class="right">0.450</td>
+		<td class="right">0.580</td>
+		<td class="right">0.515</td>
+		<td class="right">3.241</td>
+	</tr>
+<caption>asm_matprod32 size=1024</caption>
+</table>
+</body>
+</html>

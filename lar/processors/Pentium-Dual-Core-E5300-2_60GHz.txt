@@ -1,0 +1,291 @@
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              2
+On-line CPU(s) list: 0,1
+Thread(s) per core:  1
+Core(s) per socket:  2
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               23
+Model name:          Pentium(R) Dual-Core  CPU      E5300  @ 2.60GHz
+Stepping:            10
+CPU MHz:             2593.896
+CPU max MHz:         2603,0000
+CPU min MHz:         1203,0000
+BogoMIPS:            5187.79
+Virtualization:      VT-x
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            2048K
+NUMA node0 CPU(s):   0,1
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl cpuid aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm xsave lahf_lm pti tpr_shadow vnmi flexpriority dtherm
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Pentium(R) Dual-Core  CPU      E5300  @ 2.60GHz
+stepping	: 10
+microcode	: 0xa07
+cpu MHz		: 2593.896
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl cpuid aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm xsave lahf_lm pti tpr_shadow vnmi flexpriority dtherm
+bugs		: cpu_meltdown spectre_v1 spectre_v2
+bogomips	: 5187.79
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Pentium(R) Dual-Core  CPU      E5300  @ 2.60GHz
+stepping	: 10
+microcode	: 0xa07
+cpu MHz		: 2593.894
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl cpuid aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm xsave lahf_lm pti tpr_shadow vnmi flexpriority dtherm
+bugs		: cpu_meltdown spectre_v1 spectre_v2
+bogomips	: 5187.79
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+===========================
+======     CACHE     ======
+===========================
+L1         Data    32K 8-way-set-associative 64 bytes
+L1  Instruction    32K 8-way-set-associative 64 bytes
+L2      Unified  2048K 8-way-set-associative 64 bytes
+===========================
+====== DMI PROCESSOR ======
+===========================
+# dmidecode 3.1
+Getting SMBIOS data from sysfs.
+SMBIOS 2.6 present.
+
+Handle 0x0004, DMI type 4, 42 bytes
+Processor Information
+	Socket Designation: CPU 1
+	Type: Central Processor
+	Family: Other
+	Manufacturer: Intel            
+	ID: 7A 06 01 00 FF FB EB BF
+	Version: Pentium(R) Dual-Core  CPU      E5300  @ 2.60GHz     
+	Voltage: 1.2 V
+	External Clock: 200 MHz
+	Max Speed: 2600 MHz
+	Current Speed: 2600 MHz
+	Status: Populated, Enabled
+	Upgrade: Socket LGA775
+	L1 Cache Handle: 0x0005
+	L2 Cache Handle: 0x0006
+	L3 Cache Handle: 0x0007
+	Serial Number: To Be Filled By O.E.M.
+	Asset Tag: To Be Filled By O.E.M.
+	Part Number: To Be Filled By O.E.M.
+	Core Count: 2
+	Core Enabled: 2
+	Thread Count: 2
+	Characteristics:
+		64-bit capable
+
+===========================
+====== DMI MOBO      ======
+===========================
+# dmidecode 3.1
+Getting SMBIOS data from sysfs.
+SMBIOS 2.6 present.
+
+Handle 0x0002, DMI type 2, 15 bytes
+Base Board Information
+	Manufacturer: Acer
+	Product Name: WG43M
+	Version:         
+	Serial Number:                       
+	Asset Tag: To Be Filled By O.E.M.
+	Features:
+		Board is a hosting board
+		Board is replaceable
+	Location In Chassis: To Be Filled By O.E.M.
+	Chassis Handle: 0x0003
+	Type: Motherboard
+	Contained Object Handles: 0
+
+Handle 0x0022, DMI type 10, 6 bytes
+On Board Device Information
+	Type: Video
+	Status: Enabled
+	Description:  Intel(R) G45/G43 Express Chipset
+
+Handle 0x0023, DMI type 10, 6 bytes
+On Board Device Information
+	Type: Ethernet
+	Status: Enabled
+	Description:  Intel(R) 82567V-2 Gigabit Network connection
+
+Handle 0x0024, DMI type 10, 6 bytes
+On Board Device Information
+	Type: SATA Controller
+	Status: Enabled
+	Description:  Intel(R) ICH10 Family 6 Port SATA AHCI Controller - 3A22
+
+Handle 0x0025, DMI type 10, 6 bytes
+On Board Device Information
+	Type: Sound
+	Status: Enabled
+	Description:  Intel(R) Corporation HD Audio Device
+
+Handle 0x0034, DMI type 41, 11 bytes
+Onboard Device
+	Reference Designation:  Intel(R) G45/G43 Express Chipset
+	Type: Video
+	Status: Enabled
+	Type Instance: 0
+	Bus Address: f000:00:02.0
+
+Handle 0x0035, DMI type 41, 11 bytes
+Onboard Device
+	Reference Designation:  Intel(R) 82567V-2 Gigabit Network connection
+	Type: Ethernet
+	Status: Enabled
+	Type Instance: 0
+	Bus Address: f000:00:19.0
+
+Handle 0x0036, DMI type 41, 11 bytes
+Onboard Device
+	Reference Designation:  Intel(R) ICH10 Family 6 Port SATA AHCI Controller - 3A22
+	Type: SATA Controller
+	Status: Enabled
+	Type Instance: 0
+	Bus Address: f000:00:1f.2
+
+Handle 0x0037, DMI type 41, 11 bytes
+Onboard Device
+	Reference Designation:  Intel(R) Corporation HD Audio Device
+	Type: Sound
+	Status: Enabled
+	Type Instance: 0
+	Bus Address: f000:00:1b.0
+
+===========================
+====== DMI MEMORY    ======
+===========================
+# dmidecode 3.1
+Getting SMBIOS data from sysfs.
+SMBIOS 2.6 present.
+
+Handle 0x0028, DMI type 16, 15 bytes
+Physical Memory Array
+	Location: System Board Or Motherboard
+	Use: System Memory
+	Error Correction Type: None
+	Maximum Capacity: 8 GB
+	Error Information Handle: Not Provided
+	Number Of Devices: 4
+
+Handle 0x002A, DMI type 17, 28 bytes
+Memory Device
+	Array Handle: 0x0028
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 2048 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM0
+	Bank Locator: BANK0
+	Type: DDR2
+	Type Detail: Synchronous
+	Speed: 52028 MT/s
+	Manufacturer: Manufacturer00
+	Serial Number: 00000000
+	Asset Tag:                       
+	Part Number:                       
+	Rank: Unknown
+
+Handle 0x002C, DMI type 17, 28 bytes
+Memory Device
+	Array Handle: 0x0028
+	Error Information Handle: Not Provided
+	Total Width: Unknown
+	Data Width: 64 bits
+	Size: No Module Installed
+	Form Factor: Unknown
+	Set: None
+	Locator: DIMM1
+	Bank Locator: BANK1
+	Type: Unknown
+	Type Detail: Other
+	Speed: Unknown
+	Manufacturer: Manufacturer01
+	Serial Number: SerNum01
+	Asset Tag:                       
+	Part Number:                       
+	Rank: Unknown
+
+Handle 0x002E, DMI type 17, 28 bytes
+Memory Device
+	Array Handle: 0x0028
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 2048 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM2
+	Bank Locator: BANK2
+	Type: DDR2
+	Type Detail: Synchronous
+	Speed: 52028 MT/s
+	Manufacturer: Manufacturer02
+	Serial Number: 00000000
+	Asset Tag:                       
+	Part Number:                       
+	Rank: Unknown
+
+Handle 0x0030, DMI type 17, 28 bytes
+Memory Device
+	Array Handle: 0x0028
+	Error Information Handle: Not Provided
+	Total Width: Unknown
+	Data Width: 64 bits
+	Size: No Module Installed
+	Form Factor: Unknown
+	Set: None
+	Locator: DIMM3
+	Bank Locator: BANK3
+	Type: Unknown
+	Type Detail: Other
+	Speed: Unknown
+	Manufacturer: Manufacturer03
+	Serial Number: SerNum03
+	Asset Tag:                       
+	Part Number:                       
+	Rank: Unknown
+

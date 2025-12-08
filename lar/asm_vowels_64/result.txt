@@ -1,0 +1,14 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                             ASM_VOWELS64                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+str=0x753567100040
+size=256000
+cycles=225069
+method.name=cv_letters_asm
+result=8458,8549,8561,8540,8494,8452
+vowels.percentage=19.94

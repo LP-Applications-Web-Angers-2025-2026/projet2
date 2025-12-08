@@ -1,0 +1,252 @@
+Architecture :                          x86_64
+Mode(s) opératoire(s) des processeurs : 32-bit, 64-bit
+Boutisme :                              Little Endian
+Processeur(s) :                         2
+Liste de processeur(s) en ligne :       0,1
+Thread(s) par cœur :                    1
+Cœur(s) par socket :                    2
+Socket(s) :                             1
+Nœud(s) NUMA :                          1
+Identifiant constructeur :              GenuineIntel
+Famille de processeur :                 15
+Modèle :                                4
+Nom de modèle :                         Intel(R) Pentium(R) D CPU 3.00GHz
+Révision :                              4
+Vitesse du processeur en MHz :          2992.628
+BogoMIPS :                              5985.25
+Cache L1d :                             16K
+Cache L2 :                              1024K
+Nœud NUMA 0 de processeur(s) :          0,1
+Drapaux :                               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc pebs bts nopl cpuid pni dtes64 monitor ds_cpl est cid cx16 xtpr pti
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 15
+model		: 4
+model name	: Intel(R) Pentium(R) D CPU 3.00GHz
+stepping	: 4
+microcode	: 0x6
+cpu MHz		: 2992.628
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 5
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc pebs bts nopl cpuid pni dtes64 monitor ds_cpl est cid cx16 xtpr pti
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf
+bogomips	: 5985.25
+clflush size	: 64
+cache_alignment	: 128
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 15
+model		: 4
+model name	: Intel(R) Pentium(R) D CPU 3.00GHz
+stepping	: 4
+microcode	: 0x6
+cpu MHz		: 2992.628
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 5
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc pebs bts nopl cpuid pni dtes64 monitor ds_cpl est cid cx16 xtpr pti
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf
+bogomips	: 5985.25
+clflush size	: 64
+cache_alignment	: 128
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+===========================
+======     CACHE     ======
+===========================
+L1         Data    16K 8-way-set-associative 64 bytes
+L2      Unified  1024K 8-way-set-associative 64 bytes
+===========================
+====== DMI PROCESSOR ======
+===========================
+# dmidecode 3.1
+Getting SMBIOS data from sysfs.
+SMBIOS 2.3 present.
+
+Handle 0x0400, DMI type 4, 32 bytes
+Processor Information
+	Socket Designation: Microprocessor
+	Type: Central Processor
+	Family: Pentium 4
+	Manufacturer: Intel
+	ID: 44 0F 00 00 FF FB EB BF
+	Signature: Type 0, Family 15, Model 4, Stepping 4
+	Flags:
+		FPU (Floating-point unit on-chip)
+		VME (Virtual mode extension)
+		DE (Debugging extension)
+		PSE (Page size extension)
+		TSC (Time stamp counter)
+		MSR (Model specific registers)
+		PAE (Physical address extension)
+		MCE (Machine check exception)
+		CX8 (CMPXCHG8 instruction supported)
+		APIC (On-chip APIC hardware supported)
+		SEP (Fast system call)
+		MTRR (Memory type range registers)
+		PGE (Page global enable)
+		MCA (Machine check architecture)
+		CMOV (Conditional move instruction supported)
+		PAT (Page attribute table)
+		PSE-36 (36-bit page size extension)
+		CLFSH (CLFLUSH instruction supported)
+		DS (Debug store)
+		ACPI (ACPI supported)
+		MMX (MMX technology supported)
+		FXSR (FXSAVE and FXSTOR instructions supported)
+		SSE (Streaming SIMD extensions)
+		SSE2 (Streaming SIMD extensions 2)
+		SS (Self-snoop)
+		HTT (Multi-threading)
+		TM (Thermal monitor supported)
+		PBE (Pending break enabled)
+	Version: Not Specified
+	Voltage: 1.3 V
+	External Clock: 800 MHz
+	Max Speed: 4000 MHz
+	Current Speed: 3000 MHz
+	Status: Populated, Enabled
+	Upgrade: ZIF Socket
+	L1 Cache Handle: 0x0700
+	L2 Cache Handle: 0x0701
+	L3 Cache Handle: Not Provided
+
+===========================
+====== DMI MOBO      ======
+===========================
+# dmidecode 3.1
+Getting SMBIOS data from sysfs.
+SMBIOS 2.3 present.
+
+Handle 0x0200, DMI type 2, 8 bytes
+Base Board Information
+	Manufacturer: Dell Inc.          
+	Product Name: 0X8582
+	Version:    
+	Serial Number: ..CN70821563J0N4.
+
+Handle 0x0A02, DMI type 10, 6 bytes
+On Board Device Information
+	Type: Ethernet
+	Status: Enabled
+	Description: Intel PRO/100 VE Network Connections
+
+Handle 0x0A03, DMI type 10, 6 bytes
+On Board Device Information
+	Type: Sound
+	Status: Enabled
+	Description: High Definition Audio Controller
+
+===========================
+====== DMI MEMORY    ======
+===========================
+# dmidecode 3.1
+Getting SMBIOS data from sysfs.
+SMBIOS 2.3 present.
+
+Handle 0x1000, DMI type 16, 15 bytes
+Physical Memory Array
+	Location: System Board Or Motherboard
+	Use: System Memory
+	Error Correction Type: None
+	Maximum Capacity: 4 GB
+	Error Information Handle: Not Provided
+	Number Of Devices: 4
+
+Handle 0x1100, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x1000
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 512 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM_1
+	Bank Locator: Not Specified
+	Type: DDR
+	Type Detail: Synchronous
+	Speed: 533 MT/s
+	Manufacturer: 7F7F7F0B00000000
+	Serial Number: E7681F35
+	Asset Tag: Not Specified
+	Part Number: NT512T64U88A0BY-37
+
+Handle 0x1101, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x1000
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 512 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM_3
+	Bank Locator: Not Specified
+	Type: DDR
+	Type Detail: Synchronous
+	Speed: 533 MT/s
+	Manufacturer: FFFFFFFFFFFFFFFF
+	Serial Number: FFFFFFFF
+	Asset Tag: Not Specified
+	Part Number:                   
+
+Handle 0x1102, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x1000
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: No Module Installed
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM_2
+	Bank Locator: Not Specified
+	Type: DDR
+	Type Detail: Synchronous
+	Speed: 533 MT/s
+	Manufacturer: 7F7F7F0B00000000
+	Serial Number: 1D661F33
+	Asset Tag: Not Specified
+	Part Number: NT512T64U88A0BY-37
+
+Handle 0x1103, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x1000
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: No Module Installed
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM_4
+	Bank Locator: Not Specified
+	Type: DDR
+	Type Detail: Synchronous
+	Speed: 533 MT/s
+	Manufacturer: FFFFFFFFFFFFFFFF
+	Serial Number: FFFFFFFF
+	Asset Tag: Not Specified
+	Part Number:                   
+

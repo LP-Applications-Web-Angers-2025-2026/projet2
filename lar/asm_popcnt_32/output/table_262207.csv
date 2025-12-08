@@ -1,0 +1,20 @@
+"number", "method" , Intel , Intel , Intel
+,  , i3 , i7 , i7
+"number", "method" , 2375M , 3630QM , 4900MQ
+1, "u8_popcnt_reference", 12.6, 5.17, 4.42
+2, "u8_popcnt_wegner", 9.78, 4.41, 3.665
+3, "u32_popcnt_wegner", 4.72, 2.148, 1.615
+4, "u8_popcnt_shift_v1", 0.494, 0.229, 0.14
+5, "u32_popcnt_shift_v1", 0.203, 0.35, 0.04
+6, "u8_popcnt_shift_v2", 0.485, 0.222, 0.144
+7, "u32_popcnt_shift_v2", 0.17, 0.277, 0.037
+8, "u32_popcnt_table_v1", 1.006, 0.3, 0.351
+9, "u32_popcnt_table_v2", 0.434, 0.176, 0.138
+10, "u8_asm_popcnt", 0.717, 0.322, 0.211
+11, "u32_asm_popcnt", 0.188, 0.085, 0.05
+12, "u32_asm_popcnt_ur2", 0.158, 0.07, 0.04
+13, "u32_asm_popcnt_ur4", 0.139, 0.064, 0.036
+14, "u32_sse_popcnt_v1", 0.15, 0.068, 0.05
+15, "u32_sse_popcnt_v2", 0.186, 0.077, 0.06
+16, "u32_avx2_popcnt_v1","N/A","N/A", 0.05
+17, "u8_popcnt_intrinsics", 0.13, 0.057, 0.04

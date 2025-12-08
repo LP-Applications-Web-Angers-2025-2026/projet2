@@ -1,0 +1,1 @@
+ -Mvect=simd  -tp=zen

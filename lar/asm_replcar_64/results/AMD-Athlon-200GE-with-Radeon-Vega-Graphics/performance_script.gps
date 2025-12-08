@@ -1,0 +1,11 @@
+set term pdfcairo font "sans,12" 
+set output "AMD-Athlon-200GE-with-Radeon-Vega-Graphics_performance_gnu.pdf"
+set title "Performance of all methods"
+set xlabel "sizes" 
+set xtics rotate by -45 
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+load 'palette.pal'
+set grid y
+plot "method_chr_repl_reference_gnu.gpd" with lines ls 1 title "chr-repl-reference", "method_chr_repl_ref_O2_gnu.gpd" with lines ls 2 title "chr-repl-ref-O2", "method_chr_repl_sse20_gnu.gpd" with lines ls 3 title "chr-repl-sse20", "method_chr_repl_sse20_u2_gnu.gpd" with lines ls 4 title "chr-repl-sse20-u2", "method_chr_repl_sse20_u2_switch_gnu.gpd" with lines ls 5 title "chr-repl-sse20-u2-switch", "method_chr_repl_avx20_gnu.gpd" with lines ls 6 title "chr-repl-avx20", "method_chr_repl_avx20_u2_gnu.gpd" with lines ls 7 title "chr-repl-avx20-u2"

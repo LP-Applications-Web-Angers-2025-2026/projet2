@@ -1,0 +1,11 @@
+set term pdfcairo font "sans,12" 
+set output "Intel-Core-i7-860-2_80GHz_performance_gnu.pdf"
+set title "Performance of all methods"
+set xlabel "sizes" 
+set xtics rotate by -45 
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+load 'palette.pal'
+set grid y
+plot "method_cmpack_reference_gnu.gpd" with lines ls 1 title "cmpack-reference", "method_cmpack_reference_rew_gnu.gpd" with lines ls 2 title "cmpack-reference-rew", "method_cmpack_compact_gnu.gpd" with lines ls 3 title "cmpack-compact", "method_asm_cmpack_sse_v1_gnu.gpd" with lines ls 4 title "asm-cmpack-sse-v1", "method_asm_cmpack_sse_compact_gnu.gpd" with lines ls 6 title "asm-cmpack-sse-compact"

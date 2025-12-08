@@ -1,0 +1,15 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                             ASM_VOWELS64                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+str=0x738bc7e9b040
+size=256000
+cycles=1428707046
+method.name=cv_avx512_intrinsics_v2
+result=8458,8549,8561,8540,8494,8452
+vowels.percentage=19.94
+cputime=0.37

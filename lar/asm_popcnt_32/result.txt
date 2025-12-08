@@ -1,0 +1,13 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                             ASM_POPCNT32                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+x=0xed552020
+size=262207
+cycles=43290
+result=1044828
+method.name=u8_popcnt_intrinsics

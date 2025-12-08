@@ -1,0 +1,52 @@
+=====================================================================
+author: Jean-Michel RICHER
+email: jean-michel.richer@univ-angers.fr
+date: January, 2019
+=====================================================================
+
+---------------------------------------------------------------------
+1. BASIC COMPILATION PROCESS
+---------------------------------------------------------------------
+
+	To compile the project using g++ (GNU) just type
+	
+		> make clean && make configure && make 
+		
+	or simply
+	
+		> make compile
+		
+---------------------------------------------------------------------
+2. USE ANOTHER COMPILER
+---------------------------------------------------------------------		
+
+	To use another compiler use
+	
+		> make compiler=[identifier]
+		
+	where [identifier] is one of:
+	
+	- gnu   for g++ the GNU C++ compiler
+	- intel for icpc
+	- llvm  for clang (version 5.0 and above)
+	- pgi   for pgc++
+	
+---------------------------------------------------------------------
+3. CREATE A DEBUG VERSION
+---------------------------------------------------------------------
+
+	By default the source files will be compiled without debug
+	information as a release (optimized version). If you want 
+	to create a debug version just type:
+	
+		> make distrib=debug
+		
+	where 'distrib' stands for distribution	
+	
+	You can also combine distrib and compiler:
+	
+		> make distrib=debug compiler=intel
+
+ 
+	
+	

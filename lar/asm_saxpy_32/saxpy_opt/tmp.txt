@@ -1,0 +1,7 @@
+x=0xef0d2020
+y=0xeecd1020
+size=524287
+zillions=10000
+result.first=1042024.6124975093
+result.final=20652366470062.5820312500
+exectime=0.64

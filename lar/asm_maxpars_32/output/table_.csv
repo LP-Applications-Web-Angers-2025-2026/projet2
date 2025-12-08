@@ -1,0 +1,15 @@
+"number", "method", "AMD-Phenom-II-X6-1090T
+results/AMD-Ryzen-7-1700X
+results/Intel-Celeron-CPU-N3050-1_60GHz
+results/Intel-Core2-Quad-CPU-Q9300-2_50GHz
+results/Intel-Core-i3-6100-CPU-3_70GHz
+results/Intel-Core-i5-3570K-CPU-3_40GHz
+results/Intel-Core-i5-7400-CPU-3_00GHz
+results/Intel-Core-i5-7500-CPU-3_40GHz
+results/Intel-Core-i7-3630QM-CPU-2_40GHz
+results/Intel-Core-i7-8700-CPU-3_20GHz"
+1, "maxpars_c_O3","N/A"
+2, "maxpars_sse2_v1","N/A"
+3, "maxpars_sse2_v2","N/A"
+4, "maxpars_sse2_u2","N/A"
+5, "maxpars_sse41","N/A"

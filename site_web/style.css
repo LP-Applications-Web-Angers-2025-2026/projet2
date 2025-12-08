@@ -1,0 +1,1003 @@
+/* ================================================================ */
+/* Copyright (C) Jean-Michel Richer                                 */
+/* Created on: October, 2025                                        */
+/* Modified on:                                                     */
+/* ================================================================ */
+
+:root {
+    --main_menu_color: #a44;
+    --definition-bg: #f8f9fa;         /* Couleur de fond très claire */
+    --definition-border: #3966aa;    /* Couleur d'accentuation (bleu) */
+    --definition-text: #212529;      /* Couleur du texte principal (presque noir) */
+    --definition-title: #3966aa;     /* Couleur du titre (bleu plus foncé) */
+    --definition-shadow: rgba(0, 0, 0, 0.07); /* Couleur de l'ombre */
+    --sommaire-border: Tan;
+    --console-color: #e37d29;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    font-family: Lato, "Trebuchet MS", Arial, sans-serif;
+    font-size: 20px;
+    /*background-color: #777;*/
+    color: white;
+}
+
+/*
+#mathSrc1, #mathSrc2	{ font-size: larger; vertical-align: text-bottom }
+		
+table.prec-form-char	{ text-align: center }
+table.prec-form-char td:first-child	{ text-align: right }
+*/
+
+/* ============================ */
+/* ========== HEADER ========== */
+/* ============================ */
+
+header {
+    background: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 120px;
+}
+
+body.index header {
+    background: #333;
+    /*background-color: rgba(0, 0, 0, 0.1);*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 120px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    flex-grow: 1;
+    text-align: center;
+    text-shadow: 0 0 5px #889, 0 0 10px #99A, 0 0 15px #AAB; 
+}
+
+header p {
+    margin: 0;
+    padding: 10px;
+    font-size: 1.0em;
+    flex-grow: 1;
+    text-align: center;
+    color: #bbb;
+
+}
+
+footer {
+    background-color: white;
+    color: #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 60px;
+    
+}
+
+footer p {
+    font-size: 14px;
+    margin: auto 10px;
+}
+
+/* ============ MENU =========== */
+
+/* Main Menu latéral */
+#main_menu {
+    position: fixed;
+    top: 50px;
+    left: 20px;
+    vertical-align: middle;
+    font-size: 2.0em;
+}
+
+/* Bouton menu */
+.menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color:  #d11;
+}
+
+#main_menu_nav {
+    position: fixed;
+    left: -250px;
+    top: 150px;
+    width: 250px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    transition: left 0.3s;
+    padding-top: 60px;
+    z-index: 10;
+}
+
+#main_menu_nav a {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+}
+
+#main_menu_nav a:hover {
+    background-color: var(--main_menu_color);
+    color: black;
+}
+
+#main_menu_nav i.material-icons {
+    margin-right: 10px;
+}
+
+#main_menu_nav.show {
+    left: 0;
+}
+
+/* Sub Menu latéral */
+
+#local_menu {
+    position: fixed;
+    top: 200px;
+    left: 20px;
+    color: #136;
+    font-size: 2em;
+    cursor: pointer;
+    z-index: 1; 
+}
+
+
+#local_menu_nav {
+    position: fixed;
+    left: -300px;
+    top: 240px;
+    width: 300px;
+    height: 600px;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: left 0.3s;
+    padding-top: 20px;
+    z-index: 20;
+}
+
+#local_menu_nav a {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+}
+
+#local_menu_nav a:hover {
+    background-color: #136;
+    color: white;
+}
+
+#local_menu_nav i.material-icons {
+    margin-right: 10px;
+}
+
+#local_menu_nav.show {
+    left: 0;
+}
+   
+
+/* Contenu principal */
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main.photo {
+    background: url('img/bg1.jpg');
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center center;
+    
+}
+
+main span.material-icons {
+    vertical-align: middle;
+    font-size: 1.1em;
+}
+
+
+section.information {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    /*background-color: white;*/
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    width: 90%;
+    color: #333;
+}
+
+
+section.information h2 {
+    padding: 10px 20px;
+    /*color: #fff;*/
+    color: black;
+    
+}
+
+section.information article {
+    margin: 20px;
+    color : #444;
+}
+
+section.information article.chamboule_tout p {
+    font-size: 80%;
+}
+
+section.information div.liste_conferences {
+    overflow:scroll; 
+    border:#888 2px solid; 
+    width:90%; 
+    height:350px; 
+    border-radius: 10px;
+    margin-left: 20px;
+    scrollbar-color: var(--main_menu_color) #f1f1f1;
+    /* Optionnel : vous pouvez aussi affiner la largeur */
+    scrollbar-width: thin;
+    overflow-x: hidden;
+}
+
+section.information a {
+    color: var(--main_menu_color);/* #cb6b26; */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+ul  {
+    padding: 20px 30px;
+    list-style-type: square;
+}
+
+ol  {
+    padding: 20px 30px;
+    list-style-type: square;
+}
+
+section.information p {
+padding: 10px 20px;
+font-size: 100%;
+line-height: 1.5;
+text-align: justify;
+}
+
+
+/* ================== COURS ================== */
+
+section.cours {
+    background: white;
+    color: black;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+section.cours p {
+    padding: 5px 20px 5px 40px;
+    font-size: 100%;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+section.cours a {
+    color: #3b71af;
+    text-decoration: none;
+}
+
+
+section.cours h1 {
+    margin: 10px 10px;
+    padding: 10px 20px;
+    font-size: 2em;
+}
+
+section.cours h1.chapter {
+	text-align: center;
+	background: rgb(207, 186, 158);
+	color: black;
+    padding: 30px 20px;
+    border-radius: 10px;
+    font-size: 48px;
+}
+
+
+section.cours h1 {
+    margin: 50px 20px 20px 20px;
+    padding: 20px 20px;
+    background: #346;
+    color: white;
+    font-size: 38px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+section.cours h2 {
+    margin: 50px 20px 20px 20px;
+    padding: 10px 20px;
+    background: #463;
+    color: white;
+    font-size: 32px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+section.cours h3 {
+    margin: 20px 20px;
+    padding: 10px 20px;
+    background: #842;
+    color: white;
+    font-size: 28px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+section.cours h4 {
+    margin: 20px 20px;
+    padding: 10px 20px;
+    background: #759;
+    color: white;
+    font-size: 24px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+section.cours h5 {
+    margin: 20px 20px;
+    padding: 10px 20px;
+    background: #79C;
+    color: white;
+    font-size: 20px;
+    
+}
+
+section.cours ul  {
+    padding: 15px 60px;
+    margin-left: 30px;
+    list-style-type: square;
+}
+
+section.cours ul  li {
+    padding-bottom: 10px;
+    text-align: justify;
+}
+
+section.cours ol  {
+    margin-left: 30px;
+    padding: 15px 60px;
+    
+}
+
+section.cours pre {
+    margin: 10px 10px 10px 30px;
+    padding: 10px;
+    border-left: 4px solid green;
+    background: #222;
+    color: white;
+}
+
+code {
+    font-size: 0.9em;
+}
+
+section.cours div.exercise {
+    margin: 10px;
+    background: #f1f1f1;
+}
+
+p.center {
+    margin: 10px auto;
+}
+
+.center {
+    margin: 10px auto;
+}
+
+.console {
+    font-family: monospace;
+    /*background-color: tan;*/
+    background-color: white;
+    color: var(--console-color);
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.citation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.texte_citation {
+    text-align: right;
+	font-style: italic;
+	font-size: 0.9em;
+	color: #a00000;
+    padding: 20px 20px;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+}
+
+/*
+.definition {
+    padding: 5px;
+	color: #222;
+	background: tan;
+	width: 80%;
+	margin: 20px auto;
+	padding: 5px 10px 5px 10px;
+	border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}*/
+
+.sommaire {
+  /* Une bordure à gauche pour l'accentuation */
+  border-left: 5px solid var(--sommaire-border);
+  
+  /* Ombre subtile pour un effet "flottant" */
+  box-shadow: 0 4px 12px var(--definition-shadow);
+  
+  /* Espacement intérieur (padding) */
+  padding: 1.5rem; /* 24px */
+  
+  /* Espacement extérieur (marge) */
+  margin: 1.5rem 0;
+  
+  /* Coins arrondis */
+  border-radius: 8px;
+}
+
+.sommaire h6 {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.definition {
+  background-color: var(--definition-bg);
+  /* Une bordure à gauche pour l'accentuation */
+  border-left: 5px solid var(--definition-border);
+  
+  /* Ombre subtile pour un effet "flottant" */
+  box-shadow: 0 4px 12px var(--definition-shadow);
+  
+  /* Espacement intérieur (padding) */
+  padding: 1.5rem; /* 24px */
+  
+  /* Espacement extérieur (marge) */
+  margin: 1.5rem 0;
+  
+  /* Coins arrondis */
+  border-radius: 8px;
+}
+
+.definition h6 {
+  /* Le titre */
+  margin-top: 0; /* Enlève la marge par défaut du h4 */
+  margin-bottom: 1rem; /* Espace sous le titre (16px) */
+  color: var(--definition-title);
+  font-size: 1.3rem; /* Taille de police légèrement augmentée */
+  font-weight: 600; /* Semi-gras */
+}
+
+/* Styles pour le contenu (paragraphes, listes) */
+.definition p,
+.definition ul,
+.definition ol {
+  color: var(--definition-text);
+  line-height: 1.4; /* Hauteur de ligne pour une meilleure lisibilité */
+  margin-bottom: 5px; /* Espace entre les éléments */
+  padding: 2px 2px 2px 2px;
+}
+
+/* Cible le *dernier* élément dans la div .definition pour enlever la marge du bas */
+.definition > :last-child {
+  margin-bottom: 0;
+}
+
+/* Style pour les listes */
+.definition ul,
+.definition ol {
+  padding-left: 1.5rem; /* Indentation de la liste */
+}
+
+.definition li {
+  margin-bottom: 0.5rem; /* Espace entre les items de la liste */
+}
+
+/* Style pour les images (responsive) */
+.definition img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px; /* Coins arrondis assortis */
+  margin-top: 0.5rem;
+}
+
+/* Style simple pour les tables */
+.definition table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.definition th,
+.definition td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.definition th {
+  background-color: #e9ecef;
+}
+
+/*
+section.cours .definition h4 {
+    width: 90%;
+    border-radius: 0px;
+    background: #222;
+}
+    */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+}
+
+.row section {
+    flex: 1;
+    min-width: 280px;
+    margin: 20px;
+}
+
+.large {
+    width: 60%;
+}
+
+.up_up_up {
+	margin: 30px 10px;
+	border-top: 3px solid #777;
+	border-bottom: 3px solid #777;
+	border-right: 3px solid #777;
+	border-left: 5px solid #D35700;
+	background: #F7E7CE;
+
+}
+
+.html_code {
+        border: 1px dashed royalblue;
+        padding: 5px;
+        margin-left: 40px;
+}
+
+figure {
+        width: 80%; 
+        margin-left: auto; 
+        margin-right: auto;
+   
+        display: flex;
+        flex-direction : column;
+        align-items: center;
+        justify-content: center;
+        margin: 20px;
+}
+legend {
+    font-weight: bold;
+    margin: 10px auto;
+        
+}
+
+
+dl {
+        margin: 15px 15px 15px 20px;
+        padding: 2px 2px 2px 0px;
+        background: #f1f1f1;
+}
+
+dt {
+        padding: 5px 5px 5px 20px;
+        font-size: 1.1em;
+        font-weight: bold;
+}
+
+dd {
+        padding: 5px 5px 20px 60px;
+        font-size: 1.0em;
+}
+
+kbd {
+	background-color: #eee;
+	border-radius: 3px;
+	border: 1px solid #b4b4b4;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
+	color: #333;
+	display: inline-block;
+	font-size: .85em;
+	font-weight: 700;
+	line-height: 1;
+	padding: 2px 4px;
+	white-space: nowrap;
+}
+
+
+.cadre_info {
+	background: Tan;
+	color: black;
+	width: 80%;
+	margin-top: 30px;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px 10px 5px 10px;
+	border-radius: 15px;
+}
+
+.cadre_alerte {
+	color: #fff;
+	background: #a00000;
+	width: 70%;
+	margin: 0;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px 10px 5px 10px;
+	border-radius: 15px;
+}
+
+.cadre_alerte p a, .cadre_alerte p a:visited {
+    color: yellow;
+}
+
+.highlight_box {
+    background: #f0dcb2; /*#f8c782;*/ /*#b09f7f;*/
+    border:2px solid #777;
+    width:80%;
+    margin:0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:5px 10px 5px 10px;
+    border-radius:15px;
+}
+
+/* ========== Tables ========== */
+
+caption {
+	font-weight: bold;
+	padding: 10px 2px;
+	color: #444;
+}
+
+table {
+	border-collapse: collapse;
+	padding: 2px;
+	margin: 10px auto;
+	font-size: 1.0em;
+}
+
+th {
+	font-weight: bold;
+    color: white;
+    background: #666;
+    font-size: 1.0em;
+    padding: 4px;
+    border: 1px solid black;
+
+}
+
+td {
+    font-size: 1.0em;
+    border: 1px solid #333;
+    padding: 4px;
+}
+
+tr.row1 {
+	background: #ebece4;
+}
+
+tr.row2 {
+	background: #fef5ca;
+}
+
+tr.highlight1 {
+	background: #4572A1;
+	color: #fff;
+}
+
+tr.highlight2 {
+	background: #799244;
+	color: #fff;
+}
+
+tr.highlight3 {
+	background: #C27535;
+	color: #fff;
+}
+
+tr.highlight4 {
+	background: #E78C41;
+	color: #000;
+}
+
+tr.highlight5 {
+	background: #AA4643;
+	color: #fff;
+}
+
+tr.highlight1_bold {
+	background: #C98987;
+	font-weight: bold;
+}
+
+tr.highlight1_bold2 {
+	background: #A9B987;
+	font-weight: bold;
+}
+
+tr.highlight_white {
+	background: #fff;
+	color: #000;
+	font-weight: bold;
+}
+
+
+tr.header {
+	background: #cdc0b0;
+	font-weight: bold;
+}
+
+
+td.empty {
+	border: 0;
+	padding: 2px;
+}
+
+td.right {
+	text-align: right;
+}
+
+td.left {
+	text-align: left;
+}
+
+td.center {
+	text-align: center;
+}
+
+/* ========== Forms ========== */
+
+input, select {
+    font-size: 0.8em;
+}
+
+input[type=submit] {
+    padding: 5px 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+input[type=radio] {
+    margin-left: 20px;
+}
+
+input[type=checkbox] {
+    margin: 10px;
+}
+
+
+/* ========== Code ========== */
+
+details {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 1em 20px;
+    background: white;
+
+}
+
+summary {
+    padding: 10px 25px;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc; /* Fausse bordure */
+}
+
+/* Quand l'élément est ouvert */
+details[open] > summary {
+    border-bottom: 1px solid #ccc;
+    background-color: #e0e0e0;
+   
+}
+
+/* Cible la sortie GeSHi à l'intérieur */
+details > div {
+    margin: 10px;
+    padding: 5px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+x-cmt {
+    color: #aaa;
+    font-weight: bold;
+    font-style: normal;
+}
+
+x-prompt {
+    color: #48A063;
+    font-weight: bold;
+    font-style: normal;
+    padding-right: 10px;
+    font-size: 110%;
+}
+
+x-cmd {
+    color: #ca915b;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 110%;
+}
+
+x-arg {
+    color: #6F4E37;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 110%;
+}
+
+x-dir {
+    font-weight: bold;
+    font-style: normal;
+    color: #13a;
+}
+
+x-file {
+    font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+    color: #13a;
+}
+
+x-term { 
+    font-family: monospace; 
+    font-weight: bold; 
+    color: darkred; 
+}
+
+x-obj {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #693;
+}
+
+x-class {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #693;
+        font-weight: bold;
+}
+
+x-var {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #4A7;
+        font-weight: bold;
+}
+
+x-kwd {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #C63;
+        font-weight: bold;
+}
+
+x-meth {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #66C;
+        font-weight: bold;
+}
+
+x-attr {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #693;
+        font-weight: bold;
+}
+
+x-value {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        font-weight: bold;
+        color: #558;
+}
+
+x-tag {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #936;
+        font-weight: bold;
+}
+
+x-select {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #939;
+        font-weight: bold;
+}
+
+x-prop {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        color: #683;
+        font-weight: bold;
+}
+
+x-string {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        font-weight: bold;
+        color: #921;
+}
+
+x-const {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        font-weight: bold;
+        color: #C42;
+}
+
+x-code {
+        font-family: 'Roboto Mono', 'Ubuntu Mono', monospace;
+        font-weight: bold;
+        font-size: 0.9em;
+        padding: 2px 3px 2px 3px;
+        color: #af601a;
+}
+
+x-console {
+    font-family: monospace;
+    /*background-color: tan;*/
+    background-color: white;
+    color: var(--console-color);
+    padding-left: 2px;
+    padding-right: 2px
+}
+
+blockquote {
+    margin: 15px 30px;
+    font-style: italic;
+}
+@media (max-width: 768px) {
+.row {
+    flex-direction: column;
+}
+
+.large {
+    width: 90%;
+}
+}
+
+@media print {
+    body {
+        background: none !important;
+    }
+    main {
+        backdrop-filter: none !important;
+        background-color: white !important;
+        color: black !important;
+    }
+    header, nav {
+        background: none !important;
+        color: black !important;
+    }
+}
+

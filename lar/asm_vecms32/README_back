@@ -1,0 +1,72 @@
+=====================================================================
+Project Vector Merge Sort
+Author: Jean-Michel RICHER
+Email: jean-michel.richer@univ-angers.fr
+Date: September 2018
+System: Linux Ubuntu
+=====================================================================
+
+---------------------------------------------------------------------
+1. DESCRIPTION
+---------------------------------------------------------------------
+
+	This project aims at comparing two implementations of the 
+	merge sort algorithm. The first one is the basic implementation
+	and the second one uses a reordering of four contiguous 
+	(adjacent) values in a SSE register.
+	
+	By doing this we face three difficulties:
+	
+	1 the first one is that the reordering SSE instruction PSHUFD
+	  accepts only one constant as the reordering operand, so we
+	  need to modify this parameter of the assembly instruction
+	  on the fly
+	  
+	2 the second one concerns the modification of the instruction
+	  operand which is not possible by default in the .text 
+	  section so we need to put the instruction either in the .data 
+	  section or enable the .text section to be modified by using 
+	  mprotect
+	  
+	3 in order to determine which reodering must be used we compute
+	  a value which acts as an identifier, but it can only be
+	  computed efficiently using the PEXT assembly instruction that
+	  is part of the BMI (Bit Manipulation) instructions Sets.
+	  There are two sets published by Intel: BMI1 and BMI2, they 
+	  were both introduced with the Haswell microarchitecture (2013).
+	  So some computers do not have this instruction and therefore
+	  it is necessary to implement it with a series of and/or/shr
+	  instructions
+	
+---------------------------------------------------------------------
+2. INSTALLATION
+---------------------------------------------------------------------
+2.a Prerequiste
+
+	You first need to install nasm (The Netwide Assembler) and
+	g++.
+
+2.b Compilation
+
+	From the command line, just type 
+	
+		> make clean && make
+		
+	All objects files and the binary will be sent to the 'build' directory 
+	that will be created in the directory of the project.
+	
+
+
+---------------------------------------------------------------------	
+3. PERFORMANCE TESTS
+---------------------------------------------------------------------
+
+	Run the ./test_performance.sh script from the directory of 
+	the project. It will execute the program on different sizes
+	of array
+
+	All results will be put in the 'results.txt' file
+	
+	You can check the 'results.txt' file with some results
+	obtained on different architectures
+	

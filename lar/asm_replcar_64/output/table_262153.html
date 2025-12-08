@@ -1,0 +1,160 @@
+<html>
+<head>
+<style>
+html { font-family: Ubuntu, Helvetica, sans-serif; }table { border-collapse: collapse; }
+th, td { border: 1px solid black; padding: 4px; }
+td.right { text-align: right; }
+td.center { text-align: center; }
+.minimum_execution_time { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+<table>
+	<tr>
+		<th>number</th>
+		<th>method</th>
+		<th>AMD<br />X6<br />1090T</th>
+		<th>AMD<br />Ryzen<br />1700X</th>
+		<th>Intel<br />Celeron<br />N3050</th>
+		<th>Intel<br />Core2-Duo<br />P9500</th>
+		<th>Intel<br />Core2<br />Q9300</th>
+		<th>Intel<br />i3<br />2375M</th>
+		<th>Intel<br />i3<br />6100</th>
+		<th>Intel<br />i5<br />7400</th>
+		<th>Intel<br />i5<br />7500</th>
+		<th>Intel<br />i7<br />3630QM</th>
+		<th>Intel<br />i7<br />4790</th>
+		<th>Intel<br />i7<br />4900MQ</th>
+		<th>Intel<br />i7<br />8700</th>
+		<th>Intel<br />Pentium-D<br />925</th>
+	</tr>
+	<tr>
+		<td class="center">1</td>
+		<td>chr_repl_reference</td>
+		<td class="right">9.450</td>
+		<td class="right">4.240</td>
+		<td class="right">35.350</td>
+		<td class="right">20.950</td>
+		<td class="right">19.880</td>
+		<td class="right">10.980</td>
+		<td class="right">3.559</td>
+		<td class="right minimum_execution_time">3.323</td>
+		<td class="right">89.020</td>
+		<td class="right">247.060</td>
+		<td class="right">4.190</td>
+		<td class="right">4.390</td>
+		<td class="right">26.360</td>
+		<td class="right">24.790</td>
+	</tr>
+	<tr>
+		<td class="center">2</td>
+		<td>chr_repl_ref_O2</td>
+		<td class="right">33.440</td>
+		<td class="right minimum_execution_time">11.620</td>
+		<td class="right">84.850</td>
+		<td class="right">50.920</td>
+		<td class="right">80.860</td>
+		<td class="right">54.230</td>
+		<td class="right">12.010</td>
+		<td class="right">12.050</td>
+		<td class="right">174.930</td>
+		<td class="right">237.650</td>
+		<td class="right">13.580</td>
+		<td class="right">11.980</td>
+		<td class="right">94.520</td>
+		<td class="right">54.190</td>
+	</tr>
+	<tr>
+		<td class="center">3</td>
+		<td>chr_repl_sse20</td>
+		<td class="right">9.960</td>
+		<td class="right">3.959</td>
+		<td class="right">15.760</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">9.380</td>
+		<td class="right">3.765</td>
+		<td class="right minimum_execution_time">3.253</td>
+		<td class="right">33.270</td>
+		<td class="right">41.690</td>
+		<td class="right">4.120</td>
+		<td class="right">4.300</td>
+		<td class="right">25.410</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">4</td>
+		<td>chr_repl_sse20_u2</td>
+		<td class="right">9.650</td>
+		<td class="right">3.935</td>
+		<td class="right">15.750</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">9.310</td>
+		<td class="right">3.534</td>
+		<td class="right minimum_execution_time">3.235</td>
+		<td class="right">31.430</td>
+		<td class="right">41.850</td>
+		<td class="right">4.120</td>
+		<td class="right">4.310</td>
+		<td class="right">25.210</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">5</td>
+		<td>chr_repl_sse20_u2_switch</td>
+		<td class="right">9.940</td>
+		<td class="right">4.260</td>
+		<td class="right">15.800</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">9.290</td>
+		<td class="right">3.757</td>
+		<td class="right minimum_execution_time">3.229</td>
+		<td class="right">31.090</td>
+		<td class="right">42.020</td>
+		<td class="right">4.190</td>
+		<td class="right">4.340</td>
+		<td class="right">24.500</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">6</td>
+		<td>chr_repl_avx20</td>
+		<td class="right">N/A</td>
+		<td class="right">3.914</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">3.555</td>
+		<td class="right minimum_execution_time">3.151</td>
+		<td class="right">29.770</td>
+		<td class="right">N/A</td>
+		<td class="right">4.090</td>
+		<td class="right">4.330</td>
+		<td class="right">23.590</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">7</td>
+		<td>chr_repl_avx20_u2</td>
+		<td class="right">N/A</td>
+		<td class="right">4.370</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">3.374</td>
+		<td class="right minimum_execution_time">3.141</td>
+		<td class="right">29.310</td>
+		<td class="right">N/A</td>
+		<td class="right">4.130</td>
+		<td class="right">4.270</td>
+		<td class="right">23.530</td>
+		<td class="right">N/A</td>
+	</tr>
+<caption>asm_replcar64 size=262153</caption>
+</table>
+</body>
+</html>

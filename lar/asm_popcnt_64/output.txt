@@ -1,0 +1,14 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                             ASM_POPCNT64                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+x=0x7f9b5ba0b040
+size=262207
+cycles=1068700644
+result=1044828
+method.name=u8_popcnt_intrinsics
+time=0.29;0:00.29;0.00

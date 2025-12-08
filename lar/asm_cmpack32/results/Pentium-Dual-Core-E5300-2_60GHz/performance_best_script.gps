@@ -1,0 +1,12 @@
+set term pdfcairo font "sans,12" 
+set output "Pentium-Dual-Core-E5300-2_60GHz_performance_best_gnu.pdf"
+set title "Best methods below average 2.37"
+set xlabel "sizes"
+set xtics rotate by -45
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+set grid y
+load 'palette.pal'
+set style data linespoints
+plot "method_cmpack_reference_rew_gnu.gpd" using 1:2 ls 2 pt 2 title "cmpack-reference-rew"

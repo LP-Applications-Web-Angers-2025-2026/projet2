@@ -1,0 +1,375 @@
+Architecture:          i686
+mode(s) opératoire(s) des microprocesseurs :32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                4
+On-line CPU(s) list:   0-3
+Thread(s) par cœur : 1
+Cœur(s) par socket : 4
+Socket(s):             1
+Identifiant constructeur :GenuineIntel
+Famille de microprocesseur :6
+Modèle :             15
+Version :             11
+Vitesse du microprocesseur en MHz :1600.000
+BogoMIPS:              4787.99
+Virtualisation :      VT-x
+cache L1d :           32K
+cache L1i :           32K
+cache L2 :            4096K
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 15
+model name	: Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz
+stepping	: 11
+microcode	: 0xb6
+cpu MHz		: 1600.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fdiv_bug	: no
+hlt_bug		: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 10
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm lahf_lm dtherm tpr_shadow vnmi flexpriority
+bogomips	: 4788.09
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 15
+model name	: Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz
+stepping	: 11
+microcode	: 0xb6
+cpu MHz		: 2400.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fdiv_bug	: no
+hlt_bug		: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 10
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm lahf_lm dtherm tpr_shadow vnmi flexpriority
+bogomips	: 4787.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 15
+model name	: Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz
+stepping	: 11
+microcode	: 0xb6
+cpu MHz		: 1600.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 3
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fdiv_bug	: no
+hlt_bug		: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 10
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm lahf_lm dtherm tpr_shadow vnmi flexpriority
+bogomips	: 4788.01
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 15
+model name	: Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz
+stepping	: 11
+microcode	: 0xb6
+cpu MHz		: 1600.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fdiv_bug	: no
+hlt_bug		: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 10
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm lahf_lm dtherm tpr_shadow vnmi flexpriority
+bogomips	: 4787.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+===========================
+======     CACHE     ======
+===========================
+L1         Data    32K 8-way-set-associative 64 bytes
+L1  Instruction    32K 8-way-set-associative 64 bytes
+L2      Unified  4096K 16-way-set-associative 64 bytes
+===========================
+====== DMI PROCESSOR ======
+===========================
+# dmidecode 2.11
+SMBIOS 2.5 present.
+
+Handle 0x0004, DMI type 4, 40 bytes
+Processor Information
+	Socket Designation: Socket 775
+	Type: Central Processor
+	Family: Other
+	Manufacturer: Intel
+	ID: FB 06 00 00 FF FB EB BF
+	Signature: Type 0, Family 6, Model 15, Stepping 11
+	Flags:
+		FPU (Floating-point unit on-chip)
+		VME (Virtual mode extension)
+		DE (Debugging extension)
+		PSE (Page size extension)
+		TSC (Time stamp counter)
+		MSR (Model specific registers)
+		PAE (Physical address extension)
+		MCE (Machine check exception)
+		CX8 (CMPXCHG8 instruction supported)
+		APIC (On-chip APIC hardware supported)
+		SEP (Fast system call)
+		MTRR (Memory type range registers)
+		PGE (Page global enable)
+		MCA (Machine check architecture)
+		CMOV (Conditional move instruction supported)
+		PAT (Page attribute table)
+		PSE-36 (36-bit page size extension)
+		CLFSH (CLFLUSH instruction supported)
+		DS (Debug store)
+		ACPI (ACPI supported)
+		MMX (MMX technology supported)
+		FXSR (FXSAVE and FXSTOR instructions supported)
+		SSE (Streaming SIMD extensions)
+		SSE2 (Streaming SIMD extensions 2)
+		SS (Self-snoop)
+		HTT (Multi-threading)
+		TM (Thermal monitor supported)
+		PBE (Pending break enabled)
+	Version: Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz
+	Voltage: 0.0 V
+	External Clock: 266 MHz
+	Max Speed: 4000 MHz
+	Current Speed: 2400 MHz
+	Status: Populated, Enabled
+	Upgrade: ZIF Socket
+	L1 Cache Handle: 0x000A
+	L2 Cache Handle: 0x000B
+	L3 Cache Handle: Not Provided
+	Serial Number:  
+	Asset Tag:  
+	Part Number:  
+	Core Count: 4
+	Core Enabled: 4
+	Thread Count: 4
+	Characteristics:
+		64-bit capable
+
+===========================
+====== DMI MOBO      ======
+===========================
+# dmidecode 2.11
+SMBIOS 2.5 present.
+
+Handle 0x0002, DMI type 2, 10 bytes
+Base Board Information
+	Manufacturer: Dell Inc.
+	Product Name: 0FM586
+	Version: ...
+	Serial Number: ..CN736047BI011J.
+	Asset Tag:  
+	Features:
+		Board is a hosting board
+
+===========================
+====== DMI MEMORY    ======
+===========================
+# dmidecode 2.11
+SMBIOS 2.5 present.
+
+Handle 0x0005, DMI type 5, 24 bytes
+Memory Controller Information
+	Error Detecting Method: 8-bit Parity
+	Error Correcting Capabilities:
+		None
+	Supported Interleave: One-way Interleave
+	Current Interleave: One-way Interleave
+	Maximum Memory Module Size: 2048 MB
+	Maximum Total Memory Size: 8192 MB
+	Supported Speeds:
+		Other
+	Supported Memory Types:
+		DIMM
+	Memory Module Voltage: 5.0 V
+	Associated Memory Slots: 4
+		0x0006
+		0x0007
+		0x0008
+		0x0009
+	Enabled Error Correcting Capabilities:
+		None
+
+Handle 0x0006, DMI type 6, 12 bytes
+Memory Module Information
+	Socket Designation: DIMM1
+	Bank Connections: 0
+	Current Speed: Unknown
+	Type: DIMM
+	Installed Size: 1024 MB (Single-bank Connection)
+	Enabled Size: 1024 MB (Single-bank Connection)
+	Error Status: OK
+
+Handle 0x0007, DMI type 6, 12 bytes
+Memory Module Information
+	Socket Designation: DIMM2
+	Bank Connections: 2
+	Current Speed: Unknown
+	Type: DIMM
+	Installed Size: 512 MB (Single-bank Connection)
+	Enabled Size: 512 MB (Single-bank Connection)
+	Error Status: OK
+
+Handle 0x0008, DMI type 6, 12 bytes
+Memory Module Information
+	Socket Designation: DIMM3
+	Bank Connections: 4
+	Current Speed: Unknown
+	Type: DIMM
+	Installed Size: 512 MB (Single-bank Connection)
+	Enabled Size: 512 MB (Single-bank Connection)
+	Error Status: OK
+
+Handle 0x0009, DMI type 6, 12 bytes
+Memory Module Information
+	Socket Designation: DIMM4
+	Bank Connections: 6
+	Current Speed: Unknown
+	Type: DIMM
+	Installed Size: 1024 MB (Single-bank Connection)
+	Enabled Size: 1024 MB (Single-bank Connection)
+	Error Status: OK
+
+Handle 0x0024, DMI type 16, 15 bytes
+Physical Memory Array
+	Location: System Board Or Motherboard
+	Use: System Memory
+	Error Correction Type: None
+	Maximum Capacity: 4 GB
+	Error Information Handle: Not Provided
+	Number Of Devices: 4
+
+Handle 0x0025, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x0024
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 1024 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM1
+	Bank Locator:  
+	Type: DDR2
+	Type Detail: Synchronous
+	Speed: 667 MHz
+	Manufacturer: AD00000000000000
+	Serial Number: 00006245
+	Asset Tag: 010807
+	Part Number: HYMP112U64CP8-Y5  
+
+Handle 0x0026, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x0024
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 512 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM2
+	Bank Locator:  
+	Type: DDR2
+	Type Detail: Synchronous
+	Speed: 667 MHz
+	Manufacturer: AD00000000000000
+	Serial Number: 04004144
+	Asset Tag: 010801
+	Part Number: HYMP164U64CP6-Y5  
+
+Handle 0x0027, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x0024
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 512 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM3
+	Bank Locator:  
+	Type: DDR2
+	Type Detail: Synchronous
+	Speed: 667 MHz
+	Manufacturer: AD00000000000000
+	Serial Number: 00005295
+	Asset Tag: 010751
+	Part Number: HYMP164U64CP6-Y5  
+
+Handle 0x0028, DMI type 17, 27 bytes
+Memory Device
+	Array Handle: 0x0024
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 1024 MB
+	Form Factor: DIMM
+	Set: None
+	Locator: DIMM4
+	Bank Locator:  
+	Type: DDR2
+	Type Detail: Synchronous
+	Speed: 667 MHz
+	Manufacturer: AD00000000000000
+	Serial Number: 00007246
+	Asset Tag: 010807
+	Part Number: HYMP112U64CP8-Y5  
+

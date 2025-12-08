@@ -1,0 +1,16 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                            ASM_MAXPARS32                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+x=0xf28f5040
+y=0xf2874040
+z=0xf27f3040
+size=524287
+cycles=1903802355
+result=256837
+method.name=maxpars_avx512_intrinsics
+cputime=0.49

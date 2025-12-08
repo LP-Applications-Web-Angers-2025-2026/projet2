@@ -1,0 +1,29 @@
+Validity test on 2021-09-06-09:43
+check methods execution...
+ + method  1 OK   mp_reference
+ + method  2 OK   mp_asm_fpu
+ + method  3 OK   mp_asm_fpu_ur4
+ + method  4 OK   mp_inv_jk_O2
+ + method  5 OK   mp_inv_jk
+ + method  6 OK   mp_inv_jk_sse
+ + method  7 OK   mp_inv_jk_avx
+ + method  8 OK   mp_tile_4x4
+ + method  9 OK   mp_tile_bxb_v1
+ + method 10 OK   mp_tile_bxb_v2
+ + method 11 OK   mp_tile_bxb_v3
+ + method 12 OK   mp_tile_bxb_v4
+  32  OK
+  48  OK
+  64  OK
+  80  OK
+  96  OK
+ 112  OK
+ 128  OK
+ 144  OK
+ 160  OK
+ 176  OK
+ 192  OK
+ 208  OK
+ 224  OK
+ 240  OK
+number_of_errors=0

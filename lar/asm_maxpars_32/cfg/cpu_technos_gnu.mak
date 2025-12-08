@@ -1,0 +1,1 @@
+ -mavx512f -mavx512bw   -mpopcnt  -mfma  -mbmi  -mbmi2 

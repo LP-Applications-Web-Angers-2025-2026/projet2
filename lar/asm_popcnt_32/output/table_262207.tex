@@ -1,0 +1,27 @@
+\begin{table}[htb]
+\begin{center}
+\begin{tabular}{lr}
+  & method  & Intel  \\
+  &        & Celeron  \\
+  &        & N3050  \\
+1 & u8_popcnt_reference & 11.45  \\
+2 & u8_popcnt_wegner & 7.31  \\
+3 & u32_popcnt_wegner & 3.758  \\
+4 & u8_popcnt_shift_v1 & 0.636  \\
+5 & u32_popcnt_shift_v1 & 0.348  \\
+6 & u8_popcnt_shift_v2 & 0.657  \\
+7 & u32_popcnt_shift_v2 & 0.333  \\
+8 & u32_popcnt_table_v1 & 1.372  \\
+9 & u32_popcnt_table_v2 & 0.695  \\
+10 & u8_asm_popcnt & 1.14  \\
+11 & u32_asm_popcnt & 0.204  \\
+12 & u32_asm_popcnt_ur2 & 0.164  \\
+13 & u32_asm_popcnt_ur4 & 0.146  \\
+14 & u32_sse_popcnt & 0.202  \\
+15 & u32_avx2_popcnt & N/A  \\
+16 & u8_popcnt_intrinsics & 0.242  \\
+\end{tabular}
+\end{center}
+\caption{asm_popcnt32  262207}
+\label{tab_}
+\end{table}

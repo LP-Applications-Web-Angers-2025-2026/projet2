@@ -1,0 +1,12 @@
+set term pdfcairo font "sans,12" 
+set output "Intel-Core-i7-8700-3_20GHz_performance_best_gnu.pdf"
+set title "Best methods below average 3.80"
+set xlabel "sizes"
+set xtics rotate by -45
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+set grid y
+load 'palette.pal'
+set style data linespoints
+plot "method_chr_repl_reference_gnu.gpd" using 1:2 ls 1 pt 1 title "chr-repl-reference", "method_chr_repl_sse20_gnu.gpd" using 1:2 ls 3 pt 3 title "chr-repl-sse20", "method_chr_repl_sse20_u2_gnu.gpd" using 1:2 ls 4 pt 4 title "chr-repl-sse20-u2", "method_chr_repl_sse20_u2_switch_gnu.gpd" using 1:2 ls 5 pt 5 title "chr-repl-sse20-u2-switch", "method_chr_repl_avx20_gnu.gpd" using 1:2 ls 6 pt 6 title "chr-repl-avx20", "method_chr_repl_avx20_u2_gnu.gpd" using 1:2 ls 7 pt 7 title "chr-repl-avx20-u2"

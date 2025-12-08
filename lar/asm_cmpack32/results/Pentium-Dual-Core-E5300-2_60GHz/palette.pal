@@ -1,0 +1,28 @@
+# author: Jean-Michel RICHER
+
+# line styles
+set style line 1 lt 1 lw 2 lc rgb '#ff8c00' # dark orange 
+set style line 2 lt 1 lw 2 lc rgb '#8a2be2' # blue violet
+set style line 3 lt 1 lw 2 lc rgb '#aa8833' # brown yellow  / gold ffd700
+set style line 4 lt 1 lw 2 lc rgb '#228b22' # forest green
+set style line 5 lt 1 lw 2 lc rgb '#ff4500' # orange red
+set style line 6 lt 1 lw 2 lc rgb '#00bfff' # deepsky bluc
+set style line 7 lt 1 lw 2 lc rgb '#32cd32' # lime green
+set style line 8 lt 1 lw 2 lc rgb '#bdb76b' # dark khaki
+set style line 9 lt 1 lw 2 lc rgb '#ff00ff' # magenta
+set style line 10 lt 1 lw 2 lc rgb '#4169e1' # royal blue
+
+# palette
+set palette maxcolors 10
+set palette defined ( 0 '#ff8c00',\
+    	    	      1 '#8a2be2',\
+		      2 '#aa8833',\
+		      3 '#228b22',\
+		      4 '#ff4500',\
+		      5 '#00bfff',\
+		      6 '#32cd32',\
+		      7 '#bdb76b',\
+		      8 '#ff00ff',\
+		      9 '#4169e1' )
+		      
+

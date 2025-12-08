@@ -1,0 +1,50 @@
+cas 1 : 4;  4.992;  4.940;  5.060;  0.037;
+
+.while:
+	movzx	eax, byte [rdi + rcx]	; s[i]
+	sub		eax, 'a'				; s[i] - 'a'
+	inc		dword [rbx + rax * 4]	;++letters[ s[i]-'a' ]
+	add		ecx, 1
+	cmp		ecx, esi				; if (i < size)
+	jne		.while					;	goto .while
+.end_while:
+
+======================================================
+cas 2: 4;  3.776;  3.710;  3.860;  0.039;
+
+align 16	
+.while:
+	movzx	eax, byte [rdi + rcx]	; s[i]
+	sub		eax, 'a'				; s[i] - 'a'
+	inc		dword [rbx + rax * 4]	;++letters[ s[i]-'a' ]
+	add		rcx, 1
+	cmp		ecx, esi				; if (i < size)
+	jne		.while					;	goto .while
+.end_while:
+
+======================================================
+cas 3: 4;  4.999;  4.930;  5.100;  0.048;
+
+align 16	
+.while:
+	movzx	eax, byte [rdi + rcx]	; s[i]
+	sub		eax, 'a'				; s[i] - 'a'
+	inc		dword [rbx + rax * 4]	;++letters[ s[i]-'a' ]
+	inc		ecx						; ++i
+	cmp		ecx, esi				; if (i < size)
+	jne		.while					;	goto .while
+.end_while:
+
+
+======================================================
+cas 4: 4;  3.783;  3.690;  4.000;  0.083
+
+align 16	
+.while:
+	movzx	eax, byte [rdi + rcx]	; s[i]
+	sub		eax, 'a'				; s[i] - 'a'
+	inc		dword [rbx + rax * 4]	;++letters[ s[i]-'a' ]
+	inc		rcx						; ++i
+	cmp		ecx, esi				; if (i < size)
+	jne		.while					;	goto .while
+.end_while:

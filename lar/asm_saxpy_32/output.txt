@@ -1,0 +1,15 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                             ASM_SAXPY32                              │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+x=0xf58d0040
+y=0xf56cf040
+size=524287
+zillions=50000
+error SIGINT: Interactive attention signal, (usually ctrl+c)
+Command exited with non-zero status 1
+time=9.75;0:09.75;0.00

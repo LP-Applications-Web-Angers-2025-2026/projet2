@@ -1,0 +1,23 @@
+# -------------------------------------------------------
+# name of cpu from cpu_name.sh|Brand|Model|SubModel|Year
+# -------------------------------------------------------
+AMD-Phenom-II-X6-1090T-Processor|AMD|X6|1090T|2010
+AMD-Ryzen-7-1700X-Eight-Core-Processor|AMD|Ryzen|1700X|2017
+AMD-Ryzen-5-3600-6-Core-Processor|AMD|Ryzen|3600|2019
+Intel-Celeron-N3050-1_60GHz|Intel|Celeron|N3050|2015
+Intel-Core2-Quad-Q6600-2_40GHz|Intel|Core2|Q6600|2007
+Intel-Core2-Quad-Q9300-2_50GHz|Intel|Core2|Q9300|2008
+Intel-Core-i3-6100-3_70GHz|Intel|i3|6100|2015
+Intel-Core-i5-3570K-3_40GHz|Intel|i5|3570K|2012
+Intel-Core-i5-7400-3_00GHz|Intel|i5|7400|2017
+Intel-Core-i7-4790-3_60GHz|Intel|i7|4790|2014
+Intel-Core-i7-860-2_80GHz|Intel|i7|860|2009
+Intel-Pentium-D-3_00GHz|Intel|Pentium-D|925|2006
+Intel-Core-i7-8700-3_20GHz|Intel|i7|8700|2017
+Intel-Core-i7-3630QM-2_40GHz|Intel|i7|3630QM|2012
+Intel-Core2-Duo-P9500-2_53GHz|Intel|Core2-Duo|P9500|2008
+Intel-Core-i7-4900MQ-2_80GHz|Intel|i7|4900MQ|2013
+Intel-Core-i3-2375M-1_50GHz|Intel|i3|2375M|2013
+Intel-Core-i5-7500-3_40GHz|Intel|i5|7500|2017
+Intel-Xeon-Silver-4208-2_10GHz|Intel|Xeon|4208|2019
+

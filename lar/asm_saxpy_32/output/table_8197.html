@@ -1,0 +1,216 @@
+<html>
+<head>
+<style>
+html { font-family: Ubuntu, Helvetica, sans-serif; }table { border-collapse: collapse; }
+th, td { border: 1px solid black; padding: 4px; }
+td.right { text-align: right; }
+td.center { text-align: center; }
+.minimum_execution_time { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+<table>
+	<tr>
+		<th>number</th>
+		<th>method</th>
+		<th>AMD<br />X6<br />1090T</th>
+		<th>AMD<br />Ryzen<br />1700X</th>
+		<th>Intel<br />Celeron<br />N3050</th>
+		<th>Intel<br />Core2-Duo<br />P9500</th>
+		<th>Intel<br />Core2<br />Q6600</th>
+		<th>Intel<br />Core2<br />Q9300</th>
+		<th>Intel<br />i3<br />2375M</th>
+		<th>Intel<br />i3<br />6100</th>
+		<th>Intel<br />i5<br />3570K</th>
+		<th>Intel<br />i5<br />7400</th>
+		<th>Intel<br />i5<br />7500</th>
+		<th>Intel<br />i7<br />3630QM</th>
+		<th>Intel<br />i7<br />4790</th>
+		<th>Intel<br />i7<br />4900MQ</th>
+		<th>Intel<br />i7<br />8700</th>
+		<th>Intel<br />Pentium-D<br />925</th>
+	</tr>
+	<tr>
+		<td class="center">1</td>
+		<td>saxpy_c</td>
+		<td class="right">0.926</td>
+		<td class="right">1.161</td>
+		<td class="right">2.846</td>
+		<td class="right">1.016</td>
+		<td class="right">1.040</td>
+		<td class="right">1.323</td>
+		<td class="right">1.658</td>
+		<td class="right">0.662</td>
+		<td class="right">0.720</td>
+		<td class="right">0.717</td>
+		<td class="right">0.730</td>
+		<td class="right">0.750</td>
+		<td class="right">0.618</td>
+		<td class="right">0.728</td>
+		<td class="right minimum_execution_time">0.540</td>
+		<td class="right">1.757</td>
+	</tr>
+	<tr>
+		<td class="center">2</td>
+		<td>saxpy_fpu</td>
+		<td class="right">0.926</td>
+		<td class="right">1.172</td>
+		<td class="right">2.305</td>
+		<td class="right">1.107</td>
+		<td class="right">1.125</td>
+		<td class="right">1.415</td>
+		<td class="right">1.664</td>
+		<td class="right">0.663</td>
+		<td class="right">0.730</td>
+		<td class="right">0.733</td>
+		<td class="right">0.720</td>
+		<td class="right">0.750</td>
+		<td class="right">0.616</td>
+		<td class="right">0.663</td>
+		<td class="right minimum_execution_time">0.540</td>
+		<td class="right">2.757</td>
+	</tr>
+	<tr>
+		<td class="center">3</td>
+		<td>saxpy_fpu_u4</td>
+		<td class="right">0.914</td>
+		<td class="right">1.181</td>
+		<td class="right">2.195</td>
+		<td class="right">1.100</td>
+		<td class="right">1.126</td>
+		<td class="right">1.451</td>
+		<td class="right">1.656</td>
+		<td class="right">0.660</td>
+		<td class="right">0.730</td>
+		<td class="right">0.724</td>
+		<td class="right">0.720</td>
+		<td class="right">0.760</td>
+		<td class="right">0.619</td>
+		<td class="right">0.654</td>
+		<td class="right minimum_execution_time">0.540</td>
+		<td class="right">1.995</td>
+	</tr>
+	<tr>
+		<td class="center">4</td>
+		<td>saxpy_sse</td>
+		<td class="right">0.248</td>
+		<td class="right">0.179</td>
+		<td class="right">0.756</td>
+		<td class="right">0.421</td>
+		<td class="right">0.446</td>
+		<td class="right">0.563</td>
+		<td class="right">0.484</td>
+		<td class="right">0.220</td>
+		<td class="right">0.220</td>
+		<td class="right">0.230</td>
+		<td class="right">0.240</td>
+		<td class="right">0.220</td>
+		<td class="right minimum_execution_time">0.167</td>
+		<td class="right">0.181</td>
+		<td class="right">0.180</td>
+		<td class="right">0.626</td>
+	</tr>
+	<tr>
+		<td class="center">5</td>
+		<td>saxpy_sse_intrinsics</td>
+		<td class="right">0.245</td>
+		<td class="right">0.183</td>
+		<td class="right">0.752</td>
+		<td class="right">0.421</td>
+		<td class="right">0.447</td>
+		<td class="right">0.605</td>
+		<td class="right">0.450</td>
+		<td class="right">0.220</td>
+		<td class="right">0.200</td>
+		<td class="right">0.231</td>
+		<td class="right">0.240</td>
+		<td class="right">0.210</td>
+		<td class="right minimum_execution_time">0.150</td>
+		<td class="right">0.180</td>
+		<td class="right">0.170</td>
+		<td class="right">0.549</td>
+	</tr>
+	<tr>
+		<td class="center">6</td>
+		<td>saxpy_avx</td>
+		<td class="right">N/A</td>
+		<td class="right">0.113</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.472</td>
+		<td class="right minimum_execution_time">0.110</td>
+		<td class="right">N/A</td>
+		<td class="right">0.120</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right minimum_execution_time">0.110</td>
+		<td class="right">0.130</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">7</td>
+		<td>saxpy_avx2_u2</td>
+		<td class="right">N/A</td>
+		<td class="right minimum_execution_time">0.110</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.479</td>
+		<td class="right">0.114</td>
+		<td class="right">N/A</td>
+		<td class="right">0.118</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right minimum_execution_time">0.110</td>
+		<td class="right">0.132</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">8</td>
+		<td>saxpy_avx2_u4</td>
+		<td class="right">N/A</td>
+		<td class="right minimum_execution_time">0.110</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.467</td>
+		<td class="right minimum_execution_time">0.109</td>
+		<td class="right">N/A</td>
+		<td class="right">0.122</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right minimum_execution_time">0.110</td>
+		<td class="right">0.133</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">9</td>
+		<td>saxpy_fma</td>
+		<td class="right">N/A</td>
+		<td class="right">0.109</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.104</td>
+		<td class="right">N/A</td>
+		<td class="right">0.120</td>
+		<td class="right">0.120</td>
+		<td class="right">N/A</td>
+		<td class="right">0.110</td>
+		<td class="right">0.128</td>
+		<td class="right minimum_execution_time">0.090</td>
+		<td class="right">N/A</td>
+	</tr>
+<caption>asm_saxpy32 size=8197</caption>
+</table>
+</body>
+</html>

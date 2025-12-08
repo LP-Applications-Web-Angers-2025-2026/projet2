@@ -1,0 +1,24 @@
+# ----------------------------------------------------------------
+# name of cpu from cpu_name.sh|Brand|Model|SubModel|Year|ShortName
+# ----------------------------------------------------------------
+AMD-Athlon-200GE-with-Radeon-Vega-Graphics|AMD|Ahtlon|200GE|2018|Ahtlon 200GE
+AMD-Phenom-II-X6-1090T-Processor|AMD|X6|1090T|2010|X6 1090T
+AMD-Ryzen-7-1700X-Eight-Core-Processor|AMD|Ryzen|1700X|2017|Ryzen 1700X
+AMD-Ryzen-5-3600-6-Core-Processor|AMD|Ryzen|3600|2019|Ryzen 3600
+Intel-Celeron-N3050-1_60GHz|Intel|Celeron|N3050|2015|N3050
+Intel-Core2-Quad-Q6600-2_40GHz|Intel|Core2|Q6600|2007|Q6600
+Intel-Core2-Quad-Q9300-2_50GHz|Intel|Core2|Q9300|2008|Q9300
+Intel-Core-i3-6100-3_70GHz|Intel|i3|6100|2015|i3 6100
+Intel-Core-i5-3570K-3_40GHz|Intel|i5|3570K|2012|i5 3570K
+Intel-Core-i5-7400-3_00GHz|Intel|i5|7400|2017|i5 7400
+Intel-Core-i7-4790-3_60GHz|Intel|i7|4790|2014|i7 4790
+Intel-Core-i7-860-2_80GHz|Intel|i7|860|2009|i7 860
+Intel-Pentium-D-3_00GHz|Intel|Pentium-D|925|2006|Pentium D
+Intel-Core-i7-8700-3_20GHz|Intel|i7|8700|2017|i7 8700
+Intel-Core-i7-3630QM-2_40GHz|Intel|i7|3630QM|2012|i7 3630QM
+Intel-Core2-Duo-P9500-2_53GHz|Intel|Core2-Duo|P9500|2008|P9500
+Intel-Core-i7-4900MQ-2_80GHz|Intel|i7|4900MQ|2013|i7 4900MQ
+Intel-Core-i3-2375M-1_50GHz|Intel|i3|2375M|2013|i3 2375M
+Intel-Celeron-N3060-1_60GHz|Intel|Celeron|N3060|2016|N3060
+Pentium-Dual-Core-E5300-2_60GHz|Intel|Pentium|E5300|2008|E5300
+

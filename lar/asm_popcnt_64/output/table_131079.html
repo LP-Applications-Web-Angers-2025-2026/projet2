@@ -1,0 +1,316 @@
+<html>
+<head>
+<style>
+html { font-family: Ubuntu, Helvetica, sans-serif; }table { border-collapse: collapse; }
+th, td { border: 1px solid black; padding: 4px; }
+td.right { text-align: right; }
+td.center { text-align: center; }
+.minimum_execution_time { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+<table>
+	<tr>
+		<th>number</th>
+		<th>method</th>
+		<th>AMD<br />X6<br />1090T</th>
+		<th>AMD<br />Ryzen<br />1700X</th>
+		<th>Intel<br />Celeron<br />N3050</th>
+		<th>Intel<br />Core2-Duo<br />P9500</th>
+		<th>Intel<br />Core2<br />Q9300</th>
+		<th>Intel<br />i3<br />2375M</th>
+		<th>Intel<br />i3<br />6100</th>
+		<th>Intel<br />i5<br />7400</th>
+		<th>Intel<br />i7<br />4790</th>
+		<th>Intel<br />i7<br />4900MQ</th>
+		<th>Intel<br />Pentium-D<br />925</th>
+	</tr>
+	<tr>
+		<td class="center">1</td>
+		<td>u8_popcnt_reference</td>
+		<td class="right">2.455</td>
+		<td class="right">2.208</td>
+		<td class="right">5.450</td>
+		<td class="right">4.930</td>
+		<td class="right">6.210</td>
+		<td class="right">6.880</td>
+		<td class="right">1.998</td>
+		<td class="right">2.067</td>
+		<td class="right">1.940</td>
+		<td class="right minimum_execution_time">1.934</td>
+		<td class="right">5.440</td>
+	</tr>
+	<tr>
+		<td class="center">2</td>
+		<td>u8_popcnt_wegner</td>
+		<td class="right">1.977</td>
+		<td class="right">2.045</td>
+		<td class="right">3.528</td>
+		<td class="right">3.441</td>
+		<td class="right">5.400</td>
+		<td class="right">4.500</td>
+		<td class="right">2.122</td>
+		<td class="right">2.153</td>
+		<td class="right">1.875</td>
+		<td class="right minimum_execution_time">1.868</td>
+		<td class="right">4.280</td>
+	</tr>
+	<tr>
+		<td class="center">3</td>
+		<td>u32_popcnt_wegner</td>
+		<td class="right">1.104</td>
+		<td class="right">1.058</td>
+		<td class="right">1.614</td>
+		<td class="right">1.452</td>
+		<td class="right">1.908</td>
+		<td class="right">2.619</td>
+		<td class="right">0.785</td>
+		<td class="right">0.810</td>
+		<td class="right minimum_execution_time">0.702</td>
+		<td class="right">0.745</td>
+		<td class="right">1.735</td>
+	</tr>
+	<tr>
+		<td class="center">4</td>
+		<td>u8_popcnt_shift_v1</td>
+		<td class="right">0.130</td>
+		<td class="right">0.108</td>
+		<td class="right">0.528</td>
+		<td class="right">0.203</td>
+		<td class="right">0.287</td>
+		<td class="right">0.248</td>
+		<td class="right minimum_execution_time">0.060</td>
+		<td class="right">0.070</td>
+		<td class="right minimum_execution_time">0.060</td>
+		<td class="right">0.069</td>
+		<td class="right">0.540</td>
+	</tr>
+	<tr>
+		<td class="center">5</td>
+		<td>u32_popcnt_shift_v1</td>
+		<td class="right">0.077</td>
+		<td class="right">0.040</td>
+		<td class="right">0.157</td>
+		<td class="right">0.080</td>
+		<td class="right">0.105</td>
+		<td class="right">0.097</td>
+		<td class="right minimum_execution_time">0.019</td>
+		<td class="right minimum_execution_time">0.019</td>
+		<td class="right minimum_execution_time">0.017</td>
+		<td class="right minimum_execution_time">0.019</td>
+		<td class="right">0.240</td>
+	</tr>
+	<tr>
+		<td class="center">6</td>
+		<td>u8_popcnt_shift_v2</td>
+		<td class="right">0.126</td>
+		<td class="right">0.117</td>
+		<td class="right">0.542</td>
+		<td class="right">0.179</td>
+		<td class="right">0.226</td>
+		<td class="right">0.247</td>
+		<td class="right">0.070</td>
+		<td class="right">0.070</td>
+		<td class="right minimum_execution_time">0.061</td>
+		<td class="right">0.070</td>
+		<td class="right">0.561</td>
+	</tr>
+	<tr>
+		<td class="center">7</td>
+		<td>u32_popcnt_shift_v2</td>
+		<td class="right">0.060</td>
+		<td class="right">0.042</td>
+		<td class="right">0.142</td>
+		<td class="right">0.073</td>
+		<td class="right">0.095</td>
+		<td class="right">0.080</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right">0.019</td>
+		<td class="right minimum_execution_time">0.011</td>
+		<td class="right">0.020</td>
+		<td class="right">0.201</td>
+	</tr>
+	<tr>
+		<td class="center">8</td>
+		<td>u32_popcnt_table_v1</td>
+		<td class="right">0.280</td>
+		<td class="right">0.161</td>
+		<td class="right">0.691</td>
+		<td class="right">0.390</td>
+		<td class="right">0.410</td>
+		<td class="right">0.412</td>
+		<td class="right minimum_execution_time">0.121</td>
+		<td class="right">0.188</td>
+		<td class="right">0.168</td>
+		<td class="right">0.179</td>
+		<td class="right">0.407</td>
+	</tr>
+	<tr>
+		<td class="center">9</td>
+		<td>u32_popcnt_table_v2</td>
+		<td class="right">0.146</td>
+		<td class="right">0.090</td>
+		<td class="right">0.349</td>
+		<td class="right">0.165</td>
+		<td class="right">0.220</td>
+		<td class="right">0.222</td>
+		<td class="right">0.080</td>
+		<td class="right">0.078</td>
+		<td class="right minimum_execution_time">0.070</td>
+		<td class="right">0.080</td>
+		<td class="right">0.308</td>
+	</tr>
+	<tr>
+		<td class="center">10</td>
+		<td>u8_asm_popcnt</td>
+		<td class="right">0.299</td>
+		<td class="right">0.121</td>
+		<td class="right">0.570</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.358</td>
+		<td class="right">0.121</td>
+		<td class="right">0.110</td>
+		<td class="right minimum_execution_time">0.100</td>
+		<td class="right">0.106</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">11</td>
+		<td>u32_asm_popcnt</td>
+		<td class="right">0.060</td>
+		<td class="right">0.026</td>
+		<td class="right">0.100</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.091</td>
+		<td class="right minimum_execution_time">0.020</td>
+		<td class="right">0.023</td>
+		<td class="right minimum_execution_time">0.020</td>
+		<td class="right">0.023</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">12</td>
+		<td>u32_asm_popcnt_ur2</td>
+		<td class="right">0.043</td>
+		<td class="right">0.021</td>
+		<td class="right">0.080</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.074</td>
+		<td class="right">0.020</td>
+		<td class="right minimum_execution_time">0.018</td>
+		<td class="right">0.020</td>
+		<td class="right minimum_execution_time">0.019</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">13</td>
+		<td>u32_asm_popcnt_ur4</td>
+		<td class="right">0.033</td>
+		<td class="right">0.020</td>
+		<td class="right">0.072</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.070</td>
+		<td class="right">0.020</td>
+		<td class="right">0.020</td>
+		<td class="right minimum_execution_time">0.015</td>
+		<td class="right">0.018</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">14</td>
+		<td>u64_asm_popcnt</td>
+		<td class="right">0.031</td>
+		<td class="right">0.020</td>
+		<td class="right">0.056</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.050</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">15</td>
+		<td>u64_asm_popcnt_ur2</td>
+		<td class="right">0.023</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right">0.047</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.040</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">16</td>
+		<td>u64_asm_popcnt_ur4</td>
+		<td class="right">0.020</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right">0.044</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.037</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right minimum_execution_time">0.010</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">17</td>
+		<td>u32_sse_popcnt</td>
+		<td class="right">0.039</td>
+		<td class="right minimum_execution_time">0.020</td>
+		<td class="right">0.073</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">0.069</td>
+		<td class="right minimum_execution_time">0.020</td>
+		<td class="right">0.028</td>
+		<td class="right minimum_execution_time">0.021</td>
+		<td class="right">0.026</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">18</td>
+		<td>u32_avx2_popcnt</td>
+		<td class="right">N/A</td>
+		<td class="right minimum_execution_time">0.020</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right">N/A</td>
+		<td class="right minimum_execution_time">0.020</td>
+		<td class="right">0.028</td>
+		<td class="right">0.627</td>
+		<td class="right">0.672</td>
+		<td class="right">N/A</td>
+	</tr>
+	<tr>
+		<td class="center">19</td>
+		<td>u8_popcnt_intrinsics</td>
+		<td class="right">0.038</td>
+		<td class="right minimum_execution_time">0.019</td>
+		<td class="right">0.080</td>
+		<td class="right">0.059</td>
+		<td class="right">0.074</td>
+		<td class="right">0.054</td>
+		<td class="right">0.020</td>
+		<td class="right minimum_execution_time">0.018</td>
+		<td class="right minimum_execution_time">0.018</td>
+		<td class="right minimum_execution_time">0.017</td>
+		<td class="right">0.154</td>
+	</tr>
+<caption>asm_popcnt64 size=131079</caption>
+</table>
+</body>
+</html>

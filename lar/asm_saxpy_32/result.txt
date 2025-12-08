@@ -1,0 +1,15 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                             ASM_SAXPY32                              │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+x=0xed677040
+y=0xed476040
+size=524287
+zillions=1
+cycles=7574151
+result=1.04664e+06
+method.name=saxpy_c

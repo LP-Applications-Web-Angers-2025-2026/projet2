@@ -1,0 +1,12 @@
+set term pdfcairo font "sans,12" 
+set output "Intel-Core-i7-8700-3_20GHz_performance_best_gnu.pdf"
+set title "Best methods below average 111.65"
+set xlabel "sizes"
+set xtics rotate by -45
+set xtics font ", 10"
+set ylabel "times in seconds"
+set key outside top right
+set grid y
+load 'palette.pal'
+set style data linespoints
+plot "method_maxpars_c_O3_gnu.gpd" using 1:2 ls 2 pt 2 title "maxpars-c-O3", "method_maxpars_no_if_asm_gnu.gpd" using 1:2 ls 4 pt 4 title "maxpars-no-if-asm", "method_maxpars_sse2_gnu.gpd" using 1:2 ls 5 pt 5 title "maxpars-sse2", "method_maxpars_avx2_gnu.gpd" using 1:2 ls 6 pt 6 title "maxpars-avx2", "method_maxpars_avx2_vpblendvb_gnu.gpd" using 1:2 ls 7 pt 7 title "maxpars-avx2-vpblendvb", "method_maxpars_avx2_u2_gnu.gpd" using 1:2 ls 8 pt 8 title "maxpars-avx2-u2", "method_maxpars_avx2_u4_gnu.gpd" using 1:2 ls 9 pt 9 title "maxpars-avx2-u4", "method_maxpars_avx2_u4_vpblendvb_gnu.gpd" using 1:2 ls 10 pt 10 title "maxpars-avx2-u4-vpblendvb", "method_maxpars_avx2_u4_vpblendvb_nodep_gnu.gpd" using 1:2 ls 11 pt 11 title "maxpars-avx2-u4-vpblendvb-nodep", "method_maxpars_avx2_intrinsics_gnu.gpd" using 1:2 ls 12 pt 12 title "maxpars-avx2-intrinsics", "method_maxpars_avx2_ez_ii_gnu.gpd" using 1:2 ls 13 pt 13 title "maxpars-avx2-ez-ii"

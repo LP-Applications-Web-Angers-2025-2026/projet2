@@ -1,0 +1,3 @@
+method=remove_dep_with_xmm0_to_xmm7
+result=0
+cycles=26958780

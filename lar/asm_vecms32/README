@@ -1,0 +1,136 @@
+=====================================================================
+author: Jean-Michel RICHER
+email: jean-michel.richer@univ-angers.fr
+date: January, 2019
+=====================================================================
+
+
+---------------------------------------------------------------------
+1. DESCRIPTION
+---------------------------------------------------------------------
+
+This project aims at comparing two implementations of the 
+	merge sort algorithm. The first one is the basic implementation
+	and the second one uses a reordering of four contiguous 
+	(adjacent) values in a SSE register.
+	
+	By doing this we face three difficulties:
+	
+	1 the first one is that the reordering SSE instruction PSHUFD
+	  accepts only one constant as the reordering operand, so we
+	  need to modify this parameter of the assembly instruction
+	  on the fly
+	  
+	2 the second one concerns the modification of the instruction
+	  operand which is not possible by default in the .text 
+	  section so we need to put the instruction either in the .data 
+	  section or enable the .text section to be modified by using 
+	  mprotect
+	  
+	3 in order to determine which reodering must be used we compute
+	  a value which acts as an identifier, but it can only be
+	  computed efficiently using the PEXT assembly instruction that
+	  is part of the BMI (Bit Manipulation) instructions Sets.
+	  There are two sets published by Intel: BMI1 and BMI2, they 
+	  were both introduced with the Haswell microarchitecture (2013).
+	  So some computers do not have this instruction and therefore
+	  it is necessary to implement it with a series of and/or/shr
+	  instructions
+	  
+---------------------------------------------------------------------
+2. INSTALLATION
+---------------------------------------------------------------------
+
+2.a Prerequisite
+
+	You first need to install:
+	
+	- make 
+	- nasm (The Netwide Assembler https://www.nasm.us/) 
+	- g++ the GNU C++ compiler
+	- gnuplot to generate graphics
+	- evince to view .pdf files
+	
+	- eventually you can install other compilers like 
+		-- icpc (Intel)
+		-- clang (LLVM)
+	  	-- pgc++ (PGI) 
+	  	
+
+2.b Compilation
+
+	From the command line, just type 
+	
+		> make clean && make configure && make 
+		
+	or simply
+	
+		> make compile
+		
+	See INSTALL file if you wan to compile with debug options or 
+	another compiler.		
+		
+	All objects files and the binary will be sent to the 'build' 
+	subdirectory that will be created in the main directory of the 
+	project.
+	
+	Note that 'make configure' will generate the files 'src/cpp_config.h',
+	'src/asm_config.inc' that contain definitions of macro and the files
+	'cpu_technos_{compiler}.mak' that contains the vector technology 
+	available on the CPU used for the tests
+
+---------------------------------------------------------------------	
+3. RESULTS
+---------------------------------------------------------------------
+
+	All results will be put in the 'results/<cpu-name>' directory
+	where <cpu-name> will be evaluated from /proc/cpuinfo using
+	the './cpu_name.sh' script
+	
+	You can check the 'results' directory with some other results
+	obtained on different architectures
+	
+	You can create a table of results in csv, html or latex format
+	using the script './make_table.sh'. By default you can select
+	all cpus but you can also specify a list of cpus and the 
+	compiler:
+	
+		> ./table.php 
+		
+	If you generate results for a new cpu not already present in the
+	list, you need to fill the 'processors.txt' file by providing a
+	new entry in the text file as follows:
+	
+		<name-of-cpu-from ./cpu_name.sh>|<brand>|Model|SubModel|Year
+	
+	For example, for an Intel Core i5 7400 @ 3.00 GHz:
+	
+		Intel-Core-i5-7400-CPU-3_00GHz|Intel|i5|7400|2017
+
+---------------------------------------------------------------------	
+3. VALIDITY TESTS
+---------------------------------------------------------------------
+
+ 	Run the ./validity_test.sh script from the directory of 
+	the project. It will execute the program on different sizes
+	of string to test if all functions provide the same result.
+
+
+---------------------------------------------------------------------	
+5. PERFORMANCE TESTS
+---------------------------------------------------------------------
+
+	Run the ./performance_test.sh script from the directory of 
+	the project. It will execute the program on different sizes
+	of the strings and report their execution times.
+	
+	You can also use make to run the test:
+	
+		> make performance
+		
+	Two graphics in PDF format will be generated using gnuplot:
+	
+	- a first one with all implemented functions
+	- a second one with the best (or most efficient) functions
+
+

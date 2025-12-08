@@ -1,0 +1,3 @@
+method=is_prime_v1
+total=17984
+time=69.21

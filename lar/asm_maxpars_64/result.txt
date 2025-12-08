@@ -1,0 +1,12 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                            ASM_MAXPARS64                             │
+    │                Copyright (C) 2019  Jean-Michel RICHER                │
+    │This program comes with ABSOLUTELY NO WARRANTY; for details type `-h' │
+    │    This is free software, and you are welcome to redistribute it     │
+    │           under certain conditions; type `-c' for details.           │
+    └──────────────────────────────────────────────────────────────────────┘
+compiler=gnu
+size=524287
+cycles=15553512
+result=257307
+method.name=maxpars_avx2_ez_ii

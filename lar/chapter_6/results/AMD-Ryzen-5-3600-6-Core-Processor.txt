@@ -1,0 +1,6 @@
+------------------------------------------------------
+N°  Method Name                           Cycles    
+------------------------------------------------------
+1             dependencie on xmm0         104340708.72
+2    remove dep with xmm0 to xmm3          35525799.36
+3    remove dep with xmm0 to xmm7          25122191.76

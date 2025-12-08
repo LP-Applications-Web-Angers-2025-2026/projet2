@@ -1,0 +1,19 @@
+method time(s)
+ 1  79.090 maxpars_c_O2                       
+ 2   4.140 maxpars_c_O3                       
+ 3  85.540 maxpars_asm                        
+ 4  16.490 maxpars_no_if_asm                  
+ 5   4.660 maxpars_sse2                       
+ 6   3.950 maxpars_avx2                       
+ 7   3.880 maxpars_avx2_vpblendvb             
+ 8   3.880 maxpars_avx2_u2                    
+ 9   3.960 maxpars_avx2_u4                    
+10   3.930 maxpars_avx2_u4_vpblendvb          
+11   3.960 maxpars_avx2_u4_vpblendvb_nodep    
+12   3.880 maxpars_avx2_intrinsics            
+13   3.960 maxpars_avx2_ez_ii                 
+14   3.880 maxpars_avx512                     
+15   3.990 maxpars_avx512_u2                  
+16   3.950 maxpars_avx512_u4                  
+17   3.950 maxpars_avx512_intrinsics          
+
