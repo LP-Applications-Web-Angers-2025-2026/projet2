@@ -1,0 +1,25 @@
+{
+  "CPUs": ["Intel Core i7 10850H", "AMD Ryzen 5 5600g", "Intel Core i5 12400f", "AMD Ryzen 5 9600X"],
+  "Years": [2020, 2021, 2022, 2024],
+  "Methods": [
+    {"name": "C if", "values": [24.37, 23.87, 27.97, 36.08]},
+    {"name": "C switch", "values": [35.14, 43.75, 35.87, 34.93]},
+    {"name": "C tableau", "values": [4.71, 3.90, 3.66, 2.73]},
+    {"name": "tableau asm", "values": [5.42, 4.02, 4.93, 2.94]},
+    {"name": "tableau asm ur4 v1", "values": [4.72, 3.97, 4.19, 2.83]},
+    {"name": "tableau asm ur4 v2", "values": [7.78, 4.07, 7.17, 2.82]},
+    {"name": "tableau asm ur8 v1", "values": [4.52, 3.55, 3.52, 2.61]},
+    {"name": "tableau asm ur8 v2", "values": [7.74, 4.23, 7.61, 2.79]},
+    {"name": "tableau asm ur8 v3", "values": [4.45, 3.50, 3.48, 2.63]},
+    {"name": "SSE2", "values": [2.97, 1.81, 1.64, 0.81]},
+    {"name": "AVX", "values": [1.52, 0.90, 1.64, 0.45]},
+    {"name": "AVX2 v1", "values": [1.50, 0.91, 1.61, 0.39]},
+    {"name": "AVX2 v3", "values": [1.53, 0.90, 0.85, 0.40]},
+    {"name": "AVX2 v2 ur8", "values": [1.55, 0.89, 0.85, 0.33]},
+    {"name": "AVX2 intrinsics", "values": [0.92, 0.84, 0.84, 0.34]}
+  ],
+  "Ratios": {
+    "1/10": [8.20, 13.18, 17.05, 44.54],
+    "1/15": [26.48, 28.41, 33.29, 106.11]
+  }
+}
