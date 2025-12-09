@@ -1,0 +1,2 @@
+u32 MAX_RECORDS_IN_BYTES = (MAX_RECORDS + 7) / 8;
+u8 tab_process_bits[ MAX_RECORDS_IN_BYTES ];
