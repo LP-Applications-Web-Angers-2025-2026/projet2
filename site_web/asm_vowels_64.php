@@ -173,7 +173,7 @@ do_geshi_inline($code,"asm");
 </div>
 
 <script type="module">
-    import { createPerformanceChart } from "./data/asm_vowels/graph.js";
+    import { createPerformanceChart } from "./data/graph.js";
     import data_ancien from "./data/asm_vowels/ancien/data.json" with { type: "json" };
     import data_moderne from "./data/asm_vowels/moderne/data.json" with { type: "json" };
     import data_recent from "./data/asm_vowels/recent/data.json" with { type: "json" };

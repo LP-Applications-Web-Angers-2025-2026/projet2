@@ -6,7 +6,7 @@ const outputDir = path.join(__dirname, 'output');
 
 // Ensure output directory exists
 if (fs.existsSync(outputDir)) {
-    fs.rmSync(outputDir, { recursive: true, force: true });
+    fs.rmSync(outputDir, {recursive: true, force: true});
 }
 fs.mkdirSync(outputDir);
 
@@ -17,15 +17,20 @@ async function parsePDF() {
         }
 
         const dataBuffer = fs.readFileSync(pdfPath);
-        // Use PDFParse class
-        const { PDFParse } = require('pdf-parse');
+        const {PDFParse} = require('pdf-parse');
         const parser = new PDFParse(new Uint8Array(dataBuffer));
         const data = await parser.getText();
 
+        // Clean the text by removing page markers
+        const cleanedText = (data.text || data)
+            .split('\n')
+            .filter(line => !line.match(/^\s*--\s*\d+\s*of\s*\d+\s*--\s*$/))
+            .join('\n');
+
         const outputSingleFile = path.join(outputDir, 'programmation_assembleur.txt');
 
-        console.log(`Writing full content to ${outputSingleFile}...`);
-        fs.writeFileSync(outputSingleFile, data.text || data);
+        console.log(`Writing cleaned content to ${outputSingleFile}...`);
+        fs.writeFileSync(outputSingleFile, cleanedText);
         console.log("Done.");
 
     } catch (error) {
