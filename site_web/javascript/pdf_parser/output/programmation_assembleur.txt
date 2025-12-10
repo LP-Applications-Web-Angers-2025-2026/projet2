@@ -12212,12 +12212,12 @@ La variable tab_records est un tableau d’enregistrements et tab_process un
 tableau de booléens. Si la variable tab_process[i] est à true cela signifie que
 l’enregistrement correspondant devra être pris en compte dans un traitement
 ultérieur.
-On pourra donc définir plusieurs méthodes liées au traitement du tableau
+On pourra donc définir plusieurs méthodes liées au traitement du tableau tab_process :
 323
 
 
 324 CHAPITRE 12. ETUDE DE CAS POPCNT
-tab_process :
+
 • void set(u32 n) qui met à jour le tableau tab_process afin d’indiquer que
 l’enregistrement n doit être traité
 • void unset(u32 n) qui met à jour le tableau tab_process afin d’indiquer que

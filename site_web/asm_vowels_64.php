@@ -75,6 +75,8 @@ foreach ($contenu as $index => $ligne) {
     <?php chapter("Compter les voyelles", 0); ?>
 
     <h1>Introduction</h1>
+    <h2> <?php echo $chapitre ?>  </h2>
+
 <?php if ($trouve) { // retravailler
     echo "<pre>"; foreach ( $resultat as $ligne => $lignes){
        echo $lignes;
@@ -84,7 +86,9 @@ foreach ($contenu as $index => $ligne) {
    ?>
 <?php section("Section"); ?>
 
+    <h2> <?php echo $chapitre2 ?> </h2>
     <h2>Fonctions de référence</h2>
+
     <?php  if ($trouve2) { // retravailler
         echo "<pre>";  foreach ( $resultat2 as $ligne => $lignes){
             echo $lignes;
@@ -111,6 +115,8 @@ foreach ($contenu as $index => $ligne) {
 <p>Code assembleur depuis un fichier</p>
 
 <?php do_geshi("code/code1.asm", "asm" ); ?>
+
+    <h2> <?php echo $chapitre3 ?> </h2>
 
     <?php  if ($trouve3) { // retravailler
         echo "<pre>";  foreach ( $resultat3 as $ligne => $lignes){

@@ -1,6 +1,5 @@
-  Cela ne focntionne pas car php ne gere pas le format pdf, mais le format.
 <?php
-
+// Cela ne focntionne pas car php ne gere pas le format pdf, mais le format.
     $lines = file("C:\Users\perod\Downloads\projet_l3pro\projet_l3pro\Programmation_Assembleur_x86_32_et_64_bits_sous_Linux_Ubuntu.pdf", FILE_IGNORE_NEW_LINES);
     $search = "Compter les voyelles 15.1 Introduction";
     $result = [];
