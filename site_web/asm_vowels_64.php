@@ -13,25 +13,20 @@ $chapitre = "15.1 Introduction";
 $chapitre2 = "15.2 Fonctions de référence";
 $chapitre3 = "Listing 15.2.1 – Compter les voyelles avec un if";
 
-// On prend la valeur la plus proche mais inférieures au max : exemple
-// 18 => 15 +3
-// 21 = 20 +1
-// 24 => 20 +4
-
 global $Lignes5; $Lignes5=5;
 global $Lignes10; $Lignes10=10;
 global $Lignes15; $Lignes15=15;
 global $Lignes20; $Lignes20=20;
 global $Lignes30; $Lignes30=30;
 
+// On prend la valeur la plus proche mais inférieures au max : exemple
+// 18 => 15 +3
+// 21 = 20 +1
+// 24 => 20 +4
 $nombreLignes1 = $Lignes10 +2;
 $nombreLignes2 = $Lignes15 +4;
 $nombreLignes3 = $Lignes10 +4;
-/*
-$nombreLignes1 =12;
-$nombreLignes2 =19;
-$nombreLignes3 =14;
-*/
+
 $resultat = [];
 $trouve = false;
 $resultat2 = [];
@@ -39,41 +34,6 @@ $trouve2 = false;
 $resultat3 = [];
 $trouve3 = false;
 
-
-/*
-foreach ($contenu as $index => $ligne) {
-    // Recherche du titre
-    if (trim($ligne) === $chapitre) {
-        $trouve = true;
-        // On récupère les 6 lignes suivantes
-        for ($i = 1; $i <= $Lignes10+2; $i++) {
-            if (isset($contenu[$index + $i])) {
-                $resultat[] = $contenu[$index + $i];
-            }
-        }
-        break; // on peut sortir de la boucle
-    }
-} */
-
-/*
-function rechercheLigneTXT($chapitre, $nombreLignes) {
-    global $contenu;
-    foreach ($contenu as $index => $ligne) {
-        // Recherche du titre
-        if (trim($ligne) === $chapitre) {
-            &$trouve = true;
-            // On récupère les lignes suivantes
-            for ($i = 1; $i <= $nombreLignes; $i++) {
-                if (isset($contenu[$index + $i])) {
-                    $resultat[] = $contenu[$index + $i];
-                }
-            }
-            break; // on peut sortir de la boucle
-        }
-    }
-
-}
-*/
 function rechercheLigneTXT(
         string $chapitre,
         int $nombreLignes
@@ -97,12 +57,6 @@ $intro      = rechercheLigneTXT($chapitre,  $nombreLignes1);
 $partie2    = rechercheLigneTXT($chapitre2, $nombreLignes2);
 $partie3    = rechercheLigneTXT($chapitre3, $nombreLignes3);
 
-/*
-rechercheLigneTXT($chapitre, $nombreLignes1);
-rechercheLigneTXT($chapitre2, $nombreLignes2);
-rechercheLigneTXT($chapitre3, $nombreLignes3);
-*/
-
 function afficher_ligne (bool &$trouve, array &$resultat)  {
     if ($trouve===true) { // retravailler
         echo "<pre>";
@@ -124,32 +78,14 @@ function afficher_ligne (bool &$trouve, array &$resultat)  {
 <?php
 
 afficher_ligne($intro['trouve'], $intro['resultat']);
-
-
-//afficher_ligne($trouve, $resultat);
-
-/*if ($trouve) { // retravailler
-    echo "<pre>"; foreach ( $resultat as $ligne => $lignes){
-       echo $lignes;
-       echo "<br>";
-    } echo "</pre>";
-    } else { echo "Titre non trouvé."; }*/
-   ?>
+?>
 <?php section("Section"); ?>
 
     <h2>Fonctions de référence</h2>
     <?php
 
     afficher_ligne($partie2['trouve'], $partie2['resultat']);
-   // afficher_ligne($trouve, $resultat);
 
-    /*if ($trouve2) { // retravailler
-        echo "<pre>";  foreach ( $resultat2 as $ligne => $lignes){
-            echo $lignes;
-            echo "<br>";
-        } echo "</pre>";
-    } else { echo "Titre non trouvé."; }
-    */
     ?>
 
     <ul>
@@ -174,14 +110,7 @@ afficher_ligne($intro['trouve'], $intro['resultat']);
     <?php
     afficher_ligne($partie3['trouve'], $partie3['resultat']);
 
-//    afficher_ligne($trouve, $resultat);
-    /*if ($trouve3) { // retravailler
-        echo "<pre>";  foreach ( $resultat3 as $ligne => $lignes){
-            echo $lignes;
-            echo "<br>";
-        } echo "</pre>";
-    } else { echo "Titre non trouvé."; }
-    */
+
     ?>
     <p>La fonction implantée avec un switch tente de remédier au problème du if, elle est présentée Listing 15.2.2. <br>
         Son codage en assembleur par un compilateur C/C ++ génère un tableau de 25 adresses qui correspondent aux lettres ’a’ à ’y’. <br>
