@@ -82,19 +82,18 @@ afficher_ligne($intro['trouve'], $intro['resultat']);
 <?php section("Section"); ?>
 
     <h2>Fonctions de référence</h2>
+    <?php afficher_ligne($partie2['trouve'], $partie2['resultat']); ?>
     <?php
-
-    afficher_ligne($partie2['trouve'], $partie2['resultat']);
-
+    /*
     ?>
-
     <ul>
         <li> La première fonction est écrite en utilisant des if, ce qui est normalement très pénalisant lorsqu’ils sont dans une boucle       </li>
         <li> La seconde fonction utilise un switch qui est sensé palier au problème de performance du if.      </li>
         <li> Enfin la troisième fonction utilise un tableau afin d’éviter les branchements conditionnels induits par le if ou le switch. La fonction réalisée avec un if est présentée Listing 15.2.1.    </li>
         <li> Les fonctions auront toutes la même signature à savoir un pointeur sur une chaine de caractères en C, la longueur de la chaine et un pointeur sur un tableau de six entiers qui sont les compteurs du nombre d’occurrences de chaque voyelle.  </li>
     </ul>
-
+*/
+?>
 <?php subsection("Subsection"); ?>
 
 <p>Code C++ depuis un fichier</p>
@@ -107,12 +106,9 @@ afficher_ligne($intro['trouve'], $intro['resultat']);
 
 <?php do_geshi("code/code1.asm", "asm" ); ?>
 
-    <?php
-    afficher_ligne($partie3['trouve'], $partie3['resultat']);
-
-
-    ?>
-    <p>La fonction implantée avec un switch tente de remédier au problème du if, elle est présentée Listing 15.2.2. <br>
+    <?php afficher_ligne($partie3['trouve'], $partie3['resultat']);
+/* ?>
+   <p>La fonction implantée avec un switch tente de remédier au problème du if, elle est présentée Listing 15.2.2. <br>
         Son codage en assembleur par un compilateur C/C ++ génère un tableau de 25 adresses qui correspondent aux lettres ’a’ à ’y’. <br>
         Ces adresses sont utilisées pour se brancher sur une partie du sous-programme qui incrémente v[i] pour
         la voyelle correspondante ou qui incrémente la variable de boucle s’il s’agit d’une consonne. <br>
@@ -124,15 +120,17 @@ afficher_ligne($intro['trouve'], $intro['resultat']);
         Le tableau temporaire composé de 26 entiers de 32 bits tient aisément dans la mémoire cache
         et permettra d’accélérer le traitement. <br>
         En fin de sous-programme, on recopiera dans le nombre d’occurrences de chaque voyelle. </p>
-
+*/
+?>
 
 <?php do_geshi("code/asm_vowels_64/375.cpp", "cpp" ); ?>
 
 <?php subsubsection("Subsubsection"); ?>
     <?php section("Temps de références"); ?>
-
+<?php /*
 
     <div class="cadre_info">
+
         <p> Le test de référence consiste à exécuter 50_000 fois le dénombrement du
             nombre de voyelles pour une chaîne de 256_000 caractères, initialisée aléatoirement, avec environ 20 % de voyelles.
             <br> Sur un AMD Ryzen 5 3600, on obtient : </p>
@@ -143,6 +141,9 @@ afficher_ligne($intro['trouve'], $intro['resultat']);
         </ul>
         <p> La méthode qui consiste à compter toutes les lettres est donc la plus efficace car elle ne contient pas de conditionnelle et elle peut être dépliée simplement. </p>
     </div>
+*/
+?>
+
 
 <?php  // a retirer ?>
 <h4>Code assembleur inline</h4>
