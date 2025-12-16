@@ -413,7 +413,17 @@ function end_exercise()
 
 function do_geshi($file_name, $language, $highlight = null)
 {
-    $contents = file_get_contents($file_name);
+    $file_name = trim($file_name);
+    $file_path = $file_name;
+
+    if (!file_exists($file_name)) {
+        if (file_exists(__DIR__ . '/' . $file_name)) {
+            $file_path = __DIR__ . '/' . $file_name;
+        }
+    }
+    
+    // We might still fail if it doesn't exist, but file_get_contents will warn as before.
+    $contents = file_get_contents($file_path);
     
     echo "\n<details>\n";
     echo "\n<summary>Afficher le code &nbsp;&nbsp; <a href=\"$file_name\">$file_name</a></summary>";
