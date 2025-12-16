@@ -103,23 +103,29 @@ certaines images peuvent ne pas s'afficher.
 </ul>
 <hr />
 <h5><em>Implémentation</em> en C</h5>
-<pre><code class="language-C++">void cv_if(u8 *s, u32 size, u32 v[6]) {
-    for (u32 i=0; i&lt;size; ++i) {
-        if (s[i] == 'a') {
-            ++v[0];
-        } else if (s[i] == 'e') {
-            ++v[1];
-        } else if (s[i] == 'i') {
-            ++v[2];
-        } else if (s[i] == 'o') {
-            ++v[3];
-        } else if (s[i] == 'u') {
-            ++v[4];
-        } else if (s[i] == 'y') {
-            ++v[5];
-        }
-    }
-}</code></pre>
+
+<details>
+
+<summary>Afficher le code &nbsp;&nbsp; <a href="C:\Users\perod\Downloads\projet_l3pro\projet_l3pro\site_web/code/asm_vowels_64/159-183.cpp">C:\Users\perod\Downloads\projet_l3pro\projet_l3pro\site_web/code/asm_vowels_64/159-183.cpp</a></summary><div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">void</span> cv_if<span style="color: #008000;">&#40;</span>u8 <span style="color: #000040;">*</span>s, u32 size, u32 v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">6</span><span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #0000ff;">for</span> <span style="color: #008000;">&#40;</span>u32 i<span style="color: #000080;">=</span><span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i<span style="color: #000080;">&lt;</span>size<span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'e'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'i'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">2</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'o'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">3</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'u'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'y'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">5</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</details>
+
 <hr />        </section>
     </div>
 

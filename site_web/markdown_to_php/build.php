@@ -11,6 +11,8 @@ $template  = __DIR__ . '/templates/layout.php';
 
 if (!is_dir($outputDir)) mkdir($outputDir);
 
+$pages = []; // Initialize pages array
+
 foreach (glob("$sourceDir/*.md") as $mdFile) {
 
     $markdown = file_get_contents($mdFile);
@@ -51,6 +53,24 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
         return ob_get_clean();
     }, $htmlContent);
 
+    // Code -> code_geshi
+    $htmlContent = preg_replace_callback('/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/', function($matches) {
+        $filename = trim($matches[2]);
+        
+        // Try to find the file
+        if (!file_exists($filename)) {
+            // Check relative to site_web (parent of this script's directory)
+            $siteWebPath = dirname(__DIR__) . '/' . $filename;
+            if (file_exists($siteWebPath)) {
+                $filename = $siteWebPath;
+            }
+        }
+
+        ob_start();
+        do_geshi($filename, $matches[1]);
+        return ob_get_clean();
+    }, $htmlContent);
+
     // Rendu avec le layout
     ob_start();
     $content = $htmlContent;
@@ -60,6 +80,30 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
     file_put_contents($outputFile, $finalHtml);
 
     echo "Généré : $outputFile\n";
+    
+    // Store page info for index
+    $pages[] = [
+        'title' => $title,
+        'file' => $filename . '.html'
+    ];
 }
-?>
 
+// Génération de l'index
+ob_start();
+echo "<h1>Index des pages</h1>";
+echo "<ul>";
+foreach ($pages as $page) {
+    echo "<li><a href=\"{$page['file']}\">{$page['title']}</a></li>";
+}
+echo "</ul>";
+$indexContent = ob_get_clean();
+
+// Rendu de l'index avec le layout
+ob_start();
+$content = $indexContent;
+include $template;
+$finalIndexHtml = ob_get_clean();
+
+file_put_contents("$outputDir/index.html", $finalIndexHtml);
+echo "✔ Index généré : $outputDir/index.html\n";
+?>
