@@ -59,6 +59,7 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
 
     file_put_contents($outputFile, $finalHtml);
 
-    echo "✔ Généré : $outputFile\n";
+    echo "Généré : $outputFile\n";
 }
 ?>
+
