@@ -1,7 +1,7 @@
 <?php
-require 'site_web/markdown_to_php/libraries/Parsedown.php';
-require 'site_web/php-geshi/geshi.php';
-require 'site_web/ez_web.php';
+require __DIR__ . '/libraries/Parsedown.php';
+require dirname(__DIR__) . '/php-geshi/geshi.php';
+require dirname(__DIR__) . '/ez_web.php';
 
 $Parsedown = new Parsedown();
 
@@ -23,18 +23,33 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
     preg_match('/<h1>(.*?)<\/h1>/', $htmlContent, $matches);
     $title = $matches[1] ?? ucfirst($filename);
 
-    preg_match( '/<h1>(.*?)<\/h1>/', $htmlContent, $matches  );
-    chapter($matches[1],0);
+    // H1 -> chapter
+    $htmlContent = preg_replace_callback('/<h1>(.*?)<\/h1>/', function($matches) {
+        ob_start();
+        chapter($matches[1], 0);
+        return ob_get_clean();
+    }, $htmlContent);
 
-    preg_match( '/<h2>(.*?)<\/h2>/', $htmlContent, $matches  );
-    section( $matches[2],1);
+    // H2 -> section
+    $htmlContent = preg_replace_callback('/<h2>(.*?)<\/h2>/', function($matches) {
+        ob_start();
+        section($matches[1], 1);
+        return ob_get_clean();
+    }, $htmlContent);
 
-    preg_match( '/<h3>(.*?)<\/h3>/', $htmlContent, $matches  );
-    subsection($matches[3]);
+    // H3 -> subsection
+    $htmlContent = preg_replace_callback('/<h3>(.*?)<\/h3>/', function($matches) {
+        ob_start();
+        subsection($matches[1]);
+        return ob_get_clean();
+    }, $htmlContent);
 
-    preg_match( '/<h4>(.*?)<\/h4>/', $htmlContent, $matches  );
-    subsubsection($matches[4]);
-
+    // H4 -> subsubsection
+    $htmlContent = preg_replace_callback('/<h4>(.*?)<\/h4>/', function($matches) {
+        ob_start();
+        subsubsection($matches[1]);
+        return ob_get_clean();
+    }, $htmlContent);
 
     // Rendu avec le layout
     ob_start();

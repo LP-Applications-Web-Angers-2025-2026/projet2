@@ -1,6 +1,13 @@
 <?php
 
-$header_html_code_part1=<<<HEREDOC
+function document_begin($class = "", $includes = "", $root_path = "") {
+    
+    // Ensure root_path ends with a slash if it's not empty and not already ending with one
+    if (!empty($root_path) && substr($root_path, -1) !== '/') {
+        $root_path .= '/';
+    }
+
+    $header_html_code_part1 = <<<HEREDOC
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,16 +19,16 @@ $header_html_code_part1=<<<HEREDOC
 <title>Site de Jean-Michel RICHER</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<link rel="icon" type="image/png" href="img/classroom.png" />
-<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="{$root_path}img/classroom.png" />
+<link rel="stylesheet" href="{$root_path}style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
 
-<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
-<script src="javascript/jquery-3.4.1.min.js"></script>
-<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="{$root_path}javascript/mathscribe/jqmath-0.4.3.css">
+<script src="{$root_path}javascript/jquery-3.4.1.min.js"></script>
+<script src="{$root_path}javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
 <script>M.MathPlayer = false; M.trustHtml = true;</script>
 <style>
 .material-symbols-outlined {
@@ -38,7 +45,7 @@ math {
 </style>
 HEREDOC;
 
-$header_html_code_part2=<<<HEREDOC
+    $header_html_code_part2=<<<HEREDOC
 </head>
 <body>
 
@@ -50,17 +57,17 @@ $header_html_code_part2=<<<HEREDOC
 <div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
 
 <nav id="main_menu_nav">
-  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
-  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
-  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
-  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
-  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
-  <a href="div.php"><i class="material-icons">category</i>Divers</a>
-  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+  <a href="{$root_path}index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="{$root_path}ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="{$root_path}rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="{$root_path}conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="{$root_path}dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="{$root_path}div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="{$root_path}contact.php"><i class="material-icons">mail</i>Contact</a>
 </nav>
 HEREDOC;
 
-$header_html_code_part3=<<<HEREDOC
+    $header_html_code_part3=<<<HEREDOC
 <div class="row">
 
 <div class="cadre_alerte" style="display: flex;">
@@ -73,21 +80,16 @@ certaines images peuvent ne pas s'afficher.
 </div>
 HEREDOC;
 
-function document_begin($class="", $includes="") {
-    global $header_html_code_part1;
-	global $header_html_code_part2;
-	global $header_html_code_part3;
+    echo $header_html_code_part1;
+    echo "\n" . $includes . "\n";
+    echo $header_html_code_part2;
+    if (empty($class)) {
+        echo "<main>\n";
+    } else {
+        echo "<main class=\"$class\">\n";
+    }
+    echo $header_html_code_part3;
 
-	echo $header_html_code_part1;
-	echo "\n".$includes."\n";
-	echo $header_html_code_part2;
-	if (empty($class)) {
-		echo "<main>\n";
-	} else {
-		echo "<main class=\"$class\">\n";
-	}
-	echo $header_html_code_part3;
-	
 }
 
 function document_end($code="") {

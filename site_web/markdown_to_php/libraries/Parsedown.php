@@ -1,5 +1,11 @@
 <?php
 
+if (!function_exists('mb_strlen')) {
+    function mb_strlen($string, $encoding = null) {
+        return strlen($string);
+    }
+}
+
 #
 #
 # Parsedown
