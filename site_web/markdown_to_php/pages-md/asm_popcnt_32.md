@@ -1,6 +1,4 @@
----
-title: "Popcnt 32"
----
+
 # Chapitre 8
 
 ## popcnt 32
