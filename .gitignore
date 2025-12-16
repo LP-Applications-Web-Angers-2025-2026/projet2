@@ -1,2 +1,3 @@
 .idea
 node_modules
+./site_web/markdown_to_php/public/

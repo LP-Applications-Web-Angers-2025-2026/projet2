@@ -55,19 +55,8 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
 
     // Code -> code_geshi
     $htmlContent = preg_replace_callback('/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/', function($matches) {
-        $filename = trim($matches[2]);
-        
-        // Try to find the file
-        if (!file_exists($filename)) {
-            // Check relative to site_web (parent of this script's directory)
-            $siteWebPath = dirname(__DIR__) . '/' . $filename;
-            if (file_exists($siteWebPath)) {
-                $filename = $siteWebPath;
-            }
-        }
-
         ob_start();
-        do_geshi($filename, $matches[1]);
+        do_geshi($matches[2], $matches[1]);
         return ob_get_clean();
     }, $htmlContent);
 
