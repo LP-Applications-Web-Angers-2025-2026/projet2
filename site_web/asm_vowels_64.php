@@ -145,6 +145,8 @@ afficher_ligne($intro['trouve'], $intro['resultat']);
 ?>
 
 
+
+
 <?php  // a retirer ?>
 <h4>Code assembleur inline</h4>
 <?php

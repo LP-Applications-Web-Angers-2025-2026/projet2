@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="../../img/classroom.png" />
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
+<script src="../../javascript/jquery-3.4.1.min.js"></script>
+<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 8</h1>
+<!-- Chapitre 8 -->
+<!-- Chapitre 8 -->
+<!-- Chapitre 8 -->
+<!-- Chapitre 8 -->
+<!-- Chapitre 8 -->
+
+<h1>1. popcnt 32</h1>
+<!-- popcnt 32 -->
+<!-- popcnt 32 -->
+<!-- popcnt 32 -->
+<!-- popcnt 32 -->
+<!-- popcnt 32 -->
+
+<hr />
+<h2>1.1. Introduction</h2>
+<!-- Introduction -->
+<!-- Introduction -->
+<!-- Introduction -->
+<!-- Introduction -->
+<!-- Introduction -->
+
+<p>L'instruction <code>popcnt</code> (population count) compte le nombre de bits à 1 dans un registre. Cette instruction est
+<strong>disponible</strong> sur les processeurs x86 modernes supportant l'extension SSE4.2.</p>
+<hr />
+<!-- SubSubSection -->
+<h3>1.1.a&nbsp; Principe de fonctionnement</h3>
+
+<blockquote>
+<p>L'instruction <code>popcnt</code> permet de compter efficacement les bits à 1 dans un entier 32 bits. Par exemple :</p>
+</blockquote>
+<ul>
+<li><code>0b00001111</code> → 4 bits à 1</li>
+<li><code>0b10101010</code> → 4 bits à 1</li>
+<li><code>0b11111111</code> → 8 bits à 1</li>
+</ul>
+<hr />
+<h5><em>Implémentation</em> en C</h5>
+
+<details>
+
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/asm_vowels_64/159-183.cpp">code/asm_vowels_64/159-183.cpp</a></summary><div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">void</span> cv_if<span style="color: #008000;">&#40;</span>u8 <span style="color: #000040;">*</span>s, u32 size, u32 v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">6</span><span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #0000ff;">for</span> <span style="color: #008000;">&#40;</span>u32 i<span style="color: #000080;">=</span><span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i<span style="color: #000080;">&lt;</span>size<span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'e'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'i'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">2</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'o'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">3</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'u'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'y'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">5</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</details>
+
+<hr />        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2025 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>
