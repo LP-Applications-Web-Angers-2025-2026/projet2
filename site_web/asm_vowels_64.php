@@ -98,13 +98,13 @@ afficher_ligne($intro['trouve'], $intro['resultat']);
 
 <p>Code C++ depuis un fichier</p>
 
-<?php do_geshi("code/asm_vowels_64/159-183.cpp", "cpp" ); ?>
+<?php do_geshi("code/asm_vowels_64/159-183.cpp", "cpp", "", true ); ?>
 
 <?php subsection("Subsection"); ?>
 
 <p>Code assembleur depuis un fichier</p>
 
-<?php do_geshi("code/code1.asm", "asm" ); ?>
+<?php do_geshi("code/code1.asm", "asm", "", true ); ?>
 
     <?php afficher_ligne($partie3['trouve'], $partie3['resultat']);
 /* ?>

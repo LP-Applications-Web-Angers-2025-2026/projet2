@@ -1,5 +1,4 @@
 <?php
-
 $header_html_code_part1=<<<HEREDOC
 <!DOCTYPE html>
 <html lang="fr">
@@ -409,7 +408,8 @@ function end_exercise()
 	echo "\n</div> <!-- end exercise -->\n";
 }
 
-function do_geshi($file_name, $language, $highlight = null)
+require_once __DIR__ . '/utils/godbolt.php';
+function do_geshi($file_name, $language, $highlight = null, $asm_bool = false)
 {
     $contents = file_get_contents($file_name);
     
@@ -430,6 +430,23 @@ function do_geshi($file_name, $language, $highlight = null)
 
     echo $geshi->parse_code();
     echo "\n</details>\n";
+
+	if ($asm_bool && $language != 'asm') {
+
+        // $contents contient le code C++
+        $asm = cpp_to_asm($contents);
+
+		echo "\n<details>\n";
+		echo "\n<summary>Afficher le code assembleur</summary>";
+
+		$geshi_asm = new GeSHi($asm, 'asm');
+		$geshi_asm->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+		$geshi_asm->set_header_type(GESHI_HEADER_DIV);
+		$geshi_asm->set_tab_width(2);
+
+		echo $geshi_asm->parse_code();
+		echo "\n</details>\n";
+	}
 }
 
 function do_geshi_inline($contents, $language, $highlight = null)
