@@ -13,11 +13,19 @@ $chapitre = "15.1 Introduction";
 $chapitre2 = "15.2 Fonctions de référence";
 $chapitre3 = "Listing 15.2.1 – Compter les voyelles avec un if";
 
-$Lignes15 =15;
-$Lignes20 =20;
-$nombreLignes1 =12;
-$nombreLignes2 =19;
-$nombreLignes3 =14;
+global $Lignes5; $Lignes5=5;
+global $Lignes10; $Lignes10=10;
+global $Lignes15; $Lignes15=15;
+global $Lignes20; $Lignes20=20;
+global $Lignes30; $Lignes30=30;
+
+// On prend la valeur la plus proche mais inférieures au max : exemple
+// 18 => 15 +3
+// 21 = 20 +1
+// 24 => 20 +4
+$nombreLignes1 = $Lignes10 +2;
+$nombreLignes2 = $Lignes15 +4;
+$nombreLignes3 = $Lignes10 +4;
 
 $resultat = [];
 $trouve = false;
@@ -26,47 +34,39 @@ $trouve2 = false;
 $resultat3 = [];
 $trouve3 = false;
 
-foreach ($contenu as $index => $ligne) {
-    // Recherche du titre
-    if (trim($ligne) === $chapitre) {
-        $trouve = true;
-        // On récupère les 6 lignes suivantes
-        for ($i = 1; $i <= $nombreLignes1; $i++) {
-            if (isset($contenu[$index + $i])) {
-                $resultat[] = $contenu[$index + $i];
-            }
+function rechercheLigneTXT(
+        string $chapitre,
+        int $nombreLignes
+): array {
+    global $contenu;
+    foreach ($contenu as $index => $ligne) {
+        if (trim($ligne) === $chapitre) {
+            return [
+                    'trouve'   => true,
+                    'resultat' => array_slice($contenu, $index + 1, $nombreLignes)
+            ];
         }
-        break; // on peut sortir de la boucle
     }
+    return [
+            'trouve'   => false,
+            'resultat' => []
+    ];
 }
 
-foreach ($contenu as $index => $ligne) {
-    // Recherche du titre
-    if (trim($ligne) === $chapitre2) {
-        $trouve2 = true;
-        // On récupère les 6 lignes suivantes
-        for ($i = 1; $i <= $nombreLignes2; $i++) {
-            if (isset($contenu[$index + $i])) {
-                $resultat2[] = $contenu[$index + $i];
-            }
-        }
-        break; // on peut sortir de la boucle
-    }
+$intro      = rechercheLigneTXT($chapitre,  $nombreLignes1);
+$partie2    = rechercheLigneTXT($chapitre2, $nombreLignes2);
+$partie3    = rechercheLigneTXT($chapitre3, $nombreLignes3);
+
+function afficher_ligne (bool &$trouve, array &$resultat)  {
+    if ($trouve===true) { // retravailler
+        echo "<pre>";
+        foreach ( $resultat as $ligne => $lignes){
+            echo $lignes;
+            echo "<br>";
+        } echo "</pre>";
+    } else { echo "Titre non trouvé."; }
 }
 
-foreach ($contenu as $index => $ligne) {
-    // Recherche du titre
-    if (trim($ligne) === $chapitre3) {
-        $trouve3 = true;
-        // On récupère les lignes suivantes
-        for ($i = 1; $i <= $nombreLignes3; $i++) {
-            if (isset($contenu[$index + $i])) {
-                $resultat3[] = $contenu[$index + $i];
-            }
-        }
-        break; // on peut sortir de la boucle
-    }
-}
 ?>
 
 <div class="row">
@@ -75,31 +75,25 @@ foreach ($contenu as $index => $ligne) {
     <?php chapter("Compter les voyelles", 0); ?>
 
     <h1>Introduction</h1>
-<?php if ($trouve) { // retravailler
-    echo "<pre>"; foreach ( $resultat as $ligne => $lignes){
-       echo $lignes;
-       echo "<br>";
-    } echo "</pre>";
-    } else { echo "Titre non trouvé."; }
-   ?>
+<?php
+
+afficher_ligne($intro['trouve'], $intro['resultat']);
+?>
 <?php section("Section"); ?>
 
     <h2>Fonctions de référence</h2>
-    <?php  if ($trouve2) { // retravailler
-        echo "<pre>";  foreach ( $resultat2 as $ligne => $lignes){
-            echo $lignes;
-            echo "<br>";
-        } echo "</pre>";
-    } else { echo "Titre non trouvé."; }
+    <?php afficher_ligne($partie2['trouve'], $partie2['resultat']); ?>
+    <?php
+    /*
     ?>
-
     <ul>
         <li> La première fonction est écrite en utilisant des if, ce qui est normalement très pénalisant lorsqu’ils sont dans une boucle       </li>
         <li> La seconde fonction utilise un switch qui est sensé palier au problème de performance du if.      </li>
         <li> Enfin la troisième fonction utilise un tableau afin d’éviter les branchements conditionnels induits par le if ou le switch. La fonction réalisée avec un if est présentée Listing 15.2.1.    </li>
         <li> Les fonctions auront toutes la même signature à savoir un pointeur sur une chaine de caractères en C, la longueur de la chaine et un pointeur sur un tableau de six entiers qui sont les compteurs du nombre d’occurrences de chaque voyelle.  </li>
     </ul>
-
+*/
+?>
 <?php subsection("Subsection"); ?>
 
 <p>Code C++ depuis un fichier</p>
@@ -112,14 +106,9 @@ foreach ($contenu as $index => $ligne) {
 
 <?php do_geshi("code/code1.asm", "asm" ); ?>
 
-    <?php  if ($trouve3) { // retravailler
-        echo "<pre>";  foreach ( $resultat3 as $ligne => $lignes){
-            echo $lignes;
-            echo "<br>";
-        } echo "</pre>";
-    } else { echo "Titre non trouvé."; }
-    ?>
-    <p>La fonction implantée avec un switch tente de remédier au problème du if, elle est présentée Listing 15.2.2. <br>
+    <?php afficher_ligne($partie3['trouve'], $partie3['resultat']);
+/* ?>
+   <p>La fonction implantée avec un switch tente de remédier au problème du if, elle est présentée Listing 15.2.2. <br>
         Son codage en assembleur par un compilateur C/C ++ génère un tableau de 25 adresses qui correspondent aux lettres ’a’ à ’y’. <br>
         Ces adresses sont utilisées pour se brancher sur une partie du sous-programme qui incrémente v[i] pour
         la voyelle correspondante ou qui incrémente la variable de boucle s’il s’agit d’une consonne. <br>
@@ -131,15 +120,17 @@ foreach ($contenu as $index => $ligne) {
         Le tableau temporaire composé de 26 entiers de 32 bits tient aisément dans la mémoire cache
         et permettra d’accélérer le traitement. <br>
         En fin de sous-programme, on recopiera dans le nombre d’occurrences de chaque voyelle. </p>
-
+*/
+?>
 
 <?php do_geshi("code/asm_vowels_64/375.cpp", "cpp" ); ?>
 
 <?php subsubsection("Subsubsection"); ?>
     <?php section("Temps de références"); ?>
-
+<?php /*
 
     <div class="cadre_info">
+
         <p> Le test de référence consiste à exécuter 50_000 fois le dénombrement du
             nombre de voyelles pour une chaîne de 256_000 caractères, initialisée aléatoirement, avec environ 20 % de voyelles.
             <br> Sur un AMD Ryzen 5 3600, on obtient : </p>
@@ -150,6 +141,9 @@ foreach ($contenu as $index => $ligne) {
         </ul>
         <p> La méthode qui consiste à compter toutes les lettres est donc la plus efficace car elle ne contient pas de conditionnelle et elle peut être dépliée simplement. </p>
     </div>
+*/
+?>
+
 
 <?php  // a retirer ?>
 <h4>Code assembleur inline</h4>

@@ -1,0 +1,30 @@
+
+/*
+foreach ($contenu as $index => $ligne) {
+    // Recherche du titre
+    if (trim($ligne) === $chapitre2) {
+        $trouve2 = true;
+        // On récupère les lignes suivantes
+        for ($i = 1; $i <= $Lignes15+4; $i++) {
+            if (isset($contenu[$index + $i])) {
+                $resultat2[] = $contenu[$index + $i];
+            }
+        }
+        break; // on peut sortir de la boucle
+    }
+}
+
+foreach ($contenu as $index => $ligne) {
+    // Recherche du titre
+    if (trim($ligne) === $chapitre3) {
+        $trouve3 = true;
+        // On récupère les lignes suivantes
+        for ($i = 1; $i <= $Lignes10+4; $i++) {
+            if (isset($contenu[$index + $i])) {
+                $resultat3[] = $contenu[$index + $i];
+            }
+        }
+        break; // on peut sortir de la boucle
+    }
+}
+*/
