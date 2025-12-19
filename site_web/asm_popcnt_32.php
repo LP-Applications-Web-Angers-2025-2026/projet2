@@ -70,4 +70,5 @@ document_begin();
         qui nous servira de fonction de référence, est par exemple:
     </p>
     <?php do_geshi("code/asm_popcnt_32/intro6.cpp", "cpp" ); ?>
+    
 
