@@ -1,41 +1,37 @@
 <?php
 /**
- * Script d'extraction PDF -> Markdown par chapitre
+ * Script d'extraction PDF -> Markdown par chapitre - v3
  * PDF: Programmation Assembleur x86 32 et 64 bits sous Linux Ubuntu
- *
  * Usage: php extract_pdf_to_markdown.php
- * Output: dossier ./chapitres_markdown/ avec un fichier .md par chapitre
+ * Output: ./chapitres_markdown/ avec un fichier .md par chapitre
  */
 
 require __DIR__ . '/vendor/autoload.php';
-
 use Smalot\PdfParser\Parser;
 
 // ============================================================
-// CONFIGURATION
+// CONFIG
 // ============================================================
 $PDF_FILE   = __DIR__ . '/Programmation_Assembleur_x86_32_et_64_bits_sous_Linux_Ubuntu.pdf';
 $OUTPUT_DIR = __DIR__ . '/chapitres_markdown';
-
 if (!is_dir($OUTPUT_DIR)) mkdir($OUTPUT_DIR, 0777, true);
 
 // ============================================================
-// PARSING DU PDF
+// PARSING
 // ============================================================
 echo "Parsing du PDF...\n";
 $parser = new Parser();
 $pdf    = $parser->parseFile($PDF_FILE);
 $pages  = $pdf->getPages();
 $total  = count($pages);
-echo "Nombre de pages: $total\n\n";
+echo "Pages: $total\n\n";
 
 // ============================================================
-// EXTRACTION DU TEXTE PAGE PAR PAGE
+// EXTRACTION DU TEXTE PAR PAGE
 // ============================================================
 $allPagesText = [];
 for ($i = 0; $i < $total; $i++) {
-    $text = $pages[$i]->getText();
-    $allPagesText[$i] = $text;
+    $allPagesText[$i] = $pages[$i]->getText();
     if (($i + 1) % 50 === 0) echo "  Lu " . ($i + 1) . "/$total pages...\n";
 }
 echo "Texte extrait.\n\n";
@@ -43,44 +39,24 @@ echo "Texte extrait.\n\n";
 // ============================================================
 // DETECTION DES CHAPITRES
 // ============================================================
-/**
- * On cherche les pages qui commencent un nouveau chapitre.
- * Patterns typiques dans ce type de document :
- *   - "Chapitre N" ou "CHAPITRE N" en début de page
- *   - Ligne contenant uniquement "N" suivi d'un titre connu (table of contents)
- * On scanne toutes les pages et on détecte les débuts de chapitres.
- */
-
-$chapters = []; // ['num' => X, 'title' => '...', 'start_page' => N]
-
+$chapters = [];
 for ($i = 0; $i < $total; $i++) {
     $text  = $allPagesText[$i];
     $lines = array_values(array_filter(array_map('trim', explode("\n", $text)), 'strlen'));
-
     if (empty($lines)) continue;
 
-    // Pattern: "ChapitreN" ou "Chapitre N" sur la première ligne de la page
-    // Structure réelle du PDF: "Chapitre1" (sans espace), puis le titre sur les lignes suivantes
     foreach (array_slice($lines, 0, 6) as $lineIdx => $line) {
-        // Matches: "Chapitre1", "Chapitre 1", "CHAPITRE 1", "Chapitre 12", etc.
         if (preg_match('/^(?:Chapitre|CHAPITRE)\s*(\d+)\s*$/i', $line, $m)) {
-            $chapNum = (int)$m[1];
-            // Le titre est construit à partir des lignes suivantes
-            // (peut être sur 1 ou 2 lignes)
+            $chapNum    = (int)$m[1];
             $titleParts = [];
-            for ($ti = $lineIdx + 1; $ti <= $lineIdx + 3 && $ti < count($lines); $ti++) {
-                $tline = trim($lines[$ti]);
-                if ($tline === '') break;
-                // Arrêter si c'est une section numérotée ou une citation
-                if (preg_match('/^\d+\.\d/', $tline)) break;
-                // Arrêter si la ligne ressemble à une épigraphe/citation (phrase avec majuscule)
-                if (count($titleParts) >= 2) break;
-                $titleParts[] = $tline;
+            for ($ti = $lineIdx + 1; $ti <= $lineIdx + 2 && $ti < count($lines); $ti++) {
+                $tl = trim($lines[$ti]);
+                if ($tl === '' || preg_match('/^\d+\.\d/', $tl)) break;
+                if (count($titleParts) >= 1) break;
+                $titleParts[] = $tl;
             }
             $titleLine = implode(' ', $titleParts);
-
-            // Eviter les doublons : ne garder que la première occurrence du chapitre
-            $exists = false;
+            $exists    = false;
             foreach ($chapters as $ch) {
                 if ($ch['num'] === $chapNum) { $exists = true; break; }
             }
@@ -92,57 +68,15 @@ for ($i = 0; $i < $total; $i++) {
     }
 }
 
-// Trier par numéro de chapitre puis par page de début
-usort($chapters, function($a, $b) {
-    return $a['start_page'] - $b['start_page'];
-});
+usort($chapters, fn($a, $b) => $a['start_page'] - $b['start_page']);
 
-// Déduplication: si même numéro, garder la première occurrence
-$dedupChapters = [];
-$seenNums      = [];
+echo "Chapitres détectés:\n";
 foreach ($chapters as $ch) {
-    if (!isset($seenNums[$ch['num']])) {
-        $seenNums[$ch['num']] = true;
-        $dedupChapters[]      = $ch;
-    }
-}
-$chapters = $dedupChapters;
-
-echo "Chapitres détectés par pattern 'Chapitre N':\n";
-foreach ($chapters as $ch) {
-    echo "  - Chapitre {$ch['num']}: \"{$ch['title']}\" (page PDF " . ($ch['start_page'] + 1) . ")\n";
+    echo "  Chap {$ch['num']}: \"{$ch['title']}\" (p." . ($ch['start_page'] + 1) . ")\n";
 }
 echo "\n";
 
-// Si aucun chapitre détecté par pattern, on essaie une approche alternative
-if (empty($chapters)) {
-    echo "Aucun chapitre trouvé avec le pattern 'ChapitreN'. Tentative de détection alternative...\n\n";
-    // Scan du texte complet pour trouver "Chapitre" n'importe où sur la page
-    for ($i = 0; $i < $total; $i++) {
-        $text  = $allPagesText[$i];
-        if (preg_match('/(?:^|\n)\s*(?:Chapitre|CHAPITRE)\s*(\d+)\s*\n\s*([^\n]{3,80})/i', $text, $m)) {
-            $chapNum = (int)$m[1];
-            $title   = trim($m[2]);
-            $exists  = false;
-            foreach ($chapters as $ch) {
-                if ($ch['num'] === $chapNum) { $exists = true; break; }
-            }
-            if (!$exists) {
-                $chapters[] = ['num' => $chapNum, 'title' => $title, 'start_page' => $i];
-            }
-        }
-    }
-    usort($chapters, fn($a, $b) => $a['start_page'] - $b['start_page']);
-    echo "Chapitres détectés (alternative):\n";
-    foreach ($chapters as $ch) {
-        echo "  - Chapitre {$ch['num']}: \"{$ch['title']}\" (page " . ($ch['start_page'] + 1) . ")\n";
-    }
-    echo "\n";
-}
-
-// ============================================================
-// ASSIGNATION DES PLAGES DE PAGES PAR CHAPITRE
-// ============================================================
+// Plages de pages
 $chapCount = count($chapters);
 for ($c = 0; $c < $chapCount; $c++) {
     $chapters[$c]['end_page'] = ($c + 1 < $chapCount)
@@ -150,7 +84,7 @@ for ($c = 0; $c < $chapCount; $c++) {
         : $total - 1;
 }
 
-// Ajouter une section "avant le chapitre 1" (intro, remerciements, TDM)
+// Section préface
 if (!empty($chapters) && $chapters[0]['start_page'] > 0) {
     array_unshift($chapters, [
         'num'        => 0,
@@ -161,330 +95,360 @@ if (!empty($chapters) && $chapters[0]['start_page'] > 0) {
 }
 
 // ============================================================
-// CONVERSION TEXT -> MARKDOWN : FONCTIONS UTILITAIRES
+// FONCTIONS UTILITAIRES
 // ============================================================
 
+function cleanLine(string $line): string {
+    $line = preg_replace('/\x00+/', '', $line);
+    $line = preg_replace('/[\x01-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $line);
+    $line = preg_replace('/[ \t]+/', ' ', $line);
+    return trim($line);
+}
+
+/**
+ * Retourne true si la ligne est un en-tête ou pied-de-page de section
+ * ex: "28 CHAPITRE 1. INFORMATIQUE..." ou "1.1. POURQUOI APPRENDRE L'ASSEMBLEUR 29"
+ */
+function isHeaderFooter(string $line): bool {
+    // "N CHAPITRE X. TITRE..." (en-têtes de page de type livre)
+    if (preg_match('/^\d+\s+(?:CHAPITRE|ANNEXE)\s+\d+\./i', $line)) return true;
+    // "X.X. TITRE EN MAJUSCULES  N" (pied de page de section)
+    if (preg_match('/^\d+\.\d+\.\s+[A-ZÀÉÈÊËÎÏÔÙÛÜ\s\'\-\/0-9,]+\s+\d{1,3}$/', $line)) return true;
+    // "CHAPITRE X. TITRE EN MAJUSCULES  N"
+    if (preg_match('/^(?:CHAPITRE|ANNEXE)\s+\d+\.\s+[A-ZÀÉÈÊËÎÏÔÙÛÜ\s]+\s+\d{1,3}$/i', $line)) return true;
+    // Ligne avec uniquement "TITRE EN MAJ  34" (en-tête section comme "L'ASSEMBLEUR NASM 143")
+    if (preg_match('/^[A-ZÀÉÈÊËÎÏÔÙÛÜ\s\'\-\/0-9]{10,}\s{2,}\d{1,3}$/', $line)) return true;
+    return false;
+}
+
+/**
+ * Retourne true si la ligne ressemble à une note de bas de page
+ * ex: "1. Note de bas de page" ou "2. http://..."
+ */
+function isFootnote(string $line): bool {
+    // Ligne commençant par "N. " ou "N.http" avec N petit
+    if (preg_match('/^\d{1,2}\.\s*(http|[A-Z][a-z]|Fon|Acr|Res)/', $line)) return true;
+    if (preg_match('/^\d{1,2}\.http/', $line)) return true;
+    return false;
+}
+
+/**
+ * Retourne true si c'est un numéro de page seul
+ */
+function isPageNumber(string $line): bool {
+    return (bool)preg_match('/^\d{1,4}$/', $line);
+}
+
+/**
+ * Détecte si le contenu ressemble à du code
+ */
 function detectCodeBlock(string $text): bool {
-    // Heuristique : présence d'instructions assembleur ou de séquences de code
     $patterns = [
-        '/^\s*(mov|push|pop|add|sub|mul|div|xor|and|or|not|cmp|jmp|je|jne|jl|jg|jle|jge|call|ret|nop|lea|int|syscall|section|global|extern|bits|db|dw|dd|dq|resb|resw|resd|resq|equ|SECTION|GLOBAL|EXTERN)\b/im',
-        '/^\s*[a-z_][a-z0-9_]*:\s*;/im',    // labels avec commentaire
-        '/^\s*;.*$/m',                          // lignes de commentaires asm
-        '/^\s*(\.text|\.data|\.bss|\.rodata)\s*$/m',
-        '/0x[0-9a-fA-F]+/',                     // constantes hexadécimales
-        '/\%[a-z]+[a-z0-9]*/i',                // registres style AT&T %eax
-        '/\b(eax|ebx|ecx|edx|esi|edi|esp|ebp|rax|rbx|rcx|rdx|rsi|rdi|rsp|rbp|r8|r9|r10|r11|r12|r13|r14|r15)\b/i',
+        '/^\s*(mov|push|pop|add|sub|mul|div|xor|and|or|not|cmp|jmp|je|jne|jl|jg|jle|jge|call|ret|nop|lea|int|syscall|section|global|extern|bits|db|dw|dd|dq|resb|resw|resd|resq|equ|SECTION|GLOBAL|EXTERN|imul|idiv|sar|shr|shl|ror|rol|neg|inc|dec|test|movzx|movsx)\b/im',
+        '/^[\s\d]+\s*(;|\/\/|#)/',   // ligne numérotée avec commentaire
+        '/^\s*;\s*[=\-*]{3,}/',      // commentaire asm séparateur
+        '/^(#include|#define|typedef|struct|int\s+main|void\s+\w+|extern\s+"C")/m',
+        '/\b(eax|ebx|ecx|edx|esi|edi|esp|ebp|rax|rbx|rcx|rdx|rsi|rdi|rsp|rbp|r8|r9|r10|r11|r12|r13|r14|r15|xmm\d|ymm\d)\b/i',
+        '/^(global|section|extern|bits)\s+\w/im',
     ];
-    $matchCount = 0;
+    $hits = 0;
     foreach ($patterns as $p) {
-        if (preg_match($p, $text)) $matchCount++;
-        if ($matchCount >= 2) return true;
+        if (preg_match($p, $text)) $hits++;
+        if ($hits >= 2) return true;
     }
     return false;
 }
 
 function detectLanguage(string $text): string {
-    if (preg_match('/\b(#include|int main|printf|scanf|void|char\s*\*|struct|typedef)\b/i', $text)) return 'c';
+    if (preg_match('/^\s*#include\s*</m', $text)) return 'c';
+    if (preg_match('/\bint\s+main\s*\(/i', $text)) return 'c';
     if (preg_match('/\bdef\s+\w+\s*\(|import\s+\w+|print\s*\(/i', $text)) return 'python';
-    if (preg_match('/\b(mov|push|pop|add|sub|xor|cmp|jmp|je|jne|syscall|section|global)\b/i', $text)) return 'nasm';
-    if (preg_match('/\b(gcc|make|ld|as|nasm|yasm)\b|^\$\s/m', $text)) return 'bash';
+    if (preg_match('/\b(section\s+\.|global\s+\w|extern\s+\w|mov|push|pop|xor|cmp|jmp)\b/i', $text)) return 'nasm';
+    if (preg_match('/^\$\s|\bgcc\b|\bmake\b|\bld\b|\bnasm\b/m', $text)) return 'bash';
+    if (preg_match('/\bg\+\+\b|\bgcc\b|\bnasm\b|\bobjdump\b/', $text)) return 'bash';
     return 'text';
 }
 
-function isTableRow(string $line): bool {
-    // Ligne contenant plusieurs colonnes séparées par des espaces multiples ou tabulations
-    return preg_match('/\s{3,}/', trim($line)) && strlen(trim($line)) > 10;
-}
-
-function isNumberedSection(string $line): bool {
-    // Ex: "2.3.1 Titre de section"
-    return (bool)preg_match('/^\d+(\.\d+)+\s+\S/', trim($line));
-}
-
-function isSectionTitle(string $line): bool {
-    // Ex: "2.3 Titre" ou "2. Titre"
-    return (bool)preg_match('/^\d+\.(\d+\.)?\s+\S/', trim($line));
-}
-
-function cleanLine(string $line): string {
-    // Supprime les artefacts du parser PDF (caractères parasites)
-    $line = preg_replace('/\x00+/', '', $line);
-    $line = preg_replace('/[\x01-\x08\x0B\x0C\x0E-\x1F]/', '', $line);
-    // Normalise les espaces multiples
-    $line = preg_replace('/[ \t]+/', ' ', $line);
-    return trim($line);
-}
-
-function isPageNumber(string $line): bool {
-    return preg_match('/^\d+$/', trim($line)) && strlen(trim($line)) <= 4;
-}
-
-function isHeaderFooter(string $line): bool {
-    $line = trim($line);
-    // En-têtes/pieds courants dans les documents académiques
-    $patterns = [
-        '/^Programmation\s+Assembleur/i',
-        '/^Chapitre\s+\d+/i',
-        '/^Exercice\s+\d+/i',
-        '/^Figure\s+\d+/i',     // garder si informatif
-        '/^Page\s+\d+/i',
-        '/^\d+\s*\/\s*\d+$/',   // "12 / 479"
-    ];
-    // On ne filtre pas tout, juste les répétitions pures
-    return false; // On garde tout pour l'instant
-}
-
 // ============================================================
-// CONVERSION DES PAGES EN MARKDOWN
+// CONVERSION PAGES -> MARKDOWN
 // ============================================================
 
 function pagesToMarkdown(array $allPagesText, int $startPage, int $endPage, int $chapNum, string $chapTitle): string {
-    $md     = '';
-    $inCode = false;
-    $codeBuffer = '';
-    $prevLineEmpty = false;
+    // --- En-tête chapitre ---
+    $md = ($chapNum === 0)
+        ? "# {$chapTitle}\n\n"
+        : "# Chapitre {$chapNum} : {$chapTitle}\n\n";
 
-    // En-tête du chapitre
-    if ($chapNum === 0) {
-        $md .= "# {$chapTitle}\n\n";
-    } else {
-        $md .= "# Chapitre {$chapNum} : {$chapTitle}\n\n";
-    }
+    $inCode        = false;
+    $codeLang      = 'text';
+    $codeLines     = [];
+    $inList        = false;
+    $listBuffer    = '';   // pour les items de liste sur plusieurs lignes
+    $prevBlank     = false;
+    $skipEpigraph  = ($chapNum > 0); // skip les lignes d'épigraphe en début de chapitre
+    $epigraphDone  = false;
 
+    // Collecte toutes les lignes de toutes les pages du chapitre
+    $allLines = [];
     for ($p = $startPage; $p <= $endPage; $p++) {
-        $text  = $allPagesText[$p];
-        $lines = explode("\n", $text);
-
-        $pageLines = [];
-        foreach ($lines as $line) {
-            $cleaned = cleanLine($line);
-            $pageLines[] = $cleaned;
+        $rawLines = explode("\n", $allPagesText[$p]);
+        foreach ($rawLines as $raw) {
+            $allLines[] = cleanLine($raw);
         }
-
-        $lineCount = count($pageLines);
-        for ($li = 0; $li < $lineCount; $li++) {
-            $line = $pageLines[$li];
-
-            // Ignorer les lignes vides successives (max 1)
-            if ($line === '') {
-                if (!$prevLineEmpty && !$inCode) {
-                    $md .= "\n";
-                    $prevLineEmpty = true;
-                }
-                continue;
-            }
-            $prevLineEmpty = false;
-
-            // Ignorer numéros de page seuls
-            if (isPageNumber($line)) continue;
-
-            // --- DETECTION TITRE CHAPITRE (déjà traité, skip) ---
-            // Matches: "Chapitre1", "Chapitre 1", etc.
-            if (preg_match('/^(?:Chapitre|CHAPITRE)\s*\d+\s*$/i', $line)) continue;
-
-            // --- FILTRER EN-TÊTES DE PAGES ("28 CHAPITRE 1. TITRE...") ---
-            // Ces lignes sont des répétitions de l'en-tête de page
-            if (preg_match('/^\d+\s+(?:CHAPITRE|ANNEXE)\s+\d+\./i', $line)) continue;
-            // Aussi: "CHAPITRE 1. TITRE  45" ou "1.2. SOUS-TITRE  29"
-            if (preg_match('/^(?:CHAPITRE|ANNEXE)\s+\d+\.\s+[A-Z\s]+\s+\d+$/i', $line)) continue;
-            if (preg_match('/^\d+\.\d+\.\s+[A-Z\s,\']+\s+\d+$/', $line)) continue;
-            // Pattern: "NOM SECTION   N\u00b0PAGE" comme "1.1. POURQUOI APPRENDRE L'ASSEMBLEUR 31"
-            if (preg_match('/^(?:\d+\.)+\s+[A-Z][A-Z\s\']+\s+\d{1,3}$/', $line)) continue;
-
-            // --- DETECTION TITRES DE SECTIONS ---
-            // Sous-section numérotée type "3.2.1 Titre" (avec texte sur la même ligne)
-            if (preg_match('/^(\d+\.\d+\.\d+(?:\.\d+)?)\s+(.+)$/', $line, $m)) {
-                if ($inCode) { $md .= "```\n\n"; $inCode = false; }
-                $level = substr_count($m[1], '.') + 2; // 3 -> ####, 2 -> ###
-                $level = min($level, 4);
-                $hashes = str_repeat('#', $level);
-                $md .= "{$hashes} {$m[1]} {$m[2]}\n\n";
-                continue;
-            }
-            // Section type "3.2 Titre" (avec texte sur la même ligne)
-            if (preg_match('/^(\d+\.\d+)\s+(.+)$/', $line, $m) && strlen($m[2]) < 120) {
-                if ($inCode) { $md .= "```\n\n"; $inCode = false; }
-                $md .= "## {$m[1]} {$m[2]}\n\n";
-                continue;
-            }
-            // Numéro de section seul sur sa ligne (ex: "1.2" ou "1.2.3" sans titre)
-            // -> Le titre est sur la ligne suivante
-            if (preg_match('/^(\d+\.\d+(?:\.\d+)*)\s*$/', $line, $m)) {
-                $nextLine = trim($pageLines[$li + 1] ?? '');
-                // Si la ligne suivante ressemble à un titre (courte, pas un paragraphe)
-                if ($nextLine !== '' && strlen($nextLine) < 100
-                    && !preg_match('/^\d+\./', $nextLine)
-                    && !preg_match('/[.!?]$/', $nextLine)) {
-                    $dots   = substr_count($m[1], '.');
-                    $level  = $dots === 1 ? 2 : ($dots === 2 ? 3 : 4);
-                    $hashes = str_repeat('#', $level);
-                    if ($inCode) { $md .= "```\n\n"; $inCode = false; }
-                    $md .= "{$hashes} {$m[1]} {$nextLine}\n\n";
-                    $li++; // Skipper la ligne du titre
-                    continue;
-                }
-            }
-
-            // --- DETECTION BLOCS SPECIAUX ---
-            // Définition / Note / Remarque / Exemple / Attention
-            if (preg_match('/^(Définition|Note|Remarque|Attention|Exemple|Info|Important)\s*[:：]/i', $line, $m)) {
-                if ($inCode) { $md .= "```\n\n"; $inCode = false; }
-                $keyword = ucfirst(strtolower($m[1]));
-                $rest    = trim(substr($line, strlen($m[0])));
-                $md .= "\n> **{$keyword}** : {$rest}\n>\n";
-                continue;
-            }
-
-            // --- DETECTION LISTES ---
-            // Listes à puces (−, •, *, -)
-            if (preg_match('/^[•\-–]\s+(.+)$/', $line, $m)) {
-                if ($inCode) { $md .= "```\n\n"; $inCode = false; }
-                $md .= "- {$m[1]}\n";
-                continue;
-            }
-            // Listes numérotées
-            if (preg_match('/^(\d+)[.)]\s+(.+)$/', $line, $m) && !isNumberedSection($line)) {
-                if ($inCode) { $md .= "```\n\n"; $inCode = false; }
-                $md .= "{$m[1]}. {$m[2]}\n";
-                continue;
-            }
-
-            // --- DETECTION CODE ---
-            // Heuristique : indentation + contenu ressemblant à du code
-            $isIndented = preg_match('/^\s{4,}/', $line); // 4+ espaces = code possible
-
-            if (!$inCode && $isIndented) {
-                // Accumuler pour vérifier si c'est vraiment du code
-                $codeBuffer .= $line . "\n";
-                // Regarder la ligne suivante pour décider
-                $nextLine = $pageLines[$li + 1] ?? '';
-                if (preg_match('/^\s{4,}/', $nextLine) || detectCodeBlock($codeBuffer)) {
-                    $lang = detectLanguage($codeBuffer);
-                    $md  .= "\n```{$lang}\n" . ltrim($codeBuffer);
-                    $codeBuffer = '';
-                    $inCode = true;
-                    continue;
-                } else {
-                    // Pas du code, traiter comme texte normal
-                    $md .= trim($codeBuffer) . "\n";
-                    $codeBuffer = '';
-                    continue;
-                }
-            }
-
-            if ($inCode) {
-                // Continuer le bloc de code si indentation ou ligne typique de code
-                if ($isIndented || $line === '' || detectCodeBlock($line)) {
-                    $md .= $line . "\n";
-                    continue;
-                } else {
-                    // Fin du bloc de code
-                    $md .= "```\n\n";
-                    $inCode = false;
-                    // NE PAS continuer, traiter la ligne courante
-                }
-            }
-
-            // --- DETECTION TABLEAUX ---
-            // Lignes avec colonnes espacées -> tentative de tableau Markdown
-            if (preg_match('/^(\S[^\t\n]{10,})\s{4,}(\S.*)$/', $line, $m)) {
-                // Simple: deux colonnes séparées par plusieurs espaces
-                // Vérification: regarder les lignes suivantes pour voir si c'est un tableau
-                $nextLine = trim($pageLines[$li + 1] ?? '');
-                if (preg_match('/\s{4,}/', $nextLine)) {
-                    // Ressemble à un tableau, on essaie de le structurer
-                    // Collecte toutes les lignes du tableau potentiel
-                    $tableLines = [$line];
-                    $j = $li + 1;
-                    while ($j < $lineCount && preg_match('/\s{3,}/', $pageLines[$j]) && trim($pageLines[$j]) !== '') {
-                        $tableLines[] = $pageLines[$j];
-                        $j++;
-                    }
-                    if (count($tableLines) >= 2) {
-                        // Analyse des colonnes par positions
-                        $md .= buildMarkdownTable($tableLines) . "\n";
-                        $li = $j - 1; // Avancer l'index
-                        continue;
-                    }
-                }
-            }
-
-            // --- TEXTE NORMAL ---
-            $md .= $line . "\n";
-        }
-
-        // Séparateur de page (invisible mais aide à la lisibilité)
-        // $md .= "\n";
     }
 
-    // Fermer un bloc de code non fermé
-    if ($inCode) $md .= "```\n";
+    $count = count($allLines);
+    $i     = 0;
+
+    while ($i < $count) {
+        $line = $allLines[$i];
+
+        // ---- LIGNES VIDES ----
+        if ($line === '') {
+            if ($inCode) {
+                $codeLines[] = '';
+            } else {
+                if ($inList && $listBuffer !== '') {
+                    $md .= "- " . trim($listBuffer) . "\n";
+                    $listBuffer = '';
+                    $inList     = false;
+                }
+                if (!$prevBlank) {
+                    $md .= "\n";
+                    $prevBlank = true;
+                }
+            }
+            $i++;
+            continue;
+        }
+        $prevBlank = false;
+
+        // ---- FILTRES GLOBAUX ----
+
+        // Numéro de page seul
+        if (isPageNumber($line)) { $i++; continue; }
+
+        // En-tête / pied de page de section
+        if (isHeaderFooter($line)) { $i++; continue; }
+
+        // Titre chapitre (déjà traité)
+        if (preg_match('/^(?:Chapitre|CHAPITRE)\s*\d+\s*$/i', $line)) { $i++; continue; }
+
+        // Note de bas de page
+        if (isFootnote($line)) { $i++; continue; }
+
+        // ---- EPIGRAPHE en début de chapitre ----
+        // On skip les premières lignes qui ressemblent à une citation (avant la section 1.1)
+        if ($skipEpigraph && !$epigraphDone && $chapNum > 0) {
+            // L'épigraphe se termine quand on trouve la première section numérotée
+            if (preg_match('/^\d+\.\d/', $line) || preg_match('/^#{2,}/', $line)) {
+                $epigraphDone = true;
+                $skipEpigraph = false;
+            } else {
+                // Ignorer les lignes d'épigraphe (titre répété, citation, etc.)
+                $i++;
+                continue;
+            }
+        }
+
+        // ---- EN BLOC DE CODE ----
+        if ($inCode) {
+            // Fin du bloc de code: ligne non indentée qui n'a pas l'air de code
+            $isIndented  = preg_match('/^ {2,}/', $line) || preg_match('/^\t/', $line);
+            $isLineNum   = preg_match('/^\d{1,2}[^\d]/', $line); // ligne numérotée
+            $isCodeLike  = detectCodeBlock($line) || $isIndented || $isLineNum;
+
+            // Ligne "Listing X.X.X — Description" = fin du bloc de code
+            if (preg_match('/^Listing\s+[\d.]+\s*[–—-]\s*/i', $line)) {
+                // Vider le buffer code
+                $code = implode("\n", $codeLines);
+                // Nettoyer les lignes vides au début et fin
+                $code = trim($code);
+                if ($code !== '') {
+                    $md .= "\n```{$codeLang}\n{$code}\n```\n";
+                }
+                $md .= "\n> *" . trim($line) . "*\n\n";
+                $codeLines = [];
+                $inCode    = false;
+                $i++;
+                continue;
+            }
+
+            if ($isCodeLike) {
+                // Enlever les numéros de ligne en début: "14main:" => "main:"
+                $cleaned = preg_replace('/^\d{1,3}\s+/', '', $line);
+                $codeLines[] = $cleaned;
+            } else {
+                // Fermer le bloc de code
+                $code = implode("\n", $codeLines);
+                $code = trim($code);
+                if ($code !== '') {
+                    $md .= "\n```{$codeLang}\n{$code}\n```\n\n";
+                }
+                $codeLines = [];
+                $inCode    = false;
+                // NE PAS incrémenter $i, retraiter cette ligne
+                continue;
+            }
+            $i++;
+            continue;
+        }
+
+        // ---- SI ON A UN ITEM DE LISTE EN COURS ----
+        if ($inList) {
+            // Continuer l'item si la ligne n'est pas un nouveau marqueur ou section
+            $isNewItem    = preg_match('/^[•\-–]\s/', $line) || preg_match('/^[•–]$/', $line);
+            $isNewSection = preg_match('/^\d+\.\d/', $line);
+            if (!$isNewItem && !$isNewSection && !isPageNumber($line)) {
+                $listBuffer .= ' ' . $line;
+                $i++;
+                continue;
+            } else {
+                // Terminer l'item précédent
+                $md .= "- " . trim($listBuffer) . "\n";
+                $listBuffer = '';
+                $inList     = false;
+                // Retraiter la ligne courante
+                continue;
+            }
+        }
+
+        // ---- TITRES DE SECTIONS ----
+
+        // Pattern "X.Y.Z.W Titre" (sous-sous-sous-section)
+        if (preg_match('/^(\d+\.\d+\.\d+\.\d+)\s+(.{1,80})$/', $line, $m)) {
+            $title = trim($m[2]);
+            // Le titre ne doit pas ressembler au début d'un paragraphe
+            if (!preg_match('/[.!?]$/', $title) || strlen($title) < 60) {
+                $md .= "\n##### {$m[1]} {$title}\n\n";
+                $i++;
+                continue;
+            }
+        }
+
+        // Pattern "X.Y.Z Titre" (sous-section)
+        if (preg_match('/^(\d+\.\d+\.\d+)\s+(.{1,80})$/', $line, $m)) {
+            $title = trim($m[2]);
+            if (!preg_match('/[.!?]$/', $title) || strlen($title) < 60) {
+                $md .= "\n### {$m[1]} {$title}\n\n";
+                $i++;
+                continue;
+            }
+        }
+
+        // Pattern "X.Y Titre" (section principale) — titre sur même ligne
+        if (preg_match('/^(\d+\.\d+)\s+(.{1,80})$/', $line, $m)) {
+            $title = trim($m[2]);
+            // Heuristique: si le titre se termine par un tiret, c'est coupé (paragraphe)
+            // on skip le formatage H2 et traite comme texte normal
+            if (substr($title, -1) !== '-' && !preg_match('/[.!?,;]$/', $title)) {
+                $md .= "\n## {$m[1]} {$title}\n\n";
+                $i++;
+                continue;
+            }
+            // Titre coupé: le titre continue sur la ligne suivante
+            // On cherche à reconstruire le titre sur au max 2 lignes
+            $nextLine = isset($allLines[$i + 1]) ? trim($allLines[$i + 1]) : '';
+            $fullTitle = rtrim($title, '-') . $nextLine;
+            if (strlen($fullTitle) <= 120 && !preg_match('/^\d+\./', $nextLine)) {
+                $md .= "\n## {$m[1]} {$fullTitle}\n\n";
+                $i += 2;
+                continue;
+            }
+        }
+
+        // Pattern "X.Y" seul sur la ligne -> titre sur la ligne suivante
+        if (preg_match('/^(\d+\.\d+(?:\.\d+)*)\s*$/', $line, $m)) {
+            $nextLine = isset($allLines[$i + 1]) ? cleanLine($allLines[$i + 1]) : '';
+            if ($nextLine !== '' && strlen($nextLine) < 100
+                && !preg_match('/^\d+\./', $nextLine)
+                && !preg_match('/[.!?]$/', $nextLine)) {
+                $dots   = substr_count($m[1], '.');
+                $hashes = str_repeat('#', min($dots + 1, 4));
+                $md .= "\n{$hashes} {$m[1]} {$nextLine}\n\n";
+                $i += 2;
+                continue;
+            }
+        }
+
+        // ---- BLOCS SPECIAUX (Définition, Note, etc.) ----
+        if (preg_match('/^(D[ée]finition|Note|Remarque|Attention|Exemple|Info|Important|Warning|Convention)\s*[:：\.]/i', $line, $m)) {
+            $keyword = ucfirst(mb_strtolower($m[1]));
+            $rest    = trim(substr($line, strlen($m[0])));
+            $md .= "\n> **{$keyword}**";
+            if ($rest !== '') $md .= " : {$rest}";
+            $md .= "\n>\n";
+            $i++;
+            continue;
+        }
+
+        // ---- LISTES A PUCES ----
+
+        // Marqueur "•" seul sur sa ligne : le contenu suit sur la prochaine ligne
+        if (preg_match('/^[•–]$/', $line)) {
+            $i++;
+            if ($i < $count) {
+                $listBuffer = $allLines[$i];
+                $inList     = true;
+            }
+            $i++;
+            continue;
+        }
+
+        // Marqueur "• contenu" ou "- contenu" ou "– contenu"
+        if (preg_match('/^[•\-–]\s+(.+)$/', $line, $m)) {
+            $listBuffer = $m[1];
+            $inList     = true;
+            $i++;
+            continue;
+        }
+
+        // ---- DETECTION DEBUT DE CODE ----
+        // Ligne numérotée ressemblant à du code: "1int main()" "14main:"
+        $isNumberedCode = preg_match('/^(\d{1,3})\s+(#include|#define|int|void|bool|char|float|double|long|unsigned|extern|struct|typedef|global|section|extern|mov|push|pop|for|if|while|return|printf|scanf|[a-z_]\w+:|\s*;|\s*\/\/|\s*\/\*)/i', $line, $nm);
+        // Ligne qui commence par une instruction asm reconnue
+        $isAsmLine = preg_match('/^\s*(mov|push|pop|add|sub|cmp|jmp|je|jne|jl|jg|call|ret|xor|and|or|lea|int|syscall|section|global|extern|db|dw|dd|imul|idiv|sar|shr)\s/i', $line);
+
+        if ($isNumberedCode || $isAsmLine) {
+            // Vérifier s'il y a d'autres lignes de code après
+            $lookahead = implode("\n", array_slice($allLines, $i, min(5, $count - $i)));
+            if (detectCodeBlock($lookahead) || $isNumberedCode) {
+                $inCode   = true;
+                $codeLang = detectLanguage($lookahead);
+                // Enlever le numéro de ligne
+                $cleaned  = $isNumberedCode ? preg_replace('/^\d{1,3}\s+/', '', $line) : $line;
+                $codeLines[] = $cleaned;
+                $i++;
+                continue;
+            }
+        }
+
+        // ---- TEXTE NORMAL ----
+        // Nettoyer les en-têtes de page qui auraient passé entre les mailles
+        // Pattern: "4.2. LES ÉDITEURS 141" (section en majuscules + numéro de page)
+        if (preg_match('/^\d+\.\d+\.\s+[A-ZÀÉÈÊËÎÏÔÙÛÜ\'\s\/\-]+\s+\d+$/', $line)) { $i++; continue; }
+        // Pattern: "4.3. L'ASSEMBLEUR NASM 143"
+        if (preg_match('/^\d+\.\d+\.\s+L[\'E][A-ZÀÉÈÊËÎÏÔÙÛÜ\'\s\/\-]+\s+\d+$/u', $line)) { $i++; continue; }
+        // "EDITION DE LIEN AVEC GCC/G++ 145"
+        if (preg_match('/^[A-ZÀÉÈÊËÎÏÔÙÛÜ]{4,}[A-ZÀÉÈÊËÎÏÔÙÛÜ\s\/\'\+\-,]{3,}\s+\d{2,3}$/', $line)) { $i++; continue; }
+
+        $md .= $line . "\n";
+        $i++;
+    }
+
+    // Fermer les blocs ouverts
+    if ($inList && $listBuffer !== '') {
+        $md .= "- " . trim($listBuffer) . "\n";
+    }
+    if ($inCode && !empty($codeLines)) {
+        $code = trim(implode("\n", $codeLines));
+        if ($code !== '') $md .= "\n```{$codeLang}\n{$code}\n```\n";
+    }
+
+    // Post-traitement: nettoyer les blancs excessifs
+    $md = preg_replace('/\n{3,}/', "\n\n", $md);
 
     return $md;
-}
-
-function buildMarkdownTable(array $lines): string {
-    // Analyse des positions de colonnes
-    // Méthode: trouver les ranges d'espaces communs à toutes les lignes
-    $cols = detectColumns($lines);
-
-    if (count($cols) < 2) {
-        // Pas un vrai tableau, retourner le texte brut
-        return implode("\n", array_map('trim', $lines));
-    }
-
-    $table   = '';
-    $headers = splitByColumns($lines[0], $cols);
-
-    // En-tête
-    $table .= '| ' . implode(' | ', array_map('trim', $headers)) . " |\n";
-    // Séparateur
-    $table .= '| ' . implode(' | ', array_fill(0, count($headers), '---')) . " |\n";
-    // Données
-    foreach (array_slice($lines, 1) as $line) {
-        $cells  = splitByColumns($line, $cols);
-        $table .= '| ' . implode(' | ', array_map('trim', $cells)) . " |\n";
-    }
-
-    return $table;
-}
-
-function detectColumns(array $lines): array {
-    // Trouve les positions de début de colonnes (où commence un groupe non-espace
-    // précédé par plusieurs espaces dans la majorité des lignes)
-    $colStarts = [];
-    foreach ($lines as $line) {
-        preg_match_all('/(?<=\s{3})\S/', str_pad($line, 200), $m, PREG_OFFSET_CAPTURE);
-        foreach ($m[0] as $match) {
-            $pos = $match[1];
-            $colStarts[$pos] = ($colStarts[$pos] ?? 0) + 1;
-        }
-    }
-    // Garder les positions présentes dans au moins 50% des lignes
-    $threshold = count($lines) * 0.4;
-    $valid = array_keys(array_filter($colStarts, fn($c) => $c >= $threshold));
-    sort($valid);
-
-    return $valid;
-}
-
-function splitByColumns(string $line, array $colStarts): array {
-    if (empty($colStarts)) return [trim($line)];
-
-    $cells = [];
-    $prev  = 0;
-    foreach ($colStarts as $i => $start) {
-        if ($i === 0) {
-            $cells[] = trim(substr($line, 0, $start));
-            $prev    = $start;
-        } else {
-            $cells[] = trim(substr($line, $prev, $start - $prev));
-            $prev    = $start;
-        }
-    }
-    $cells[] = trim(substr($line, $prev));
-
-    return $cells;
 }
 
 // ============================================================
@@ -493,36 +457,26 @@ function splitByColumns(string $line, array $colStarts): array {
 
 echo "Génération des fichiers Markdown...\n\n";
 
-$index = "# Programmation Assembleur x86 32 et 64 bits sous Linux Ubuntu\n\n";
-$index .= "## Table des matières\n\n";
+$index  = "# Programmation Assembleur x86 32 et 64 bits sous Linux Ubuntu\n\n## Table des matières\n\n";
 
 foreach ($chapters as $ch) {
     $num       = $ch['num'];
     $title     = $ch['title'] ?: "Chapitre {$num}";
     $startPage = $ch['start_page'];
     $endPage   = $ch['end_page'];
-    $pageCount = $endPage - $startPage + 1;
 
-    echo "  Traitement: Chapitre {$num} \"{$title}\" (pages PDF " . ($startPage + 1) . "-" . ($endPage + 1) . ", {$pageCount} pages)...\n";
+    echo "  Chap {$num} \"{$title}\" (p." . ($startPage + 1) . "-" . ($endPage + 1) . ")...\n";
 
     $md       = pagesToMarkdown($allPagesText, $startPage, $endPage, $num, $title);
-
-    $filename = $num === 0
-        ? '00_preface.md'
-        : sprintf('chapitre_%02d.md', $num);
+    $filename = $num === 0 ? '00_preface.md' : sprintf('chapitre_%02d.md', $num);
 
     file_put_contents("{$OUTPUT_DIR}/{$filename}", $md);
-    echo "    -> {$filename} écrit.\n";
+    echo "    -> {$filename}\n";
 
-    // Entrée dans l'index
-    if ($num === 0) {
-        $index .= "- [{$title}]({$filename})\n";
-    } else {
-        $index .= "- [Chapitre {$num} : {$title}]({$filename})\n";
-    }
+    $index .= $num === 0
+        ? "- [{$title}]({$filename})\n"
+        : "- [Chapitre {$num} : {$title}]({$filename})\n";
 }
 
-// Écriture de l'index
 file_put_contents("{$OUTPUT_DIR}/index.md", $index);
-echo "\n✓ Index écrit: {$OUTPUT_DIR}/index.md\n";
-echo "\n✓ Extraction terminée ! Fichiers dans: {$OUTPUT_DIR}\n";
+echo "\n✓ Terminé ! Fichiers dans: {$OUTPUT_DIR}\n";

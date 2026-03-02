@@ -1,0 +1,113 @@
+{
+    "chapter": 11,
+    "title": "Produit de matrices",
+    "description": "Temps d'exécution en secondes du produit de matrices 2048×2048 en 32 bits.",
+    "CPUs": [
+        "Core i7 10850H",
+        "Ryzen 5 5600g",
+        "Ryzen 5 9600X"
+    ],
+    "Years": [
+        2020,
+        2021,
+        2024
+    ],
+    "Methods": [
+        {
+            "name": "mp_reference",
+            "values": [
+                39.18,
+                46.48,
+                36.25
+            ]
+        },
+        {
+            "name": "mp_asm_fpu",
+            "values": [
+                39.7,
+                39.27,
+                35.07
+            ]
+        },
+        {
+            "name": "mp_asm_fpu_ur4",
+            "values": [
+                37.56,
+                46.59,
+                38.73
+            ]
+        },
+        {
+            "name": "mp_inv_jk_O2",
+            "values": [
+                7.71,
+                4.19,
+                3.22
+            ]
+        },
+        {
+            "name": "mp_inv_jk",
+            "values": [
+                1.26,
+                0.8,
+                0.29
+            ]
+        },
+        {
+            "name": "mp_inv_jk_sse",
+            "values": [
+                2.76,
+                2.68,
+                0.75
+            ]
+        },
+        {
+            "name": "mp_inv_jk_avx",
+            "values": [
+                1.33,
+                0.9,
+                0.34
+            ]
+        },
+        {
+            "name": "mp_tile_4x4",
+            "values": [
+                4.59,
+                4.91,
+                2.47
+            ]
+        },
+        {
+            "name": "mp_tile_bxb_v1",
+            "values": [
+                13.18,
+                28.61,
+                14.54
+            ]
+        },
+        {
+            "name": "mp_tile_bxb_v2",
+            "values": [
+                9.76,
+                21.36,
+                13.57
+            ]
+        },
+        {
+            "name": "mp_tile_bxb_v3",
+            "values": [
+                1.47,
+                0.97,
+                0.7
+            ]
+        },
+        {
+            "name": "mp_tile_bxb_v4",
+            "values": [
+                1.23,
+                null,
+                null
+            ]
+        }
+    ]
+}

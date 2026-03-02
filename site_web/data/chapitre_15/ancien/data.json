@@ -1,0 +1,188 @@
+{
+    "chapter": 15,
+    "title": "Compter les voyelles",
+    "description": "Temps d'exécution en secondes pour 100 000 itérations sur des chaînes de 256 000 caractères (environ 20% de voyelles).",
+    "CPUs": [
+        "Pentium D 925",
+        "Core 2 Q9300",
+        "Core i7 860",
+        "AMD X6 1090T",
+        "Core i5 3570K",
+        "Core i7 4790"
+    ],
+    "Years": [
+        2006,
+        2008,
+        2009,
+        2010,
+        2012,
+        2014
+    ],
+    "Methods": [
+        {
+            "name": "C if",
+            "values": [
+                79.19,
+                62.44,
+                43.63,
+                39.43,
+                38.04,
+                27.49
+            ]
+        },
+        {
+            "name": "C switch",
+            "values": [
+                126.15,
+                102.51,
+                57.28,
+                47.88,
+                54.41,
+                39.72
+            ]
+        },
+        {
+            "name": "C tableau",
+            "values": [
+                12.57,
+                14.8,
+                29.91,
+                21.91,
+                8.37,
+                6.36
+            ]
+        },
+        {
+            "name": "tableau asm",
+            "values": [
+                32.95,
+                16.02,
+                26.16,
+                18.35,
+                8.37,
+                6.59
+            ]
+        },
+        {
+            "name": "tableau asm ur4 v1",
+            "values": [
+                37.17,
+                17.54,
+                29.89,
+                21.92,
+                8.53,
+                6.69
+            ]
+        },
+        {
+            "name": "tableau asm ur4 v2",
+            "values": [
+                19.26,
+                19.78,
+                13.16,
+                8.51,
+                11.55,
+                8.93
+            ]
+        },
+        {
+            "name": "tableau asm ur8 v1",
+            "values": [
+                32.48,
+                16.61,
+                27.5,
+                18.38,
+                7.37,
+                5.64
+            ]
+        },
+        {
+            "name": "tableau asm ur8 v2",
+            "values": [
+                19.25,
+                21.6,
+                13.04,
+                8.37,
+                11.48,
+                8.89
+            ]
+        },
+        {
+            "name": "tableau asm ur8 v3",
+            "values": [
+                32.49,
+                16.64,
+                27.4,
+                18.44,
+                7.34,
+                5.65
+            ]
+        },
+        {
+            "name": "SSE2",
+            "values": [
+                17.58,
+                8.95,
+                3.59,
+                4.27,
+                4.25,
+                3.61
+            ]
+        },
+        {
+            "name": "AVX",
+            "values": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                1.82
+            ]
+        },
+        {
+            "name": "AVX2 v1",
+            "values": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                1.82
+            ]
+        },
+        {
+            "name": "AVX2 v3",
+            "values": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                1.82
+            ]
+        },
+        {
+            "name": "AVX2 v2 ur8",
+            "values": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                1.82
+            ]
+        },
+        {
+            "name": "AVX2 intrinsics",
+            "values": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                1.14
+            ]
+        }
+    ]
+}

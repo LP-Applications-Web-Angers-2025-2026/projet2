@@ -1,0 +1,118 @@
+{
+    "chapter": 14,
+    "title": "Maximum de Parcimonie (Fitch)",
+    "description": "Temps d'exécution en secondes pour 50 000 répétitions sur des chaînes de 524 287 bases (bioinformatique).",
+    "CPUs": [
+        "Core i7 10850H",
+        "Core i5 12400f",
+        "Ryzen 5 5600g",
+        "Ryzen 5 9600X"
+    ],
+    "Years": [
+        2020,
+        2022,
+        2021,
+        2024
+    ],
+    "Methods": [
+        {
+            "name": "ref_v1_O2",
+            "values": [
+                83.5,
+                104.5,
+                91.38,
+                76.97
+            ]
+        },
+        {
+            "name": "ref_v1_O3",
+            "values": [
+                1.85,
+                1.69,
+                1.98,
+                0.64
+            ]
+        },
+        {
+            "name": "asm",
+            "values": [
+                79.75,
+                100.53,
+                82.38,
+                70.65
+            ]
+        },
+        {
+            "name": "no_if_asm",
+            "values": [
+                27.44,
+                44.54,
+                29.31,
+                13.06
+            ]
+        },
+        {
+            "name": "no_if_opt_asm",
+            "values": [
+                16.17,
+                11.98,
+                17.23,
+                9.8
+            ]
+        },
+        {
+            "name": "no_if_opt_ur4_asm",
+            "values": [
+                14.81,
+                11.06,
+                14.96,
+                8.3
+            ]
+        },
+        {
+            "name": "no_if_opt_ur8_asm",
+            "values": [
+                14.2,
+                10.49,
+                13.99,
+                7.89
+            ]
+        },
+        {
+            "name": "sse2_v1",
+            "values": [
+                2.56,
+                1.82,
+                1.74,
+                1.07
+            ]
+        },
+        {
+            "name": "sse41",
+            "values": [
+                2.53,
+                1.81,
+                1.75,
+                1.08
+            ]
+        },
+        {
+            "name": "avx2",
+            "values": [
+                1.36,
+                null,
+                null,
+                null
+            ]
+        },
+        {
+            "name": "avx2_intrinsics",
+            "values": [
+                1.36,
+                null,
+                null,
+                null
+            ]
+        }
+    ]
+}
