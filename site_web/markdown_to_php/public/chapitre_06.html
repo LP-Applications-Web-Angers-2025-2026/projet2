@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="../../img/classroom.png" />
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
+<script src="../../javascript/jquery-3.4.1.min.js"></script>
+<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 6 : Appeldesous-programme</h1>
+
+<h2 class="section">6.1 Dans ce chapitre nous allons voir comment réaliser l’appel de sous-programme</h2>
+
+<p>en 32 et 64 bits. Malheureusement les conventions d’appel dans ces deux archi-
+tectures sont très différentes sous Linux et elles différent également entre Linux
+et Windows. Il faut donc soit penser méticuleusement au choix des registres si on
+désire écrire du code en 32 bits pour ensuite passer au 64 bits ou revoir entièrement
+son code.</p>
+<h2 class="section">6.2 Regardons dans un premier temps comment est réalisé l’appel de sous-programme</h2>
+
+<p>en 32 bits.</p>
+<h3 class="subsection">6.2.1 Lorsque l’on appelle un sous-programme en 32 bits on passe les paramètres dans</h3>
+
+<p>la pile. La pile est une partie de la mémoire centrale qui sert d’espace de stockage
+et, en réalité, il existe plusieurs piles. Chaque programme se voit attribuer une
+pile. Lorsque l’on bascule d’un programme à un autre on réalise un changement de
+contexte et on doit mettre à jour les différents registres pour qu’ils soient conformes
+à l’état dans lequel ils étaient avant de basculer vers un autre programme. La pile
+permet de garder trace des appels de sous-programmes, de passer les paramètres
+des sous-programmes et de créer des variables locales à un sous-programme.
+En architecture 32 bits, le segmentsscontient l’adresse du début de la pile et
+Le sommet de pile se trouve dans le registreesp. On utilise le registreebpafin de
+récupérer les paramètres placés dans la pile.
+Sous Linux, la pile d’un programme possède une taille de8Mo qui peut être
+éventuellement redéfinie. On peut obtenir la valeur de cette taille initiale de la pile
+grâce à la commandeulimit -adans le terminal.
+Les deux instructions principales utilisées pour manipuler la pile sontpushet
+popmais les instructionscalletretagissent également sur celle-ci.</p>
+<h4 class="subsubsection">6.2.1.1 L’instructionpushconsiste à mettre la valeur d’un registre, un emplacement mé-</h4>
+
+<p>moire ou une constante dans la pile. Cependant la pile possède un fonctionnement
+différent et spécifique par rapport à une pile que l’on pourrait implanter soi-même.
+La pile est un tableau d’octets que l’on remplit par le haut et non par le bas comme
+on le ferait classiquement.
+Par exemplepush , consiste àabaisserle sommet de pile puis y écrire la
+valeur contenue danseaxce qui se résume en fait aux deux instructions suivantes :
+1 sub ,4</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span></div></li>
+</ol></div>
+</div>
+
+<p>On soustrait ici4octets àespcareaxest un registre 32 bits.</p>
+<h4 class="subsubsection">6.2.1.2 L’instructionpopfonctionne de manière inverse. Par exemplepop , lit la</h4>
+
+<p>valeur en sommet de pile et la stocke danseaxpuisremontele sommet de pile :</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">6<span style="color: #339933;">.</span>2<span style="color: #339933;">.</span>1<span style="color: #339933;">.</span>3</div></li>
+</ol></div>
+</div>
+
+<p>Il existe d’autres instructions pour empiler et dépiler des informations dans la
+pile, dont notamment :
+•pusha
+place dans la pile l’ensemble des registres généraux 16 bits (ax,cx,dx,
+bx,sp,bp,si,di)
+•pushad
+place dans la pile l’ensemble des registres généraux 32 bits (eax,ecx,
+edx,ebx,esp,ebp,esi,edi)
+•pushfplace dans la pile le registre 16 bits flags
+•pushfdplace dans la pile le registre 32 bits eflags
+Bien entendu, on dispose des instructionspopa,popad,popfetpopfdqui réa-
+lisent les opérations inverses.</p>
+<h3 class="subsection">6.2.2 L’appel de sous-programme en 32 bits est l’un des concepts des plus difficiles à</h3>
+
+<p>appréhender lorsque l’on apprend l’assembleur car il fait appel à diverses notions
+et conventions. Lors de l’appel d’un sous-programme, on distingue :
+•
+le sous-programmeappelant(un autre sous-programme) qualifié decalleren
+anglais
+•du sous-programmeappelé(par l’appelant) qualifié decallee
+Pour réaliser l’appel de sous-programme, on procède de la manière indiquée
+Table, qui consiste à suivre la convention d’appel du langage C sous Linux.
+Sous-programme appelant Sous-programme appelé
+(Caller) (Callee)
+1placer les paramètres dans la pile dans
+l’ordre inverse de la définition du
+sous-programme
+2 appel du sous-programme grâce à
+l’instruction (call)
+3 entrée dans le sous-programme :
+sauvegarde deebp, mise à jour deebp
+4 récupération des paramètres grâce à
+ebp
+5 Exécution du sous-programme
+6 sortie du sous-programme : mise à
+jour deesp, restauration deebp
+7suppression des paramètres mis dans
+la pile à l’étape 1
+TABLE6.1 – Appel de sous-programme en 32 bits convention du langage C</p>
+<h3 class="subsection">6.2.3 La convention d’appel en 32 bits en langage C impose que le sous-programme</h3>
+
+<p>appelé ne modifie pas certains registres. Ces registres sontebp,ebx,esietedi. Il
+est donc nécessaire, une fois entré dans le sous-programme appelé, desauvegarder
+ces registres dans la pilesi on a l’intention de les modifier. Il faudra par la suite
+les dépiler afin de restaurer leur contenu avant de sortir du sous-programme. Les
+registres qui peuvent être modifiés sont donceax,ecxetedx.
+La conséquence de cela est que si on écrit du code assembleur qui appelle une
+fonction de la librairie C, on doit garder à l’esprit queeax,ecxetedxpourront être
+modifiés. Il ne faudra pas stocker de données qui doivent être réutilisées après
+l’appel du sous-programme ou alors il faudra les sauvegarder dans la pile, puis les
+restaurer.
+Afin de se rappeler des registres qui sont modifiables ou non modifiables,
+les deux vers qui figurent en préambule de ce chapitre, représentent un moyen
+mnémotechnique intéressant :
+AuX CieuX, les DieuX,
+BaPtisent des DIsSIdents BelliqueuX.
+Il fait apparaître :
+•
+sur la première ligne les registres modifiables :ax,cx,dx(et par extension
+eax,ecx,edx)
+•
+et sur la seconde ceux qu’il faut préserver :bp,di,si,bx(et par extension
+ebp,edi,esi,ebx)</p>
+<h3 class="subsection">6.2.4 Lorsqu’un sous-programme retourne une valeur il doit le faire en suivant la</h3>
+
+<p>convention du langage C :
+•
+s’il s’agit d’une valeur entière (entier, pointeur), on la place dans le registre
+eax
+•
+s’il s’agit d’un nombre à virgule flottante, on le place dansst0le sommet de
+pile du coprocesseur (cf. Chapitre)</p>
+<h3 class="subsection">6.2.5 Prenons un exemple simple avec le programme suivant :</h3>
+
+<p>1int (int ,int )</p>
+<pre class="code-block"><code>int ;
+r=a+b;
+return ;
+5}
+7int ()
+sum(4,5);
+9}</code></pre>
+
+<p>Lecaller(main) appelle lecallee(sum) qui retourne une valeur entière mais que
+la fonctionmainn’utilisera pas, ceci afin de simplifier le code que nous allons écrire.
+Nous allons réaliser une traduction très terre à terre de cet exemple afin de montrer
+tout ce qui doit être réalisé. Pour cela, nous utiliserons, dans la fonctionsum, le
+registreeaxpour représenteraetebxpour représenterb.</p>
+<h4 class="subsubsection">6.2.5.1 Traduisons dans un premier temps le sous-programmemain(cf. Listing). Il</h4>
+
+<p>consiste à passer les paramètres dans la pile. On peut le faire ici de deux manières
+différentes puisqu’il s’agit de constantes entières : soit on met la constante dans
+un registre et on empile le registre (lignes 2 et 3 du code qui suit), soit on empile
+directement la constante (ligne 4). Dans ce dernier cas il faut préciser sur combien
+d’octets on code la valeur4. Etant donné qu’il s’agit d’un entier sur 32 bits, on
+utilise le préfixedwordpourdouble word.
+On réalise ensuite l’appel du sous-programmesumgrâce à l’instructioncall.
+Cela a pour effet de stocker dans la pile l’adresse de retour du sous-programme,
+c’est à dire l’adresse de l’instruction située juste aprèscall, c’est à dire la ligne 6.
+Nous verrons pourquoi, ci-après, nous appelons l’instructionadd ,8 en
+ligne 6 après être sorti du sous-programme.
+1main:</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">5</span> <span style="color: #666666; font-style: italic;">; place dans la pile le second parametre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; place le premier parametre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">call</span> <span style="color: #666666; font-style: italic;">; appel du sous-programme</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">8</span> <span style="color: #666666; font-style: italic;">; supprime les parametres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+<p><em>Listing 6.2.1 – Appelant en 32 bits</em></p>
+<div class="cadre_convention"><strong>Convention</strong> : ordre des paramètres
+</div>
+Par convention en C (en architecture 32 bits), on place le dernier paramètre
+du sous-programme appelé en premier dans la pile et le premier paramètre
+du sous-programme en dernier dans la pile.
+Pour notre exemple, on commence donc par le paramètre le plus à droite (5) et
+on termine par le plus à gauche (4).
+6.2.5.2
+Traduisons dans un second temps le sous-programmesumqui figure Listing.
+1sum:
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; entrée dans le sous-programme</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span> <span style="color: #666666; font-style: italic;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">4</span> <span style="color: #666666; font-style: italic;">; création de la variable'r'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; sauvegarde de ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span> <span style="color: #7f007f;">'a'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span> <span style="color: #7f007f;">'b'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span> <span style="color: #666666; font-style: italic;">; calcul du résultat</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span><span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span> <span style="color: #666666; font-style: italic;">; stockage du résultat dans'r'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #666666; font-style: italic;">; restauration de ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; sortie du sous-programme</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+<p><em>Listing 6.2.2 – Appelé en 32 bits</em></p>
+<p>L’entrée dans la fonctionsumconsiste à réaliser les trois étapes suivantes :</p>
+<ol>
+<li>la première étape est l’entrée dans le sous programme (lignes2et3), elle
+consiste à sauvegarderebppuisque celui-ci va être utilisé pour accéder aux
+paramètresaetbainsi que la variable localer, puis on affecte àebpla valeur
+deesp</li>
+<li>
+<p>on crée ensuite les variables locales si cela est nécessaire en réservant de
+l’espace dans la pile, ici il s’agit de la variablerqui est un entier 32 bits, soit
+4octets, on abaisse donc le sommet de pile de4octets (ligne4)</p>
+</li>
+<li>
+<p>on sauvegarde les registres dont la valeur doit être préservée pour la procé-
+dure appelante, ici c’est le cas pourebxen ligne5qui sera utilisé pour stocker
+le paramètreb
+Le rôle du registreebpest primordial car c’est lui qui permet d’accèder aux
+paramètres et aux variables locales dès lors que l’on écritmov ,esp en ligne3.
+On peut voir Figure ebpet les paramètres.
+FIGURE6.1 – Etat de la pile après entrée dans le sous-programme appelé
+A l’intérieur de la fonctionsum:
+•le premier paramètre (a) est en[ebp + 8]
+•le second paramètre (b) est en[ebp + 12]
+•
+par extension lenième paramètre, s’il est défini, est situé à l’adresse[ebp +
+4×(n+ 1)]
+•
+les variables locales sont stockées en[ebp - x]oùxdépend du nombre de
+variables et de leurs types
+Taille des paramètres
+Que le paramètre soit un octet ou un mot, on le stockera sur 32 bits. S’il s’agit
+d’une chaîne de caractères ou d’un tableau on passera son adresse sur 32 bits.
+S’il s’agit d’une valeur 64 bits elle occupera 2 fois 32 bits.
+On éxécute ensuite le corps de la fonction : on place le paramètreadanseax,
+puisbdansebx(lignes7et8). On additionne ensuiteebxàeaxet on stocke le
+résultat dansr(lignes9et10).
+La sortie de la fonction consiste à faire dans l’ordre inverse ce que l’on a fait lors
+de l’entrée (voir Figure) :
+FIGURE6.2 – Sortie du sous-programme appelé</p>
+</li>
+<li>
+<p>on récupère le résultat, comme il s’agit d’une fonction entière on le place dans
+eax(ligne12)</p>
+</li>
+<li>ebxqui a été sauvegardé (ligne14)</li>
+<li>
+<p>on rétablitespà sa valeur quand on est entré dans la fonction (ligne15) puis
+on restaureebp(ligne16)</p>
+</li>
+<li>
+<p>enfin on exécute l’instructionretqui récupère l’adresse de retour du sous-
+programme et exécutera l’instruction à cette adresse dans le sous-programme
+main</p>
+</li>
+</ol>
+<div class="cadre_warning"><strong>Attention</strong> : variable locale non supprimée
+</div>
+Il faut remarquer que l’on n’a pas supprimé la variable localerqui avait
+été créée par unsub ,4 . Cela n’est pas nécessaire car l’étape 3 (de la
+fonctionsum) qui consiste à rétabliresple fait automatiquement.
+On notera que la ligne12n’est pas utile puisque le résultat est déjà danseaxet,
+de plus, la variable localerest également inutile puisque les calculs sont réalisés
+avec les registreseaxetebx. On notera que pour améliorer le temps d’exécution de
+la fonction, on pourrait également remplacerebxparecxcarecxest un registre
+modifiable et il n’est alors pas nécessaire de le sauvegarder puis le restaurer comme
+on l’a fait avecebx.
+<h4 class="subsubsection">6.2.5.3 Les paramètres mis dans la pile dans le sous-programmemaindoivent être</h4>
+
+<p>supprimés car si ce n’était pas le cas on risquerait de saturer la pile. La manière la
+plus simple pour réaliser cela consiste à remonter le sommet de pile du nombre
+d’octets qui correspondent à l’espace occupé par les paramètres. En l’occurrence, on
+a placé deux entiers 32 bits dans la pile, donc2×4octets, on doit donc remonter
+le sommet de pile de8octets.
+La convention du langage C impose que ce soit le sous-programme appelant
+qui supprime les paramètres. C’est pourquoi dans le code du sous-programmemain
+nous avons placé une instructionadd ,8, juste après lecall.
+Dans un langage comme le Pascal c’est l’inverse, c’est le sous-programme appelé
+qui supprime les paramètres. Dans le cas présent nous devrions écrire en Pascal
+une instructionret , pour quitter le sous-programmesum. La valeur qui suitret
+est forcément une constante. Nous faisons la même chose en langage C mais en
+reportant la suppression des paramètres dans la fonction appelante.
+Pourquoi le langage C utilise t-il la convention qui impose au sous-programme
+appelant de supprimer les paramètres? La réponse est simple, en C on a la possibilité
+de créer des fonctions qui peuvent prendre un nombre quelconque de paramètres
+comme par exempleprintf. Etant donné que le sous-programme appelé ne connait
+pas le nombre de paramètres on ne peut pas utiliser l’instructionretavec une
+valeur constante prédéfinie puisqu’elle varie en fonction du nombre de paramètres.
+Par contre le sous-programme appelant sait combien de paramètres il a mis dans la
+pile et il est donc en mesure de les supprimer.
+Tout ceci peut paraître complexe mais il s’agit d’une mécanique très simple et il
+suffit de suivre à la lettre les règles que nous venons de voir.</p>
+<h3 class="subsection">6.2.6 L’entrée dans un sous-programme et la sortie peuvent être réalisées également</h3>
+
+<p>grâce à deux instructions assembleur nomméesenteretleave:</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; enter 4, 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span> <span style="color: #666666; font-style: italic;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">4</span> <span style="color: #666666; font-style: italic;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; leave</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #666666; font-style: italic;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+<p>L’instructionenterremplace les lignes1et3du code précédent etleaveles
+lignes5et6. On pourra se référer à [19] pour de plus amples informations quant à
+ces instructions.</p>
+<h3 class="subsection">6.2.7 fast call)</h3>
+
+<p>La manière dont on appelle classiquement un sous-programme est de typecdecl,
+c’est à diredéclaration du langage C. Il existe en 32 bits la possibilité d’appeler
+un sous-programme en utilisant un appel dit rapide, en anglaisfast call. Un appel
+rapide signifie que l’on passe les paramètres dans les registres plutôt que de les
+passer dans la pile.
+La raison derrière tout cela est qu’utiliserebppour accéder aux paramètres est
+pénalisant pour deux raisons :
+•
+la première est que le sous-programme appelant place une première fois les
+paramètres dans la pile
+•
+la seconde est que le sous-programme appelé relit les paramètres depuis
+la pile et utilise plusieurs instructions (push ;mov ,ebp , etc.) qui
+servent uniquement à la relecture
+Tout cela est finalement pénalisant et source de ralentissement. Lors d’unfastcall
+les données sont passées en 32 bits dans les registresecxetedxrespectivement. Si
+un sous-programme dispose de plus de deux paramètres, les premiers paramètres
+sont placés dans les registres évoqués et le reste des paramètres est placé dans la
+pile.
+Si on désire écrire une fonction avec appel rapide en assembleur et l’appeler
+depuis un code source en langage C ou C
+++, il faut préciser dans le fichier C que la
+fonction est externe (c’est à dire définie dans un autre fichier) et qu’elle est de type
+fastcallgrâce à la directive<strong>attribute</strong>:
+1// en C
+2extern (int ,int )<strong>attribute</strong>((fastcall));
+4// en C++
+5extern {</p>
+<pre class="code-block"><code>int (int ,int )__attribute__((fastcall));
+7}</code></pre>
+
+<p>Il existe également une autre possibilité afin d’améliorer l’efficacité des sous-
+programmes qui consiste à ne pas utiliserebpmais à utiliser directementesp. C’est
+généralement ce que font les compilateurs lorsqu’ils génèrent du code optimisé.
+Malheureusement cela se révèle très compliqué à gérer lorsque l’on écrit soi-même
+de l’assembleur car dès qu’on place des données dans la pile, l’accès aux paramètres
+est décalé et il faut garder trace constamment de l’adresse des paramètres.</p>
+<h2 class="section">6.3 Afin d’écrire des fonctions en assembleur et de pouvoir les interfacer avec un</h2>
+
+<p>programme C il est nécessaire de définir une convention d’appel, tout comme en 32
+bits. Cette convention indique comment passer les paramètres aux sous-programmes
+appelés, quels registres devront être préservés dans les sous-programmes appelés
+et comment retourner les résultats. Il existe différentes conventions d’appel en 64
+bits comme celle de Microsoft. En ce qui concerne Linux, on utilise la convention
+System V AMD64 ABIet c’est bien entendu celle que nous allons décrire ici.
+Paramètre 64 bits 32 bits 16 bits 8 bits
+1 rdi
+2 rsi
+3 rdx
+4 rcx
+5 r8
+6 r9
+TABLE6.2 – Ordre des registres entiers utilisés pour la convention d’appel C sous Linux
+•
+la première différence avec la convention d’appel 32 bits est que les para-
+mètres sont placés dans des registres et non dans la pile, il s’agit donc d’appels
+de typefastcall, cependant, s’il n’y a pas assez de registres on utilise la pile
+comme en 32 bits
+•
+pour les paramètres entiers on dispose de 6 registresrdi,rsi,rdx,rcx,r8,
+r9(cf. Table) que l’on utilise dans l’ordre indiqué
+•
+les paramètres pour les nombres à virgule flottante sont passés dans la partie
+basse des registresxmm0àxmm7(cf. Chapitre)
+•pour retourner une valeur entière, on la place dansrax
+•pour retourner un flottant, on le place dans la partie basse dexmm0
+•
+les registres qui ne doivent pas être modifiés par le sous-programme appelé
+sontrbp,rbx,r12àr15
+On remarque donc qu’il y a un maximum de 14 paramètres (6 entiers, 8 réels)
+qui peuvent être passés dans des registres avec la convention d’appel 64 bits sous
+Linux.</p>
+<h3 class="subsection">6.3.1 Pour entrer dans une fonction on peut procéder comme en 32 bits en sauve-</h3>
+
+<p>gardantrbppuis en positionnantrbpsurrspet lors de la sortie on effectuera les
+opérations inverses :</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rsp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+<p>Néanmoins si tous les paramètres d’un sous-programme sont placés dans des
+registres cela n’a aucune utilité et on peut donc faire l’économie de quatre instruc-
+tions.</p>
+<h3 class="subsection">6.3.2 En 64 bits, sous Linux, il est convenu que la zone mémoire de 128 octets située</h3>
+
+<p>dans la pile de[rsp-128]à[rsp], juste après l’appel d’un sous-programme, et que
+l’on qualifie dered zone, ne sera pas modifiée par les interruptions. On peut donc
+l’utiliser pour stocker temporairement des valeurs à condition de ne pas faire de
+pushou decallcar ces instructions vont modifier cette zone. Notons que sous
+Windows cette zone n’est pas disponible.
+6.3.3
+Les adresses doivent être précisées en utilisant les registres 64 bits uniquement.
+La manipulation de la pile par l’intermédaire depushetpopimpose également
+d’utiliser des registres de 64 bits.</p>
+<h3 class="subsection">6.3.4 On considère la fonction C suivante qui calcule la somme des élémentsti/ad’un</h3>
+
+<p>tableautavecaqui est une constante :
+1float (float*t,int ,float )</p>
+<pre class="code-block"><code>float =0;
+for(int =0;i&lt;n; i)
+s=s+t[i] a;
+}
+return ;
+7}</code></pre>
+
+<p>Nous donnons ci-après la traduction selong++du code précédent en Listing
+avec option d’optimisation-O2.
+D’après ce que nous avons vu précédemment, lors de l’entrée dans le sous-
+programme le premier paramètretest placé dansrdi, la taille du tableaunest
+dansrsiet la constanteaest dansxmm0. On note que l’on jongle entre les registres
+1sum:
+2 test ,esi ; si n == 0 alors sortir
+3 jle ; du sous-programme
+4 lea ,rsi+1]
+5 pxor ,xmm2 ; s = xmm2 = [0, 0, ... 0]
+6 lea ,rdi+rax<em>4+4]
+7.L3: ; en fait rax = tab + n</em>4</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movss</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">4</span> <span style="color: #666666; font-style: italic;">; ++tab</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">divss</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; xmm1.ps[0] /= a</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">addss</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span> <span style="color: #666666; font-style: italic;">; s += xmm1.ps[O]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rax</span> <span style="color: #666666; font-style: italic;">; si &amp;t[i] &lt; &amp;tab[N] alors boucler</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jne</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movaps</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; résultat placé dans xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">16</span><span style="color: #339933;">.</span>L4<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pxor</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; résultat mis à 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movaps</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; et placé dans xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+<p><em>Listing 6.3.1 – Traduction en 64 bits de la fonction sum</em></p>
+<p>32 bits et 64 bits. Par exemple la taille du tableau est un entier de typeintdonc 32
+bits, il n’est donc pas nécessaire de considérer cette valeur comme une valeur 64
+bits et par conséquent on se cantonne à utiliseresi.
+Décrivons à présent le comportement de ce sous-programme. Les lignes 2 et 3
+vérifient que la taille est bien supérieure à 0, si ce n’est pas le cas on saute en.L4
+pour mettrexmm0à 0 et sortir du sous-programme. Etrangement la mise à 0 utilise
+deux instructions (lignes 17 et 18) alors qu’une seule instructionxorps ,xmm0
+aurait suffit. En ligne 4, on calcule danseaxle résultat dersi - 1, c’est à diren-1.
+De même que précédemment, on aurait pu écrirelea ,esi-1].
+En ligne 5, on metxmm2, qui représentesà 0. On remarque qu’on a utilisé
+pxorqui est normalement destinée aux entiers et qu’il aurait fallu utiliserxorps
+destinée aux valeurs flottantes, mais les deux instructions produisent au final le
+même résultat à savoir mettre l’ensemble des bits du registre SSE à 0.
+En ligne 6, on calcule l’adresse de fin du tableau c’est à direrdi+rsi<em>4 ,
+cependant on réalise le calcul en deux étapes (lignes 4 et 6) et on calcule :
+rdi+rax
+|{z}
+rsi−1
+∗4 + 4
+que l’on stocke dansrax, ce qui est inutile puisqu’au final :
+rdi+rax∗4−4 =rdi+ (rsi−1)∗4 + 4 =rdi+rsi∗4−4 + 4 =rdi+rsi∗4
+On notera que l’adresse du dernier élément du tableau est&amp;t[n-1]et l’adresse
+de fin du tableau est&amp;t[n], c’est à dire l’adresse du dernier élément du tableau
+plus4octets.
+Les lignes 7 à 13 réalisent la boucleforen utilisantxmm1pour chargert[i].
+On augmenterdide 4 octets à chaque itération de boucle pour passer au flottant
+suivant jusqu’à avoir atteintraxqui est l’adresse de fin du tableau.
+Enfin, lignes 14 à 15, on met le résultatsstocké dansxmm2dansxmm0qui est le
+registre qui contient la valeur de retour de la fonction (puisqu’il s’agit d’une valeur
+en virgule flottante), puis on sort du sous-programme.
+Nous avons noté beaucoup de bizzareries dans cette traduction automatique et
+on peut la réécrire de manière plus concise comme présenté Listing.
+1sum:
+2 xorps ,xmm2 ; s = 0
+3 test ,esi ; si n &lt;= 0 alors sortir
+4 jle ; du sous-programme
+5 lea ,rdi+rsi</em>4]
+6.while:</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movss</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">4</span> <span style="color: #666666; font-style: italic;">; ++tab</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">divss</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; xmm1.ps[0] /= a</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">addss</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span> <span style="color: #666666; font-style: italic;">; s += tab[i] / a</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rax</span> <span style="color: #666666; font-style: italic;">; si &amp;t[i] &lt; &amp;tab[N] alors boucler</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jne</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">13</span><span style="color: #339933;">.</span>end<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movaps</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; résultat placé dans xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+<p><em>Listing 6.3.2 – Traduction en 64 bits de la fonction sum - version améliorée</em></p>
+<h1 class="chapter">Le lecteur aura compris que le calcul peut être simplifié puisqueaest une
+constante :
+X
+t[i]
+a</h1>
+
+<p>a
+X
+t[i]
+On pourra donc sortir l’instruction de division de la boucle.while.
+6.3.5</p>
+<h4 class="subsubsection">6.3.5.1 L’appel de fonctions externes, comme la fonctionprintf, doit être réalisé en</h4>
+
+<p>utilisant le mécanisme de PLT (Procedure Linkage Table). Ce mécanisme permet
+l’appel de fonctions dont l’adresse n’est pas connue lors de l’édition de liens et qui
+sera résolu par l’éditeur de lien dynamique lors de l’exécution.
+Il faut alors suffixer les fonctions parWRT ..pltoù WRT signifieWith Respect
+to:
+1call WRT..plt
+Cela n’est pas nécessaire pour les fonctions écrites en assembleur par l’utilisateur
+à moins de faire appel à ces fonctions depuis un autre fichier assembleur.</p>
+<h4 class="subsubsection">6.3.5.2 En outre, en 64 bits, on utilise généralement le PIC (Position Independent Code)</h4>
+
+<p>qui est simple à mettre en œuvre car on se base sur l’adressage relatif par rapport
+au registrerip, le pointeur d’instruction.
+De la même manière, le PIE pourPosition Independent Executableest une fonction
+de sécurité qui permet aux exécutables d’être chargés à des adresses mémoire
+aléatoires à chaque fois qu’ils sont exécutés, ce qui peut aider à prévenir certains
+types d’attaques, telles que la programmation orientée retour (ROP) et certaines
+formes d’attaques par débordement de mémoire tampon.
+Par défaut, certaines distributions modernes degccgénèrent des exécutables
+indépendants de la position. Cela est utile pour les bibliothèques partagées, qui
+peuvent être chargées à différentes adresses dans différents programmes. Cepen-
+dant, cela peut poser un problème pour certains programmes de bas niveau, comme
+certains programmes d’assemblage, qui peuvent dépendre d’un chargement à une
+adresse spécifique.
+Dans le cadre de la programmation assembleur que nous voyons dans cet
+ouvrage, il est plus simple de ne pas utiliser cette fonctionnalité car elle est difficile
+à mettre en oeuvre manuellement. Un compilateur sera plus à même d’automatiser
+cette tâche.
+C’est pourquoi il est nécessaire, pour l’écriture de notre code, d’utiliser lors de
+l’édition de lien avecgcc, l’option-no-pieafin d’éviter que le compilateur ne se
+plaigne du fait que le code n’est pas de type PIC. Il en résulte que le code sera
+toujours chargé à la même adresse en mémoire.
+Par défaut, avecnasml’adressage est absolu, c’est le mode qui nous convient. Si
+on désire passer à l’adressage relatif il faut, en début du fichier assembleur, ajouter
+la directive
+1defaultrel</p>
+<h4 class="subsubsection">6.3.5.3 Un autre point important qui est à prendre en considération est lié à l’appel des</h4>
+
+<p>fonctions de la bibliothèque C. Les conventions d’appel en 64 bits imposent qu’avant
+l’appel d’un sous-programme, la pile (doncrsp) contienne une adresse multiple de
+16octets. Lorsque l’on entre dans un sous-programme, on a préalablement réalisé
+uncall, qui en 64 bits place8octets dans la pile. Ces8octets correspondent à
+l’adresse de retour de sous-programme qui sera utilisée par l’instructionretafin
+de passer à l’instruction suivant lecalldans le sous-programme appelant. Cela
+implique qu’une fois dans le sous-programme appelé, l’adresse derspest multiple
+de8.
+Si on écrit un sous-programme qui fait appel à une fonction de la bibliothèque
+C, il est nécessaire de rendrerspmultiple de16avant l’appel à cette fonction.
+Pourquoi, me direz vous? Normalement cela ne devrait pas poser de problème. Un
+appel àprintfdevrait être indifférent au fait querspsoit multiple de8ou de16.
+Mais pour certaines fonctions ou dans certaines version de laglibcse produit une
+erreur de segmentation! Ce qui semble bien étrange mais dont l’explication réside
+dans l’implantation de la fonction.
+Regardons ce qui se passe au niveau du code de la fonctionscanfpar exemple,
+en installant les sources de la bibliothèque C, version 2.31, comme suit :
+sudo apt-get install libc-dbg
+2sudo apt-get install glibc-source
+3sudo tar xvf /usr/src/glibc/glibc-2.31.tar.xz -C ~
+Avec la dernière commande (tar), on installe les sources dans le répertoire
+homede l’utilisateur.
+On peut alors lancer le débogueurgdbsur un petit programme, ici appelé
+prog.exe, qui fait un simple appel àscanf. On obtient bien une erreur de segmen-
+tation (ligne 6). Avant de lancer le programme, on indique grâce à la commande
+directory(ligne 2) dans quel répertoire se trouvent les sources de la bibliothèque
+C :
+gdb prog.exe
+2(gdb) directory /home/richer/glibc-2.31/
+3(gdb) run
+4Starting program: /home/richer/prog.exe
+6Program received signal SIGSEGV, Segmentation fault.
+70x00007ffff7e0da86 in __vfscanf_internal (s=0x7ffff7f96980 <_IO_2_1_stdin_>,</p>
+<pre class="code-block"><code>format=0x555555558023 &lt;msg_scanf&gt; &quot;%d&quot;, argptr=argptr@entry=0x7fffffffd748,
+mode_flags=mode_flags@entry=0) at vfscanf-internal.c:339</code></pre>
+
+<p>10339 vfscanf-internal.c: Aucun fichier ou dossier de ce type.
+11(gdb) bt
+12#0 0x00007ffff7e0da86 in __vfscanf_internal (s=0x7ffff7f96980 <_IO_2_1_stdin_>,</p>
+<pre class="code-block"><code>format=0x555555558023 &lt;msg_scanf&gt; &quot;%d&quot;, argptr=argptr@entry=0x7fffffffd748,
+mode_flags=mode_flags@entry=0) at vfscanf-internal.c:339
+15#1 0x00007ffff7e0c20f in __scanf (format=&lt;optimized out&gt;) at scanf.c:38
+16#2 0x0000555555555173 in main () at prog.asm:87</code></pre>
+
+<p>Grâce à la commandex/i, on affiche la dernière instruction exécutée et donc
+celle qui a provoqué l’erreur de segmentation :
+(gdb) x/i $pc
+2=&gt; 0x7ffff7e0da86 &lt;__vfscanf_internal+134&gt;: movaps %xmm1,-0x600(%rbp)
+L’instruction est affichée au format AT&amp;T, elle correspond en fait, sous format
+Intel, à l’instruction :
+1movaps[rbp-0x600],xmm1
+qui sauvegarde le contenu du registre vectorielxmm1dans la pile. L’instruction
+movapsimpose que l’adresse de destination soit multiple de 16 (voir le Chapitre).
+Si on affiche le contenu derbp, on obtient :
+(gdb) info reg rbp
+2rbp 0x7fffffffd738 0x7fffffffd738
+Soit, si on s’intéresse au trois derniers chiffres hexadécimaux à73816−60016=
+13816
+, donc une adresse multiple de8, d’où l’erreur de segmentation. Attention, ici
+il s’agit derbpet nonrsp, maisrbpa été mis à jour en fonction derspcomme on
+peut le faire en32bits.
+Pour résoudre le problème, il suffit, dans le sous-programme qui réalise l’appel
+àscanf, de remettrerspà une valeur multiple de16.
+Soit en plaçant un registre dans la pile :
+1push ; ou tout autre registre 64 bits
+Soit en abaissant le sommet de pile de8octets :
+1sub ,8
+Soit en alignant le sommet de pile sur un multiple de 16 inférieur à la valeur
+actuelle dersp:
+1and ,0xF
+Il faudra bien évidemment supprimer ces octets de la pile avant de sortir du
+sous-programme. On obtient, par exemple, le code suivant pour lire un entier en
+64 bits :
+1extern
+3section
+5 s: ,0
+6 a:
+8section
+10; scanf("%d", &amp;a)
+11my_call_to_scanf:
+12 sub ,8 ; rsp multiple de 16
+14 lea ,s]
+15 lea ,a]</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">0</span> <span style="color: #666666; font-style: italic;">; pas de flottant traité</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">call</span> <span style="color: #0000ff; font-weight: bold;">WRT</span><span style="color: #339933;">..</span>plt</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">8</span> <span style="color: #666666; font-style: italic;">; on supprime les octets utilisés</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; pour l'alignement</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+<p>Le désassemblage du code du sous-programme précédent compilé avec un
+adressage absolu sous forme de fichier objet (.o), donne :
+objdump -d -j .text a.o --show-raw-insn
+2...
+3my_call_to_scanf():
+4 0: 48 83 ec 08 sub rsp,0x8
+5 4: 48 8d 3c 25 00 00 00 lea rdi,ds:0x0
+6 b: 00
+7 8: R_X86_64_32S .data
+8 c: 48 8d 34 25 00 00 00 lea rsi,ds:0x0
+9 13: 00
+10 10: R_X86_64_32S .data+0x3
+11 14: b8 00 00 00 00 mov eax,0x0
+12 19: e8 00 00 00 00 call 1e &lt;my_call_to_scanf+0x1e&gt;
+13 1a: R_X86_64_PLT32 scanf-0x4
+14 1e: 48 83 c4 08 add rsp,0x8
+15 22: 31 c0 xor eax,eax
+16 24: c3 ret
+Le même code généré avec l’approche PIC ou adressage realtif donne :
+1&gt; objdump -d -j .text a.o --show-raw-insn
+2...
+30000000000000000 <my_call_to_scanf>:
+4my_call_to_scanf():
+5 0: 48 83 ec 08 sub rsp,0x8
+6 4: 48 8d 3d 00 00 00 00 lea rdi,[rip+0x0] # b &lt;my_call_to_scanf+0xb&gt;
+7 7: R_X86_64_PC32 .data-0x4
+8 b: 48 8d 35 00 00 00 00 lea rsi,[rip+0x0] # 12 &lt;my_call_to_scanf+0x12&gt;
+9 e: R_X86_64_PC32 .data-0x1
+10 12: b8 00 00 00 00 mov eax,0x0
+11 17: e8 00 00 00 00 call 1c &lt;my_call_to_scanf+0x1c&gt;
+12 18: R_X86_64_PLT32 scanf-0x4
+13 1c: 48 83 c4 08 add rsp,0x8
+14 20: 31 c0 xor eax,eax
+15 22: c3 ret
+On voit apparaître l’adressage relatif par rapport àripqui a été ajouté parnasm.
+On note également que certains instructions qui n’utilisent pas le PIC sont plus
+longue d’un octet.</p>
+<h4 class="subsubsection">6.3.5.4 Pour l’entrée dans un sous-programme en 64 bits, je recommande d’utiliser un</h4>
+
+<p>fonctionnement du type 32 bits en passant parrbp.</p>
+<ol>
+<li>rbp</li>
+<li>rspdansrbp</li>
+<li>
+<p>on sauvegarde les registres que l’on désire ou que l’on doit préserver s’ils sont
+modifiés</p>
+</li>
+<li>rspsur un multiple de16
+Dès lors, on peut au travers derbp, accéder aux valeurs des registres sauvegardés
+dans la pile.
+Pour la sortie de sous-programme, on procède de la manière suivante :</li>
+<li>rbp</li>
+<li>rbpdansrsp</li>
+<li>rbp</li>
+<li>ret
+Afin de simplifier l’écriture du code, on peut définir deux macro-instructions en
+nasm:
+•defsppourdefine sub program
+•endsppourend sub program
+La première macro-instruction comporte 1 à plusieurs arguments (1-<em>) dont le
+premier est le nom du sous-programme. Il est suivi par éventuellement d’autres
+arguments qui sont, soit des noms de registres généraux 64 bits, considérés comme
+des identifiants, soit des entiers positifs. S’il s’agit d’un registre général, il sera
+empilé, sinon on décrémentera le sommet de pile de la quantité indiquée. Cet
+espace pourra servir à stocker des variables temporaires.
+1%macro defsp 1-</em>
+2%1:
+3 %rotate 1</li>
+</ol>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rsp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">%</span><span style="color: #00007f; font-weight: bold;">rep</span> <span style="color: #0000ff; font-weight: bold;">%0</span> <span style="color: #339933;">-</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%ifnum</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%else</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">push<span style="color: #339933;">%</span><span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endif</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%rotate</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endrep</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">and</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">0xF</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">15</span><span style="color: #339933;">%</span>endmacro</div></li>
+</ol></div>
+</div>
+
+<p>L’instruction%rep, de la ligne 6, permet de répéter%0 - 1fois, c’est à dire
+n−1 fois les instructions qui apparaissent jusqu’à%endrep. Ici,nest égal à%0qui
+représente le nombre d’arguments de la macro-instruction. On utilise l’instruction
+%rotate 1
+qui permet de passer à l’argument suivant en considérant que les
+arguments sont dans une liste sans fin. Par exemple,%rotate %0nous ramène sur
+le premier argument.
+On termine ensuite la macro en rendant le sommet de pile multiple de 16 (ligne
+14).
+L’appel de cette macro peut être réalisé de la sorte :
+1defsp ,rdi,rsi,100,rbx
+On note que les paramètres sont séparés par des virgules. Dans ce cas précis, la
+macro-instruction permettra de générer le code suivant :
+1main:</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rsp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">100</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">and</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">0xF</span></div></li>
+</ol></div>
+</div>
+
+<p>La seconde macro-instruction qui gére la sortie du sous-programme fonctionne
+sur le même modèle :
+1%macro endsp 1-*
+2end_%1:
+3 %rotate 1
+4 %assign i 8
+5 %rep %0 - 1
+6 %ifnum %1
+7 %assign i i + %1
+8 %else</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rbp</span><span style="color: #339933;">-</span>i<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%assign</span> i i <span style="color: #339933;">+</span> <span style="color: #ff0000;">8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endif</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%rotate</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endrep</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">17</span><span style="color: #339933;">%</span>endmacro</div></li>
+</ol></div>
+</div>
+
+<p>Elle permet de récupérer les valeurs mises dans la pile. On y fait appel de la
+même manière que pourdefsp:
+1endsp ,rdi,rsi,100,rbx
+On obtient alors le code suivant :
+1end_main:</p>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">124</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">6.4</span></div></li>
+</ol></div>
+</div>
+
+<p>On peut se demander s’il est préférable de compiler son code en 32 ou 64 bits.
+A l’heure où nous écrivons cet ouvrage les fournisseurs de systèmes d’exploitation
+commencent à abandonner le support 32 bits. Il est toujours possible de compiler
+du code 32 bits sur un système 64 bits mais cela requiert d’installer des librairies
+spécifiques : avecgccnotamment, le packagemultilib.
+Un code C compilé en 64 bits s’exécute normalement plus rapidement que du
+code 32 bits parce que le passage des paramètres des sous-programmes se fait
+dans les registres et que l’on dispose de plus de registres de calcul pour stocker des
+résultats temporaires
+. On dispose de plus de registres en 64 bits ce qui permet
+. Cependant, dans certains cas, un programme 32 bits peut être plus rapide qu’un programme
+compilé en 64 bits.
+de stocker plus de données temporaires dans les registres et faire moins d’appels
+à la mémoire pour certains traitements, on est donc sensé gagner en efficacité.
+L’écriture du code est également simplifiée mais plus contraignante qu’en 32 bits.
+Il semble donc préférable d’écrire le code assembleur uniquement en 64 bits et
+compiler ses programmes en 64 bits dorénavant.
+6.5</p>
+<h3 class="subsection">6.5.1 ▷</h3>
+
+<p>en architecture 32 bits les paramètres des sous-programmes sont passés dans
+la pile. Les valeurs de retour des fonctions sont passées dans le registre eax
+s’il s’agit d’un entier ou d’un pointeur ou dans le sommet de pile de la FPU s’il
+s’agit d’un nombre à virgule flottante
+▷
+en architecture 64 bits les paramètres des sous-programmes sont passés dans
+les registres généraux (rdi,rsi,rdx,rcx) s’il s’agit d’entiers ou de pointeurs
+et dans les registres SSE s’il s’agit de nombres à virgule flottante. Les valeurs
+de retour des fonctions sont passées dans le registre rax s’il s’agit d’un entier
+ou d’un pointeur ou dans xmm0 s’il s’agit d’un nombre à virgule flottante
+▷
+les conventions d’appel en architecture 32 et 64 bits étant différentes il est
+très souvent nécessaire de modifier le code assembleur pour passer d’une
+architecture à l’autre.</p>
+<h3 class="subsection">6.5.2 Il faut être en mesure de :</h3>
+
+<p>□réaliser un appel de sous-programme en 32 bits
+□récupérer les arguments d’un sous-programme écrit en 32 bits
+□réaliser un appel de sous-programme en 64 bits
+□
+savoir dans quels registres se trouvent les arguments d’un sous-programme
+écrit en 64 bits</p>
+<h2 class="section">6.6 Exercice 27 -Réaliser le codage du sous-programme suivant en 32 bits, puis en 64</h2>
+
+<p>bits :
+1float (int*tab,int )</p>
+<pre class="code-block"><code>float =0;
+for(int =0;i&lt;n; i)
+tab[i] tab[i] 2;
+sum+=tab[i]*1.25;
+}
+return (sum);
+8}</code></pre>
+
+<p>Exercice 28 -Réaliser le codage du sous-programme suivant en 32 bits, puis en 64
+bits :
+1double (double*tab,int ,double )</p>
+<pre class="code-block"><code>double =0;
+for(int =0;i&lt;n; i)
+sum+=tab[i] k;
+}
+return (sum);
+7}</code></pre>
+        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

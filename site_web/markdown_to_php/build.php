@@ -3,7 +3,8 @@
  * build.php — Convertit les fichiers Markdown en HTML
  * Utilise Parsedown pour le parsing Markdown, puis applique le layout.
  * Version améliorée: génère du HTML propre sans numérotation automatique
- * ni commentaires parasites.
+ * ni commentaires parasites. Injecte des graphiques Highcharts sous les
+ * tableaux de résultats de performance détectés (TABLE N.X).
  */
 
 require __DIR__ . '/libraries/Parsedown.php';
@@ -11,7 +12,113 @@ require dirname(__DIR__) . '/php-geshi/geshi.php';
 require dirname(__DIR__) . '/ez_web.php';
 
 $Parsedown = new Parsedown();
-$Parsedown->setSafeMode(false); // Permettre le HTML brut dans le Markdown
+$Parsedown->setSafeMode(false);
+
+// ──────────────────────────────────────────────────────────────────────────
+// Correspondance TABLE[chap].[num] → catégorie d'architecture
+// ──────────────────────────────────────────────────────────────────────────
+// Chaque entrée : numéro du sous-tableau → nom du sous-dossier dans data/
+define('TABLE_CATEGORY_MAP', [
+    // Chapitre 11 – Produit de matrices
+    11 => [ 4 => 'ancien', 5 => 'moderne', 6 => 'recent' ],
+    // Chapitre 12 – POPCNT
+    12 => [ 2 => 'ancien', 3 => 'moderne', 4 => 'recent' ],
+    // Chapitre 13 – SAXPY
+    13 => [ 3 => 'ancien', 4 => 'moderne', 5 => 'recent' ],
+    // Chapitre 14 – Fitch
+    14 => [ 3 => 'ancien', 4 => 'moderne', 5 => 'recent' ],
+    // Chapitre 15 – Voyelles
+    15 => [ 4 => 'ancien', 5 => 'moderne', 7 => 'recent' ],
+    // Chapitre 16 – Fibonacci
+    16 => [ 5 => 'moderne', 6 => 'recent' ],
+]);
+
+/**
+ * Injecte un graphique Highcharts après chaque tableau de performance.
+ *
+ * Détecte dans $htmlContent les paragraphes de légende du type
+ * «TABLE15.4 – …» et insère juste après le tableau HTML précédent
+ * un bloc <div id="chart-chap15-ancien"> + <script type="module"> qui
+ * charge data/chapitre_15/ancien/data.json et appelle createPerformanceChart.
+ *
+ * @param string $htmlContent  HTML généré par Parsedown
+ * @param int    $chapNum      Numéro de chapitre (11, 12, …)
+ * @return string HTML enrichi avec les blocs graphiques
+ */
+function injectChartAfterTable(string $htmlContent, int $chapNum): string
+{
+    $map = constant('TABLE_CATEGORY_MAP')[$chapNum] ?? [];
+    if (empty($map)) {
+        return $htmlContent; // Pas de graphiques pour ce chapitre
+    }
+
+    // Chemin relatif depuis public/ vers data/
+    // Les pages HTML sont dans public/, les données dans ../../data/
+    $dataBasePath = "../../data/chapitre_{$chapNum}";
+    $graphJsPath  = '../../data/graph.js';
+
+    // Compteur global pour créer des IDs uniques par page
+    static $chartCounter = 0;
+
+    // Chercher TABLE[chapNum].[tableNum] n'importe où dans le HTML
+    // La légende peut être dans un <p> long ou à la fin d'un <p>/<li>/<ol>
+    // On cherche le pattern et on injecte le chart après la balise fermante suivante
+    foreach ($map as $tableNum => $category) {
+
+        // Matche TABLE N.M (avec ou sans espace avant le tiret/dash)
+        // suivi de TOUT jusqu'à la prochaine balise fermante </p> </ol> </li>
+        // Le flag 's' (DOTALL) permet de matcher les sauts de ligne
+        $pattern = sprintf(
+            '/(TABLE%d\.%d\s*[–—\-][^<]*?)(<\/(?:p|ol|li|ul)>)/us',
+            $chapNum,
+            $tableNum
+        );
+
+        $htmlContent = preg_replace_callback(
+            $pattern,
+            function ($m) use ($chapNum, $category, $tableNum, $dataBasePath, $graphJsPath, &$chartCounter) {
+                $chartCounter++;
+                $chartId  = "chart-ch{$chapNum}-{$category}-{$chartCounter}";
+                $dataPath = "{$dataBasePath}/{$category}/data.json";
+                
+                // On lit le fichier JSON côté serveur et on l'inclut directement 
+                // pour éviter le fetch asynchrone et les problèmes de CORS CORS en local.
+                $absDataPath = dirname(__DIR__) . "/data/chapitre_{$chapNum}/{$category}/data.json";
+                $jsonData = '{}';
+                if (file_exists($absDataPath)) {
+                    $jsonData = file_get_contents($absDataPath);
+                }
+
+                $legendText = $m[1];   // texte de la légende
+                $closingTag = $m[2];   // </p> ou </ol> etc.
+
+                $chartHtml = <<<HTML
+{$legendText}{$closingTag}
+<div class="chart-container" id="{$chartId}" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = '{$chartId}';
+    var data = {$jsonData};
+    function drawChart(){
+      if (typeof window.createPerformanceChart === 'function') {
+        window.createPerformanceChart(id, data);
+      } else {
+        console.error("createPerformanceChart est introuvable");
+      }
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
+    else { drawChart(); }
+  })();
+</script>
+HTML;
+                return $chartHtml;
+            },
+            $htmlContent
+        );
+    }
+
+    return $htmlContent;
+}
 
 $sourceDir  = __DIR__ . '/pages-md';
 $outputDir  = __DIR__ . '/public';
@@ -161,6 +268,25 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
     );
     // Supprimer les <p> contenant uniquement un numéro de page
     $htmlContent = preg_replace('/<p>\s*\d{1,4}\s*<\/p>\n?/', '', $htmlContent);
+
+    // 9. Détecter le numéro de chapitre depuis le nom du fichier Markdown
+    //    et injecter les graphiques Highcharts après les tableaux de performance
+    if (preg_match('/chapitre_(\d+)/i', basename($mdFile, '.md'), $chapMatch)) {
+        $chapNum     = (int) $chapMatch[1];
+        $htmlContent = injectChartAfterTable($htmlContent, $chapNum);
+        // Injecter Highcharts + graph.js une seule fois si des graphiques ont été injectés
+        if (preg_match('/chart-ch\d+/', $htmlContent)) {
+            $scripts = '<script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>' . "\n"
+                     . '<script src="../../data/graph.js"></script>' . "\n";
+            // Placer les scripts avant le premier div.chart-container
+            $htmlContent = preg_replace(
+                '/(<div class="chart-container")/',
+                $scripts . '$1',
+                $htmlContent,
+                1
+            );
+        }
+    }
 
     // ---- Rendu avec le layout ----
     ob_start();
