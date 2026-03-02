@@ -1,0 +1,3 @@
+mov ,0xFEDC
+mov ,0x0F0F
+pdep ,ebx,ecx

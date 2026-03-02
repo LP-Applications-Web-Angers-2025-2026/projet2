@@ -234,11 +234,15 @@ TABLE9.2 – La fonctionand(x,y)
 En d’autres termes, dans un programme, pour que la condition(x and y)soit
 vraie, il faut que les deux sous-conditionsxetysoient vraies.
 1if((0&lt;a)and(a&lt;11))</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_9/code_001.txt" target="_blank">code/chapitre_9/code_001.txt</a></summary>
 <pre class="code-block"><code>// a est compris entre 1 et 10
 3}else{
 // a est en dehors de l&#039;intervalle [1..10]
 5}
 9.3.1.2 or(x,y)(OU Logique)</code></pre>
+</details>
 
 <p>Le OU logique (voir Table) vaut 0 uniquement si ses deux opérandes xety
 valent 0.
@@ -252,6 +256,9 @@ xyor(x,y)
 TABLE9.3 – La fonctionor(x,y)
 1if((a&gt;10)or(a&lt;1))</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_9/code_002.asm" target="_blank">code/chapitre_9/code_002.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">//</span> a est en dehors de l<span style="color: #7f007f;">'intervalle [1..10]</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #7f007f;">3}else{</span></div></li>
@@ -260,6 +267,8 @@ TABLE9.3 – La fonctionor(x,y)
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #7f007f;">9.3.1.3 xor(x,y)(OU Exclusif Logique)</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p>Le OU Exclusif logique (voir Table) vaut 0 uniquement si ses deux opérandes
 xetyont la même valeur.
@@ -272,11 +281,15 @@ TABLE9.4 – La fonctionxor(x,y)
 En d’autres termes, pour que la condition(x xor y)soit vraie, il faut que l’une
 des deux sous-conditionsxetysoit vraie, mais pas les deux en même temps.
 1if((est_un_poisson(a)xor (a)))</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_9/code_003.txt" target="_blank">code/chapitre_9/code_003.txt</a></summary>
 <pre class="code-block"><code>// élimine les poissons volants
 // Traite les poissons ou les animaux qui volent
 // mais pas les deux en même temps
 5}
 9.3.1.4</code></pre>
+</details>
 
 <p>Les lois deDe Morgan(mathématicien et logicien britannique, 1806-1871)
 permettent d’exprimer la transformation de la négation d’un ET ou d’un OU logique.
@@ -573,15 +586,24 @@ Ainsi pour obtenir la table de vérité de la fonction booléennef(x,y,z) =
 x.y.z+
 x.y.z+x.y.z+x.y.z, on pourra écrire le code suivant :
 1for(int =0;i&lt;8; i)</p>
-<pre class="code-block"><code>int =i&amp;4) 2;
-int =i&amp;2) 1;
-int =i&amp;1;
-int =or2(and3(not1(x),y,not1(z)),and3(x,not1(y),not1(z)));
-int =or2(and3(x,y,not1(z)),and3(not1(x),not1(y),not1(z)));
-int =or2(v1,v2);
-cout&lt;&lt;x&lt;&lt;&quot; &quot;&lt;&lt;y&lt;&lt;&quot; &quot;&lt;&lt;z&lt;&lt;&quot; : &quot;&lt;&lt;f&lt;&lt;endl;
-10}
-9.8</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_9/code_004.c" target="_blank">code/chapitre_9/code_004.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>i<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">4</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>i<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>i<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>or2<span style="color: #009900;">&#40;</span>and3<span style="color: #009900;">&#40;</span>not1<span style="color: #009900;">&#40;</span>x<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>y<span style="color: #339933;">,</span>not1<span style="color: #009900;">&#40;</span>z<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>and3<span style="color: #009900;">&#40;</span>x<span style="color: #339933;">,</span>not1<span style="color: #009900;">&#40;</span>y<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>not1<span style="color: #009900;">&#40;</span>z<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>or2<span style="color: #009900;">&#40;</span>and3<span style="color: #009900;">&#40;</span>x<span style="color: #339933;">,</span>y<span style="color: #339933;">,</span>not1<span style="color: #009900;">&#40;</span>z<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>and3<span style="color: #009900;">&#40;</span>not1<span style="color: #009900;">&#40;</span>x<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>not1<span style="color: #009900;">&#40;</span>y<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>not1<span style="color: #009900;">&#40;</span>z<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>or2<span style="color: #009900;">&#40;</span>v1<span style="color: #339933;">,</span>v2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span>x<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot; &quot;</span><span style="color: #339933;">&lt;&lt;</span>y<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot; &quot;</span><span style="color: #339933;">&lt;&lt;</span>z<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot; : &quot;</span><span style="color: #339933;">&lt;&lt;</span>f<span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">10</span><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color:#800080;">9.8</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Dans cette section nous tentons de montrer le lien qui existe entre logique
 propositionnelle et algèbre de Boole en nous basant sur le problème des pigeons.</p>

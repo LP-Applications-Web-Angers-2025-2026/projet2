@@ -1,0 +1,5 @@
+; tableau initialisé de 8 octets
+tab1: ,1,2,3,4,6,7
+5section
+; réserve 8 octets
+tab2:

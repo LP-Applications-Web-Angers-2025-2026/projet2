@@ -142,12 +142,21 @@ structures de données du même nom (Fibonacci Heap).
 16.2
 Le code de la fonction de Fibonacci récursive est donné Listing.
 1u32 (u32 )</p>
-<pre class="code-block"><code>if(n&lt;=1)
-return ;
-}else{
-return (n-1) fib_rec(n-2);
-}
-7}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_001.c" target="_blank">code/chapitre_16/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&lt;=</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #009900;">&#40;</span>n<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> fib_rec<span style="color: #009900;">&#40;</span>n<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 16.2.1 – Fibonacci - fonction récursive</em></p>
 <p>Si on réalise quelques tests de performance, on s’aperçoit rapidement que le
@@ -184,19 +193,28 @@ F40331160281 63
 F453672623805 75
 TABLE16.2 – Nombre d’appels des fonctions récursives de Fibonacci
 1u32 (u32 )</p>
-<pre class="code-block"><code>if(n&lt;=1)return ;
-if(n%2==1)
-int =n+1) 1;
-int =fib_rec_improved(k-1);
-int =fib_rec_improved(k);
-return(f1*f1+f2*f2);
-}else{
-int =n&gt;&gt;1;
-int =fib_rec_improved(k-1);
-int =fib_rec_improved(k);
-return(2*f1+f2) f2;
-}
-16}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_002.c" target="_blank">code/chapitre_16/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&lt;=</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span><span style="color:#800080;">2</span><span style="color: #339933;">==</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>n<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>fib_rec_improved<span style="color: #009900;">&#40;</span>k<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>fib_rec_improved<span style="color: #009900;">&#40;</span>k<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span><span style="color: #009900;">&#40;</span>f1<span style="color: #339933;">*</span>f1<span style="color: #339933;">+</span>f2<span style="color: #339933;">*</span>f2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>n<span style="color: #339933;">&gt;&gt;</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>fib_rec_improved<span style="color: #009900;">&#40;</span>k<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>fib_rec_improved<span style="color: #009900;">&#40;</span>k<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">2</span><span style="color: #339933;">*</span>f1<span style="color: #339933;">+</span>f2<span style="color: #009900;">&#41;</span> f2<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">16</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 16.2.2 – Fibonacci - fonction récursive améliorée</em></p>
 <p>Pour la version récursive améliorée, le nombre d’appels récursifs est nettement
@@ -224,13 +242,22 @@ Elle prend en paramètres la valeur du nombre à calculernainsi queF0etF1
 représentés respectivement parf0etf1. L’appel est réalisé en prenantf0= 0et
 f1= 1.
 1u32 (u32 ,u32 ,u32 )</p>
-<pre class="code-block"><code>if(n==0)
-return ;
-}else{
-return (f1,f0+f1,n-1);
-}
-7}
-9u32 =fib_ref(0,1,n);</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_003.c" target="_blank">code/chapitre_16/code_003.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">==</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #009900;">&#40;</span>f1<span style="color: #339933;">,</span>f0<span style="color: #339933;">+</span>f1<span style="color: #339933;">,</span>n<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">9u32 <span style="color: #339933;">=</span>fib_ref<span style="color: #009900;">&#40;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">,</span><span style="color: #0000dd;">1</span><span style="color: #339933;">,</span>n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 16.4.1 – Fibonacci - fonction de référence</em></p>
 <p>Cette fonction de référence est traduite par le compilateurg++en utilisant les
@@ -270,6 +297,9 @@ ralentissement (cf. partie résultats pour l’explication) .</p>
 valeurs0et1qui correspondent àF0etF1. Chaque élément d’indiceidu tableau
 1fib_v1:</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_004.asm" target="_blank">code/chapitre_16/code_004.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
@@ -292,20 +322,31 @@ valeurs0et1qui correspondent àF0etF1. Chaque élément d’indiceidu tableau
 </ol></div>
 </div>
 
+</details>
+
 <p><em>Listing 16.5.1 – Fibonacci - fonction de référence en assembleur</em></p>
 <p>correspond à la valeur deFi. On applique ensuite la formule de récurrence sur les
 éléments du tableau. Le Listing
 1u32 (u32 ,u32 ,u32 )</p>
-<pre class="code-block"><code>if(n&lt;=1)return ;
-data[0]f0;
-data[1]f1;
-u32 =2;
-while(i&lt;=n)
-data[i] data[i-1]data[i-2];
-++i;
-}
-return [i-1];
-15}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_005.c" target="_blank">code/chapitre_16/code_005.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&lt;=</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">data<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#93;</span>f0<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">data<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span>f1<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">2</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">while</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">&lt;=</span>n<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">data<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> data<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span>data<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">++</span>i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #009900;">&#91;</span>i<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">15</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 16.6.1 – Fibonacci - fonction itérative avec tableau</em></p>
 <p>Version tableau
@@ -322,14 +363,23 @@ d’un tableau pour stocker les calculs intermédiaires. Ces calculs seront réa
 dans les registreseaxetedxprincipalement. Le code C correspondant à cette
 modification figure Listing.
 1u32 (u32 ,u32 ,u32 )</p>
-<pre class="code-block"><code>while(n!=0)
-int =f1;
-f1+=f0;
-f0=f1;
---n;
-}
-return ;
-9}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_006.c" target="_blank">code/chapitre_16/code_006.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">while</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">!=</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>f1<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">f1<span style="color: #339933;">+=</span>f0<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">f0<span style="color: #339933;">=</span>f1<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">--</span>n<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">9</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 16.7.1 – Fibonacci - fonction itérative avec boucle while</em></p>
 <p>Sinest égal à0, on retournef0, donc0. Sinon on calculeF1, puisF2, jusqu’à
@@ -341,6 +391,9 @@ alors de sauvegarderebxdans la pile, puis de le restaurer par la suite.
 Chaque itération de la bouclewhileest alors composée de trois instructions
 assembleur (lignes14à16) du Listing.
 1fib_v3:</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_007.asm" target="_blank">code/chapitre_16/code_007.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
@@ -366,6 +419,8 @@ assembleur (lignes14à16) du Listing.
 </ol></div>
 </div>
 
+</details>
+
 <p><em>Listing 16.7.2 – Fibonacci - fonction itérative avec while en assembleur</em></p>
 <p>Version itérative avec while
 La version itérative avecwhilene prend alors plus que6,30secondes pour
@@ -380,12 +435,17 @@ Les dépliages par un facteur4ou8semblent donc les plus performants.</p>
 
 <p>de coder :</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_008.asm" target="_blank">code/chapitre_16/code_008.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edx</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p>on peut utiliser les deux instructions suivantes :
 1 add ,edx ; eax = f0 + f1, edx = f1
@@ -414,8 +474,17 @@ En effet, si on considère queeaxcontientFietedxFi+1 alors le résultat de la
 première instruction d’addition estFi+2danseax, puisFi+3dansedx
 Instruction / Registreeaxedx
 initialement FiFi+1</p>
-<pre class="code-block"><code>add ,edx Fi+2Fi+1
-add ,edx Fi+2Fi+3</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_009.asm" target="_blank">code/chapitre_16/code_009.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edx</span> Fi<span style="color: #339933;">+</span>2Fi<span style="color: #339933;">+</span><span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edx</span> Fi<span style="color: #339933;">+</span>2Fi<span style="color: #339933;">+</span><span style="color: #ff0000;">3</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>TABLE16.3 – Astuce dépliage par 2
 Version itérative avec while et amélioration du dépliage
@@ -454,6 +523,9 @@ diffère est présentée ci-après.
 11 swap_2
 12 loop
 14.last_7:</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_010.asm" target="_blank">code/chapitre_16/code_010.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -499,6 +571,8 @@ diffère est présentée ci-après.
 </ol></div>
 </div>
 
+</details>
+
 <p><em>Listing 16.7.3 – Fibonacci - fonction itérative avec while et amélioration du dépliage</em></p>
 <p>19align ; switch
 20..@case_7:
@@ -522,6 +596,9 @@ directementesp. Le premier paramètref0est donc en[esp+4] car[esp] contient
 l’adresse de retour du sous-programme.
 1fib:</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_011.asm" target="_blank">code/chapitre_16/code_011.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -535,6 +612,8 @@ l’adresse de retour du sous-programme.
 </ol></div>
 </div>
 
+</details>
+
 <p>Version itérative avec while, amélioration du dépliage, switch, esp
 En éliminant tout ce qui touche àebp, notamment l’entrée et la sortie de la
 fonction, on exécute la fonction en2,298secondes.</p>
@@ -545,18 +624,27 @@ fonction, on exécute la fonction en2,298secondes.</p>
 on génère de nombreuses dépendances. On peut alors tenter de supprimer des
 dépendances en utilisant l’instructionleacomme sur le code suivant :
 1.while_ur8:</p>
-<pre class="code-block"><code>; eax edx ebx
-; x
-; y ?
-add ,edx ; x+y y
-add ,eax ; x+y x+2y
-lea ,eax+edx]
-lea ,ebx+edx]
-lea ,eax+ebx]
-lea ,eax+edx]
-lea ,ebx+edx]
-lea ,eax+ebx]
-loop</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_012.asm" target="_blank">code/chapitre_16/code_012.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; eax edx ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; x</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; y ?</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edx</span> <span style="color: #666666; font-style: italic;">; x+y y</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span> <span style="color: #666666; font-style: italic;">; x+y x+2y</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">loop</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Version itérative avec while, amélioration du calcul interne, switch, esp
 Le test d’efficacité ne met alors plus que2,229secondes pour s’exécuter. Même
@@ -608,6 +696,9 @@ version SSE assembleur améliorée avec dépliage par 8 (méthode30) :
 3sse_vect1: ,1,2,3; F1, F2, F3, F4
 5fib_sse:</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_013.asm" target="_blank">code/chapitre_16/code_013.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span>sse_vect0<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -631,6 +722,8 @@ version SSE assembleur améliorée avec dépliage par 8 (méthode30) :
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p><em>Listing 16.8.1 – Fibonacci - fonction itérative vectorielle</em></p>
 <h2 class="section">16.9 Le code qui correspond à l’ensemble des résultats produits dans cette section</h2>
@@ -660,16 +753,25 @@ et utilisation deesp
 10 vf0=_mm_load_si128((<strong>m128i*) sse_v0);
 11 vf1=_mm_load_si128((</strong>m128i*) sse_v1);
 13 u32 =n/4;</p>
-<pre class="code-block"><code>while(r)
-vf0=_mm_add_epi32(vf0,vf1);
-vf1=_mm_add_epi32(vf0,vf1);
-vf0=_mm_add_epi32(vf0,vf1);
-vf1=_mm_add_epi32(vf0,vf1);
---r;
-}
-_mm_store_si128(__m128i*) v2[0],vf0);
-return [n&amp;3];
-24}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_014.c" target="_blank">code/chapitre_16/code_014.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">while</span><span style="color: #009900;">&#40;</span>r<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">vf0<span style="color: #339933;">=</span>_mm_add_epi32<span style="color: #009900;">&#40;</span>vf0<span style="color: #339933;">,</span>vf1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">vf1<span style="color: #339933;">=</span>_mm_add_epi32<span style="color: #009900;">&#40;</span>vf0<span style="color: #339933;">,</span>vf1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">vf0<span style="color: #339933;">=</span>_mm_add_epi32<span style="color: #009900;">&#40;</span>vf0<span style="color: #339933;">,</span>vf1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">vf1<span style="color: #339933;">=</span>_mm_add_epi32<span style="color: #009900;">&#40;</span>vf0<span style="color: #339933;">,</span>vf1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">--</span>r<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">_mm_store_si128<span style="color: #009900;">&#40;</span>__m128i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span> v2<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span>vf0<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #009900;">&#91;</span>n<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">24</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 16.8.2 – Fibonacci - fonction vectorielle SSE</em></p>
 <p>•while v6 ur8
@@ -699,6 +801,9 @@ optimisé pariccest par contre bien moins performant alors que généralementicc
 5align
 6fib_avx:</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_015.asm" target="_blank">code/chapitre_16/code_015.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vmovdqa</span> <span style="color: #339933;">,</span>avx_vect0<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -726,6 +831,8 @@ optimisé pariccest par contre bien moins performant alors que généralementicc
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p><em>Listing 16.8.3 – Fibonacci - fonction vectorielle AVX</em></p>
 <p>produit un code plutôt bien optimisé.
@@ -756,6 +863,9 @@ Modèle 61001700X 7400 87008365U
 4 stat. array8,99 8,84 9,12 7,37 8,30
 5 dyna. array18,57 21,16 21,67 15,79 18,09
 6 n recursive63,39 82,48 67,71 51,53 112,24
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_016.txt" target="_blank">code/chapitre_16/code_016.txt</a></summary>
 <pre class="code-block"><code>while v1 7,52 11,47 8,99 5,78 7,44
 9while v1 ur218,45 5,48 22,26 15,01 18,88
 10while v1 ur412,56 5,25 16,07 10,21 12,79
@@ -766,6 +876,7 @@ SSE intrin 4,11 4,27 4,36 3,17 3,66
 SSE v4 ur8
 32AVX intrin v2 4,20 5,73 4,38 3,21 3,93
 33AVX asm ur8 5,60 3,34</code></pre>
+</details>
 
 <p>ratio (1 / 30) 1,18 1,36 1,26 1,25 1,22
 ratio (1 / 33) 1,28 0,78 1,26 1,25 1,17
@@ -778,194 +889,6 @@ temps d’exécution (cf. méthode21) sur les processeurs AMD et Intel, de même
 la méthode24.
 Mais c’est l’implantation vectorielle SSE ou AVX (méthodes30et33) qui permet
 de supplanter la version optimisée par le compilateur.</p>
-<script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
-<script src="../../data/graph.js"></script>
-<div class="chart-container" id="chart-ch16-moderne-15" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-ch16-moderne-15';
-    var data = {
-    "chapter": 16,
-    "title": "Suite de Fibonacci",
-    "description": "Temps d'exécution en secondes pour 500 000 000 fois le calcul de F43.",
-    "CPUs": [
-        "Core i3 6100",
-        "Ryzen 7 1700X",
-        "Core i5 7400",
-        "Core i7 8700",
-        "Core i5 8365U"
-    ],
-    "Years": [
-        2015,
-        2017,
-        2017,
-        2017,
-        2019
-    ],
-    "Methods": [
-        {
-            "name": "gcc",
-            "values": [
-                4.11,
-                4.39,
-                4.24,
-                3.23,
-                3.61
-            ]
-        },
-        {
-            "name": "icc",
-            "values": [
-                7.97,
-                11.31,
-                8.56,
-                6.49,
-                7.39
-            ]
-        },
-        {
-            "name": "stat. array",
-            "values": [
-                8.99,
-                8.84,
-                9.12,
-                7.37,
-                8.3
-            ]
-        },
-        {
-            "name": "dyna. array",
-            "values": [
-                18.57,
-                21.16,
-                21.67,
-                15.79,
-                18.09
-            ]
-        },
-        {
-            "name": "n recursive",
-            "values": [
-                63.39,
-                82.48,
-                67.71,
-                51.53,
-                112.24
-            ]
-        },
-        {
-            "name": "while v1",
-            "values": [
-                7.52,
-                11.47,
-                8.99,
-                5.78,
-                7.44
-            ]
-        },
-        {
-            "name": "while v1 ur2",
-            "values": [
-                18.45,
-                5.48,
-                22.26,
-                15.01,
-                18.88
-            ]
-        },
-        {
-            "name": "while v1 ur4",
-            "values": [
-                12.56,
-                5.25,
-                16.07,
-                10.21,
-                12.79
-            ]
-        },
-        {
-            "name": "while v1 ur8",
-            "values": [
-                9.65,
-                5.14,
-                11.85,
-                7.86,
-                9.95
-            ]
-        },
-        {
-            "name": "while v3 ur8",
-            "values": [
-                5.37,
-                4.39,
-                5.74,
-                4.45,
-                4.96
-            ]
-        },
-        {
-            "name": "while v6 ur8",
-            "values": [
-                4.35,
-                4.51,
-                4.66,
-                3.6,
-                3.95
-            ]
-        },
-        {
-            "name": "SSE intrin",
-            "values": [
-                4.11,
-                4.27,
-                4.36,
-                3.17,
-                3.66
-            ]
-        },
-        {
-            "name": "SSE v4 ur8",
-            "values": [
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "name": "AVX intrin v2",
-            "values": [
-                4.2,
-                5.73,
-                4.38,
-                3.21,
-                3.93
-            ]
-        },
-        {
-            "name": "AVX asm ur8",
-            "values": [
-                null,
-                5.6,
-                null,
-                null,
-                null
-            ]
-        }
-    ]
-};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
-  })();
-</script>
 <h3 class="subsection">16.9.2 Pour les architectures récentes (voir Table), on observe globalement les</h3>
 
 <p>mêmes phénomènes.
@@ -978,6 +901,9 @@ Modèle10850H1165G7 10400 5600g12400F
 4 stat. array6,446 5,96 7,478 6,380 4,871
 5 dyna. array14,470 14,84 16,660 13,790 9,441
 6 n recursive93,390 59,53 108,57050,630 55,870</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_017.txt" target="_blank">code/chapitre_16/code_017.txt</a></summary>
 <pre class="code-block"><code>while v1 6,038 11,94 7,322 6,304 5,570
 9while v1 ur213,860 16,09 18,210 3,60814,930
 10while v1 ur49,510 11,07 13,140 3,50011,250
@@ -988,6 +914,7 @@ SSE intrin3,076 3,47 3,584 2,393 2,480
 SSE v4 ur8 2,442 2,70 2,153
 32AVX intrin v23,235 3,71 3,837 2,471 2,566
 33AVX asm ur8</code></pre>
+</details>
 
 <p>ratio (1/33) 1,247 1,137 1,270 1,439 0,981
 TABLE16.6 – Résultats comparatifs pour fib_iter : architectures récentes
@@ -998,192 +925,6 @@ MHz?
 Au final, la méthode qui semble la plus efficace est la méthode basée sur une
 implantation assembleur avec AVX, une boucle dépliée par 8, utilisantesppour
 accéder àn(voir Listing).</p>
-<div class="chart-container" id="chart-ch16-recent-16" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-ch16-recent-16';
-    var data = {
-    "chapter": 16,
-    "title": "Suite de Fibonacci",
-    "description": "Temps d'exécution en secondes pour 500 000 000 fois le calcul de F43.",
-    "CPUs": [
-        "Core i7 10850H",
-        "Core i7 1165G7",
-        "Core i5 10400",
-        "Ryzen 5 5600g",
-        "Core i5 12400F"
-    ],
-    "Years": [
-        2020,
-        2020,
-        2020,
-        2021,
-        2022
-    ],
-    "Methods": [
-        {
-            "name": "gcc",
-            "values": [
-                3.007,
-                3.07,
-                3.516,
-                2.853,
-                2.035
-            ]
-        },
-        {
-            "name": "icc",
-            "values": [
-                5.365,
-                5.81,
-                5.61,
-                3.99,
-                4.489
-            ]
-        },
-        {
-            "name": "stat. array",
-            "values": [
-                6.446,
-                5.96,
-                7.478,
-                6.38,
-                4.871
-            ]
-        },
-        {
-            "name": "dyna. array",
-            "values": [
-                14.47,
-                14.84,
-                16.66,
-                13.79,
-                9.441
-            ]
-        },
-        {
-            "name": "n recursive",
-            "values": [
-                93.39,
-                59.53,
-                108.57,
-                50.63,
-                55.87
-            ]
-        },
-        {
-            "name": "while v1",
-            "values": [
-                6.038,
-                11.94,
-                7.322,
-                6.304,
-                5.57
-            ]
-        },
-        {
-            "name": "while v1 ur2",
-            "values": [
-                13.86,
-                16.09,
-                18.21,
-                3.608,
-                14.93
-            ]
-        },
-        {
-            "name": "while v1 ur4",
-            "values": [
-                9.51,
-                11.07,
-                13.14,
-                3.5,
-                11.25
-            ]
-        },
-        {
-            "name": "while v1 ur8",
-            "values": [
-                7.254,
-                8.69,
-                9.583,
-                3.497,
-                8.197
-            ]
-        },
-        {
-            "name": "while v3 ur8",
-            "values": [
-                4.121,
-                5.02,
-                4.823,
-                2.229,
-                4.795
-            ]
-        },
-        {
-            "name": "while v6 ur8",
-            "values": [
-                3.286,
-                3.41,
-                3.832,
-                2.271,
-                2.807
-            ]
-        },
-        {
-            "name": "SSE intrin",
-            "values": [
-                3.076,
-                3.47,
-                3.584,
-                2.393,
-                2.48
-            ]
-        },
-        {
-            "name": "SSE v4 ur8",
-            "values": [
-                2.442,
-                2.7,
-                2.153,
-                null,
-                null
-            ]
-        },
-        {
-            "name": "AVX intrin v2",
-            "values": [
-                3.235,
-                3.71,
-                3.837,
-                2.471,
-                2.566
-            ]
-        },
-        {
-            "name": "AVX asm ur8",
-            "values": [
-                null,
-                null,
-                null,
-                null,
-                null
-            ]
-        }
-    ]
-};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
-  })();
-</script>
 <h3 class="subsection">16.9.3 J’ai créé un petit programme qui s’intitulefrequency.cppdont le but est d’en-</h3>
 
 <p>registrer la fréquence de fonctionnement du core0sur lequel est exécuté le pro-
@@ -1192,6 +933,9 @@ accéder àn(voir Listing).</p>
 3avx_vect1: ,1,2,3,5,8,13,21
 5align
 6fib:</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_16/code_018.asm" target="_blank">code/chapitre_16/code_018.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -1220,6 +964,8 @@ accéder àn(voir Listing).</p>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p><em>Listing 16.9.1 – Fibonacci - fonction la plus performante</em></p>
 <p>gramme principal de testfib.exe. Ce programme permet de vérifier si la fréquence

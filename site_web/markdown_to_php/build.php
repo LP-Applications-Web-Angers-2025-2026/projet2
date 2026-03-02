@@ -60,16 +60,11 @@ function injectChartAfterTable(string $htmlContent, int $chapNum): string
     // Compteur global pour créer des IDs uniques par page
     static $chartCounter = 0;
 
-    // Chercher TABLE[chapNum].[tableNum] n'importe où dans le HTML
-    // La légende peut être dans un <p> long ou à la fin d'un <p>/<li>/<ol>
-    // On cherche le pattern et on injecte le chart après la balise fermante suivante
+    // Chercher la balise finale de la table générée pour y accrocher le graphique juste après
+    // On repère le </table></div> qui correspond à notre tableau
     foreach ($map as $tableNum => $category) {
-
-        // Matche TABLE N.M (avec ou sans espace avant le tiret/dash)
-        // suivi de TOUT jusqu'à la prochaine balise fermante </p> </ol> </li>
-        // Le flag 's' (DOTALL) permet de matcher les sauts de ligne
         $pattern = sprintf(
-            '/(TABLE%d\.%d\s*[–—\-][^<]*?)(<\/(?:p|ol|li|ul)>)/us',
+            '/(<caption>TABLE%d\.%d\s*[–—\-][^<]*?<\/caption>\s*<\/table>\s*<\/div>)/us',
             $chapNum,
             $tableNum
         );
@@ -79,21 +74,15 @@ function injectChartAfterTable(string $htmlContent, int $chapNum): string
             function ($m) use ($chapNum, $category, $tableNum, $dataBasePath, $graphJsPath, &$chartCounter) {
                 $chartCounter++;
                 $chartId  = "chart-ch{$chapNum}-{$category}-{$chartCounter}";
-                $dataPath = "{$dataBasePath}/{$category}/data.json";
                 
-                // On lit le fichier JSON côté serveur et on l'inclut directement 
-                // pour éviter le fetch asynchrone et les problèmes de CORS CORS en local.
                 $absDataPath = dirname(__DIR__) . "/data/chapitre_{$chapNum}/{$category}/data.json";
                 $jsonData = '{}';
                 if (file_exists($absDataPath)) {
                     $jsonData = file_get_contents($absDataPath);
                 }
 
-                $legendText = $m[1];   // texte de la légende
-                $closingTag = $m[2];   // </p> ou </ol> etc.
-
+                $tableHtml = $m[1]; // Fin du tableau généré avec <caption> et </table></div>
                 $chartHtml = <<<HTML
-{$legendText}{$closingTag}
 <div class="chart-container" id="{$chartId}" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
@@ -120,6 +109,37 @@ HTML;
     return $htmlContent;
 }
 
+/**
+ * Lit le JSON et génère un tableau HTML propre
+ */
+function buildHtmlTableFromJson(string $jsonPath, string $legend): string {
+    if (!file_exists($jsonPath)) return "<p><em>Données du tableau introuvables.</em></p> {$legend}";
+    $data = json_decode(file_get_contents($jsonPath), true);
+    if (!isset($data['CPUs']) || !isset($data['Methods'])) return "<p><em>Format JSON invalide.</em></p> {$legend}";
+
+    $html = "<div class=\"center\">\n<table class=\"data-table\">\n";
+    $html .= "  <thead>\n    <tr>\n      <th>Méthode</th>\n";
+    foreach ($data['CPUs'] as $idx => $cpu) {
+        $year = isset($data['Years'][$idx]) ? "<br><small>{$data['Years'][$idx]}</small>" : "";
+        $html .= "      <th>{$cpu}{$year}</th>\n";
+    }
+    $html .= "    </tr>\n  </thead>\n  <tbody>\n";
+
+    foreach ($data['Methods'] as $m) {
+        $html .= "    <tr>\n      <td><strong>{$m['name']}</strong></td>\n";
+        foreach ($m['values'] as $val) {
+            $display = ($val === null) ? "-" : number_format((float)$val, 2, '.', '');
+            $html .= "      <td>{$display}</td>\n";
+        }
+        $html .= "    </tr>\n";
+    }
+    $html .= "  </tbody>\n";
+    // On ajoute la légende issue du Markdown comme caption
+    $html .= "  <caption>{$legend}</caption>\n";
+    $html .= "</table>\n</div>\n";
+    return $html;
+}
+
 $sourceDir  = __DIR__ . '/pages-md';
 $outputDir  = __DIR__ . '/public';
 $template   = __DIR__ . '/templates/layout.php';
@@ -130,7 +150,41 @@ $pages = [];
 
 foreach (glob("$sourceDir/*.md") as $mdFile) {
 
+    $filename = basename($mdFile, '.md');
+    // Extraction du numéro de chapitre
+    $chapNum = 0;
+    if (preg_match('/chapitre_(\d+)/i', $filename, $chapMatch)) {
+        $chapNum = (int) $chapMatch[1];
+    }
+    
+    // Initialisation du dossier de sortie pour les codes (ex: site_web/code/chapitre_15)
+    $codeCounter = 0;
+    $chapterCodeDir = dirname(__DIR__) . '/code' . ($chapNum > 0 ? "/chapitre_{$chapNum}" : "/commun");
+    if (!is_dir($chapterCodeDir)) mkdir($chapterCodeDir, 0777, true);
+
     $markdown = file_get_contents($mdFile);
+
+    // ---- Reconstruction des tableaux depuis JSON (Optionnel par chapitre) ----
+    if ($chapNum >= 11 && $chapNum <= 16) {
+        $map = constant('TABLE_CATEGORY_MAP')[$chapNum] ?? [];
+        foreach ($map as $tableNum => $category) {
+            $jsonPath = dirname(__DIR__) . "/data/chapitre_{$chapNum}/{$category}/data.json";
+            
+            // On cherche n'importe quel texte résiduel du tableau corrompu (jusqu'à 1500 caractères avant TABLE X.Y)
+            // ex: "N°Marque Intel..." jusqu'à "TABLE15.5– Architectures modernes..."
+            $pattern = '/(?:N°Marque|n° Méthode|Méthode Temps).*?(TABLE\s*' . $chapNum . '\.' . $tableNum . '\s*[–—\-].*?(?:\n|$))/isu';
+            
+            $markdown = preg_replace_callback($pattern, function($m) use ($jsonPath) {
+                // $m[1] contient la légende "TABLE X.Y - Titre..." qu'on a capturée
+                $legend = trim($m[1]);
+                $tableHtml = buildHtmlTableFromJson($jsonPath, $legend);
+                
+                // On remplace tout le texte corrompu par deux sauts de ligne + la balise de table brute 
+                // que Parsedown va laisser intacte car c'est de l'HTML
+                return "\n\n" . $tableHtml . "\n\n";
+            }, $markdown);
+        }
+    }
 
     // ---- Nettoyage du Markdown avant parsing ----
 
@@ -208,39 +262,92 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
         return "<h5>{$t}</h5>\n";
     }, $htmlContent);
 
-    // 6. Blocs de code -> coloration syntaxique GeSHi inline
-    $htmlContent = preg_replace_callback(
-        '/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/s',
-        function($m) {
-            $lang     = trim($m[1]);
-            $code     = html_entity_decode($m[2], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            // Mapper les noms de languge Markdown -> GeSHi
-            $langMap  = [
-                'nasm'   => 'asm',
-                'bash'   => 'bash',
-                'c'      => 'c',
-                'cpp'    => 'cpp',
-                'python' => 'python',
-                'text'   => 'text',
-            ];
-            $geshiLang = $langMap[$lang] ?? 'text';
+    // Fonction Helpers pour détecter le langage du code au vu de son contenu
+    $detectCodeLanguage = function($code, $defaultLang = 'text') {
+        if ($defaultLang !== 'text' && $defaultLang !== '') return $defaultLang;
+        
+        $c_keywords   = ['#include', 'void ', 'int ', 'for(', 'while(', 'if(', 'struct ', '__m128', '__m256', '__m512', 'u32', 'u8', 'u64'];
+        $asm_keywords = ['mov ', 'xor ', 'cmp ', 'jmp', 'lea ', 'add ', 'sub ', 'inc ', 'dec ', 'popcnt', 'vmov', 'rep '];
+        $bash_keywords = ['echo ', 'sudo ', 'apt-get', '#!/bin/bash'];
 
-            if ($geshiLang === 'text') {
-                // Pas de coloration pour text, juste une <pre> propre
-                $escaped = htmlspecialchars($code, ENT_QUOTES, 'UTF-8');
-                return "<pre class=\"code-block\"><code>{$escaped}</code></pre>\n";
-            }
+        $count_c = 0; $count_asm = 0; $count_bash = 0;
+        foreach ($c_keywords as $kw)   if (stripos($code, $kw) !== false) $count_c++;
+        foreach ($asm_keywords as $kw) if (stripos($code, $kw) !== false) $count_asm++;
+        foreach ($bash_keywords as $kw) if (stripos($code, $kw) !== false) $count_bash++;
 
+        if ($count_c > 0 && $count_c >= $count_asm && $count_c >= $count_bash) return 'c';
+        if ($count_asm > 0 && $count_asm > $count_c && $count_asm >= $count_bash) return 'asm';
+        if ($count_bash > 0 && $count_bash > $count_c && $count_bash > $count_asm) return 'bash';
+
+        return 'text';
+    };
+
+    // Fonction unifiée de rendu et d'export du code
+    $renderAndExportCodeBlock = function($code, $lang_hint) use ($chapNum, $chapterCodeDir, &$codeCounter, $detectCodeLanguage) {
+        $codeCounter++;
+        $code = trim($code);
+        
+        // Détecter le vrai langage si non précisé ou générique
+        $detectedLang = $detectCodeLanguage($code, $lang_hint);
+        
+        // Mapper vers GeSHi et Extension
+        $langMap = [
+            'nasm'   => ['geshi' => 'asm', 'ext' => 'asm'],
+            'asm'    => ['geshi' => 'asm', 'ext' => 'asm'],
+            'bash'   => ['geshi' => 'bash', 'ext' => 'sh'],
+            'c'      => ['geshi' => 'c', 'ext' => 'c'],
+            'cpp'    => ['geshi' => 'cpp', 'ext' => 'cpp'],
+            'python' => ['geshi' => 'python', 'ext' => 'py'],
+            'text'   => ['geshi' => 'text', 'ext' => 'txt'],
+        ];
+        
+        $geshiLang = $langMap[$detectedLang]['geshi'] ?? 'text';
+        $ext       = $langMap[$detectedLang]['ext'] ?? 'txt';
+        
+        // Exporter le code
+        $codeFileName = sprintf("code_%03d.%s", $codeCounter, $ext);
+        $codeFilePath = $chapterCodeDir . '/' . $codeFileName;
+        file_put_contents($codeFilePath, $code);
+        
+        // Chemins
+        $relDir = $chapNum > 0 ? "chapitre_{$chapNum}" : "commun";
+        $htmlRelPath = "../../code/{$relDir}/{$codeFileName}";
+        $displayPath = "code/{$relDir}/{$codeFileName}";
+
+        $rendered = '';
+        if ($geshiLang === 'text') {
+            $escaped = htmlspecialchars($code, ENT_QUOTES, 'UTF-8');
+            $rendered = "<pre class=\"code-block\"><code>{$escaped}</code></pre>";
+        } else {
             try {
                 $geshi = new GeSHi($code, $geshiLang);
                 $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
                 $geshi->set_header_type(GESHI_HEADER_DIV);
                 $geshi->set_tab_width(4);
-                return "\n<div class=\"code-container\">\n" . $geshi->parse_code() . "\n</div>\n";
+                $rendered = "\n<div class=\"code-container\">\n" . $geshi->parse_code() . "\n</div>\n";
             } catch (Exception $e) {
                 $escaped = htmlspecialchars($code, ENT_QUOTES, 'UTF-8');
-                return "<pre class=\"code-block\"><code>{$escaped}</code></pre>\n";
+                $rendered = "<pre class=\"code-block\"><code>{$escaped}</code></pre>";
             }
+        }
+
+        return <<<HTML
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="{$htmlRelPath}" target="_blank">{$displayPath}</a></summary>
+{$rendered}
+</details>
+
+HTML;
+    };
+
+    // 6. Blocs de code (avec attribut language) -> sauvagarde physique & HTML type do_geshi()
+    $htmlContent = preg_replace_callback(
+        '/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/s',
+        function($m) use ($renderAndExportCodeBlock) {
+            $lang = trim($m[1]);
+            $code = html_entity_decode($m[2], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            return $renderAndExportCodeBlock($code, $lang);
         },
         $htmlContent
     );
@@ -248,10 +355,9 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
     // Blocs de code sans classe (``` sans langage)
     $htmlContent = preg_replace_callback(
         '/<pre><code>(.*?)<\/code><\/pre>/s',
-        function($m) {
-            $code    = html_entity_decode($m[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            $escaped = htmlspecialchars($code, ENT_QUOTES, 'UTF-8');
-            return "<pre class=\"code-block\"><code>{$escaped}</code></pre>\n";
+        function($m) use ($renderAndExportCodeBlock) {
+            $code = html_entity_decode($m[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            return $renderAndExportCodeBlock($code, 'text');
         },
         $htmlContent
     );

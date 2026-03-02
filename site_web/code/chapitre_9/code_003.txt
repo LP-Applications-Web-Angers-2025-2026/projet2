@@ -1,0 +1,5 @@
+// élimine les poissons volants
+// Traite les poissons ou les animaux qui volent
+// mais pas les deux en même temps
+5}
+9.3.1.4

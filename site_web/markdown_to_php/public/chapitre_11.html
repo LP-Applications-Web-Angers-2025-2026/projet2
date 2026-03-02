@@ -191,16 +191,25 @@ qui ont le même nombre de lignes et de colonnes.
 2#define b(y,x) B[(y)</em>dim+(x)]
 3#define c(y,x) C[(y)<em>dim+(x)]
 5void (f32</em>A,f32<em>B,f32</em>C,u32 )</p>
-<pre class="code-block"><code>for(u32 =0;i&lt;dim; i)
-for(u32 =0;j&lt;dim;j)
-f32 =0.0;
-for(u32 =0;k&lt;dim;k)
-sum+=a(i,k)b(k,j);
-}
-c(i,j)sum;
-}
-}
-15}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_001.c" target="_blank">code/chapitre_11/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>dim<span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>j<span style="color: #339933;">&lt;</span>dim<span style="color: #339933;">;</span>j<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">f32 <span style="color: #339933;">=</span><span style="color:#800080;">0.0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>k<span style="color: #339933;">&lt;</span>dim<span style="color: #339933;">;</span>k<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sum<span style="color: #339933;">+=</span>a<span style="color: #009900;">&#40;</span>i<span style="color: #339933;">,</span>k<span style="color: #009900;">&#41;</span>b<span style="color: #009900;">&#40;</span>k<span style="color: #339933;">,</span>j<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">c<span style="color: #009900;">&#40;</span>i<span style="color: #339933;">,</span>j<span style="color: #009900;">&#41;</span>sum<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">15</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 11.3.1 – Produit de matrice, fonction de référence</em></p>
 <p>Afin de simplifier l’écriture, on a créé trois macro instructionsa(),b()etc()qui
@@ -372,14 +381,23 @@ Amélioration inversion de boucles j et k
 En inversant les bouclesjetkon ne met plus que2,46secondes, on va donc
 environ29fois plus vite.
 1void (f32<em>A,f32</em>B,f32*C,u32 )</p>
-<pre class="code-block"><code>for(u32 =0;i&lt;dim;i)
-for(u32 =0;k&lt;dim;k)
-for(u32 =0;j&lt;dim;j)
-c(i,j) a(i,k)b(k,j);
-}
-}
-}
-9}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_002.c" target="_blank">code/chapitre_11/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>dim<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>k<span style="color: #339933;">&lt;</span>dim<span style="color: #339933;">;</span>k<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>j<span style="color: #339933;">&lt;</span>dim<span style="color: #339933;">;</span>j<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">c<span style="color: #009900;">&#40;</span>i<span style="color: #339933;">,</span>j<span style="color: #009900;">&#41;</span> a<span style="color: #009900;">&#40;</span>i<span style="color: #339933;">,</span>k<span style="color: #009900;">&#41;</span>b<span style="color: #009900;">&#40;</span>k<span style="color: #339933;">,</span>j<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">9</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 11.6.1 – Produit de matrice, Inversion de boucles j et k</em></p>
 <h2 class="section">11.7 Nous allons créer une version vectorisée en SSE de la variante de l’inversion de</h2>
@@ -403,6 +421,9 @@ j) et on stockeraietkdans la pile en tant que variables locales :
 Le sous-programme débute par la création des variablesietkdans la pile, puis
 on initialiseià0et on commence à écrire le code de la bouclefor :</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_003.asm" target="_blank">code/chapitre_11/code_003.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
@@ -417,6 +438,8 @@ on initialiseià0et on commence à écrire le code de la bouclefor :</p>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">11.7</span><span style="color: #339933;">.</span> VERSION SSE DE L’INVERSION DE LA BOUCLE J<span style="color: #339933;">,</span> K <span style="color: #ff0000;">309</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p>Cste/Param/Var TypeParamètreRegistreDescription
 A [ebp+8] matriceA
@@ -435,6 +458,9 @@ c(i,j:j+3)
 TABLE11.2 – Association variable C avec registres pour l’inversion de boucle
 12.for_i:</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_004.asm" target="_blank">code/chapitre_11/code_004.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">20</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -452,10 +478,15 @@ TABLE11.2 – Association variable C avec registres pour l’inversion de boucle
 </ol></div>
 </div>
 
+</details>
+
 <p>La partie notée&lt;&lt;<1>&gt;&gt;est développée ci-après. On écrit le code de la boucle
 k:
 1&lt;&lt;<1>&gt;&gt;
 2 xor ,ecx ; boucle k</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_005.asm" target="_blank">code/chapitre_11/code_005.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ecx</span> <span style="color: #666666; font-style: italic;">; k = 0</span></div></li>
@@ -470,11 +501,16 @@ k:
 </ol></div>
 </div>
 
+</details>
+
 <p>On poursuit avec le calcul de l’adresse de la valeura(i,k), valeur que l’on
 charge dans la partie basse dexmm0, puis que l’on recopie 3 fois dansxmm0grâce à
 l’instructionpshufd. On calcule également dansedil’adresse dec(i,0)et l’adresse
 deb(k,0)dansesi
 1&lt;&lt;<2>&gt;&gt;</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_006.asm" target="_blank">code/chapitre_11/code_006.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -497,9 +533,14 @@ deb(k,0)dansesi
 </ol></div>
 </div>
 
+</details>
+
 <p>Enfin, on écrit la bouclefor :
 1&lt;&lt;<3>&gt;&gt;
 2 xor ,ecx ; j = 0</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_007.asm" target="_blank">code/chapitre_11/code_007.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">20</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -516,6 +557,8 @@ deb(k,0)dansesi
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">16</span><span style="color: #339933;">.</span>endfor_j<span style="color: #339933;">:</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p>Amélioration inversion de boucles j et k + SSE
 En inversant les bouclesjetket en combinant avec la technologie vectorielle
@@ -541,21 +584,30 @@ efficacement. Si on utilise l’option-funroll-loopsdegcc, la boucle sera dépli
 3 __m128 =_mm_load_ps(&amp;B[dim]);
 4 </strong>m128 =_mm_load_ps(&amp;B[2</em>dim]);
 5 __m128 =_mm_load_ps(&amp;B[3*dim]);</p>
-<pre class="code-block"><code>for(int =0;i&lt;4;i++)
-__m128 =_mm_set1_ps(A[dim*i+0]);
-__m128 =_mm_set1_ps(A[dim*i+1]);
-__m128 =_mm_set1_ps(A[dim*i+2]);
-__m128 =_mm_set1_ps(A[dim*i+3]);
-__m128 =_mm_add_ps(_mm_mul_ps(dup1,row1),
-_mm_mul_ps(dup2,row2)
-__m128 =_mm_add_ps(_mm_mul_ps(dup3,row3),
-_mm_mul_ps(dup4,row4)
-__m128 =_mm_add_ps(sum1,sum2);
-__m128 =_mm_load_ps(&amp;C[dim*i]);
-row=_mm_add_ps(row,old_row);
-_mm_store_ps(&amp;C[dim*i],row);
-}
-24}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_008.c" target="_blank">code/chapitre_11/code_008.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span><span style="color: #0000dd;">4</span><span style="color: #339933;">;</span>i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_set1_ps<span style="color: #009900;">&#40;</span>A<span style="color: #009900;">&#91;</span>dim<span style="color: #339933;">*</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_set1_ps<span style="color: #009900;">&#40;</span>A<span style="color: #009900;">&#91;</span>dim<span style="color: #339933;">*</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_set1_ps<span style="color: #009900;">&#40;</span>A<span style="color: #009900;">&#91;</span>dim<span style="color: #339933;">*</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_set1_ps<span style="color: #009900;">&#40;</span>A<span style="color: #009900;">&#91;</span>dim<span style="color: #339933;">*</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_add_ps<span style="color: #009900;">&#40;</span>_mm_mul_ps<span style="color: #009900;">&#40;</span>dup1<span style="color: #339933;">,</span>row1<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">_mm_mul_ps<span style="color: #009900;">&#40;</span>dup2<span style="color: #339933;">,</span>row2<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_add_ps<span style="color: #009900;">&#40;</span>_mm_mul_ps<span style="color: #009900;">&#40;</span>dup3<span style="color: #339933;">,</span>row3<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">_mm_mul_ps<span style="color: #009900;">&#40;</span>dup4<span style="color: #339933;">,</span>row4<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_add_ps<span style="color: #009900;">&#40;</span>sum1<span style="color: #339933;">,</span>sum2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">__m128 <span style="color: #339933;">=</span>_mm_load_ps<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span>C<span style="color: #009900;">&#91;</span>dim<span style="color: #339933;">*</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">row<span style="color: #339933;">=</span>_mm_add_ps<span style="color: #009900;">&#40;</span>row<span style="color: #339933;">,</span>old_row<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">_mm_store_ps<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span>C<span style="color: #009900;">&#91;</span>dim<span style="color: #339933;">*</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span>row<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">24</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 11.8.1 – Produit de matrice - Tuilage 4x4</em></p>
 <p>normalement plus efficace. L’intrinsics_mm_set1_psqui charge quatre fois la valeur
@@ -588,22 +640,31 @@ chaque bloc on fait varieri,kpuisj
 La dernière version (version 4) semble être la plus efficace. Son code est donné
 Listing.
 1void (f32<em>A,f32</em>B,f32*C,u32 )</p>
-<pre class="code-block"><code>for(u32 =0;i&lt;size;i+=BLOCK_DIM)
-for(u32 =0;j&lt;size;j+=BLOCK_DIM)
-for(u32 =0;k&lt;size;k+=BLOCK_DIM)
-for(u32 =i;ib&lt;min(i+BLOCK_DIM,size); ib)
-for(u32 =k;kb&lt;min(k+BLOCK_DIM,size); kb)
-f32*aib=a(ib,0);
-f32*cib=c(ib,0);
-for(u32 =j;jb&lt;min(j+BLOCK_DIM,size); jb)
-cib[jb] aib[kb]b(kb,jb);
-}
-}
-}
-}
-}
-}
-18}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_11/code_009.c" target="_blank">code/chapitre_11/code_009.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>size<span style="color: #339933;">;</span>i<span style="color: #339933;">+=</span>BLOCK_DIM<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>j<span style="color: #339933;">&lt;</span>size<span style="color: #339933;">;</span>j<span style="color: #339933;">+=</span>BLOCK_DIM<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>k<span style="color: #339933;">&lt;</span>size<span style="color: #339933;">;</span>k<span style="color: #339933;">+=</span>BLOCK_DIM<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span>i<span style="color: #339933;">;</span>ib<span style="color: #339933;">&lt;</span>min<span style="color: #009900;">&#40;</span>i<span style="color: #339933;">+</span>BLOCK_DIM<span style="color: #339933;">,</span>size<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> ib<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span>k<span style="color: #339933;">;</span>kb<span style="color: #339933;">&lt;</span>min<span style="color: #009900;">&#40;</span>k<span style="color: #339933;">+</span>BLOCK_DIM<span style="color: #339933;">,</span>size<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> kb<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">f32<span style="color: #339933;">*</span>aib<span style="color: #339933;">=</span>a<span style="color: #009900;">&#40;</span>ib<span style="color: #339933;">,</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">f32<span style="color: #339933;">*</span>cib<span style="color: #339933;">=</span>c<span style="color: #009900;">&#40;</span>ib<span style="color: #339933;">,</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span>j<span style="color: #339933;">;</span>jb<span style="color: #339933;">&lt;</span>min<span style="color: #009900;">&#40;</span>j<span style="color: #339933;">+</span>BLOCK_DIM<span style="color: #339933;">,</span>size<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> jb<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cib<span style="color: #009900;">&#91;</span>jb<span style="color: #009900;">&#93;</span> aib<span style="color: #009900;">&#91;</span>kb<span style="color: #009900;">&#93;</span>b<span style="color: #009900;">&#40;</span>kb<span style="color: #339933;">,</span>jb<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">18</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 11.8.2 – Produit de matrice - Tuilage</em></p>
 <p>On utilise la variableBLOCK_DIMqui représente le facteur de blocage. Ce facteur
@@ -723,178 +784,6 @@ Le tuilage4×4 n’est pas très intéressant et les résultats sont moins bons 
 méthode 4.
 Le tuilage est intéressant sauf pour les méthodes 9 et 10, mais le fait de se
 limiter à une taille de64×64est pénalisant.</p>
-<script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
-<script src="../../data/graph.js"></script>
-<div class="chart-container" id="chart-ch11-ancien-1" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-ch11-ancien-1';
-    var data = {
-    "chapter": 11,
-    "title": "Produit de matrices",
-    "description": "Temps d'exécution en secondes du produit de matrices 2048×2048 en 32 bits.",
-    "CPUs": [
-        "Pentium D 925",
-        "Core 2 Q9300",
-        "Core i7 860",
-        "AMD X6 1090T",
-        "Core i5 3570k",
-        "Core i7 4790"
-    ],
-    "Years": [
-        2006,
-        2008,
-        2009,
-        2010,
-        2012,
-        2014
-    ],
-    "Methods": [
-        {
-            "name": "mp_reference",
-            "values": [
-                363.91,
-                257.74,
-                90.53,
-                172.35,
-                78.62,
-                64.46
-            ]
-        },
-        {
-            "name": "mp_asm_fpu",
-            "values": [
-                380.06,
-                190.83,
-                74.86,
-                180.55,
-                78.33,
-                63.05
-            ]
-        },
-        {
-            "name": "mp_asm_fpu_ur4",
-            "values": [
-                379.9,
-                197.35,
-                74.4,
-                179.28,
-                79.18,
-                63.02
-            ]
-        },
-        {
-            "name": "mp_inv_jk_O2",
-            "values": [
-                23.07,
-                14.94,
-                8.25,
-                10.35,
-                6.27,
-                5
-            ]
-        },
-        {
-            "name": "mp_inv_jk",
-            "values": [
-                null,
-                null,
-                null,
-                null,
-                8.51,
-                8.09
-            ]
-        },
-        {
-            "name": "mp_inv_jk_sse",
-            "values": [
-                85.23,
-                32.28,
-                4.36,
-                17.06,
-                4.32,
-                4.96
-            ]
-        },
-        {
-            "name": "mp_inv_jk_avx",
-            "values": [
-                null,
-                null,
-                null,
-                null,
-                2.33,
-                1.93
-            ]
-        },
-        {
-            "name": "mp_tile_4x4",
-            "values": [
-                35.77,
-                28.71,
-                10.19,
-                21.24,
-                7.98,
-                6.76
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v1",
-            "values": [
-                28.19,
-                178.39,
-                23.82,
-                60.46,
-                19.25,
-                16.82
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v2",
-            "values": [
-                25.74,
-                33.68,
-                23.15,
-                49.14,
-                15.2,
-                11.67
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v3",
-            "values": [
-                12.62,
-                7.99,
-                3.98,
-                7.62,
-                2.97,
-                1.86
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v4",
-            "values": [
-                14.11,
-                7.7,
-                3.74,
-                6.36,
-                2.82,
-                1.55
-            ]
-        }
-    ]
-};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
-  })();
-</script>
 <h3 class="subsection">11.9.2 En ce qui concerne les architectures modernes (cf. Table), on observe le</h3>
 
 <p>même phénomène que noté précédemment pour l’inversion des bouclesjetk. Mais
@@ -919,176 +808,6 @@ Modèle 61001700X 7400 8700 36004208
 ratio (1/5) 28.47 37.68 31.47 38.86 47.41 24.15
 TABLE11.5– Architectures modernes : temps d’exécution en secondes du produit de
 matrices2048×2048en 32 bits</p>
-<div class="chart-container" id="chart-ch11-moderne-2" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-ch11-moderne-2';
-    var data = {
-    "chapter": 11,
-    "title": "Produit de matrices",
-    "description": "Temps d'exécution en secondes du produit de matrices 2048×2048 en 32 bits.",
-    "CPUs": [
-        "Core i3 6100",
-        "Ryzen 7 1700X",
-        "Core i5 7400",
-        "Core i7 8700",
-        "Ryzen 5 3600",
-        "Xeon Silver 4208"
-    ],
-    "Years": [
-        2015,
-        2017,
-        2017,
-        2017,
-        2019,
-        2019
-    ],
-    "Methods": [
-        {
-            "name": "mp_reference",
-            "values": [
-                60.08,
-                57.66,
-                49.1,
-                50.13,
-                43.62,
-                53.63
-            ]
-        },
-        {
-            "name": "mp_asm_fpu",
-            "values": [
-                59.77,
-                52.46,
-                49.28,
-                46.85,
-                34.42,
-                53.23
-            ]
-        },
-        {
-            "name": "mp_asm_fpu_ur4",
-            "values": [
-                60.63,
-                55.26,
-                48.36,
-                42.57,
-                45.58,
-                52.22
-            ]
-        },
-        {
-            "name": "mp_inv_jk_O2",
-            "values": [
-                10.22,
-                6.84,
-                10.32,
-                8.01,
-                6.16,
-                11.28
-            ]
-        },
-        {
-            "name": "mp_inv_jk",
-            "values": [
-                2.11,
-                null,
-                1.53,
-                1.56,
-                0.92,
-                2.22
-            ]
-        },
-        {
-            "name": "mp_inv_jk_sse",
-            "values": [
-                5.84,
-                5.53,
-                5.81,
-                4.53,
-                4.39,
-                4.33
-            ]
-        },
-        {
-            "name": "mp_inv_jk_avx",
-            "values": [
-                2.18,
-                1.76,
-                1.63,
-                1.4,
-                1.03,
-                2.51
-            ]
-        },
-        {
-            "name": "mp_tile_4x4",
-            "values": [
-                6.89,
-                6.35,
-                5.27,
-                4.71,
-                4.62,
-                7.74
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v1",
-            "values": [
-                17.31,
-                122.13,
-                18.05,
-                14.03,
-                37.54,
-                21.31
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v2",
-            "values": [
-                12.49,
-                27.39,
-                12.7,
-                10.57,
-                27.6,
-                13.4
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v3",
-            "values": [
-                1.84,
-                1.78,
-                1.85,
-                null,
-                2.48,
-                0.97
-            ]
-        },
-        {
-            "name": "mp_tile_bxb_v4",
-            "values": [
-                1.48,
-                null,
-                null,
-                null,
-                1.72,
-                2.48
-            ]
-        }
-    ]
-};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
-  })();
-</script>
 <h3 class="subsection">11.9.3 Pour les architectures récentes (cf. Table), on note les mêmes tendances</h3>
 
 <p>que pour les architectures modernes. C’est la version avec tuilage qui est la plus

@@ -107,18 +107,27 @@ chiffre unité du nombre et le comparer à 1, 3, 5, 7 ou 9 :
 1#include
 2using ;
 4int (int ,char*argv[]</p>
-<pre class="code-block"><code>int =123789;
-if(argc&gt;1)x=atoi(argv[1]
-// extraire l&#039;unité
-int =x%10;
-// la comparer
-if((u==1) u==3) u==5) u==7) u==9))
-cout&lt;&lt;x&lt;&lt;&quot; est impair&quot;&lt;&lt;endl;
-}else{
-cout&lt;&lt;x&lt;&lt;&quot; est pair&quot;&lt;&lt;endl;
-}
-return ;
-20}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_001.c" target="_blank">code/chapitre_2/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">123789</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>argc<span style="color: #339933;">&gt;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span>x<span style="color: #339933;">=</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/atoi.html"><span style="color: #000066;">atoi</span></a><span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// extraire l'unité</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>x<span style="color: #339933;">%</span><span style="color:#800080;">10</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// la comparer</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>u<span style="color: #339933;">==</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> u<span style="color: #339933;">==</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#41;</span> u<span style="color: #339933;">==</span><span style="color: #0000dd;">5</span><span style="color: #009900;">&#41;</span> u<span style="color: #339933;">==</span><span style="color: #0000dd;">7</span><span style="color: #009900;">&#41;</span> u<span style="color: #339933;">==</span><span style="color: #0000dd;">9</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span>x<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot; est impair&quot;</span><span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span>x<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot; est pair&quot;</span><span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">20</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Voici le code assembleur x86 64 bits qui correspondrait au code C précédent
 pour la partie comparaison. Ici, on retourne la valeur1dans le registreeaxpour
@@ -129,6 +138,9 @@ indiquer que le nombre est impair et0pour indiquer qu’il est pair :
 6; bool est_impair(int n)
 7; n =&gt; edi
 8est_impair:</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_002.asm" target="_blank">code/chapitre_2/code_002.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edi</span> <span style="color: #666666; font-style: italic;">; eax &lt;- edi</span></div></li>
@@ -153,6 +165,8 @@ indiquer que le nombre est impair et0pour indiquer qu’il est pair :
 </ol></div>
 </div>
 
+</details>
+
 <p>Comme nous n’avons pas encore vu d’instructions assembleur, quelques explica-
 tions s’imposent. Les lignes 9 à 12 calculent le reste de la division denpar10, le
 modulo. Celui-ci est obtenu dans le registreedxaprès utilisation de l’instruction
@@ -170,15 +184,24 @@ est différent de 0, ce qui revient au même :
 1#include
 2using ;
 4int (int ,char*argv[]</p>
-<pre class="code-block"><code>int =123789;
-if(argc&gt;1)x=atoi(argv[1]
-if((x&amp;1) 0)
-cout&lt;&lt;x&lt;&lt;&quot; est impair&quot;&lt;&lt;endl;
-}else{
-cout&lt;&lt;x&lt;&lt;&quot; est pair&quot;&lt;&lt;endl;
-}
-return ;
-16}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_003.c" target="_blank">code/chapitre_2/code_003.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">123789</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>argc<span style="color: #339933;">&gt;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span>x<span style="color: #339933;">=</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/atoi.html"><span style="color: #000066;">atoi</span></a><span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>x<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span>x<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot; est impair&quot;</span><span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span>x<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot; est pair&quot;</span><span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">16</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Au final, le calcul réalisé par un informaticien, ou tout au moins une personne
 qui possède des connaissances en informatique, est moins coûteux en temps de
@@ -712,11 +735,20 @@ On peut en dégager l’algorithme suivant extrait d’une librairie C++ que j�
 4 quotient.shl(1);
 5 quotient.set_bit(BIT_0,1);
 6 sub_at(dividend,divisor,pos);</p>
-<pre class="code-block"><code>int =greater_or_equal_at(dividend,divisor);
-int =pos-next_pos-1;
-if(shift&gt;0)quotient.shl(shift);
-pos=next_pos;
-11}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_004.c" target="_blank">code/chapitre_2/code_004.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>greater_or_equal_at<span style="color: #009900;">&#40;</span>dividend<span style="color: #339933;">,</span>divisor<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>pos<span style="color: #339933;">-</span>next_pos<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>shift<span style="color: #339933;">&gt;</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span>quotient.<span style="color: #202020;">shl</span><span style="color: #009900;">&#40;</span>shift<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">pos<span style="color: #339933;">=</span>next_pos<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">11</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Ce code repose sur l’utilisation d’une structure de données appeléeBitsqui
 représente une suite de bits par un tableau de caractères, ainsi que sur l’utilisation
@@ -951,19 +983,28 @@ précision
 8float =1.3001;
 9float =1.3001001;
 11int ()</p>
-<pre class="code-block"><code>float =v1-v2;
-float =v2-v3;
-cout&lt;&lt;setprecision(10);
-cout&lt;&lt;&quot;v1-v2 = &quot;&lt;&lt;diff_v1_v2&lt;&lt;endl;
-cout&lt;&lt;&quot;v2-v3 = &quot;&lt;&lt;diff_v2_v3&lt;&lt;endl;
-float =fabs(v3-v4);
-cout&lt;&lt;&quot;|v3-v4| = &quot;&lt;&lt;diff_v3_v4&lt;&lt;endl;
-if(diff_v3_v4&lt;1E-6)
-cout&lt;&lt;&quot;v3 = v4&quot;&lt;&lt;endl;
-else
-cout&lt;&lt;&quot;v3 != v4&quot;&lt;&lt;endl;
-return ;
-28}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_005.c" target="_blank">code/chapitre_2/code_005.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> <span style="color: #339933;">=</span>v1<span style="color: #339933;">-</span>v2<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> <span style="color: #339933;">=</span>v2<span style="color: #339933;">-</span>v3<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span>setprecision<span style="color: #009900;">&#40;</span><span style="color: #0000dd;">10</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot;v1-v2 = &quot;</span><span style="color: #339933;">&lt;&lt;</span>diff_v1_v2<span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot;v2-v3 = &quot;</span><span style="color: #339933;">&lt;&lt;</span>diff_v2_v3<span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> <span style="color: #339933;">=</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/fabs.html"><span style="color: #000066;">fabs</span></a><span style="color: #009900;">&#40;</span>v3<span style="color: #339933;">-</span>v4<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot;|v3-v4| = &quot;</span><span style="color: #339933;">&lt;&lt;</span>diff_v3_v4<span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>diff_v3_v4<span style="color: #339933;">&lt;</span><span style="color:#800080;">1E-6</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot;v3 = v4&quot;</span><span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">else</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot;v3 != v4&quot;</span><span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">28</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 2.4.1 – Précision et nombres flottants</em></p>
 <p>•
@@ -1020,12 +1061,21 @@ significatifs.</p>
 <p>coder la fonctionfabsqui calcule la valeur absolue d’un nombre. Logiquement
 cette fonction devrait être implantée sous la forme suivante :
 1float (float )</p>
-<pre class="code-block"><code>if(v&gt;=0.0)
-return ;
-}else{
-return-v;
-}
-7}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_006.c" target="_blank">code/chapitre_2/code_006.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>v<span style="color: #339933;">&gt;=</span><span style="color:#800080;">0.0</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">return<span style="color: #339933;">-</span>v<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>C’est à dire qu’il faudrait changer le signe du nombre seulement s’il est négatif
 et cela implique donc de comparervà 0.0. Mais il exite une méthode beaucoup
@@ -1096,26 +1146,35 @@ utilisant les instructions assembleur telles quebsroubsf. Le code C correspondan
 est le suivant et devrait donner dans la majorité des cas les valeurs deaet desde
 manière précise :
 1void (u32 )</p>
-<pre class="code-block"><code>// on calcule 1/d sous forme d&#039;une double
-double =1.0/d;
-u64*a=u64*)ratio;
-// décalage de 11 bits (exposant)
-// et on fixe le bit de la mantisse tronquée
-// on décale ensuite de 32 bits
-*a= *a&lt;&lt;11) 0x8000000000000000)) 32;
-// on fixe le bit de poids faible
-*a=*a|0x01;
-u32 ;
-u64 =*a)*d;
-for(shift=32;shift&lt;63; shift)
-u64 =prod&gt;&gt;shift;
-if(r==1)
-break;
-}
-}
-cout&lt;&lt;&quot;a=&quot;&lt;&lt;hex&lt;&lt;a&lt;&lt;endl;
-cout&lt;&lt;&quot;s=&quot;&lt;&lt;dec&lt;&lt;shift&lt;&lt;endl;
-25}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_007.c" target="_blank">code/chapitre_2/code_007.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// on calcule 1/d sous forme d'une double</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">double</span> <span style="color: #339933;">=</span><span style="color:#800080;">1.0</span><span style="color: #339933;">/</span>d<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u64<span style="color: #339933;">*</span>a<span style="color: #339933;">=</span>u64<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>ratio<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// décalage de 11 bits (exposant)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// et on fixe le bit de la mantisse tronquée</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// on décale ensuite de 32 bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">*</span>a<span style="color: #339933;">=</span> <span style="color: #339933;">*</span>a<span style="color: #339933;">&lt;&lt;</span><span style="color: #0000dd;">11</span><span style="color: #009900;">&#41;</span> <span style="color: #208080;">0x8000000000000000</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">32</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// on fixe le bit de poids faible</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">*</span>a<span style="color: #339933;">=*</span>a<span style="color: #339933;">|</span><span style="color: #208080;">0x01</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u64 <span style="color: #339933;">=*</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">*</span>d<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>shift<span style="color: #339933;">=</span><span style="color: #0000dd;">32</span><span style="color: #339933;">;</span>shift<span style="color: #339933;">&lt;</span><span style="color: #0000dd;">63</span><span style="color: #339933;">;</span> shift<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u64 <span style="color: #339933;">=</span>prod<span style="color: #339933;">&gt;&gt;</span>shift<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>r<span style="color: #339933;">==</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot;a=&quot;</span><span style="color: #339933;">&lt;&lt;</span>hex<span style="color: #339933;">&lt;&lt;</span>a<span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span><span style="color: #ff0000;">&quot;s=&quot;</span><span style="color: #339933;">&lt;&lt;</span>dec<span style="color: #339933;">&lt;&lt;</span>shift<span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">25</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Un test simple qui consiste à réaliser 10 milliards de divisions par différentes
 valeurs (11,127,1027,11279,44567187) en emlpoyant soit l’instructiondivde
@@ -1175,22 +1234,40 @@ du passage en majuscules (lignes 11 à 13). Il vaut mieux passer par des pointeu
 4#include
 5using ;
 7int ()</p>
-<pre class="code-block"><code>char [] &quot;abracadabra...&quot;;
-int =strlen(chaine);
-for(int =0;i&lt;longueur;i)
-if(isalpha(chaine[i]))chaine[i]toupper(chaine[i]);
-}
-cout&lt;&lt;chaine&lt;&lt;endl;
-return ;
-18}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_008.c" target="_blank">code/chapitre_2/code_008.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">char</span> <span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #ff0000;">&quot;abracadabra...&quot;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/strlen.html"><span style="color: #000066;">strlen</span></a><span style="color: #009900;">&#40;</span>chaine<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>longueur<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/isalpha.html"><span style="color: #000066;">isalpha</span></a><span style="color: #009900;">&#40;</span>chaine<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>chaine<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/toupper.html"><span style="color: #000066;">toupper</span></a><span style="color: #009900;">&#40;</span>chaine<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cout<span style="color: #339933;">&lt;&lt;</span>chaine<span style="color: #339933;">&lt;&lt;</span>endl<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">18</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 2.5.1 – Convertir une chaine en majuscules</em></p>
 <p>1char<em>s=chaine;
 2while(</em>s!='\0')</p>
-<pre class="code-block"><code>if(isalpha(*s))*s=toupper(*s);
-++s;
-5}
-2.5.2</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_2/code_009.c" target="_blank">code/chapitre_2/code_009.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/isalpha.html"><span style="color: #000066;">isalpha</span></a><span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>s<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">*</span>s<span style="color: #339933;">=</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/toupper.html"><span style="color: #000066;">toupper</span></a><span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>s<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">++</span>s<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">5</span><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">2.5.2</div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Le problème de l’ASCII est qu’il ne permet de coder que 256 caractères différents
 ce qui est insuffisant au regard de toutes les langues qui existent ainsi que des

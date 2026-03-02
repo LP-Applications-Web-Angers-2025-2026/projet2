@@ -181,6 +181,9 @@ du commentaire.
 2externprintf
 4; ==== DATA ====
 5section.data</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_4/code_001.txt" target="_blank">code/chapitre_4/code_001.txt</a></summary>
 <pre class="code-block"><code>; declaration d&#039;une chaine
 msg: db&quot;hello world!&quot;,,
 10; ==== CODE ====
@@ -196,6 +199,7 @@ xor,
 mov,
 pop
 ret</code></pre>
+</details>
 
 <p><em>Listing 4.3.1 – Hello world en nasm</em></p>
 <p>Dans la forme la plus épurée d’un programme, il suffit d’utiliser deux sections :
@@ -225,11 +229,15 @@ ou.bss). Par exemple pour créer un tableau de 8 octets, il faudra l’initialis
 la partie.dataalors que dans la section.bss, il suffit d’indiquer le nombre d’octets
 que l’on utilisera :
 1section</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_4/code_002.txt" target="_blank">code/chapitre_4/code_002.txt</a></summary>
 <pre class="code-block"><code>; tableau initialisé de 8 octets
 tab1: ,1,2,3,4,6,7
 5section
 ; réserve 8 octets
 tab2:</code></pre>
+</details>
 
 <p>On note que le caractère qui correspond au passage à la ligne en C, le fameux
 ’\n’n’existe pas ennasmsi on définit la chaîne par des guillemets simples ou
@@ -296,8 +304,17 @@ déclaration varie suivant que l’on est dans un fichier C ou un fichier C
 2extern (int*t,int );
 4// dans un fichier .cpp
 5extern {</p>
-<pre class="code-block"><code>int (int*t,int );
-7}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_4/code_003.c" target="_blank">code/chapitre_4/code_003.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span><span style="color: #339933;">*</span>t<span style="color: #339933;">,</span><span style="color: #993333;">int</span> <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>On compilera donc les fichiers d’extension.cou.cppséparément et on réalisera
 l’édition de liens avec l’ensemble des fichiers objets comme suit :
@@ -321,14 +338,23 @@ comprises entre 0 et 9.
 5inttab[MAXIMUM];
 6intsum;
 8intmain()</p>
-<pre class="code-block"><code>inti;
-srand(1970);
-for(i;i);
-sum;
-for(i;i)
-printf(&quot;sum = %d ˙&quot;,
-return0;
-19}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_4/code_004.c" target="_blank">code/chapitre_4/code_004.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">inti<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><a href="http://www.opengroup.org/onlinepubs/009695399/functions/srand.html"><span style="color: #000066;">srand</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">1970</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sum<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><a href="http://www.opengroup.org/onlinepubs/009695399/functions/printf.html"><span style="color: #000066;">printf</span></a><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;sum = %d ˙&quot;</span><span style="color: #339933;">,</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">return0<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">19</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 4.4.1 – Exemple de traduction</em></p>
 <h4 class="subsubsection">4.4.3.1 On utilisegccavec l’option-Spour obtenir le code assembleur. Il faut également</h4>

@@ -1184,6 +1184,9 @@ inxi -F -c 18
 L’option-Fsignifiefullet l’option-cpermet de choisir un mode de coloration.
 On obtient alors le compte rendu suivant que nous avons pas affiché en totalité :
 System:</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_3/code_001.txt" target="_blank">code/chapitre_3/code_001.txt</a></summary>
 <pre class="code-block"><code>Host: zentopia Kernel: 5.4.0-40-generic x86_64 bits: 64
 Desktop: Gnome 3.36.2 Distro: Ubuntu 20.04 LTS (Focal Fossa)
 4Machine:
@@ -1200,6 +1203,7 @@ Speed: 2200 MHz min/max: 2200/3600 MHz Core speeds (MHz): 1: 2209 2: 2200
 Device-1: NVIDIA GP104 [GeForce GTX 1070] driver: nvidia v: 440.100
 16...
 3.9.1.2</code></pre>
+</details>
 
 <p>Pour utiliserlstopoil faut installer le paquethwlocsous Ubuntu :
 1sudo apt install hwloc
@@ -1261,6 +1265,9 @@ sudo dmidecode -t baseboard
 3SMBIOS 2.8 present.
 5Handle 0x0002, DMI type 2, 15 bytes
 6Base Board Information</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_3/code_002.txt" target="_blank">code/chapitre_3/code_002.txt</a></summary>
 <pre class="code-block"><code>Manufacturer: Micro-Star International Co., Ltd.
 Product Name: MPG X570 GAMING EDGE WIFI (MS-7C37)
 Version: 1.0
@@ -1280,6 +1287,7 @@ Type: Ethernet
 Status: Disabled
 Type Instance: 1
 Bus Address: 0000:03:00.0</code></pre>
+</details>
 
 <p>Ici, il s’agit d’une carte MSI X570 GAMING EDGE WIFI.</p>
 <h3 class="subsection">3.9.3 De la même manière, pour obtenir des informations concernant le sous-système</h3>
@@ -1291,6 +1299,9 @@ sudo dmidecode -t memory
 4SMBIOS 2.8 present.
 6Handle 0x000F, DMI type 16, 23 bytes
 7Physical Memory Array</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_3/code_003.txt" target="_blank">code/chapitre_3/code_003.txt</a></summary>
 <pre class="code-block"><code>Location: System Board Or Motherboard
 Use: System Memory
 Error Correction Type: None
@@ -1321,6 +1332,7 @@ Minimum Voltage: 1.2 V
 Maximum Voltage: 1.2 V
 Configured Voltage: 1.2 V
 38...</code></pre>
+</details>
 
 <p>On voit que la carte mère possède quatre slots de connexion (Number Of Devices,
 ligne 13), on peut donc positionner quatre barrettes de mémoires mais il ne faut pas
@@ -1457,6 +1469,9 @@ phoronix-test-suite info n-queens-results
 19 total time: 10.0016s
 20 total number of events: 1828
 22Latency (ms):</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_3/code_004.txt" target="_blank">code/chapitre_3/code_004.txt</a></summary>
 <pre class="code-block"><code>min: 5.37
 avg: 5.47
 max: 10.31
@@ -1478,6 +1493,7 @@ scope: global
 15Initializing worker threads...
 17Threads started!
 19Total operations: 199824 (19977.75 per second)</code></pre>
+</details>
 
 <h2 class="section">2149956.00 MiB transferred (4994.44 MiB/sec)</h2>
 
@@ -1485,6 +1501,9 @@ scope: global
 25 total time: 10.0002s
 26 total number of events: 199824
 28Latency (ms):</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_3/code_005.txt" target="_blank">code/chapitre_3/code_005.txt</a></summary>
 <pre class="code-block"><code>min: 0.05
 avg: 0.05
 max: 5.53
@@ -1494,6 +1513,7 @@ sum: 9875.07
 events (avg/stddev): 199824.0000/0.00
 execution time (avg/stddev): 9.8751/0.00
 3.10.3</code></pre>
+</details>
 
 <p>Geekbench est une suite de test disponible pour Windows, Linux et MacOS qui
 permet d’évaluer la puissance de calcul du microprocesseur que ce soit en mono
@@ -1578,9 +1598,18 @@ Test NoDescription Core i5-7400Core i3-6100
 2 Produit de matrices 2060x2060 36,83 34,40
 3 SAXPY 524417 FPU 45,20 43,52
 4 SAXPY 524417 AVX 10,00 14,43</p>
-<pre class="code-block"><code>Popcnt 512333 réf. 8,05 7,54
-Compte Voyelles 524288 (if) 15,50 14,47
-Compte Voyelles 524288 AVX 0,85 0,79</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_3/code_006.asm" target="_blank">code/chapitre_3/code_006.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">Popcnt</span> <span style="color: #ff0000;">512333</span> réf<span style="color: #339933;">.</span> <span style="color: #ff0000;">8</span><span style="color: #339933;">,</span><span style="color: #ff0000;">05</span> <span style="color: #ff0000;">7</span><span style="color: #339933;">,</span><span style="color: #ff0000;">54</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">Compte Voyelles <span style="color: #ff0000;">524288</span> <span style="color: #009900; font-weight: bold;">&#40;</span>if<span style="color: #009900; font-weight: bold;">&#41;</span> <span style="color: #ff0000;">15</span><span style="color: #339933;">,</span><span style="color: #ff0000;">50</span> <span style="color: #ff0000;">14</span><span style="color: #339933;">,</span><span style="color: #ff0000;">47</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">Compte Voyelles <span style="color: #ff0000;">524288</span> AVX <span style="color: #ff0000;">0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">85</span> <span style="color: #ff0000;">0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">79</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>TABLE3.11– Temps d’exécution en secondes de certaines études de cas pour Core i5-7400
 et Core i3-6100

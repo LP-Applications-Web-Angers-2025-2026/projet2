@@ -107,19 +107,28 @@ disponibles dans la plupart des langages informatiques et il faut les implanter 
 les instructions du langage.
 1// fonction qui implante bsr (bit scan reverse)
 2u32 (u32 )</p>
-<pre class="code-block"><code>for(int =31;i&gt;=0; i)
-if((a&amp;1&lt;&lt;i)) 0)return(u32)i;
-}
-return ;
-7}
-9// retourne la somme des bsr(t[i]) pour i dans [0..n-1]
-10u32 (u32*t,u32 )
-u32 =0;
-for(u32 =0;i&lt;n;i)
-sum+=function_bsr(t[i]);
-}
-return ;
-16}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_1/code_001.c" target="_blank">code/chapitre_1/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">31</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>a<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">1</span><span style="color: #339933;">&lt;&lt;</span>i<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span><span style="color: #009900;">&#40;</span>u32<span style="color: #009900;">&#41;</span>i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">9</span><span style="color: #666666; font-style: italic;">// retourne la somme des bsr(t[i]) pour i dans [0..n-1]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">10u32 <span style="color: #009900;">&#40;</span>u32<span style="color: #339933;">*</span>t<span style="color: #339933;">,</span>u32 <span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sum<span style="color: #339933;">+=</span>function_bsr<span style="color: #009900;">&#40;</span>t<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">16</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 1.1.1 – Fonction bsr, version 1</em></p>
 <p>Pour rentrer abruptement dans le vif du sujet, regardons quel gain on peut
@@ -150,14 +159,23 @@ compilateur pour avoir une idée de la syntaxe utilisée, mais laissons cela de 
 pour le moment.
 1u32 (u32*t,u32 )
 2 u32 =0;</p>
-<pre class="code-block"><code>for(u32 =0;i&lt;n;i)
-u32 =t[i];
-u32 ;
-asm(&quot;bsr %0, %1&quot;:&quot;=r&quot;(output)&quot;r&quot;(input)
-sum+=output;
-}
-return ;
-10}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_1/code_002.c" target="_blank">code/chapitre_1/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">=</span>t<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">asm<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;bsr %0, %1&quot;</span><span style="color: #339933;">:</span><span style="color: #ff0000;">&quot;=r&quot;</span><span style="color: #009900;">&#40;</span>output<span style="color: #009900;">&#41;</span><span style="color: #ff0000;">&quot;r&quot;</span><span style="color: #009900;">&#40;</span>input<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sum<span style="color: #339933;">+=</span>output<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">10</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 1.1.2 – Fonction bsr, version 3</em></p>
 <p>On notera cependant qu’en langage C, ces instructions (bsr,bsf, ...) ont été
@@ -545,13 +563,22 @@ un informaticien calculer le reste de la division est une opération qui s’app
 l’opérationmodulo. En C elle est représentée par l’opérateur%et dans d’autres
 langages par le mot clémodoumodulo.
 1bool (int )</p>
-<pre class="code-block"><code>if(n&lt;0)return ;
-int =0;
-for(int =1;i&lt;=n;i)
-if((n%i) 0) nbr_diviseurs;
-}
-return(nbr_diviseurs==2);
-8}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_1/code_003.c" target="_blank">code/chapitre_1/code_003.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&lt;</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;=</span>n<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span>i<span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> nbr_diviseurs<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span><span style="color: #009900;">&#40;</span>nbr_diviseurs<span style="color: #339933;">==</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">8</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 1.3.1 – Fonction nombre premier, version inefficace</em></p>
 <p>Une première version de la fonctionest_premierqui détermine si un nombren
@@ -602,18 +629,27 @@ p q r p q r
 10 3 7 20 1 17
 TABLE1.2 – Décomposition de 37
 1bool (int )</p>
-<pre class="code-block"><code>if(n&lt;=1)return ;
-if(n&lt;=3)return ;
-// est-ce un nombre pair ?
-if((n%2) 0)return ;
-// chercher les diviseurs impairs jusqu&#039;à
-// racine carrée de n
-int =static_cast&lt;int&gt;(floor(sqrt(n)));
-for(int =3;k&lt;=limit;k+=2)
-if((n%k) 0)return ;
-}
-return ;
-15}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_1/code_004.c" target="_blank">code/chapitre_1/code_004.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&lt;=</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&lt;=</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// est-ce un nombre pair ?</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span><span style="color:#800080;">2</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// chercher les diviseurs impairs jusqu'à</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// racine carrée de n</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>static_cast<span style="color: #339933;">&lt;</span>int<span style="color: #339933;">&gt;</span><span style="color: #009900;">&#40;</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/floor.html"><span style="color: #000066;">floor</span></a><span style="color: #009900;">&#40;</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/sqrt.html"><span style="color: #000066;">sqrt</span></a><span style="color: #009900;">&#40;</span>n<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">3</span><span style="color: #339933;">;</span>k<span style="color: #339933;">&lt;=</span>limit<span style="color: #339933;">;</span>k<span style="color: #339933;">+=</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span>k<span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">15</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 1.3.2 – Fonction nombre premier, version améliorée</em></p>
 <p>On peut améliorer cette version et en donner une version optimisée (Lis-
@@ -629,14 +665,23 @@ différentes plateformes pour les trois méthodes que nous venons d’évoquer .
 première méthode qui consiste à compter le nombre de diviseurs est totalement
 inefficace. La version améliorée de la fonctionest_premierest tout à fait acceptable.
 1bool (int )</p>
-<pre class="code-block"><code>if(n&lt;=3)return &gt;1;
-if(0==n%2) 0== n%3))return ;
-for(int =5;i*i) n;i+=6)
-if(n%i) 0) n%i+2)) 0)
-return ;
-}
-return ;
-11}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_1/code_005.c" target="_blank">code/chapitre_1/code_005.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&lt;=</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">&gt;</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">==</span>n<span style="color: #339933;">%</span><span style="color:#800080;">2</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">==</span> n<span style="color: #339933;">%</span><span style="color:#800080;">3</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">5</span><span style="color: #339933;">;</span>i<span style="color: #339933;">*</span>i<span style="color: #009900;">&#41;</span> n<span style="color: #339933;">;</span>i<span style="color: #339933;">+=</span><span style="color: #0000dd;">6</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span>i<span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> n<span style="color: #339933;">%</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">11</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 1.3.3 – Fonction nombre premier, version optimisée</em></p>
 <p>1// on teste les nombres de 1 a un million
@@ -651,11 +696,20 @@ return ;
 12// on élimine les multiples de chaque nombre
 13int =2;
 14while(n&lt;=N)</p>
-<pre class="code-block"><code>if(tab[n])
-for(int =2*n;j&lt;N;j+=n)tab[j]false;
-}
-++n;
-19}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_1/code_006.c" target="_blank">code/chapitre_1/code_006.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>tab<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">2</span><span style="color: #339933;">*</span>n<span style="color: #339933;">;</span>j<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span>j<span style="color: #339933;">+=</span>n<span style="color: #009900;">&#41;</span>tab<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span><span style="color: #000000; font-weight: bold;">false</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">++</span>n<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">19</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 1.3.4 – Nombre premier avec crible</em></p>
 <p>Le crible représente la méthode la plus efficace. Les temps d’exécution pour cette
@@ -707,14 +761,23 @@ le code du tri à bulles pour un tableautde taillen. On peut voir qu’il existe
 opérations qui influent sur la complexité du tri :
 •lacomparaisondes valeurst[j] &gt; t[j+1]
 1void (int [],int )</p>
-<pre class="code-block"><code>for(int =n-1;i&gt;0; i)
-for(int =0;j&lt;i;j)
-if(t[j]t[j+1])
-swap(t[j],t[j+1]);
-}
-}
-}
-9}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_1/code_007.c" target="_blank">code/chapitre_1/code_007.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span>n<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&gt;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>j<span style="color: #339933;">&lt;</span>i<span style="color: #339933;">;</span>j<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>t<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span>t<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">swap<span style="color: #009900;">&#40;</span>t<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span>t<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">9</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 1.3.5 – Tri à bulles en ordre croissant</em></p>
 <p>•lapermutationdes valeursswap(t[j], t[j+1])

@@ -242,6 +242,9 @@ Par exemple, le code qui suit commence par convertir un angle de 60
 en
 radians, puis applique la fonctionfsincos:
 1section</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_001.txt" target="_blank">code/chapitre_7/code_001.txt</a></summary>
 <pre class="code-block"><code>angle: ; degrés
 cqv: ; degrés
 5section
@@ -252,6 +255,7 @@ fdivp ,st0 ; st1 = 60.0 / 180.0, puis pop st0 = 0.3333...
 fldpi ; st0 = pi, st1 = 0.3333...
 fmulp ,st0 ; st0 = pi*0.3333...
 fsincos</code></pre>
+</details>
 
 <p>On obtient donc dansst0la valeur0.5et dansst1la valeur0.86qui corres-
 pondent respectivement au cosinus et sinus d’un angle de 60 degrés.
@@ -339,16 +343,28 @@ bits de condition de la FPU.</p>
 <h3 class="subsection">7.6.1 Par exemple pour comparer deux valeurs flottantes :</h3>
 
 <p>1int (float ,float )</p>
-<pre class="code-block"><code>if(x&gt;y)
-return ;
-}else{
-return ;
-}
-7}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_002.c" target="_blank">code/chapitre_7/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>x<span style="color: #339933;">&gt;</span>y<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>En 32 bits, on commence par chargery, puisx. On compare ensuitexàygrâce à
 l’instructionfcomipqui réalise la comparaison et dépilexdest0. On dépile ensuite
 y(ligne 8). On utilise l’instruction de branchement conditionneljbe(Jump Below</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_003.asm" target="_blank">code/chapitre_7/code_003.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">or</span> Equal<span style="color: #009900; font-weight: bold;">&#41;</span> pour exécuter le<span style="color: #339933;">.</span>elsedans le cas oùx≤y<span style="color: #339933;">.</span></div></li>
@@ -372,6 +388,8 @@ y(ligne 8). On utilise l’instruction de branchement conditionneljbe(Jump Below
 </ol></div>
 </div>
 
+</details>
+
 <p>Instructions de saut pour les flottants
 Pour des raisons historiques les instructions de comparaison sur les flottants
 ne mettent pas à jour les mêmes bits du registreEFLAGSque l’instructioncmp.
@@ -388,12 +406,21 @@ Chapitre) pour réaliser les calculs avec les nombres flottants. En prévision d
 que nous verrons dans le prochain chapitre nous montrons comment le compilateur
 C traduit le code suivant :
 1void (float ,float )</p>
-<pre class="code-block"><code>if(fabs(x-y) 1e-6)
-// code du then
-}else{
-// code du else
-}
-7}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_004.c" target="_blank">code/chapitre_7/code_004.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/fabs.html"><span style="color: #000066;">fabs</span></a><span style="color: #009900;">&#40;</span>x<span style="color: #339933;">-</span>y<span style="color: #009900;">&#41;</span> <span style="color:#800080;">1e-6</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// code du then</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span><span style="color: #b1b100;">else</span><span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// code du else</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>On a vu Chapitre xetysont respectivement placées dans les
 registresxmm0etxmm1:
@@ -401,24 +428,33 @@ registresxmm0etxmm1:
 2 subss ,xmm1
 3 andps ,XMMWORD [rip]
 4 cvtss2sd ,xmm0</p>
-<pre class="code-block"><code>movsd ,QWORD [rip]
-comisd ,xmm0
-jb
-8.then:
-....
-jmp
-11.else:
-....
-13.endif:
-ret
-17.LC0:
-.long ; 0x7FFFFFFF
-.long
-.long
-.long
-22.LC1:
-.long ; 0xA0B5ED8D
-.long ; 0x3EB0C6F7</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_005.asm" target="_blank">code/chapitre_7/code_005.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movsd</span> <span style="color: #339933;">,</span><span style="color: #0000ff; font-weight: bold;">QWORD</span> <span style="color: #009900; font-weight: bold;">&#91;</span>rip<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">comisd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jb</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">8</span><span style="color: #339933;">.</span>then<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">....</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jmp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">11</span><span style="color: #339933;">.</span>else<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">....</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">13</span><span style="color: #339933;">.</span>endif<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">17</span><span style="color: #339933;">.</span>LC0<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>long <span style="color: #666666; font-style: italic;">; 0x7FFFFFFF</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>long</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>long</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>long</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">22</span><span style="color: #339933;">.</span>LC1<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>long <span style="color: #666666; font-style: italic;">; 0xA0B5ED8D</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>long <span style="color: #666666; font-style: italic;">; 0x3EB0C6F7</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>On commence donc par calculer la différencex-y(ligne 2), puis on calcule la
 valeur absolue (ligne 3) en appliquant un masque qui ne garde que les 31 premiers
@@ -528,6 +564,9 @@ A partir de l’expression précédente, on obtient donc :
 1section</p>
 </li>
 </ol>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_006.txt" target="_blank">code/chapitre_7/code_006.txt</a></summary>
 <pre class="code-block"><code>trois: ; constante
 4section
 ; x + 1
@@ -547,6 +586,7 @@ fsqrt
 fsubp ,st0
 ; (x+1)*(x-1) / (3 - sqrt(x))
 fdivp ,st0</code></pre>
+</details>
 
 <p>On notera que dans le cas des constantes, si la constante n’est pas une des
 constantes prédéfinies du coprocesseur il est nécessaire de la stocker en mémoire.
@@ -562,15 +602,24 @@ est donc traduit en :
 1extern
 3section
 4 x:</p>
-<pre class="code-block"><code>msg: `%f`,0
-7section
-fld [x]
-sub ,8 ; réservation de 64 bits pour
-; double précision
-fstp [esp]
-push
-call
-add ,12</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_007.asm" target="_blank">code/chapitre_7/code_007.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">msg<span style="color: #339933;">:</span> `<span style="color: #339933;">%</span>f`<span style="color: #339933;">,</span><span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">7section</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">fld</span> <span style="color: #009900; font-weight: bold;">&#91;</span>x<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">8</span> <span style="color: #666666; font-style: italic;">; réservation de 64 bits pour</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; double précision</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">fstp</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">call</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">12</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Afin de convertir la valeur en une valeur double précision, on réserve 8 octets
 dans la pile et on utilisera ces 8 octets comme paramètre de la fonctionprintf.</p>
@@ -581,19 +630,28 @@ dans la pile et on utilisera ces 8 octets comme paramètre de la fonctionprintf.
 2defaultrel
 4section
 5 x:</p>
-<pre class="code-block"><code>msg: `%f`,0
-8section
-10affiche:
-push ; | ces deux instructions sont
-mov ,rsp ; | normalement inutiles
-movss ,x]
-cvtss2sd ,xmm0 ; conversion au format double précision
-lea ,msg]
-mov ,1 ; indique qu&#039;il y a une valeur flottante
-call WRT..plt
-mov ,rbp ; | ces deux instructions sont
-pop ; | normalement inutiles
-ret</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_008.asm" target="_blank">code/chapitre_7/code_008.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">msg<span style="color: #339933;">:</span> `<span style="color: #339933;">%</span>f`<span style="color: #339933;">,</span><span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">8section</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #adadad; font-style: italic;">10af</span>fiche<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; | ces deux instructions sont</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rsp</span> <span style="color: #666666; font-style: italic;">; | normalement inutiles</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movss</span> <span style="color: #339933;">,</span>x<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">cvtss2sd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; conversion au format double précision</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #339933;">,</span>msg<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">1</span> <span style="color: #666666; font-style: italic;">; indique qu'il y a une valeur flottante</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">call</span> <span style="color: #0000ff; font-weight: bold;">WRT</span><span style="color: #339933;">..</span>plt</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">rbp</span> <span style="color: #666666; font-style: italic;">; | ces deux instructions sont</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #666666; font-style: italic;">; | normalement inutiles</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Le registrerdicontient l’adresse de la chaine du format d’affichage. La valeur
 flottante est placée dans le registrexmm0et est convertie en double précision comme
@@ -626,10 +684,19 @@ valeur absolue oufchsqui change le signe d’une valeur flottante sur 32 bits. O
 chargera la valeur flottante danseaxpar exemple avant de réaliser l’opération.
 Exercice 30 -Implantez la fonctioniotaen architecture 32 bits en utilisant la FPU :
 1void (float*t,int )</p>
-<pre class="code-block"><code>for(int =0;i&lt;n; i)
-t[i] float)i;
-}
-5}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_009.c" target="_blank">code/chapitre_7/code_009.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">t<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span>i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">5</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Exercice 31 -Implantez l’expression suivante en architecture 32 bits en utilisant la
 FPU :
@@ -652,12 +719,21 @@ la FPU :
 1float (float ,int )</p>
 </li>
 </ol>
-<pre class="code-block"><code>float =1;
-for(int =0;i&lt;n; i)
-result*=x;
-}
-return ;
-7}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_7/code_010.c" target="_blank">code/chapitre_7/code_010.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">result<span style="color: #339933;">*=</span>x<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">7</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Faire de même en 64 bits.
 Exercice 33 -Ecrire un programme assembleur qui calcule l’expression suivante

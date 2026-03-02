@@ -1,0 +1,9 @@
+min: 0.05
+avg: 0.05
+max: 5.53
+95th percentile: 0.05
+sum: 9875.07
+35Threads fairness:
+events (avg/stddev): 199824.0000/0.00
+execution time (avg/stddev): 9.8751/0.00
+3.10.3

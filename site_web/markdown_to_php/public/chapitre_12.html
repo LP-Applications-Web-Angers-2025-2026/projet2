@@ -111,14 +111,23 @@ Le code de ces sous-programmes est très simple et ressemble à ce qui suit :
 6 tab_process[n] false;
 7}
 9bool (u32 )</p>
-<pre class="code-block"><code>return [n];
-11}
-13u32 ()
-u32 =0;
-for(u32 =0;i&lt;MAX_RECORDS; i)
-total+= u32)tab_process[i];
-return ;
-18}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_001.c" target="_blank">code/chapitre_12/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">11</span><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">13u32 <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>MAX_RECORDS<span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">total<span style="color: #339933;">+=</span> u32<span style="color: #009900;">&#41;</span>tab_process<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">18</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>La variabletab_processétant un tableau de booléens elle occupe en mé-
 moire100_000 octets car un booléen possède une taille d’un octet. On utilise
@@ -142,20 +151,32 @@ de prendre en compte les spécificités du nouveau tableautab_process_bits:
 6 tab_process_bits[n/8]( 1&lt;&lt; n%8));
 7}
 9bool (u32 )</p>
-<pre class="code-block"><code>return(tab_process_bits[n/8] 1&lt;&lt; n%8))) 0;
-11}
-13u32 ()
-u32 =0;
-for(u32 =0;i&lt;MAX_RECORDS_IN_BYTES ; i)
-total+=pop_count_8(tab_process_bits[i]
-}
-return ;
-19}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_002.c" target="_blank">code/chapitre_12/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span><span style="color: #009900;">&#40;</span>tab_process_bits<span style="color: #009900;">&#91;</span>n<span style="color: #339933;">/</span><span style="color: #0000dd;">8</span><span style="color: #009900;">&#93;</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">&lt;&lt;</span> n<span style="color: #339933;">%</span><span style="color:#800080;">8</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">11</span><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">13u32 <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>MAX_RECORDS_IN_BYTES <span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">total<span style="color: #339933;">+=</span>pop_count_8<span style="color: #009900;">&#40;</span>tab_process_bits<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">19</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Par exemple pour la méthodeset, l’élémentnse trouve à l’indicen / 8du
 tableautab_process_bitset occupe le bit à la positionn % 8. La traduction de ce
 sous-programme en assembleur x86 32 bits est la suivante :
 1set:</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_003.asm" target="_blank">code/chapitre_12/code_003.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span></div></li>
@@ -173,17 +194,28 @@ sous-programme en assembleur x86 32 bits est la suivante :
 </ol></div>
 </div>
 
+</details>
+
 <p>La fonctioncountdoit être réécrite en utilisant la fonctionpop_count_8qui
 compte le nombre de bits à 1 dans un octet. Une version simple de cette fonction
 qui nous servira de fonction de référence, est par exemple :
 1u32 (u8 )
 2 u32 =0;</p>
-<pre class="code-block"><code>while(n)
-if((n&amp;1) 0) count_bits;
-n=n&gt;&gt;1;
-}
-return ;
-9}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_004.c" target="_blank">code/chapitre_12/code_004.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">while</span><span style="color: #009900;">&#40;</span>n<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>n<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> count_bits<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">n<span style="color: #339933;">=</span>n<span style="color: #339933;">&gt;&gt;</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">9</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>On réalise une boucle et tant que la variablenn’est pas égale à0, on regarde
 si le bit de poids faible est égal à1et dans ce cas on incrémente le compteur
@@ -201,12 +233,21 @@ L’efficacité de la fonction est biaisée par leifqui n’est pas prédictible
 cependant éliminer leifen écrivant la fonction comme suit :
 1u32 (u8 )
 2 u32 =0;</p>
-<pre class="code-block"><code>while(n)
-count_bits+= n&amp;1);
-n=n&gt;&gt;1;
-}
-return ;
-9}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_005.c" target="_blank">code/chapitre_12/code_005.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">while</span><span style="color: #009900;">&#40;</span>n<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">count_bits<span style="color: #339933;">+=</span> n<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">n<span style="color: #339933;">=</span>n<span style="color: #339933;">&gt;&gt;</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">9</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Version de référence, élimination du if
 La version de référence améliorée en supprimant leifs’exécute en48,78
@@ -224,8 +265,12 @@ un octet :
 du tableau égal à 189 est 6 car18910= 1011_11012, soit 6 bits à 1 :
 1u8 [256] 0,1,1,2,1,2,2,3, 8};
 3u32 (u8 )</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_006.txt" target="_blank">code/chapitre_12/code_006.txt</a></summary>
 <pre class="code-block"><code>return [n]
 5}</code></pre>
+</details>
 
 <p>Cette version est relativement courte mais pour qu’elle soit efficace il faut que
 la tablebits_tabletienne en mémoire cache L1.
@@ -276,8 +321,12 @@ Le code de la fonctionpop_count_8est alors :
 7 x=x&amp;m1) x&gt;&gt;1) m1);
 8 x=x&amp;m2) x&gt;&gt;2) m2);
 9 x=x&amp;m4) x&gt;&gt;4) m4);</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_007.txt" target="_blank">code/chapitre_12/code_007.txt</a></summary>
 <pre class="code-block"><code>return ;
 12}</code></pre>
+</details>
 
 <p>Si nous reprenons notre exemple avec la valeur8716, on obtient successivement :
 •pour la première étapex en base 2
@@ -303,6 +352,9 @@ assembleur alors que le premier en utilise 6 puisque l’on ne réalise leet bin
 avecm1qu’une seule fois (et non deux fois dans la première version).
 1; x = x - ((x &gt;&gt; 1) &amp; m1 );</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_008.asm" target="_blank">code/chapitre_12/code_008.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span>x<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">eax</span></div></li>
@@ -311,6 +363,8 @@ avecm1qu’une seule fois (et non deux fois dans la première version).
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edx</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p>Le code de la version 2 sera donc normalement plus efficace.</p>
 <h3 class="subsection">12.2.3 popcnt</h3>
@@ -336,19 +390,28 @@ Il suffit alors de modifier les fonctions en conséquence, par exemple, pour les
 fonctions liées à la table de conversion, on obtient :
 1u32 (u8*x,u32 )
 2 u32 =0,i;</p>
-<pre class="code-block"><code>// convertir x en un tableau d&#039;entiers 32 bits
-u32*y=u32*)x;
-// compter par groupe de 4 octets (dépliage par 4)
-for(i=0;i&lt;size&amp;3);i+=4)
-count+=popcnt_table_u32(*y++);
-}
-// compter les derniers octets restants
-while(i&lt;size)
-count+=popcnt_table[x[i]
-++i;
-}
-return ;
-18}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_009.c" target="_blank">code/chapitre_12/code_009.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// convertir x en un tableau d'entiers 32 bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32<span style="color: #339933;">*</span>y<span style="color: #339933;">=</span>u32<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>x<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// compter par groupe de 4 octets (dépliage par 4)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>size<span style="color: #339933;">&amp;</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>i<span style="color: #339933;">+=</span><span style="color: #0000dd;">4</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">count<span style="color: #339933;">+=</span>popcnt_table_u32<span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>y<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// compter les derniers octets restants</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">while</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">&lt;</span>size<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">count<span style="color: #339933;">+=</span>popcnt_table<span style="color: #009900;">&#91;</span>x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">++</span>i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">18</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Cependant, la fonctionpopcnt_table_32peut être écrite au moins de deux
 manières différentes dont l’une est plus efficace que l’autre.
@@ -358,8 +421,12 @@ Voici la version qui est la moins efficace car elle utilise une boucle :
 4 do{
 5 total+= u32)popcnt_table[x&amp;0xFF];
 6 }while((x&gt;&gt;=8)!=0);</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_010.txt" target="_blank">code/chapitre_12/code_010.txt</a></summary>
 <pre class="code-block"><code>return ;
 9}</code></pre>
+</details>
 
 <p>Et la version la plus efficace, car dépliée :
 1u32 (u32 )
@@ -370,8 +437,12 @@ Voici la version qui est la moins efficace car elle utilise une boucle :
 6 total+=popcnt_table[x&amp;0xFF];
 7 x&gt;&gt;=8;
 8 total+=popcnt_table[x&amp;0xFF];</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_011.txt" target="_blank">code/chapitre_12/code_011.txt</a></summary>
 <pre class="code-block"><code>return ;
 11}</code></pre>
+</details>
 
 <p>Il en résulte des temps d’exécution bien plus intéressants comme indiqué ci-
 après :
@@ -394,30 +465,42 @@ a priori, est de charger les données par groupe de 16 octets puis d’extraire 
 double mot, et enfin d’en compter le nombre de bits avecpopcnt. Voici un aperçu
 de la boucle principale de ce traitement :
 1.for_u16:</p>
-<pre class="code-block"><code>movdqa ,esi+ecx]
-pshufd ,xmm0,0x01 ; extrait le 2nd mot dans xmm1
-pshufd ,xmm0,0x02 ; extrait le 3ieme mot dans xmm2
-pshufd ,xmm0,0x03 ; extrait le 4ieme mot dans xmm3
-movd ,xmm0 ; compte les bits
-popcnt ,edi ; de la partie basse de xmm0
-add ,edi
-movd ,xmm1 ; compte les bits
-popcnt ,ebx ; de la partie basse de xmm1
-add ,ebx
-movd ,xmm2 ; compte les bits
-popcnt ,edi ; de la partie basse de xmm2
-add ,edi
-movd ,xmm3 ; compte les bits
-popcnt ,ebx ; de la partie basse de xmm3
-add ,ebx
-add ,16
-cmp ,edx
-jne</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_012.asm" target="_blank">code/chapitre_12/code_012.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pshufd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">0x01</span> <span style="color: #666666; font-style: italic;">; extrait le 2nd mot dans xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pshufd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">0x02</span> <span style="color: #666666; font-style: italic;">; extrait le 3ieme mot dans xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pshufd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">0x03</span> <span style="color: #666666; font-style: italic;">; extrait le 4ieme mot dans xmm3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; compte les bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edi</span> <span style="color: #666666; font-style: italic;">; de la partie basse de xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span> <span style="color: #666666; font-style: italic;">; compte les bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span> <span style="color: #666666; font-style: italic;">; de la partie basse de xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; compte les bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edi</span> <span style="color: #666666; font-style: italic;">; de la partie basse de xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm3</span> <span style="color: #666666; font-style: italic;">; compte les bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span> <span style="color: #666666; font-style: italic;">; de la partie basse de xmm3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jne</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>Une seconde version consiste à utiliser le même principe que lorsque nous avons
 compté les bits dans un registre général (voir Section). Voici le code AVX
 mais qui s’applique sur les registres SSE. On commence par charger les masques
 dans les registresxmm4àxmm7</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_013.asm" target="_blank">code/chapitre_12/code_013.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">0x55555555</span></div></li>
@@ -435,48 +518,59 @@ dans les registresxmm4àxmm7</p>
 </ol></div>
 </div>
 
+</details>
+
 <p>Puis dans la boucle principale, on réalise les décalages de bits et on additionne
 le résultat àxmm3qui fait office de somme. Le registrexmm3contiendra au final deux
 valeurs 64 bits mais on ne prendra en compte que les 32 bits de chaquequad word
 pour faire la somme du nombre de bits à 1 (lignes 34 à 37) :
 1for_ur16:</p>
-<pre class="code-block"><code>movdqa ,esi+ecx]
-; x = x - (x &gt;&gt; 1) &amp; 0x5555... 5 (version 2)
-vpsrlw ,xmm0,1
-vpand ,xmm4
-vpsubw ,xmm1
-; x = (x &amp; m2) + ((x &gt;&gt; 2) &amp; m2);
-vpand ,xmm0,xmm5
-vpsrlw ,xmm0,2
-vpand ,xmm5
-vpaddw ,xmm1,xmm2
-; x = (x &amp; m4) + ((x &gt;&gt; 4)) &amp; m4);
-vpand ,xmm0,xmm6
-vpsrlw ,xmm0,4
-vpand ,xmm6
-vpaddw ,xmm1,xmm2
-; x = (x &amp; m5) + ((x &gt;&gt; 8)) &amp; m5);
-vpand ,xmm0,xmm7
-vpsrlw ,xmm0,8
-vpand ,xmm7
-vpaddw ,xmm1,xmm2
-vpxor ,xmm2
-; sum of absolute differences
-; [v[0]-w[0],...v[15]-w[15]], puis
-; [v[0]+..+v[7], 0, .. , 0, v[8]+..+v[15], 0, ..., 0]
-vpsadbw ,xmm0,xmm2
-vmovd ,xmm1
-; interleave high-order quadword
-vpunpckhqdq ,xmm1,xmm1
-vmovd ,xmm2
-add ,ebx
-add ,16
-dec
-jnz
-vmovd ,xmm3
-vpunpckhqdq ,xmm3,xmm3
-vmovd ,xmm1
-add ,ebx</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_014.asm" target="_blank">code/chapitre_12/code_014.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; x = x - (x &gt;&gt; 1) &amp; 0x5555... 5 (version 2)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpsrlw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpsubw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; x = (x &amp; m2) + ((x &gt;&gt; 2) &amp; m2);</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm5</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpsrlw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm5</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpaddw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; x = (x &amp; m4) + ((x &gt;&gt; 4)) &amp; m4);</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm6</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpsrlw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm6</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpaddw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; x = (x &amp; m5) + ((x &gt;&gt; 8)) &amp; m5);</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm7</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpsrlw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #ff0000;">8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm7</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpaddw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpxor</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; sum of absolute differences</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; [v[0]-w[0],...v[15]-w[15]], puis</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; [v[0]+..+v[7], 0, .. , 0, v[8]+..+v[15], 0, ..., 0]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpsadbw</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vmovd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; interleave high-order quadword</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpunpckhqdq</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vmovd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">dec</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jnz</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vmovd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpunpckhqdq</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm3</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vmovd</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>L’instructionvpsrlw(Shift Packed Data Right Logical) réalise un décalage à
 droite dans chacun des mots dexmm1par la quantité donnée en troisième opérande.
@@ -548,281 +642,163 @@ La version par décalage (shift, méthode 8) en 32 bits donne des temps d’exé
 tion très intéressants en fonction de l’augmentation de l’année de production des
 processeurs.
 Mais c’est au final la version intrinsics qui est la plus optimisée et qui donne les
-meilleurs résultats sauf pour l’Intel i7 860, l’Intel i7 4790 ou l’AMD 1090 T.
-n° Méthode IntelIntelIntelAMD IntelIntel
-Pentium DCore 2 i7 X6 i5 i7
-925Q9300 8601090T3570K 4790
-2006 2008 200920102012 2014
-1 u8_reference 150.22 170.20 110.19 80.21 72.58 54.99
-2 u8_reference_opt 111.73 161.63 102.39 64.68 65.12 47.38
-3 u32_reference 126.41 105.45 60.91 43.46 53.34 39.42
-4u32_reference_opt 73.51 88.36 60.81 43.31 48.68 33.40
-5 u8_shift_v1 16.50 7.77 4.52 4.31 3.23 1.98
-6 u8_shift_v2 16.45 7.66 4.76 4.62 3.20 2.02
-7 u32_shift_v1 8.01 4.25 2.05 2.50 1.29 0.56
-8 u32_shift_v2 7.76 3.13 1.82 1.86 1.06 0.49
-9 u8_asm - - 6.88 10.94 4.65 2.96
-10 u32_asm - - 1.27 1.65 1.16 0.71
-11 u32_asm_ur4 - - 0.89 0.880.49
-12 u32_sse_v1 - - 0.96 1.52 0.92 0.74
-13 u32_sse_v2 - - - - 1.06 0.81
-14 u32_avx2_v1 - - - - - 0.71
-15 u8_intrinsics 4.55 0.92 1.35 0.76 0.61
-ratio 1 / (11 ou15) 33.01 75.30 123.80 95.48 95.50 112.22
-TABLE12.2– Architectures anciennes : temps d’exécution en secondes sur 30_000 exécu-
-tions de la fonction popcnt sur des tableaux de 262_207 octets
-12.6.2
-Pour les architectures modernes (Table), on observe les mêmes tendances.
-Cependant, les méthodes8et11donnent les meilleurs résultats et sont un peu plus
-performantes que la version intrinsics. Traiter les données sous format32bits est
-donc bénéfique dans ce cas.
-La méthode8avec décalage de bits est souvent la plus performante, talonnée
-par la méthode11qui réalise un dépliage par4de la boucle.
-On peut alors se demander si le passage au64bits améliorera encore les
-performances? La réponse est oui à en croire les tests effectués en traitant les
-données par groupe de32ou de64bits sous une architecture64bits avec un AMD
-Ryzen 5 3600 :
-•architecture 32 bits, traitement par 32 bits :0,43s
-•
-architecture 32 bits, traitement par 32 bits et dépliage par 4 de la boucle :
-0,31s
-N° Marque Intel AMD IntelIntel AMD Intel
-Gamme Core i3Ryzen 7Core i5Core i7Ryzen 5Xeon
-Modèle 61001700X 7400 8700 36004208
-2015 2017 2017 2017 20192019
-1 u8_reference57.99 59.13 64.81 47.28 54.96 71.73
-2 u8_reference_opt53.14 54.11 58.58 43.03 48.78 74.70
-3 u32_reference36.39 44.72 39.89 29.53 35.36 54.49
-4u32_reference_opt32.65 28.77 35.83 26.47 23.67 46.18
-5 u8_shift_v1 2.17 2.51 2.32 1.75 2.83 2.49
-6 u8_shift_v2 2.11 2.51 2.23 1.70 2.84 2.50
-7 u32_shift_v1 0.61 1.00 0.64 0.49 0.44 0.72
-8 u32_shift_v2 0.50 0.80 0.54
-9 u8_asm 6.39 3.24 6.83 5.20 3.06 7.53
-10 u32_asm 1.07 0.68 1.14 0.86 0.62 0.91
-11 u32_asm_ur4 0.54 0.51 0.59 0.45 0.47 0.74
-12 u32_sse_v1 0.90 0.90 0.96 0.72 0.83 1.05
-13 u32_sse_v2 0.87 0.74 0.92 0.70 0.64 1.05
-14 u32_avx2_v1 0.87 0.83 0.95 0.70 0.69 1.02
-15 u8_intrinsics 0.64 0.64 0.68 0.52 0.56 0.76
-ratio 1 / 11 107.38 115.94 109.84 N/A 116.93 96.93
-TABLE12.3– Architectures récentes : temps d’exécution en secondes sur 30_000 exécutions
-de la fonction popcnt sur des tableaux de 262_207 octets
-•architecture 64 bits,traitement par 64 bits :0,21s
-•
-architecture 64 bits,traitement par 64 bits et dépliage par 4 de la boucle :0,15
-s
-On divise donc le temps d’exécution par deux en passant au64bits et en traitant
-les données par des registres64bits.</p>
-<script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+meilleurs résultats sauf pour l’Intel i7 860, l’Intel i7 4790 ou l’AMD 1090 T.</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Pentium D 925<br><small>2006</small></th>
+      <th>Core 2 Q9300<br><small>2008</small></th>
+      <th>Core i7 860<br><small>2009</small></th>
+      <th>AMD X6 1090T<br><small>2010</small></th>
+      <th>Core i5 3570K<br><small>2012</small></th>
+      <th>Core i7 4790<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>u8_reference</strong></td>
+      <td>150.22</td>
+      <td>170.20</td>
+      <td>110.19</td>
+      <td>80.21</td>
+      <td>72.58</td>
+      <td>54.99</td>
+    </tr>
+    <tr>
+      <td><strong>u8_reference_opt</strong></td>
+      <td>111.73</td>
+      <td>161.63</td>
+      <td>102.39</td>
+      <td>64.68</td>
+      <td>65.12</td>
+      <td>47.38</td>
+    </tr>
+    <tr>
+      <td><strong>u32_reference</strong></td>
+      <td>126.41</td>
+      <td>105.45</td>
+      <td>60.91</td>
+      <td>43.46</td>
+      <td>53.34</td>
+      <td>39.42</td>
+    </tr>
+    <tr>
+      <td><strong>u32_reference_opt</strong></td>
+      <td>73.51</td>
+      <td>88.36</td>
+      <td>60.81</td>
+      <td>43.31</td>
+      <td>48.68</td>
+      <td>33.40</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v1</strong></td>
+      <td>16.50</td>
+      <td>7.77</td>
+      <td>4.52</td>
+      <td>4.31</td>
+      <td>3.23</td>
+      <td>1.98</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v2</strong></td>
+      <td>16.45</td>
+      <td>7.66</td>
+      <td>4.76</td>
+      <td>4.62</td>
+      <td>3.20</td>
+      <td>2.02</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v1</strong></td>
+      <td>8.01</td>
+      <td>4.25</td>
+      <td>2.05</td>
+      <td>2.50</td>
+      <td>1.29</td>
+      <td>0.56</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v2</strong></td>
+      <td>7.76</td>
+      <td>3.13</td>
+      <td>1.82</td>
+      <td>1.86</td>
+      <td>1.06</td>
+      <td>0.49</td>
+    </tr>
+    <tr>
+      <td><strong>u8_asm</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>6.88</td>
+      <td>10.94</td>
+      <td>4.65</td>
+      <td>2.96</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.27</td>
+      <td>1.65</td>
+      <td>1.16</td>
+      <td>0.71</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_ur4</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.89</td>
+      <td>0.88</td>
+      <td>0.49</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.96</td>
+      <td>1.52</td>
+      <td>0.92</td>
+      <td>0.74</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.06</td>
+      <td>0.81</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.71</td>
+    </tr>
+    <tr>
+      <td><strong>u8_intrinsics</strong></td>
+      <td>4.55</td>
+      <td>-</td>
+      <td>0.92</td>
+      <td>1.35</td>
+      <td>0.76</td>
+      <td>0.61</td>
+    </tr>
+  </tbody>
+  <script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="../../data/graph.js"></script>
-<div class="chart-container" id="chart-ch12-moderne-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-ch12-ancien-1" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-ch12-moderne-4';
-    var data = {
-    "chapter": 12,
-    "title": "POPCNT – Compter les bits à 1",
-    "description": "Temps d'exécution en secondes pour 30 000 exécutions de la fonction popcnt sur des tableaux de 262 207 octets.",
-    "CPUs": [
-        "Core i3 6100",
-        "Ryzen 7 1700X",
-        "Core i5 7400",
-        "Core i7 8700",
-        "Ryzen 5 3600",
-        "Xeon Silver 4208"
-    ],
-    "Years": [
-        2015,
-        2017,
-        2017,
-        2017,
-        2019,
-        2019
-    ],
-    "Methods": [
-        {
-            "name": "u8_reference",
-            "values": [
-                57.99,
-                59.13,
-                64.81,
-                47.28,
-                54.96,
-                71.73
-            ]
-        },
-        {
-            "name": "u8_reference_opt",
-            "values": [
-                53.14,
-                54.11,
-                58.58,
-                43.03,
-                48.78,
-                74.7
-            ]
-        },
-        {
-            "name": "u32_reference",
-            "values": [
-                36.39,
-                44.72,
-                39.89,
-                29.53,
-                35.36,
-                54.49
-            ]
-        },
-        {
-            "name": "u32_reference_opt",
-            "values": [
-                32.65,
-                28.77,
-                35.83,
-                26.47,
-                23.67,
-                46.18
-            ]
-        },
-        {
-            "name": "u8_shift_v1",
-            "values": [
-                2.17,
-                2.51,
-                2.32,
-                1.75,
-                2.83,
-                2.49
-            ]
-        },
-        {
-            "name": "u8_shift_v2",
-            "values": [
-                2.11,
-                2.51,
-                2.23,
-                1.7,
-                2.84,
-                2.5
-            ]
-        },
-        {
-            "name": "u32_shift_v1",
-            "values": [
-                0.61,
-                1,
-                0.64,
-                0.49,
-                0.44,
-                0.72
-            ]
-        },
-        {
-            "name": "u32_shift_v2",
-            "values": [
-                0.5,
-                null,
-                null,
-                0.8,
-                0.54,
-                null
-            ]
-        },
-        {
-            "name": "u8_asm",
-            "values": [
-                6.39,
-                3.24,
-                6.83,
-                5.2,
-                3.06,
-                7.53
-            ]
-        },
-        {
-            "name": "u32_asm",
-            "values": [
-                1.07,
-                0.68,
-                1.14,
-                0.86,
-                0.62,
-                0.91
-            ]
-        },
-        {
-            "name": "u32_asm_ur4",
-            "values": [
-                0.54,
-                0.51,
-                0.59,
-                0.45,
-                0.47,
-                0.74
-            ]
-        },
-        {
-            "name": "u32_sse_v1",
-            "values": [
-                0.9,
-                0.9,
-                0.96,
-                0.72,
-                0.83,
-                1.05
-            ]
-        },
-        {
-            "name": "u32_sse_v2",
-            "values": [
-                0.87,
-                0.74,
-                0.92,
-                0.7,
-                0.64,
-                1.05
-            ]
-        },
-        {
-            "name": "u32_avx2_v1",
-            "values": [
-                0.87,
-                0.83,
-                0.95,
-                0.7,
-                0.69,
-                1.02
-            ]
-        },
-        {
-            "name": "u8_intrinsics",
-            "values": [
-                0.64,
-                0.64,
-                0.68,
-                0.52,
-                0.56,
-                0.76
-            ]
-        }
-    ]
-};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
-  })();
-</script>
-<div class="chart-container" id="chart-ch12-ancien-3" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-ch12-ancien-3';
+    var id = 'chart-ch12-ancien-1';
     var data = {
     "chapter": 12,
     "title": "POPCNT – Compter les bits à 1",
@@ -1022,6 +998,50 @@ les données par des registres64bits.</p>
     else { drawChart(); }
   })();
 </script>
+<p>tions de la fonction popcnt sur des tableaux de 262_207 octets
+12.6.2
+Pour les architectures modernes (Table), on observe les mêmes tendances.
+Cependant, les méthodes8et11donnent les meilleurs résultats et sont un peu plus
+performantes que la version intrinsics. Traiter les données sous format32bits est
+donc bénéfique dans ce cas.
+La méthode8avec décalage de bits est souvent la plus performante, talonnée
+par la méthode11qui réalise un dépliage par4de la boucle.
+On peut alors se demander si le passage au64bits améliorera encore les
+performances? La réponse est oui à en croire les tests effectués en traitant les
+données par groupe de32ou de64bits sous une architecture64bits avec un AMD
+Ryzen 5 3600 :
+•architecture 32 bits, traitement par 32 bits :0,43s
+•
+architecture 32 bits, traitement par 32 bits et dépliage par 4 de la boucle :
+0,31s
+N° Marque Intel AMD IntelIntel AMD Intel
+Gamme Core i3Ryzen 7Core i5Core i7Ryzen 5Xeon
+Modèle 61001700X 7400 8700 36004208
+2015 2017 2017 2017 20192019
+1 u8_reference57.99 59.13 64.81 47.28 54.96 71.73
+2 u8_reference_opt53.14 54.11 58.58 43.03 48.78 74.70
+3 u32_reference36.39 44.72 39.89 29.53 35.36 54.49
+4u32_reference_opt32.65 28.77 35.83 26.47 23.67 46.18
+5 u8_shift_v1 2.17 2.51 2.32 1.75 2.83 2.49
+6 u8_shift_v2 2.11 2.51 2.23 1.70 2.84 2.50
+7 u32_shift_v1 0.61 1.00 0.64 0.49 0.44 0.72
+8 u32_shift_v2 0.50 0.80 0.54
+9 u8_asm 6.39 3.24 6.83 5.20 3.06 7.53
+10 u32_asm 1.07 0.68 1.14 0.86 0.62 0.91
+11 u32_asm_ur4 0.54 0.51 0.59 0.45 0.47 0.74
+12 u32_sse_v1 0.90 0.90 0.96 0.72 0.83 1.05
+13 u32_sse_v2 0.87 0.74 0.92 0.70 0.64 1.05
+14 u32_avx2_v1 0.87 0.83 0.95 0.70 0.69 1.02
+15 u8_intrinsics 0.64 0.64 0.68 0.52 0.56 0.76
+ratio 1 / 11 107.38 115.94 109.84 N/A 116.93 96.93
+TABLE12.3– Architectures récentes : temps d’exécution en secondes sur 30_000 exécutions
+de la fonction popcnt sur des tableaux de 262_207 octets
+•architecture 64 bits,traitement par 64 bits :0,21s
+•
+architecture 64 bits,traitement par 64 bits et dépliage par 4 de la boucle :0,15
+s
+On divise donc le temps d’exécution par deux en passant au64bits et en traitant
+les données par des registres64bits.</p>
 <h3 class="subsection">12.6.3 Pour les architectures récentes (Table), on observe encore les mêmes</h3>
 
 <p>tendances que précédemment. La méthode8est la plus efficace.
@@ -1047,175 +1067,6 @@ Modèle10850H 5600g12400F 9600X
 ratio 1 / 11 106.87 104.97 117.61
 TABLE12.4– Architectures actuelles : temps d’exécution en secondes sur 30_000 exécutions
 de la fonction popcnt sur des tableaux de 262_207 octets</p>
-<div class="chart-container" id="chart-ch12-recent-5" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-ch12-recent-5';
-    var data = {
-    "chapter": 12,
-    "title": "POPCNT – Compter les bits à 1",
-    "description": "Temps d'exécution en secondes pour 30 000 exécutions de la fonction popcnt sur des tableaux de 262 207 octets.",
-    "CPUs": [
-        "Core i7 10850H",
-        "Ryzen 5 5600g",
-        "Core i5 12400F",
-        "Ryzen 5 9600X"
-    ],
-    "Years": [
-        2020,
-        2021,
-        2022,
-        2024
-    ],
-    "Methods": [
-        {
-            "name": "u8_reference",
-            "values": [
-                43.82,
-                46.19,
-                51.75,
-                21.68
-            ]
-        },
-        {
-            "name": "u8_reference_opt",
-            "values": [
-                40.06,
-                42.72,
-                49.1,
-                20.69
-            ]
-        },
-        {
-            "name": "u32_reference",
-            "values": [
-                27.42,
-                25.91,
-                35.64,
-                18.39
-            ]
-        },
-        {
-            "name": "u32_reference_opt",
-            "values": [
-                24.5,
-                21.25,
-                28.58,
-                17.8
-            ]
-        },
-        {
-            "name": "u8_shift_v1",
-            "values": [
-                1.65,
-                2.28,
-                0.73,
-                0.2
-            ]
-        },
-        {
-            "name": "u8_shift_v2",
-            "values": [
-                1.61,
-                2.29,
-                0.73,
-                0.19
-            ]
-        },
-        {
-            "name": "u32_shift_v1",
-            "values": [
-                0.48,
-                0.37,
-                0.31,
-                0.15
-            ]
-        },
-        {
-            "name": "u32_shift_v2",
-            "values": [
-                0.39,
-                null,
-                null,
-                null
-            ]
-        },
-        {
-            "name": "u8_asm",
-            "values": [
-                2.45,
-                3.6,
-                1.79,
-                1.46
-            ]
-        },
-        {
-            "name": "u32_asm",
-            "values": [
-                0.8,
-                0.45,
-                0.5,
-                0.36
-            ]
-        },
-        {
-            "name": "u32_asm_ur4",
-            "values": [
-                0.41,
-                0.44,
-                0.44,
-                0.36
-            ]
-        },
-        {
-            "name": "u32_sse_v1",
-            "values": [
-                0.67,
-                0.79,
-                0.65,
-                0.36
-            ]
-        },
-        {
-            "name": "u32_sse_v2",
-            "values": [
-                0.66,
-                0.53,
-                0.63,
-                0.47
-            ]
-        },
-        {
-            "name": "u32_avx2_v1",
-            "values": [
-                0.65,
-                0.73,
-                0.69,
-                0.36
-            ]
-        },
-        {
-            "name": "u8_intrinsics",
-            "values": [
-                0.49,
-                0.47,
-                0.44,
-                0.32
-            ]
-        }
-    ]
-};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
-  })();
-</script>
 <h2 class="section">12.7 Ce problème révèle deux choses importantes. La première est quele traitement</h2>
 
 <p>des données par groupe de 32 bits(voire de 64 bits) au lieu de 8 bitspermet de

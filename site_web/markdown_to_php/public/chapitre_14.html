@@ -130,15 +130,24 @@ calculée par la fonction ainsi que la longueur des séquences (size). En retour
 donne le nombre de mutations trouvées.
 1u32 (u8<em>x,u8</em>y,u8*z,u32 )
 2 u32 =0;</p>
-<pre class="code-block"><code>for(u32 =0;i&lt;size;i)
-z[i]x[i]y[i];
-if(z[i] 0)
-z[i]x[i] y[i];
-++mutations;
-}
-}
-return ;
-12}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_001.c" target="_blank">code/chapitre_14/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>u32 <span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>size<span style="color: #339933;">;</span>i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">++</span>mutations<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">12</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 14.2.1 – Maximum de Parcimonie fonction de référence en C</em></p>
 <p>Les séquences sont modélisées sous forme de tableaux d’octetset pour coder
@@ -191,6 +200,9 @@ de référence :
 Afin de donner un ordre d’idée du temps d’exécution pour les différentes implan-
 tations que nous allons réaliser, nous reportons par la suite, les résultats obtenus</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_002.asm" target="_blank">code/chapitre_14/code_002.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; entrée dans la fonction</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
@@ -229,6 +241,8 @@ tations que nous allons réaliser, nous reportons par la suite, les résultats o
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p><em>Listing 14.3.1 – Maximum de Parcimonie fonction de référence en assembleur</em></p>
 <p>sur un Core i7 8700. Le test effectué consiste à calculer50_000fois la fonction
@@ -273,6 +287,9 @@ haute. Elle est généralement plus performante qu’unmovqui mettraity[i]dansdl
 
 <p>plusieurs changements :</p>
 
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_003.asm" target="_blank">code/chapitre_14/code_003.asm</a></summary>
+
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; entrée dans la fonction</span></div></li>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
@@ -314,6 +331,8 @@ haute. Elle est généralement plus performante qu’unmovqui mettraity[i]dansdl
 </ol></div>
 </div>
 
+</details>
+
 <p><em>Listing 14.4.1 – Maximum de Parcimonie fonction de référence sans if</em></p>
 <p>•
 la variablemutationssera remplacée par le registreeax, cela évite des accès
@@ -326,6 +345,9 @@ pour stockerz, ce qui fait qu’on aura à notre disposition 7 registres
 le registreedisera également utilisé pour stockery, après avoir réalisé les
 calculs il faudra donc le recharger avecy
 Le code est donné Listing.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_004.asm" target="_blank">code/chapitre_14/code_004.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -363,6 +385,8 @@ Le code est donné Listing.</p>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p><em>Listing 14.5.1 – Maximum de Parcimonie fonction de référence sans if optimisée</em></p>
 <p>Amélioration sans if et optimisation
@@ -438,28 +462,37 @@ Grâce à la vectorisation avec jeu d’instruction SSE2, on abaisse le temps
 d’exécution à2,70secondes soit un facteur d’amélioration de84,37/2,70≃31 .
 14.7. VERSION SSE 4.1 363
 1.for_u16:</p>
-<pre class="code-block"><code>movdqa ,esi+ecx]
-movdqa ,edi+ecx]
-movdqa ,xmm0 ; xmm1 = xmm0
-pand ,xmm2 ; xmm0 = x[i:i+15] &amp; y[i:i+15]
-por ,xmm2 ; xmm1 = x[i:i+15] | y[i:i+15]
-movdqa ,xmm0 ; xmm4 = x[i:i+15] &amp; y[i:i+15]
-pcmpeqb ,xmm6 ; xmm4 est le masque
-; si (x[i] &amp; y[i] == 0) alors
-; xmm4[i] = 0xFF
-; sinon
-; xmm4[i] = 0x00
-pmovmskb ,xmm4 ; obtenir les bits
-popcnt ,ebp ; compte le nombre de mutations
-add ,ebp ; ajouter à eax
-; calcul de la séquence
-pand ,xmm4 ; not(xmm4) &amp; (x[i] | y[i])
-pandn ,xmm0
-por ,xmm1
-movdqa[ebx+ecx],xmm0 ; résultat dans z[i:i+15]
-add ,16 ; i+= 16
-dec
-jnz</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_005.asm" target="_blank">code/chapitre_14/code_005.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; xmm1 = xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; xmm0 = x[i:i+15] &amp; y[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">por</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; xmm1 = x[i:i+15] | y[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; xmm4 = x[i:i+15] &amp; y[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pcmpeqb</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm6</span> <span style="color: #666666; font-style: italic;">; xmm4 est le masque</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; si (x[i] &amp; y[i] == 0) alors</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; xmm4[i] = 0xFF</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; sinon</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; xmm4[i] = 0x00</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pmovmskb</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm4</span> <span style="color: #666666; font-style: italic;">; obtenir les bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; compte le nombre de mutations</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; ajouter à eax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; calcul de la séquence</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm4</span> <span style="color: #666666; font-style: italic;">; not(xmm4) &amp; (x[i] | y[i])</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pandn</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">por</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span><span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; résultat dans z[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">16</span> <span style="color: #666666; font-style: italic;">; i+= 16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">dec</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jnz</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 14.6.1 – Maximum de Parcimonie version SSE2</em></p>
 <h2 class="section">14.7 Un variante de la version SSE2 va consister à utiliser l’instruction appelée</h2>
@@ -480,24 +513,33 @@ on gardexmm1.b[i]. Etant donné que :
 2 cmp ,edx
 3 jge
 4 pxor ,xmm0 ; xmm0 = [0, 0, ..., 0]</p>
-<pre class="code-block"><code>movdqu ,esi+ecx]
-movdqu ,edi+ecx]
-movdqa ,xmm1 ; xmm2 = x[i:i+15]
-movdqa ,xmm3 ; xmm4 = y[i:i+15]
-pand ,xmm3 ; xmm1 = x[i:i+15] &amp; y[i:i+15]
-por ,xmm4 ; xmm1 = x[i:i+15] | y[i:i+15]
-pcmpeqb ,xmm1 ; si xmm1.b[i] == 0
-; xmm0.b[i] = 0xFF
-; alors
-; xmm0.b[i] = 0x00
-pmovmskb ,xmm0 ; obtenir le nombre de mutations locales
-popcnt ,ebp ; compter
-add ,ebp ; ajouter aux mutations totales
-pblendvb ,xmm2,xmm0; calculer la séquence hypothétique
-movdqa[ebx+ecx],xmm1 ; stocker le résultat en z[i:i+15]
-add ,16 ; i+= 16
-jmp
-22.endfor_ur16</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_006.asm" target="_blank">code/chapitre_14/code_006.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqu</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqu</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span> <span style="color: #666666; font-style: italic;">; xmm2 = x[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm3</span> <span style="color: #666666; font-style: italic;">; xmm4 = y[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pand</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm3</span> <span style="color: #666666; font-style: italic;">; xmm1 = x[i:i+15] &amp; y[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">por</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm4</span> <span style="color: #666666; font-style: italic;">; xmm1 = x[i:i+15] | y[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pcmpeqb</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span> <span style="color: #666666; font-style: italic;">; si xmm1.b[i] == 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; xmm0.b[i] = 0xFF</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; alors</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; xmm0.b[i] = 0x00</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pmovmskb</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span> <span style="color: #666666; font-style: italic;">; obtenir le nombre de mutations locales</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; compter</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; ajouter aux mutations totales</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pblendvb</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #666666; font-style: italic;">; calculer la séquence hypothétique</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span><span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">xmm1</span> <span style="color: #666666; font-style: italic;">; stocker le résultat en z[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">16</span> <span style="color: #666666; font-style: italic;">; i+= 16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jmp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">22</span><span style="color: #339933;">.</span>endfor_ur16</div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 14.7.1 – Maximum de Parcimonie version SSE4.1</em></p>
 <p>On obtient bien le résultat escompté.
@@ -527,17 +569,26 @@ On aurait pu également remplacer les lignes 8 et 9 du Listing
 8 vpand ,ymm3 ; ymm1 = ymm1 &amp; ymm3
 9 vpor ,ymm4 ; ymm2 = ymm2 | ymm3
 11 vpcmpeqb ,ymm1 ; si ymm1.b[i] == 0</p>
-<pre class="code-block"><code>; ymm0.b[i] = 0xFF
-; alors
-; ymm0.b[i] = 0x00
-vpmovmskb ,ymm0 ; obtenir le nombre de mutations locales
-popcnt ,ebp ; compter
-add ,ebp ; ajouter aux mutations totales
-vpblendvb ,ymm2,ymm0 ; calculer la séquence hypothétique
-vmovdqa[ebx+ecx],ymm1; stocker le résultat en z[i:i+15]
-add ,32 ; i += 32
-dec
-jnz</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_007.asm" target="_blank">code/chapitre_14/code_007.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; ymm0.b[i] = 0xFF</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; alors</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; ymm0.b[i] = 0x00</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpmovmskb</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ymm0</span> <span style="color: #666666; font-style: italic;">; obtenir le nombre de mutations locales</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; compter</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ebp</span> <span style="color: #666666; font-style: italic;">; ajouter aux mutations totales</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">vpblendvb <span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ymm2</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ymm0</span> <span style="color: #666666; font-style: italic;">; calculer la séquence hypothétique</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vmovdqa</span><span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span><span style="color: #46aa03; font-weight: bold;">ymm1</span><span style="color: #666666; font-style: italic;">; stocker le résultat en z[i:i+15]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #339933;">,</span><span style="color: #ff0000;">32</span> <span style="color: #666666; font-style: italic;">; i += 32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">dec</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">jnz</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p><em>Listing 14.8.1 – Maximum de Parcimonie version AVX2</em></p>
 <p>ou bien stocker dans d’autres registres les résultats des unions et intersections
@@ -583,29 +634,38 @@ optimisations.
 10 v_zero,v_cmp ((aligned(32)));
 12 v_zero=_mm256_set_epi8(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 13 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);</p>
-<pre class="code-block"><code>for(i=0;i&lt;size&amp;~31));i+=32)
-v_x=_mm256_load_si256((__m256i*)x[i]);
-v_y=_mm256_load_si256((__m256i*)y[i]);
-v_x_and_y=_mm256_and_si256(v_x,v_y);
-v_x_or_y=_mm256_or_si256(v_x,v_y);
-v_cmp=_mm256_cmpeq_epi8(v_zero,v_x_and_y);
-u32 =_mm256_movemask_epi8 (v_cmp);
-mutations+=_mm_popcnt_u32(r);
-v_x=_mm256_andnot_si256(v_cmp,v_x_and_y);
-v_y=_mm256_and_si256(v_cmp,v_x_or_y);
-v_z=_mm256_or_si256(v_x,v_y);
-_mm256_store_si256(__m256i*)z[i],v_z);
-}
-// dernières itérations
-for( i&lt;size; i)
-z[i] x[i] y[i];
-if(z[i] 0)
-z[i] x[i] y[i];
-++mutations;
-}
-}
-return ;
-39}</code></pre>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_008.c" target="_blank">code/chapitre_14/code_008.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>i<span style="color: #339933;">&lt;</span>size<span style="color: #339933;">&amp;</span>~<span style="color: #0000dd;">31</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>i<span style="color: #339933;">+=</span><span style="color: #0000dd;">32</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_x<span style="color: #339933;">=</span>_mm256_load_si256<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m256i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_y<span style="color: #339933;">=</span>_mm256_load_si256<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m256i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_x_and_y<span style="color: #339933;">=</span>_mm256_and_si256<span style="color: #009900;">&#40;</span>v_x<span style="color: #339933;">,</span>v_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_x_or_y<span style="color: #339933;">=</span>_mm256_or_si256<span style="color: #009900;">&#40;</span>v_x<span style="color: #339933;">,</span>v_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_cmp<span style="color: #339933;">=</span>_mm256_cmpeq_epi8<span style="color: #009900;">&#40;</span>v_zero<span style="color: #339933;">,</span>v_x_and_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 <span style="color: #339933;">=</span>_mm256_movemask_epi8 <span style="color: #009900;">&#40;</span>v_cmp<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">mutations<span style="color: #339933;">+=</span>_mm_popcnt_u32<span style="color: #009900;">&#40;</span>r<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_x<span style="color: #339933;">=</span>_mm256_andnot_si256<span style="color: #009900;">&#40;</span>v_cmp<span style="color: #339933;">,</span>v_x_and_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_y<span style="color: #339933;">=</span>_mm256_and_si256<span style="color: #009900;">&#40;</span>v_cmp<span style="color: #339933;">,</span>v_x_or_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">v_z<span style="color: #339933;">=</span>_mm256_or_si256<span style="color: #009900;">&#40;</span>v_x<span style="color: #339933;">,</span>v_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">_mm256_store_si256<span style="color: #009900;">&#40;</span>__m256i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span>v_z<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// dernières itérations</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span> i<span style="color: #339933;">&lt;</span>size<span style="color: #339933;">;</span> i<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">++</span>mutations<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b1b100;">return</span> <span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000dd;">39</span><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
 
 <p>On notera que l’appel à_mm256_set_epi8peut être remplacé par unvpxor(dont
 l’intrinsics est_mm256_setzero_si256), puisqu’elle a pour but de mettre le vecteur
@@ -614,6 +674,9 @@ v_zeroà 0).</p>
 
 <p>total de mutations est stocké danseaxalors que le registreebppermet de compter
 (en deux fois 32 bits) les mutations pour le vecteur courantzmm1.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_14/code_009.asm" target="_blank">code/chapitre_14/code_009.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #666666; font-style: italic;">; sauvegarde d'ebp</span></div></li>
@@ -641,6 +704,8 @@ v_zeroà 0).</p>
 <li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">29</span><span style="color: #339933;">.</span>last_63<span style="color: #339933;">:</span></div></li>
 </ol></div>
 </div>
+
+</details>
 
 <p>L’AVX512 apporte un léger gain par rapport à l’AVX2 (cf. Résultats ci-après).</p>
 <h2 class="section">14.12 Afin de tester les différentes versions que nous avons écrites, nous allons exami-</h2>
@@ -679,228 +744,127 @@ Les méthodes4à7qui suppriment leifdiminuent le temps de calcul par un
 facteur2même si elles restent loin de ce que peut apporter la vectorisation avec
 SSE.
 On note enfin, sur l’Intel 4790, que le passage à l’AVX permet de diminuer par
-deux le temps de calcul par rapport au SSE.
-n° Méthode IntelIntelIntelAMD IntelIntel
-Pentium DCore 2 i7 X6 i5 i7
-925Q9300 8601090T3570K 4790
-2006 2008 2009 2010 2012 2014
-1 ref_v1_O2 224.64 170.22 131.86 110.89 140.27 103.54
-2 ref_v1_O3 29.86 11.80 5.47 2.56
-3 asm 235.32 185.40 126.40 118.98 114.89 96.59
-4 no_if_asm 133.48 98.36 67.72 52.67 48.67 41.62
-5 no_if_opt_asm 94.97 85.60 65.33 45.64 33.35 25.95
-6no_if_opt_ur4_asm 70.15 87.67 51.68 38.16 28.95 22.52
-7no_if_opt_ur8_asm 70.29 86.91 50.25 36.73 28.32 21.89
-8 sse2_v1 27.64 9.37 5.84 11.75 4.49 3.66
-9 sse41 -9.25 5.72 - 4.42 3.73
-10 avx2 - - - - - 1.86
-11 avx2_intrinsics - - - - - 1.89
-ratio (1 / 8 ou 10) 8.12 18.16 22.57 9.43 31.24 55.66
-TABLE14.3– Architectures anciennes : temps d’exécution en secondes de la fonction de
-Fitch avec 50_000 répétitions sur des chaînes de 524_287 bases
-14.12.2
-Pour les architectures modernes (Table), on observe les mêmes tendances.
-On notera que la version AVX2 (méthode10) est souvent plus performante que la
-version intrinsics traduite par le compilateur (méthode11).
-Dans le cas de l’AMD Ryzen 5 3600, la traduction en assembleur avec jeu
-d’instruction AVX2 permet d’atteindre0,79secondes soit un facteur d’amélioration
-de presque131.
-L’Intel Xeon Silver 4208 dispose du jeu d’instructions AVX512. Les résultats
-obtenus sont les suivants :
-•version de base AVX512 :2.95s
-•amélioration avec dépliage par 8 et élimination des dépendances :2.43s
-•version intrinsics :2.34s
-Dans ce cas c’est la versionintrinsicsqui est la plus efficace.
-L’AMD Ryzen 5 9600X dispose également du jeu d’instructions AVX512. Les
-résultats obtenus sont les suivants :
-•version de base AVX512 :0.50s
-•amélioration avec dépliage par 8 et élimination des dépendances :0.42s
-•version intrinsics :0.49s
-N°Marque Intel AMD IntelIntel AMD Intel
-Gamme Core i3Ryzen 7Core i5Core i7Ryzen 5Xeon
-Modèle 61001700X 7400 8700 3600 4208
-2015 2017 2017 2017 2019 2019
-1ref_v1_O2 139.36 111.55 148.59 96.72 103.41 118.36
-2ref_v1_O3 2.20 2.50 2.45 1.85 2.02 3.61
-3asm 104.56 106.52 110.79 84.37 101.56 123.00
-4no_if_asm 42.58 53.86 45.42 34.68 47.03 42.45
-5no_if_opt_asm 21.43 19.58 22.82 17.40 17.24 49.80
-6no_if_opt_ur4_asm19.67 18.85 20.95 15.92 16.75 23.04
-7no_if_opt_ur8_asm18.75 17.17 19.99 15.21 14.68 22.56
-8sse2_v1 3.58 3.59 3.52 2.70 3.16 4.30
-9sse41 3.58 3.61 3.46 2.60 3.19 4.28
-10avx2 1.54
-11avx2_intrinsics 1.81 1.39 1.82 1.39 1.09 3.03
-ratio (1 / 10) 90.49 97.85 84.42 71.64 130.89 41.24
-TABLE14.4– Architectures modernes : temps d’exécution en secondes de la fonction de
-Fitch avec 50_000 répétitions sur des chaînes de 524_287 bases.
-Dans ce cas, c’est la méthode implantée en assembleur qui est la plus perfor-
-mante.</p>
-<script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+deux le temps de calcul par rapport au SSE.</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Pentium D 925<br><small>2006</small></th>
+      <th>Core 2 Q9300<br><small>2008</small></th>
+      <th>Core i7 860<br><small>2009</small></th>
+      <th>AMD X6 1090T<br><small>2010</small></th>
+      <th>Core i5 3570K<br><small>2012</small></th>
+      <th>Core i7 4790<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ref_v1_O2</strong></td>
+      <td>224.64</td>
+      <td>170.22</td>
+      <td>131.86</td>
+      <td>110.89</td>
+      <td>140.27</td>
+      <td>103.54</td>
+    </tr>
+    <tr>
+      <td><strong>ref_v1_O3</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>29.86</td>
+      <td>11.80</td>
+      <td>-</td>
+      <td>5.47</td>
+    </tr>
+    <tr>
+      <td><strong>asm</strong></td>
+      <td>235.32</td>
+      <td>185.40</td>
+      <td>126.40</td>
+      <td>118.98</td>
+      <td>114.89</td>
+      <td>96.59</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_asm</strong></td>
+      <td>133.48</td>
+      <td>98.36</td>
+      <td>67.72</td>
+      <td>52.67</td>
+      <td>48.67</td>
+      <td>41.62</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_asm</strong></td>
+      <td>94.97</td>
+      <td>85.60</td>
+      <td>65.33</td>
+      <td>45.64</td>
+      <td>33.35</td>
+      <td>25.95</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_ur4_asm</strong></td>
+      <td>70.15</td>
+      <td>87.67</td>
+      <td>51.68</td>
+      <td>38.16</td>
+      <td>28.95</td>
+      <td>22.52</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_ur8_asm</strong></td>
+      <td>70.29</td>
+      <td>86.91</td>
+      <td>50.25</td>
+      <td>36.73</td>
+      <td>28.32</td>
+      <td>21.89</td>
+    </tr>
+    <tr>
+      <td><strong>sse2_v1</strong></td>
+      <td>27.64</td>
+      <td>9.37</td>
+      <td>5.84</td>
+      <td>11.75</td>
+      <td>4.49</td>
+      <td>3.66</td>
+    </tr>
+    <tr>
+      <td><strong>sse41</strong></td>
+      <td>-</td>
+      <td>9.25</td>
+      <td>5.72</td>
+      <td>-</td>
+      <td>4.42</td>
+      <td>3.73</td>
+    </tr>
+    <tr>
+      <td><strong>avx2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.86</td>
+    </tr>
+    <tr>
+      <td><strong>avx2_intrinsics</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.89</td>
+    </tr>
+  </tbody>
+  <script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="../../data/graph.js"></script>
-<div class="chart-container" id="chart-ch14-moderne-10" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-ch14-ancien-2" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-ch14-moderne-10';
-    var data = {
-    "chapter": 14,
-    "title": "Maximum de Parcimonie (Fitch)",
-    "description": "Temps d'exécution en secondes pour 50 000 répétitions sur des chaînes de 524 287 bases (bioinformatique).",
-    "CPUs": [
-        "Core i3 6100",
-        "Ryzen 7 1700X",
-        "Core i5 7400",
-        "Core i7 8700",
-        "Ryzen 5 3600",
-        "Xeon Silver 4208"
-    ],
-    "Years": [
-        2015,
-        2017,
-        2017,
-        2017,
-        2019,
-        2019
-    ],
-    "Methods": [
-        {
-            "name": "ref_v1_O2",
-            "values": [
-                139.36,
-                111.55,
-                148.59,
-                96.72,
-                103.41,
-                118.36
-            ]
-        },
-        {
-            "name": "ref_v1_O3",
-            "values": [
-                2.2,
-                2.5,
-                2.45,
-                1.85,
-                2.02,
-                3.61
-            ]
-        },
-        {
-            "name": "asm",
-            "values": [
-                104.56,
-                106.52,
-                110.79,
-                84.37,
-                101.56,
-                123
-            ]
-        },
-        {
-            "name": "no_if_asm",
-            "values": [
-                42.58,
-                53.86,
-                45.42,
-                34.68,
-                47.03,
-                42.45
-            ]
-        },
-        {
-            "name": "no_if_opt_asm",
-            "values": [
-                21.43,
-                19.58,
-                22.82,
-                17.4,
-                17.24,
-                49.8
-            ]
-        },
-        {
-            "name": "no_if_opt_ur4_asm",
-            "values": [
-                19.67,
-                18.85,
-                20.95,
-                15.92,
-                16.75,
-                23.04
-            ]
-        },
-        {
-            "name": "no_if_opt_ur8_asm",
-            "values": [
-                18.75,
-                17.17,
-                19.99,
-                15.21,
-                14.68,
-                22.56
-            ]
-        },
-        {
-            "name": "sse2_v1",
-            "values": [
-                3.58,
-                3.59,
-                3.52,
-                2.7,
-                3.16,
-                4.3
-            ]
-        },
-        {
-            "name": "sse41",
-            "values": [
-                3.58,
-                3.61,
-                3.46,
-                2.6,
-                3.19,
-                4.28
-            ]
-        },
-        {
-            "name": "avx2",
-            "values": [
-                null,
-                null,
-                null,
-                1.54,
-                null,
-                null
-            ]
-        },
-        {
-            "name": "avx2_intrinsics",
-            "values": [
-                1.81,
-                1.39,
-                1.82,
-                1.39,
-                1.09,
-                3.03
-            ]
-        }
-    ]
-};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
-  })();
-</script>
-<div class="chart-container" id="chart-ch14-ancien-9" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-ch14-ancien-9';
+    var id = 'chart-ch14-ancien-2';
     var data = {
     "chapter": 14,
     "title": "Maximum de Parcimonie (Fitch)",
@@ -1056,6 +1020,301 @@ mante.</p>
     else { drawChart(); }
   })();
 </script>
+<p>Fitch avec 50_000 répétitions sur des chaînes de 524_287 bases
+14.12.2
+Pour les architectures modernes (Table), on observe les mêmes tendances.
+On notera que la version AVX2 (méthode10) est souvent plus performante que la
+version intrinsics traduite par le compilateur (méthode11).
+Dans le cas de l’AMD Ryzen 5 3600, la traduction en assembleur avec jeu
+d’instruction AVX2 permet d’atteindre0,79secondes soit un facteur d’amélioration
+de presque131.
+L’Intel Xeon Silver 4208 dispose du jeu d’instructions AVX512. Les résultats
+obtenus sont les suivants :
+•version de base AVX512 :2.95s
+•amélioration avec dépliage par 8 et élimination des dépendances :2.43s
+•version intrinsics :2.34s
+Dans ce cas c’est la versionintrinsicsqui est la plus efficace.
+L’AMD Ryzen 5 9600X dispose également du jeu d’instructions AVX512. Les
+résultats obtenus sont les suivants :
+•version de base AVX512 :0.50s
+•amélioration avec dépliage par 8 et élimination des dépendances :0.42s
+•version intrinsics :0.49s</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i3 6100<br><small>2015</small></th>
+      <th>Ryzen 7 1700X<br><small>2017</small></th>
+      <th>Core i5 7400<br><small>2017</small></th>
+      <th>Core i7 8700<br><small>2017</small></th>
+      <th>Ryzen 5 3600<br><small>2019</small></th>
+      <th>Xeon Silver 4208<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ref_v1_O2</strong></td>
+      <td>139.36</td>
+      <td>111.55</td>
+      <td>148.59</td>
+      <td>96.72</td>
+      <td>103.41</td>
+      <td>118.36</td>
+    </tr>
+    <tr>
+      <td><strong>ref_v1_O3</strong></td>
+      <td>2.20</td>
+      <td>2.50</td>
+      <td>2.45</td>
+      <td>1.85</td>
+      <td>2.02</td>
+      <td>3.61</td>
+    </tr>
+    <tr>
+      <td><strong>asm</strong></td>
+      <td>104.56</td>
+      <td>106.52</td>
+      <td>110.79</td>
+      <td>84.37</td>
+      <td>101.56</td>
+      <td>123.00</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_asm</strong></td>
+      <td>42.58</td>
+      <td>53.86</td>
+      <td>45.42</td>
+      <td>34.68</td>
+      <td>47.03</td>
+      <td>42.45</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_asm</strong></td>
+      <td>21.43</td>
+      <td>19.58</td>
+      <td>22.82</td>
+      <td>17.40</td>
+      <td>17.24</td>
+      <td>49.80</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_ur4_asm</strong></td>
+      <td>19.67</td>
+      <td>18.85</td>
+      <td>20.95</td>
+      <td>15.92</td>
+      <td>16.75</td>
+      <td>23.04</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_ur8_asm</strong></td>
+      <td>18.75</td>
+      <td>17.17</td>
+      <td>19.99</td>
+      <td>15.21</td>
+      <td>14.68</td>
+      <td>22.56</td>
+    </tr>
+    <tr>
+      <td><strong>sse2_v1</strong></td>
+      <td>3.58</td>
+      <td>3.59</td>
+      <td>3.52</td>
+      <td>2.70</td>
+      <td>3.16</td>
+      <td>4.30</td>
+    </tr>
+    <tr>
+      <td><strong>sse41</strong></td>
+      <td>3.58</td>
+      <td>3.61</td>
+      <td>3.46</td>
+      <td>2.60</td>
+      <td>3.19</td>
+      <td>4.28</td>
+    </tr>
+    <tr>
+      <td><strong>avx2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.54</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>avx2_intrinsics</strong></td>
+      <td>1.81</td>
+      <td>1.39</td>
+      <td>1.82</td>
+      <td>1.39</td>
+      <td>1.09</td>
+      <td>3.03</td>
+    </tr>
+  </tbody>
+  <div class="chart-container" id="chart-ch14-moderne-3" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-ch14-moderne-3';
+    var data = {
+    "chapter": 14,
+    "title": "Maximum de Parcimonie (Fitch)",
+    "description": "Temps d'exécution en secondes pour 50 000 répétitions sur des chaînes de 524 287 bases (bioinformatique).",
+    "CPUs": [
+        "Core i3 6100",
+        "Ryzen 7 1700X",
+        "Core i5 7400",
+        "Core i7 8700",
+        "Ryzen 5 3600",
+        "Xeon Silver 4208"
+    ],
+    "Years": [
+        2015,
+        2017,
+        2017,
+        2017,
+        2019,
+        2019
+    ],
+    "Methods": [
+        {
+            "name": "ref_v1_O2",
+            "values": [
+                139.36,
+                111.55,
+                148.59,
+                96.72,
+                103.41,
+                118.36
+            ]
+        },
+        {
+            "name": "ref_v1_O3",
+            "values": [
+                2.2,
+                2.5,
+                2.45,
+                1.85,
+                2.02,
+                3.61
+            ]
+        },
+        {
+            "name": "asm",
+            "values": [
+                104.56,
+                106.52,
+                110.79,
+                84.37,
+                101.56,
+                123
+            ]
+        },
+        {
+            "name": "no_if_asm",
+            "values": [
+                42.58,
+                53.86,
+                45.42,
+                34.68,
+                47.03,
+                42.45
+            ]
+        },
+        {
+            "name": "no_if_opt_asm",
+            "values": [
+                21.43,
+                19.58,
+                22.82,
+                17.4,
+                17.24,
+                49.8
+            ]
+        },
+        {
+            "name": "no_if_opt_ur4_asm",
+            "values": [
+                19.67,
+                18.85,
+                20.95,
+                15.92,
+                16.75,
+                23.04
+            ]
+        },
+        {
+            "name": "no_if_opt_ur8_asm",
+            "values": [
+                18.75,
+                17.17,
+                19.99,
+                15.21,
+                14.68,
+                22.56
+            ]
+        },
+        {
+            "name": "sse2_v1",
+            "values": [
+                3.58,
+                3.59,
+                3.52,
+                2.7,
+                3.16,
+                4.3
+            ]
+        },
+        {
+            "name": "sse41",
+            "values": [
+                3.58,
+                3.61,
+                3.46,
+                2.6,
+                3.19,
+                4.28
+            ]
+        },
+        {
+            "name": "avx2",
+            "values": [
+                null,
+                null,
+                null,
+                1.54,
+                null,
+                null
+            ]
+        },
+        {
+            "name": "avx2_intrinsics",
+            "values": [
+                1.81,
+                1.39,
+                1.82,
+                1.39,
+                1.09,
+                3.03
+            ]
+        }
+    ]
+};
+    function drawChart(){
+      if (typeof window.createPerformanceChart === 'function') {
+        window.createPerformanceChart(id, data);
+      } else {
+        console.error("createPerformanceChart est introuvable");
+      }
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
+    else { drawChart(); }
+  })();
+</script>
+<p>Fitch avec 50_000 répétitions sur des chaînes de 524_287 bases.
+Dans ce cas, c’est la méthode implantée en assembleur qui est la plus perfor-
+mante.</p>
 <h3 class="subsection">14.12.3 Les résultats concernant les architectures récentes figurent Table). Là</h3>
 
 <p>également, on note que l’AVX2 est très bénéfique qu’il soit codé à la main ou écrit
@@ -1068,39 +1327,101 @@ méthodes 5,6 et 7 ainsi que les méthodes vectorielles (8 à 11).</p>
 <h2 class="section">14.13 Dans cette étude de cas, la fonction de référence peut être optimisée de manière</h2>
 
 <p>spectaculaire par le compilateur en utilisant les options de compilation liées à
-la vectorisation et le dépliage de boucle. Cependant nous voyons que la version
-N°Marque IntelIntel AMD AMD
-Gamme i7 i7Ryzen 5Ryzen 5
-Modèle 10850H12400f 5600g 9600X
-2020 2022 2021 2024
-1ref_v1_O2 83.50 104.50 91.38 76.97
-2ref_v1_O3 1.85 1.69 1.98 0.64
-3asm 79.75 100.53 82.38 70.65
-4no_if_asm 27.44 44.54 29.31 13.06
-5no_if_opt_asm 16.17 11.98 17.23 9.80
-6no_if_opt_ur4_asm 14.81 11.06 14.96 8.30
-7no_if_opt_ur8_asm 14.20 10.49 13.99 7.89
-8sse2_v1 2.56 1.82 1.74 1.07
-9sse41 2.53 1.81 1.75 1.08
-10avx2 1.36
-11avx2_intrinsics 1.36
-ratio (1 / 10) 61.39 108.85 97.85
-TABLE14.5– Architectures récentes : temps d’exécution en secondes de la fonction de
-Fitch avec 50_000 répétitions sur des chaînes de 524_287 bases.
-assembleur avec jeu d’instruction AVX2 écrite à la main (ou la version intrinsics)
-sont les plus efficaces. Nous sommes bien entendu tributaires de la disponibilité
-d’instructions liées à ce traitement commepcmpeqbetpmovmskb. Enfin, on remar-
-quera que l’utilisation de l’AVX512 permet de grandement simplifier le codage du
-traitement en raison de l’utilisation des registres de masquek1etk2. Le traitement
-est également encore plus simple et plus efficace à traduire en architecture 64 bits,
-puisqu’on n’est pas contraint de réaliser le calcul du nombre de mutations en deux
-fois 32 bits mais en une fois 64 bits. Gageons que l’implantation de l’AVX512 devien-
-dra plus efficace dans les années à venir et deviendra deux fois plus performante
-que l’AVX2.</p>
-<div class="chart-container" id="chart-ch14-recent-11" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+la vectorisation et le dépliage de boucle. Cependant nous voyons que la version</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i7 10850H<br><small>2020</small></th>
+      <th>Core i5 12400f<br><small>2022</small></th>
+      <th>Ryzen 5 5600g<br><small>2021</small></th>
+      <th>Ryzen 5 9600X<br><small>2024</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ref_v1_O2</strong></td>
+      <td>83.50</td>
+      <td>104.50</td>
+      <td>91.38</td>
+      <td>76.97</td>
+    </tr>
+    <tr>
+      <td><strong>ref_v1_O3</strong></td>
+      <td>1.85</td>
+      <td>1.69</td>
+      <td>1.98</td>
+      <td>0.64</td>
+    </tr>
+    <tr>
+      <td><strong>asm</strong></td>
+      <td>79.75</td>
+      <td>100.53</td>
+      <td>82.38</td>
+      <td>70.65</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_asm</strong></td>
+      <td>27.44</td>
+      <td>44.54</td>
+      <td>29.31</td>
+      <td>13.06</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_asm</strong></td>
+      <td>16.17</td>
+      <td>11.98</td>
+      <td>17.23</td>
+      <td>9.80</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_ur4_asm</strong></td>
+      <td>14.81</td>
+      <td>11.06</td>
+      <td>14.96</td>
+      <td>8.30</td>
+    </tr>
+    <tr>
+      <td><strong>no_if_opt_ur8_asm</strong></td>
+      <td>14.20</td>
+      <td>10.49</td>
+      <td>13.99</td>
+      <td>7.89</td>
+    </tr>
+    <tr>
+      <td><strong>sse2_v1</strong></td>
+      <td>2.56</td>
+      <td>1.82</td>
+      <td>1.74</td>
+      <td>1.07</td>
+    </tr>
+    <tr>
+      <td><strong>sse41</strong></td>
+      <td>2.53</td>
+      <td>1.81</td>
+      <td>1.75</td>
+      <td>1.08</td>
+    </tr>
+    <tr>
+      <td><strong>avx2</strong></td>
+      <td>1.36</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>avx2_intrinsics</strong></td>
+      <td>1.36</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+  <div class="chart-container" id="chart-ch14-recent-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-ch14-recent-11';
+    var id = 'chart-ch14-recent-4';
     var data = {
     "chapter": 14,
     "title": "Maximum de Parcimonie (Fitch)",
@@ -1230,6 +1551,17 @@ que l’AVX2.</p>
     else { drawChart(); }
   })();
 </script>
+<p>Fitch avec 50_000 répétitions sur des chaînes de 524_287 bases.
+assembleur avec jeu d’instruction AVX2 écrite à la main (ou la version intrinsics)
+sont les plus efficaces. Nous sommes bien entendu tributaires de la disponibilité
+d’instructions liées à ce traitement commepcmpeqbetpmovmskb. Enfin, on remar-
+quera que l’utilisation de l’AVX512 permet de grandement simplifier le codage du
+traitement en raison de l’utilisation des registres de masquek1etk2. Le traitement
+est également encore plus simple et plus efficace à traduire en architecture 64 bits,
+puisqu’on n’est pas contraint de réaliser le calcul du nombre de mutations en deux
+fois 32 bits mais en une fois 64 bits. Gageons que l’implantation de l’AVX512 devien-
+dra plus efficace dans les années à venir et deviendra deux fois plus performante
+que l’AVX2.</p>
 <h2 class="section">14.14 Exercice 49 -Réalisez un dépliage de la version SSE 4.1 par 4, puis par 8. Intégrez</h2>
 
 <p>votre code au projet et comparez les résultats obtenus aux méthodes existantes.
