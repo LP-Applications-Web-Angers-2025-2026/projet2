@@ -100,7 +100,7 @@ function injectChartAfterTable(string $htmlContent, int $chapNum): string
   })();
 </script>
 HTML;
-                return $chartHtml;
+                return $tableHtml . "\n" . $chartHtml;
             },
             $htmlContent
         );
@@ -170,9 +170,10 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
         foreach ($map as $tableNum => $category) {
             $jsonPath = dirname(__DIR__) . "/data/chapitre_{$chapNum}/{$category}/data.json";
             
-            // On cherche n'importe quel texte résiduel du tableau corrompu (jusqu'à 1500 caractères avant TABLE X.Y)
-            // ex: "N°Marque Intel..." jusqu'à "TABLE15.5– Architectures modernes..."
-            $pattern = '/(?:N°Marque|n° Méthode|Méthode Temps).*?(TABLE\s*' . $chapNum . '\.' . $tableNum . '\s*[–—\-].*?(?:\n|$))/isu';
+            // On cherche n'importe quel texte résiduel du tableau corrompu
+            // L'assertion (?!TABLE\s*\d+\.\d+) empêche l'expression de déborder sur le tableau suivant
+            // tout en évitant d'échouer bêtement sur le mot "tableau" (case-insensitive) !!
+            $pattern = '/(?:N°Marque|n° Méthode|Méthode Temps)(?:(?!TABLE\s*\d+\.\d+).)*?(TABLE\s*' . $chapNum . '\.' . $tableNum . '\s*[–—\-].*?(?:\n|$))/isu';
             
             $markdown = preg_replace_callback($pattern, function($m) use ($jsonPath) {
                 // $m[1] contient la légende "TABLE X.Y - Titre..." qu'on a capturée

@@ -773,7 +773,54 @@ derniers caractères on utilise la méthode du tableau (voir Section).</p>
 <h2 class="section">15.8 Nous donnons Table</h2>
 
 <p>avons évoquées pour un Intel i7 4900MQ ainsi que l’amélioration par rapport à la
-méthode de référence qui correspond à l’implantation avec leif.</p>
+méthode de référence qui correspond à l’implantation avec leif.
+Méthode Temps (s)Amélioration
+if 13,22 1
+switch 17,22 × ≃0.8
+tableau 2,79 × ≃4.7
+vectorisation SSE 1,59 × ≃8.3
+vectorisation AVX2 0,79 × ≃16.7
+TABLE15.3 – Résultats comparatifs des méthodes pour compter les voyelles</p>
+<h3 class="subsection">15.8.1 Pour certaines de ces architectures, l’AVX n’est pas disponible on se contente</h3>
+
+<p>donc du SSE pour la vectorisation. Nous avons rapporter les temps d’exécution des
+méthodes suivantes :</p>
+<ol>
+<li>if</li>
+<li>switch</li>
+<li>
+</li>
+<li>
+</li>
+<li>
+<p>implantation assembleur de la méthode avec tableau avec dépliage de la
+boucle par 4, version 1, on charge chaque octet danseax</p>
+</li>
+<li>
+<p>implantation assembleur de la méthode avec tableau avec dépliage de la
+boucle par 4, version 2, on charge quatre octets danseaxen une seule fois
+puis on les répartit dansr8,r9,r10</p>
+</li>
+<li>
+</li>
+<li>
+</li>
+<li>eax</li>
+<li>
+</li>
+<li>
+</li>
+<li>
+<p>vectorisation en assembleur avec jeu d’instructions AVX2 (version 1) avec
+dépliage par 2 de la boucle principale</p>
+</li>
+<li>
+<p>vectorisation en assembleur avec jeu d’instructions AVX2 (version 3) avec
+élimintaion des dépendances</p>
+</li>
+<li>
+</li>
+</ol>
 <div class="center">
 <table class="data-table">
   <thead>
@@ -924,7 +971,10 @@ méthode de référence qui correspond à l’implantation avec leif.</p>
       <td>1.14</td>
     </tr>
   </tbody>
-  <script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+  <caption>TABLE15.4– Architectures anciennes : temps d’exécution en secondes pour100_000</caption>
+</table>
+</div>
+<script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="../../data/graph.js"></script>
 <div class="chart-container" id="chart-ch15-ancien-5" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
@@ -1329,7 +1379,10 @@ d’atteindre 0,62 secondes, soit un facteur d’amélioration de 73.</p>
       <td>1.36</td>
     </tr>
   </tbody>
-  <div class="chart-container" id="chart-ch15-moderne-6" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+  <caption>TABLE15.5– Architectures modernes : temps d’exécution en secondes pour100_000</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-ch15-moderne-6" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
     var id = 'chart-ch15-moderne-6';
@@ -1532,7 +1585,16 @@ d’atteindre 0,62 secondes, soit un facteur d’amélioration de 73.</p>
     else { drawChart(); }
   })();
 </script>
-<p>itérations sur des chaînes de256_000caractères.</p>
+<p>itérations sur des chaînes de256_000caractères.
+Méthode Temps (s)
+AVX512 asm v1 2.56
+AVX512 asm v2 1.45
+AVX512 asm v2 (dépliage par 8) 1.22
+AVX512 C intrinsics 1.56
+TABLE15.6– Intel Xeon Silver 4208 et AVX512 : temps d’exécution en secondes pour
+100_000itérations sur des chaînes de256_000caractères.</p>
+<h3 class="subsection">15.8.3</h3>
+
 <div class="center">
 <table class="data-table">
   <thead>
@@ -1651,7 +1713,10 @@ d’atteindre 0,62 secondes, soit un facteur d’amélioration de 73.</p>
       <td>-</td>
     </tr>
   </tbody>
-  <div class="chart-container" id="chart-ch15-recent-7" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+  <caption>TABLE15.7– Architectures récentes : temps d’exécution en secondes pour100_000 itéra-</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-ch15-recent-7" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
     var id = 'chart-ch15-recent-7';

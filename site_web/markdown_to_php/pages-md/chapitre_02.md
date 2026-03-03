@@ -1,101 +1,108 @@
-# Chapitre 2 : Représentationdel’information
+# Chapitre 2 : Représentation de l'information
 
-## 2.1 Etre informaticien demande de penser d’une certaine manière qui est différente
+## 2.1 Informaticien vs mathématicien
 
-de la manière de penser des mathématiciens : un informaticien d’un bon niveau ne
-fera pas forcément un mathématicien d’un bon niveau et inversement.
-Par exemple : les mathématiciens travaillent avec la notion d’infini alors que
+Etre informaticien demande de penser d'une certaine manière qui est différente
+de la manière de penser des mathématiciens : un informaticien d'un bon niveau ne
+fera pas forcément un mathématicien d'un bon niveau et inversement.
+
+Par exemple : les mathématiciens travaillent avec la notion d'infini alors que
 les informaticiens travaillent dans des domaines finis : la taille de la mémoire, la
 taille du disque dur, le nombre de processeurs utilisés pour réaliser un calcul en
 parallèle, toutes ces quantités sont finies.
-Un mathématicien peut dire que : quand n tend vers l’infini,1/ntend vers 0
-mais ne sera jamais égal à 0. Pour un informaticien, à partir d’une certaine valeur
-de n, il remplacera1/npar 0 car il aura dépassé la capacité de représentation d’un
+
+Un mathématicien peut dire que : quand *n* tend vers l'infini, *1/n* tend vers 0
+mais ne sera jamais égal à 0. Pour un informaticien, à partir d'une certaine valeur
+de *n*, il remplacera *1/n* par 0 car il aura dépassé la capacité de représentation d'un
 très petit nombre.
-Du point de vue de la démarche, un mathématicien va démontrer qu’un pro-
-blème admet ou non des solutions dans telles conditions mais sans donner ces
+Du point de vue de la démarche, un mathématicien va démontrer qu'un problème
+admet ou non des solutions dans telles conditions mais sans donner ces
 solutions. La réponse sera généralement de type oui ou non : oui, le problème
-admet une solution, ou non, il n’en admet pas. le mathématicien peut également
+admet une solution, ou non, il n'en admet pas. Le mathématicien peut également
 nous indiquer comment construire une solution.
-L’informaticien va s’attacher à trouver une, ou toutes les solutions, ou à prouver
-qu’on ne trouvera pas de solution en résolvant le problème : c’est à dire en tentant
-de trouver une solution et en ne pouvant, au final, n’en trouver aucune en ayant
-testé tous les cas possibles; la réponse sera une solution, la ou les meilleures pour
+L'informaticien va s'attacher à trouver une, ou toutes les solutions, ou à prouver
+qu'on ne trouvera pas de solution en résolvant le problème : c'est à dire en tentant
+de trouver une solution et en ne pouvant, au final, n'en trouver aucune en ayant
+testé tous les cas possibles ; la réponse sera une solution, la ou les meilleures pour
 un critère donné, ou aucune.
-Au niveau de la machine l’information est représentée sous forme binaire avec
-des suites de 0 et de 1. Il est donc primordial de comprendre comment l’information
+Au niveau de la machine l'information est représentée sous forme binaire avec
+des suites de 0 et de 1. Il est donc primordial de comprendre comment l'information
 (entiers, réels, texte) est représentée en informatique si on désire raisonner comme
-un informaticien puisque c’est de cette représentation :
-•que l’on peut déduire la limite des calculs possibles que l’on pourra réaliser
-•
-mais également, trouver les traitements les plus efficaces pour résoudre un
-problème donné
-A titre d’exemple, considérons un traitement qui s’attache à déterminer si un
-nombre entier est impair ou, en d’autres termes, comment sait-on qu’un nombre
-entier est impair?
-Facile, me direz-vous, il suffit que ce nombre se termine par l’un des chiffres
-suivants : 1, 3, 5, 7, 9. Mais comment procéder avec un ordinateur?
+un informaticien puisque c'est de cette représentation :
+
+- que l'on peut déduire la limite des calculs possibles que l'on pourra réaliser
+- mais également, trouver les traitements les plus efficaces pour résoudre un problème donné
+
+A titre d'exemple, considérons un traitement qui s'attache à déterminer si un
+nombre entier est impair ou, en d'autres termes, comment sait-on qu'un nombre
+entier est impair ?
+
+Facile, me direz-vous, il suffit que ce nombre se termine par l'un des chiffres
+suivants : 1, 3, 5, 7, 9. Mais comment procéder avec un ordinateur ?
+
 Une première solution consiste à faire ce que font les humains : extraire le
 chiffre unité du nombre et le comparer à 1, 3, 5, 7 ou 9 :
-1#include
-2using ;
-4int (int ,char*argv[]
 
-```text
-int =123789;
-if(argc>1)x=atoi(argv[1]
-// extraire l'unité
-int =x%10;
-// la comparer
-if((u==1) u==3) u==5) u==7) u==9))
-cout<<x<<" est impair"<<endl;
-}else{
-cout<<x<<" est pair"<<endl;
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(int argc, char *argv[]) {
+    int x = 123789;
+    if (argc > 1) x = atoi(argv[1]);
+    // extraire l'unité
+    int u = x % 10;
+    // la comparer
+    if ((u == 1) || (u == 3) || (u == 5) || (u == 7) || (u == 9))
+        cout << x << " est impair" << endl;
+    else
+        cout << x << " est pair" << endl;
+    return 0;
 }
-return ;
-20}
 ```
+
+> *Listing 2.1.1 – Déterminer si un entier est impair, méthode 1*
 
 Voici le code assembleur x86 64 bits qui correspondrait au code C précédent
-pour la partie comparaison. Ici, on retourne la valeur1dans le registreeaxpour
-indiquer que le nombre est impair et0pour indiquer qu’il est pair :
-1global
-3section
-5; code 64 bits
-6; bool est_impair(int n)
-7; n => edi
-8est_impair:
+pour la partie comparaison. Ici, on retourne la valeur `1` dans le registre `eax` pour
+indiquer que le nombre est impair et `0` pour indiquer qu'il est pair :
 
 ```nasm
-mov ,edi ; eax <- edi
-xor ,edx ; edx <- 0
-mov ,10 ; ecx <- 10
-div ; eax <- eax / ecx, (u) edx <- eax % ecx
-mov ,1 ; eax <- 1, valeur de retour true
-cmp ,1 ; si u == 1 alors sortir de la fonction
-je
-cmp ,3 ; si u == 3 alors sortir de la fonction
-je
-cmp ,5 ; si u == 5 alors sortir de la fonction
-je
-cmp ,7 ; si u == 7 alors sortir de la fonction
-je
-cmp ,9 ; si u == 9 alors sortir de la fonction
-je
-xor ,eax ; sinon, le nombre est pair on sort avec
-; la valeur 0 (false)
-26.end:
-ret
+global est_impair
+section .text
+; code 64 bits
+; bool est_impair(int n)
+; n => edi
+est_impair:
+    mov eax, edi    ; eax <- edi
+    xor edx, edx    ; edx <- 0
+    mov ecx, 10     ; ecx <- 10
+    div ecx         ; eax <- eax / ecx, (u) edx <- eax % ecx
+    mov eax, 1      ; eax <- 1, valeur de retour true
+    cmp edx, 1      ; si u == 1 alors sortir de la fonction
+    je .end
+    cmp edx, 3      ; si u == 3 alors sortir de la fonction
+    je .end
+    cmp edx, 5      ; si u == 5 alors sortir de la fonction
+    je .end
+    cmp edx, 7      ; si u == 7 alors sortir de la fonction
+    je .end
+    cmp edx, 9      ; si u == 9 alors sortir de la fonction
+    je .end
+    xor eax, eax    ; sinon, le nombre est pair on sort avec la valeur 0 (false)
+.end:
+    ret
 ```
 
+> *Listing 2.1.2 – Déterminer si un entier est impair, assembleur méthode 1*
 Comme nous n’avons pas encore vu d’instructions assembleur, quelques explica-
-tions s’imposent. Les lignes 9 à 12 calculent le reste de la division denpar10, le
-modulo. Celui-ci est obtenu dans le registreedxaprès utilisation de l’instruction
-divqui réalise la division. On place ensuite en ligne 13 la valeur 1 (true) danseax
+tions s’imposent. Les lignes 9 à 12 calculent le reste de la division de n par 10, le
+modulo. Celui-ci est obtenu dans le registre `edx` après utilisation de l’instruction
+`div` qui réalise la division. On place ensuite en ligne 13 la valeur 1 (true) dans `eax`
 car c’est, par convention, ce registre qui contient la valeur retournée par la fonction.
 Les lignes 14 à 23 ne font que comparer le reste de la division à 1, 3, 5, 7 puis 9,
 et, s’il s’agit de l’une de ces valeurs, on se dirige directement vers la sortie de la
-fonction. Finalement, si le reste n’est pas un chiffre impair, on met, en ligne 24,eax
+fonction. Finalement, si le reste n’est pas un chiffre impair, on met, en ligne 24, `eax`
 à 0 (false), puis on sort de la fonction.
 Un informaticien ne procédera pas ainsi, il sait que la représentation binaire
 des nombres fait que, si un nombre est impair, il possède son premier bit (bit en
@@ -121,1076 +128,1126 @@ return ;
 Au final, le calcul réalisé par un informaticien, ou tout au moins une personne
 qui possède des connaissances en informatique, est moins coûteux en temps de
 calcul et moins soumis à certains aléas.
-Un test réalisé pour comparer les deux méthodes (cf. Table), et, qui consiste
-à répéter50_000fois l’application de l’une des deux fonctions précédentes sur les
-éléments d’un tableau de100_000 entiers générés dans des conditions spécifiques
+
+Un test réalisé pour comparer les deux méthodes, et, qui consiste
+à répéter 50 000 fois l'application de l'une des deux fonctions précédentes sur les
+éléments d'un tableau de 100 000 entiers générés dans des conditions spécifiques
 (voir ci-après), donne les résultats suivants :
-InitialisationMéthode 1Méthode 2
-aléatoire 38.42 5.28
-...1 12.04 5.44
-...3 12.23 5.41
-...5 12.45 5.29
-...7 12.86 5.40
-...9 14.81 5.50
-pairs 12.46 5.49
-TABLE2.1– Temps d’exécution (en secondes) des méthodes en fonction des nombres à
-traiter sur Intel Core i7-10850H
-La méthode d’initialisation des éléments du tableau peut être :
-•aléatoire : on aura autant de nombres pairs que de nombres impairs
-•ne générer que des nombres impairs se terminant par 1, 3, 5, 7 ou 9
-•ne générer que des nombres pairs
-L’analyse des résultats montre que la méthode 1, traduction de la manière dont
+
+| Initialisation | Méthode 1 | Méthode 2 |
+|---|---|---|
+| aléatoire | 38.42 | 5.28 |
+| nombres ...1 | 12.04 | 5.44 |
+| nombres ...3 | 12.23 | 5.41 |
+| nombres ...5 | 12.45 | 5.29 |
+| nombres ...7 | 12.86 | 5.40 |
+| nombres ...9 | 14.81 | 5.50 |
+| pairs | 12.46 | 5.49 |
+
+*TABLE 2.1 – Temps d'exécution (en secondes) des méthodes en fonction des nombres à traiter sur Intel Core i7-10850H*
+La méthode d'initialisation des éléments du tableau peut être :
+
+- **Aléatoire** : on aura autant de nombres pairs que de nombres impairs
+- **Ne générer que des nombres impairs** se terminant par 1, 3, 5, 7 ou 9
+- **Ne générer que des nombres pairs**
+
+L'analyse des résultats montre que la méthode 1, traduction de la manière dont
 procède un programmeur non expérimenté, est sensible aux données et se révèle
 toujours moins efficace que la méthode 2. En effet, trouver si un nombre se termine
 par 3 prend plus de temps que comparer si un nombre se termine par 1 car on
-effectue un test supplémentaire, et ainsi de suite jusqu’à comparer si un nombre se
+effectue un test supplémentaire, et ainsi de suite jusqu'à comparer si un nombre se
 termine par 9, comme le montre le code assembleur ci-dessus.
 Dans le cas de données aléatoires (nombres pairs ou impairs sans ordre précis),
-on note que le temps d’exécution est prohibitif (exorbitant) avec la méthode 1. Cela
-est dû à la prédiction de branchement (cf. Section) qui ne peut déterminer
-sur quelle valeur de l’unité sortir de la fonction.
-Dans ce cas, la méthode 2 est7,27(= 38,42/5,28 ) fois plus performante que la
+on note que le temps d'exécution est prohibitif (exorbitant) avec la méthode 1. Cela
+est dû à la prédiction de branchement (cf. Section 5.2) qui ne peut déterminer
+sur quelle valeur de l'unité sortir de la fonction.
+Dans ce cas, la méthode 2 est **7,27** (= 38,42/5,28) fois plus performante que la
 méthode 1.
 
-## 2.2 Pour représenter un nombre entier naturel dans une baseb, il faut disposer deb
+## 2.2 Représentation des entiers
 
-chiffres distincts allant de0àb−1. Tout nombrens’exprime alors sous la forme :
-n=
-k
-X
-i=0
-ai×b
-i
-(2.1)
-où chaqueaiest un chiffre. Ainsi en base 10, on peut écrire :
-197510= 1×1000 + 9×100 + 7×10 + 5×1
-= 1×10
-+ 9×10
-+ 7×10
-+ 5×10
+Pour représenter un nombre entier naturel dans une base *b*, il faut disposer de *b*
+chiffres distincts allant de *0* à *b−1*. Tout nombre *n* s'exprime alors sous la forme :
+
+*n = Σ(i=0..k) aᵢ × bⁱ* &nbsp;&nbsp;&nbsp;&nbsp;(2.1)
+
+où chaque *aᵢ* est un chiffre. Ainsi en base 10, on peut écrire :
+
+*1975₁₀ = 1×1000 + 9×100 + 7×10 + 5×1 = 1×10³ + 9×10² + 7×10¹ + 5×10⁰*
+
 En informatique, on utilise la base 2 ou binaire mais il est parfois plus facile
-d’utiliser d’autres bases comme l’octal (base 8) ou l’hexadécimal (base 16) afin de
+d'utiliser d'autres bases comme l'octal (base 8) ou l'hexadécimal (base 16) afin de
 représenter de grandes quantités ou de faire des calculs.
 
-### 2.2.1 Dans la notation binaire, également appelée base2, on ne dispose que de deux
+### 2.2.1 Binaire (base 2)
 
-chiffres0et1. Par exemple110012représente la valeur décimale25:
-110012= 1×2
-+ 1×2
-+ 1×2
-= 1610+ 810+ 110= 2510
-Notation
-J’ai choisi de mettre en indice de chaque nombre la base à laquelle il se
-rapporte. Quand on ne le précise pas il s’agit par défaut de la base 10.
-Dans la suite de l’ouvrage, afin d’améliorer la lisibilité des nombres j’utilise
-le symbole souligné (_) après chaque quartet pour les nombres binaires ou
-chaque triplet pour les nombres décimaux :
-110101010102= 110_1010_10102= 170610= 1_70610= 1_706
-On poura également utiliser la notation suivante :
-•bpour le binaire :1011_0001bou1011_00012
-•opour l’octal :261oou2618
-•dpour le décimal :177dou17710ou177
-•hpour l’héxadécimal :B1houB116
-En binaire un chiffre est appelé unbitpourBInary digiT. On distingue générale-
-ment dans un nombre binaire le bit (où chiffre) le plus à gauche qui est appelé bit
-depoids fort(oumost significant biten anglais) et le bit le plus à droite appelé bit
-depoids faible(ouleast significant bit).
-n
-Valeur 2
-n
-Valeur
-= 1 2
-= 256
-= 2 2
-= 512
-= 4 2
-= 1_024
-= 8 2
-= 2_048
-= 16 2
-= 4_096
-= 32 2
-= 8_192
-= 64 2
-= 16_384
-= 128 2
-= 32_768
-= 65_536 2
-= 2_147_483_648
-= 131_072 2
-= 4_294_967_296
-=9_223_372_036_854_775_808 2
-=18_446_744_073_709_551_616
-TABLE2.3 – Liste de puissances de 2 de2
-à2
-Etant donné qu’en informatique on travaille toujours sur une quantité finie, on
+Dans la notation binaire, également appelée base 2, on ne dispose que de deux
+chiffres 0 et 1. Par exemple `11001`₂ représente la valeur décimale 25 :
+
+*11001₂ = 1×2⁴ + 1×2³ + 0×2² + 0×2¹ + 1×2⁰ = 16₁₀ + 8₁₀ + 1₁₀ = 25₁₀*
+
+> **Notation**
+> J'ai choisi de mettre en indice de chaque nombre la base à laquelle il se
+> rapporte. Quand on ne le précise pas il s'agit par défaut de la base 10.
+> Dans la suite de l'ouvrage, afin d'améliorer la lisibilité des nombres j'utilise
+> le symbole souligné (`_`) après chaque quartet pour les nombres binaires ou
+> chaque triplet pour les nombres décimaux :
+> `110101010102` = `110_1010_1010`₂ = 1706₁₀ = `1_706`₁₀ = `1_706`
+
+On pourra également utiliser la notation suivante :
+
+- `b` pour le binaire : `1011_0001b` ou `1011_0001`₂
+- `o` pour l'octal : `261o` ou `261`₈
+- `d` pour le décimal : `177d` ou `177`₁₀ ou `177`
+- `h` pour l'héxadécimal : `B1h` ou `B1`₁₆
+
+En binaire un chiffre est appelé un **bit** pour *BInary digiT*. On distingue généralement
+dans un nombre binaire le bit (ou chiffre) le plus à gauche qui est appelé bit de
+**poids fort** (ou *most significant bit* en anglais) et le bit le plus à droite appelé bit de
+**poids faible** (ou *least significant bit*).
+
+| n | Valeur de 2ⁿ | n | Valeur de 2ⁿ |
+|---|---|---|---|
+| 0 | 1 | 8 | 256 |
+| 1 | 2 | 9 | 512 |
+| 2 | 4 | 10 | 1 024 |
+| 3 | 8 | 11 | 2 048 |
+| 4 | 16 | 12 | 4 096 |
+| 5 | 32 | 13 | 8 192 |
+| 6 | 64 | 14 | 16 384 |
+| 7 | 128 | 15 | 32 768 |
+| 16 | 65 536 | 31 | 2 147 483 648 |
+| 17 | 131 072 | 32 | 4 294 967 296 |
+| 63 | 9 223 372 036 854 775 808 | 64 | 18 446 744 073 709 551 616 |
+
+*TABLE 2.3 – Liste de puissances de 2 de 2⁰ à 2⁶⁴*
+Etant donné qu'en informatique on travaille toujours sur une quantité finie, on
 a introduit des termes pour identifier un nombre de bits consécutifs déterminé :
-•un ensemble de 4 bits consécutifs est appelé unquartet
-•un ensemble de 8 bits consécutifs est appelé unoctet(byteen anlgais)
-•deux octets consécutifs (16 bits) forment unmot(word)
-•quatre octets consécutifs (32 bits) forment undouble mot(double word)
-•huits octets consécutifs (64 bits) forment unquadruple mot(quad word)
-•
-seize octets consécutifs (128 bits) forment undouble quadruple mot(double
-quad word)
-Quand on travaille en tant qu’informaticien il est généralement très utile de
-connaître les puissances de2allant de2
-1jusqu’à2
-16(voire jusqu’à2
-20) car cela
+
+- Un ensemble de 4 bits consécutifs est appelé un **quartet**
+- Un ensemble de 8 bits consécutifs est appelé un **octet** (*byte* en anglais)
+- Deux octets consécutifs (16 bits) forment un **mot** (*word*)
+- Quatre octets consécutifs (32 bits) forment un **double mot** (*double word*)
+- Huit octets consécutifs (64 bits) forment un **quadruple mot** (*quad word*)
+- Seize octets consécutifs (128 bits) forment un **double quadruple mot** (*double quad word*)
+
+Quand on travaille en tant qu'informaticien il est généralement très utile de
+connaître les puissances de 2 allant de 2¹ jusqu'à 2¹⁶ (voire jusqu'à 2²⁰) car cela
 permet de réaliser certains calculs de tête. Je recommande à tout informaticien
-d’apprendre la Table.
-Il est également nécessaire de connaître les puissances de 2 proches des puis-
-sances de 10 (cf. Table) puisqu’elle définissent la taille des mémoires et espaces
-de stockage. Elles sont basées sur les préfixes du Système International (SI) d’unités
+d'apprendre la Table 2.3.
+
+Il est également nécessaire de connaître les puissances de 2 proches des
+puissances de 10 (cf. Table 2.4) puisqu'elles définissent la taille des mémoires et espaces
+de stockage. Elles sont basées sur les préfixes du Système International (SI) d'unités
 et simplifient la manipulation des grandes quantités.
-PuissancePréfixe PuissancePréfixe
-kilo 2
-Peta
-Mega 2
-Exa
-Giga 2
-Zetta
-Tera 2
-Yotta
-TABLE2.4 – Liste de puissances de 2 liées aux puissances de 10
-La phrase introductive de ce chapitre reprend dans l’ordre, pour chaque mot, la
+
+| Puissance | Préfixe | Puissance | Préfixe |
+|---|---|---|---|
+| 2¹⁰ | kilo | 2⁵⁰ | Peta |
+| 2²⁰ | Mega | 2⁶⁰ | Exa |
+| 2³⁰ | Giga | 2⁷⁰ | Zetta |
+| 2⁴⁰ | Tera | 2⁸⁰ | Yotta |
+
+*TABLE 2.4 – Liste de puissances de 2 liées aux puissances de 10*
+
+La phrase introductive de ce chapitre reprend dans l'ordre, pour chaque mot, la
 première lettre des préfixes : ainsi le K de Karla correspond à kilo, le M de Mangeait
-correspond à Mega, etc. Il s’agit d’un moyen mnémotechnique pour se rappeler
-l’ordre des préfixes du SI.
+correspond à Mega, etc. Il s'agit d'un moyen mnémotechnique pour se rappeler
+l'ordre des préfixes du SI.
+
 Certains constructeurs comme les fabricants de disques durs préfèrent utiliser
-3au lieu de 1024. Un disque de 80Gigaoctets, qui possède un espace de stockage
-de80×10
-9 octets, apparaît pour le système d’exploitation comme un disque de74
-Giga octets
-.
+l'exposant 3 au lieu de 1024. Un disque de 80 Gigaoctets, qui possède un espace de stockage
+de 80 × 10⁹ octets, apparaît pour le système d'exploitation comme un disque de
+74 Gigaoctets[^disk74].
 
-### 2.2.2 La base 8 est utilisée pour représenter des octets comme par exemple des
+[^disk74]: 1,80 × 10⁹ / 1024³ = 74,5
 
-caractères mais elle est en général peu usitée. On la retrouve lors de l’utilisation de
-commandes Unix commechmodqui change les droits d’un fichier outrqui permet
-de transposer ou d’éliminer des caractères dans un fichier ou un flux de données.
-Voici, par exemple, deux commandes Unix qui utilisent l’octal :
+### 2.2.2 Octal (base 8)
+
+La base 8 est utilisée pour représenter des octets comme par exemple des
+caractères mais elle est en général peu usitée. On la retrouve lors de l'utilisation de
+commandes Unix comme `chmod` qui change les droits d'un fichier ou `tr` qui permet
+de transposer ou d'éliminer des caractères dans un fichier ou un flux de données.
+Voici, par exemple, deux commandes Unix qui utilisent l'octal :
+
+```shell
 richer@universe:~$ chmod 644 fichier
-2richer@universe:~$ tr':' '\012'< fichier
-1.80×10
-/1024
-= 74,5
+richer@universe:~$ tr ':' '\012' < fichier
+```
+
 La première ligne donne au propriétaire les droits de modification et lecture,
 aux membres du groupe et aux autres uniquement les droits de lecture sur le fichier.
-La seconde permet de remplacer le caractère’:’par un saut de ligne car128= 10
-ce qui correspond au caractère’˙’. Il faut noter que le nombre commence par un
-0qui indique qu’il faut lire la valeur en octal.
-Binaire vers l’octal
-Le passage du binaire à l’octal est simple puisqu’un triplet (3 bits consécutifs)
+La seconde permet de remplacer le caractère `':'` par un saut de ligne car `012`₈ = `10`₁₀
+ce qui correspond au caractère *LF* (line feed). Il faut noter que le nombre commence par un
+`0` qui indique qu'il faut lire la valeur en octal.
+
+**Binaire vers l'octal** : Le passage du binaire à l'octal est simple puisqu'un triplet (3 bits consécutifs)
 correspond à un chiffre octal.
 
-### 2.2.3 La base16permet de représenter des adresses ou des nombres utilisant plusieurs
+### 2.2.3 Hexadécimal (base 16)
 
-bits comme les double et quadruple mots. Ainsi un double mot qui occupe32bits,
-soit32chiffres en binaire, utilise seulement8chiffres hexadécimaux.
-Dans la base16on utilise les chiffres0à9ainsi que des lettres pour représenter
-les chiffres supérieurs ou égaux à 10 en partant deAqui vaut10pour aller jusqu’à
-Fqui vaut15en décimal :
-A2F816= A×16
-+ 2×16
-+ F×16
-+ 8×16
-= 41_720
-= 10×16
-+ 2×16
-+ 15×16
-+ 8×16
-On remarquera qu’en C ou en assembleur on peut écrire les nombres hexadéci-
-maux en les préfixant avec0x, on écrira donc0xA2F8.
-Binaire vers l’hexadécimal
-Le passage du binaire à l’hexadécimal est simple puisqu’un quartet (4 bits
-consécutifs) correspond à un chiffre hexadécimal.
+La base 16 permet de représenter des adresses ou des nombres utilisant plusieurs
+bits comme les double et quadruple mots. Ainsi un double mot qui occupe 32 bits,
+soit 32 chiffres en binaire, utilise seulement 8 chiffres hexadécimaux.
+Dans la base 16 on utilise les chiffres `0` à `9` ainsi que des lettres pour représenter
+les chiffres supérieurs ou égaux à 10 en partant de `A` qui vaut 10 pour aller jusqu'à
+`F` qui vaut 15 en décimal :
 
-### 2.2.4 Les entiers naturelsNsont des entiers positifs ou nul, ils sont généralement
+*A2F8₁₆ = A×16³ + 2×16² + F×16¹ + 8×16⁰ = 41 720 = 10×16³ + 2×16² + 15×16¹ + 8×16⁰*
 
-représentés en langage C par le typeunsigned intou encore paruint32_tdu
-fichier d’entêtestdint.h, en d’autres termes il s’agit de valeurs dites non signées.
+On remarquera qu'en C ou en assembleur on peut écrire les nombres hexadécimaux
+en les préfixant avec `0x`, on écrira donc `0xA2F8`.
+
+**Binaire vers l'hexadécimal** : Le passage du binaire à l'hexadécimal est simple puisqu'un quartet (4 bits
+consecutifs) correspond à un chiffre hexadécimal.
+
+### 2.2.4 Entiers naturels (non signés)
+
+Les entiers naturels *ℕ* sont des entiers positifs ou nul, ils sont généralement
+représentés en langage C par le type `unsigned int` ou encore par `uint32_t` du
+fichier d'en-tête `stdint.h`, en d'autres termes il s'agit de valeurs dites non signées.
+
 On a souvent besoin de convertir des nombres décimaux en binaire ou en
-hexadécimal dès lors que l’on programme en assembleur. Pour passer d’un nombre
-décimal en un nombre dans une autre base il existe plusieurs méthodes :
-1.
-2.
-3.
+hexadécimal dès lors que l'on programme en assembleur. Pour passer d'un nombre
+décimal en un nombre dans une autre base il existe plusieurs méthodes.
 
-#### 2.2.4.1 On réalise des divisions successives par la basebdu nombrenà convertir. On
+#### 2.2.4.1 Méthode des divisions successives
 
-s’arrête lorsque le quotient de la division est inférieur àb, puis on prend le dernier
-quotient et les restes successifs obtenus lors des divisions (cf. Figure).
-FIGURE2.1 – Méthode des divisions successives par 2, 8 et 16
-Ainsi le nombre 189 en décimal s’écrit également :
-•1011_11012
-•2758
-•BD16
+On réalise des divisions successives par la base *b* du nombre *n* à convertir. On
+s'arrête lorsque le quotient de la division est inférieur à *b*, puis on prend le dernier
+quotient et les restes successifs obtenus lors des divisions (cf. Figure 2.1).
 
-#### 2.2.4.2 On applique ici la méthode au binaire mais elle peut être transposée à d’autres
+*FIGURE 2.1 – Méthode des divisions successives par 2, 8 et 16*
 
+Ainsi le nombre 189 en décimal s'écrit également :
+
+- `1011_1101`₂
+- `275`₈
+- `BD`₁₆
+
+#### 2.2.4.2 Méthode des intervalles
+
+On applique ici la méthode au binaire mais elle peut être transposée à d'autres
 bases. Si on connait les puissances de 2, il est plus facile de convertir les grands
-nombres. En effet on n’est jamais à l’abris de commettre une erreur avec la méthode
+nombres. En effet on n'est jamais à l'abris de commettre une erreur avec la méthode
 des divisions successives. Avec la méthode des intervalles, on cherche entre quelles
 puissances de 2 se trouve le nombre à convertir et on retranche la puissance la plus
-petite comme sur l’exemple suivant :
-•189 est compris entre 128 et 256, il contient donc128 = 2
-•189 - 128 = 61 est compris entre 32 et 64, il contient donc32 = 2
-•61 - 32 = 29 est compris entre 16 et 32, il contient donc16 = 2
-•29 - 16 = 13 est compris entre 8 et 16, il contient donc8 = 2
-•13 - 8 = 5, et finalement510= 1012
-On retrouve donc comme dans la méthode précédente que18910= 1011_11012 .
+petite comme sur l'exemple suivant :
+- 189 est compris entre 128 et 256, il contient donc 128 = 2⁷
+- 189 - 128 = 61 est compris entre 32 et 64, il contient donc 32 = 2⁵
+- 61 - 32 = 29 est compris entre 16 et 32, il contient donc 16 = 2⁴
+- 29 - 16 = 13 est compris entre 8 et 16, il contient donc 8 = 2³
+- 13 - 8 = 5, et finalement 5₁₀ = `101`₂
 
-#### 2.2.4.3 Enfin, si le nombre à convertir se trouve proche d’une puissance2
+On retrouve donc comme dans la méthode précédente que 189₁₀ = `1011_1101`₂.
 
-k, on peut
-procéder par complément c’est à dire en calculant2
-k
-−1−n . Prenons un exemple :
-32_745est proche de32_768 = 2
-15 . Si on calcule(2
-−1)−32745 , on obtient22
-qui s’écrit en binaire1_01102 . Il suffit alors de retirer les bits à1du nombre22à
-(2
-−1)en utilisant par exemple l’opérateurxor(ou exclusif) :
-111_1111_1111_11112(32767)
-xor 1_01102 (22)
-= 111_1111_1110_10012(32745)
+#### 2.2.4.3 Méthode du complément
 
-#### 2.2.4.4 En informatique, on travaille à quantité finie et on utilise pour représenter
+Enfin, si le nombre à convertir se trouve proche d'une puissance 2ᵏ, on peut
+précéder par complément c'est à dire en calculant *2ᵏ − 1 − n*. Prenons un exemple :
 
-l’information des octets, des mots, des double mots ou des quadruple mots. La
-Table n) le nombre de valeurs différentes
-que l’on peut représenter ainsi que les valeurs minimum et maximum si on utilise
+`32_745` est proche de `32_768 = 2`¹⁵. Si on calcule *(2¹⁵ −1) − 32745*, on obtient 22
+qui s'écrit en binaire `1_0110`₂. Il suffit alors de retirer les bits à 1 du nombre 22 à
+*(2¹⁵ −1)* en utilisant par exemple l'opérateur `xor` (ou exclusif) :
+
+```
+111_1111_1111_1111₂ (32767)
+xor       1_0110₂ (22)
+= 111_1111_1110_1001₂ (32745)
+```
+
+#### 2.2.4.4 Capacité de représentation
+
+En informatique, on travaille à quantité finie et on utilise pour représenter
+l'information des octets, des mots, des double mots ou des quadruple mots. La
+Table 2.5 montre pour un nombre fixé *n* de bits le nombre de valeurs différentes
+que l'on peut représenter ainsi que les valeurs minimum et maximum si on utilise
 des valeurs non signées.
-nvaleur minimumvaleur maximumnombre de valeurs
-8 0 255 256
-16 0 65_535 65 _536
-32 0 4_294_967_295 4 _294_967_296
-TABLE2.5 – Entiers naturels représentés avec un nombre fixé de bits
-On peut résumer la Table nbits on peut représenter2
-n
-entiers naturels différents allant de0à2
-n
-−1 . Ainsi avec32bits on peut représenter
-un peu plus de4milliards de valeurs différentes.
 
-#### 2.2.4.5 Que se passe t-il si on si essaye de représenter la valeur259sur8bits? Si, par
+| n bits | Valeur minimum | Valeur maximum | Nombre de valeurs |
+|---|---|---|---|
+| 8 | 0 | 255 | 256 |
+| 16 | 0 | 65 535 | 65 536 |
+| 32 | 0 | 4 294 967 295 | 4 294 967 296 |
 
-exemple, on ajoute4à255, il se produit alors un dépassement de capacité (overflow)
-ou débordement et la valeur obtenue est alors égale à259modulo256 = 3 . On
-rappelle que le modulo est le reste de la division entière, ici,259 = 256×1 + 3 ,
-donc3est le reste de la division entière de259par256. La conséquence est que si
-on ne prête pas attention au calcul ce dernier risque d’être erroné.
-Considérons, par exemple, les entiers non signés sur32bits. Si on réalise la
-somme des entiers naturels de1àn, à partir de quelle valeur denla somme
-n’est-elle plus exacte? Ce problème est laissé à titre d’exercice de programmation.
-Vous devriez normalement trouver la valeur limite den= 92_681 , ce qui
-correspond à la somme4_294_930_221 , soit une valeur proche de2
-32, au delà, le
+*TABLE 2.5 – Entiers naturels représentés avec un nombre fixé de bits*
+
+On peut résumer la Table 2.5 en disant qu'avec *n* bits on peut représenter *2ⁿ*
+entiers naturels différents allant de 0 à *2ⁿ − 1*. Ainsi avec 32 bits on peut représenter
+un peu plus de 4 milliards de valeurs différentes.
+
+#### 2.2.4.5 Dépassement de capacité (*overflow*)
+
+Que se passe t-il si on essaye de représenter la valeur 259 sur 8 bits ? Si, par
+exemple, on ajoute 4 à 255, il se produit alors un dépassement de capacité (*overflow*)
+ou débordement et la valeur obtenue est alors égale à *259 modulo 256 = 3*. On
+rappelle que le modulo est le reste de la division entière, ici *259 = 256×1 + 3*,
+donc 3 est le reste de la division entière de 259 par 256. La conséquence est que si
+on ne prête pas attention au calcul ce dernier risque d'être erroné.
+
+Considérons, par exemple, les entiers non signés sur 32 bits. Si on réalise la
+somme des entiers naturels de 1 à *n*, à partir de quelle valeur de *n* la somme
+n'est-elle plus exacte ? Ce problème est laissé à titre d'exercice de programmation.
+Vous devriez normalement trouver la valeur limite de *n = 92 681*, ce qui
+correspond à la somme *4 294 930 221*, soit une valeur proche de *2*³², au delà, le
 calcul est inexact.
 
-### 2.2.5 L’ensemble des entiers relatifsZreprésente les nombres entiers positifs, négatifs
+### 2.2.5 Entiers relatifs (signés)
 
-ou nul. En langage C, il s’agit du typeintouint32_t, c’est à dire des valeurs
+L'ensemble des entiers relatifs *ℤ* représente les nombres entiers positifs, négatifs
+ou nul. En langage C, il s'agit du type `int` ou `int32_t`, c'est à dire des valeurs
 signées. Plusieurs représentations existent afin de pouvoir coder nombres positifs
-et négatifs mais on utilisera la notationbinaire en complément à deuxqui permet
+et négatifs mais on utilisera la notation **binaire en complément à deux** qui permet
 de réaliser des opérations arithmétiques dont le résultat sera correct. Dans cette
-notation, les nombres positifs utilisent le même procédé de réprésentation que la
+notation, les nombres positifs utilisent le même procédé de représentation que la
 notation binaire de la section précédente.
-Pour obtenir le codage en binaire en notation en complément à deux d’un
-nombrenégatif, on procède en commençant par fixer la taille de l’espace de codage
-en nombre de bits, généralement8,16,32ou64bits. Prenons par exemple8bits.
-On réalise ensuite la série d’opérations suivantes :
-1. |x|du nombre que l’on code sur8bits
-2.
-on réalise ensuite une opération de complémentation (¯x) c’est à dire que l’on
+
+Pour obtenir le codage en binaire en notation en complément à deux d'un
+nombre *négatif*, on procède en commençant par fixer la taille de l'espace de codage
+en nombre de bits, généralement 8, 16, 32 ou 64 bits. Prenons par exemple 8 bits.
+On réalise ensuite la série d'opérations suivantes :
+1. On code |x| du nombre que l'on code sur 8 bits
+2. On réalise ensuite une opération de **complémentation** (x̅) c'est à dire que l'on
 remplace les 0 par des 1 et inversement
-3.
-Ainsi, pour coder la valeurx=−1 sur8bits en notation binaire en complément
+3. On ajoute 1 au résultat
+
+Ainsi, pour coder la valeur *x = −1* sur 8 bits en notation binaire en complément
 à deux, on obtient :
-|x|= 0000_00012
-¯x= 1111_11102
-+ 0000_00012
-= 1111_1111¯2
-Notation
-On remarque alors que si le bit de poids fort est à 0, il s’agit d’une valeur
-positive ou nulle. Par contre si le bit de poids fort est à 1, il s’agit d’une valeur
-négative.
-On noterax¯2un nombre en notation en complément à2afin de le différencier
-avec un nombre en notation binaire.
-La Table n) quelles sont les valeurs
-minimum, maximum et le nombre de valeurs différentes que l’on peut représenter.
-On peut résumer la table en disant qu’avecnbits on peut représenter2
-nentiers
-relatifs différents allant de−2
-n−1
-à+2
-n−1
-−1.
-nvaleur minimumvaleur maximumnombre de valeurs
-8 −128 127 256
-16 −32_768 32 _767 65 _536
-32−2_147_483_648 2_147_483_647 4 _294_967_296
-TABLE2.6 – Entiers relatifs représentés avec un nombre fixe de bits
 
-#### 2.2.5.1 De la même manière qu’avec les entiers naturels on peut avoir un dépassement
+```
+|x| = 0000_0001₂
+x̅   = 1111_1110₂
+  + 0000_0001₂
+  = 1111_1111̅₂
+```
 
-de capacité. Fixons la représentation sur8bits et considérons le nombre126auquel
-on ajoute3, on obtient alors129qui est en dehors de l’intervalle de représentation,
-puisque pour8bits, la valeur maximale que l’on peut représenter est127. Mais sur
-8 bits,12910= 1000_0001¯2 . Etant donné que le bit de poids fort est à 1, cela signifie
-qu’on traite un nombre négatif! Comment un nombre positif peut il être négatif?
-FIGURE2.2 – Intervalle de représentation des entiers relatifs sur 8 bits
-La raison est dûe au débordement. Comment savoir à quel nombre correspond
-1000_0001¯2 ? Il suffit de réaliser les opérations inverses qui conduisent au codage
+> **Notation** : On remarque alors que si le bit de poids fort est à 0, il s'agit d'une valeur
+> positive ou nulle. Par contre si le bit de poids fort est à 1, il s'agit d'une valeur négative.
+> On notera *x̅₂* un nombre en notation en complément à 2 afin de le différencier
+> avec un nombre en notation binaire.
+
+La Table 2.6 montre pour un nombre fixé *n* de bits quelles sont les valeurs
+minimum, maximum et le nombre de valeurs différentes que l'on peut représenter.
+On peut résumer la table en disant qu'avec *n* bits on peut représenter *2ⁿ*
+entiers relatifs différents allant de *−2ⁿ⁻¹* à *+2ⁿ⁻¹ −1*.
+
+| n bits | Valeur minimum | Valeur maximum | Nombre de valeurs |
+|---|---|---|---|
+| 8 | −128 | 127 | 256 |
+| 16 | −32 768 | 32 767 | 65 536 |
+| 32 | −2 147 483 648 | 2 147 483 647 | 4 294 967 296 |
+
+*TABLE 2.6 – Entiers relatifs représentés avec un nombre fixe de bits*
+
+#### 2.2.5.1 Dépassement de capacité for les entiers signés
+
+De la même manière qu'avec les entiers naturels on peut avoir un dépassement
+de capacité. Fixons la représentation sur 8 bits et considérons le nombre 126 auquel
+on ajoute 3, on obtient alors 129 qui est en dehors de l'intervalle de représentation,
+puisque pour 8 bits, la valeur maximale que l'on peut représenter est 127. Mais sur
+8 bits, *129₁₀ = 1000_0001̅₂*. Etant donné que le bit de poids fort est à 1, cela signifie
+qu'on traite un nombre négatif ! Comment un nombre positif peut-il être négatif ?
+
+*FIGURE 2.2 – Intervalle de représentation des entiers relatifs sur 8 bits*
+
+La raison est due au débordement. Comment savoir à quel nombre correspond
+*1000_0001̅₂* ? Il suffit de réaliser les opérations inverses qui conduisent au codage
 des nombres négatifs :
-1.
-2. ¯xchacun des bits
-y= 1000_0001¯2
-−0000_00012
-= 1000_00002
-¯y= 0111_11112
-Donc1000_0001¯2 correspond finalement à la représentation binaire en complé-
-ment à deux de−127. Comme on peut le voir sur la Figure, à partir de 127,
-si on se déplace dans le sens des aiguilles d’une montre de deux positions, on se
-positionne sur−127. La boucle est bouclée!
-Une autre méthode qui permet de savoir à quel nombre correspond1000_0001¯2
-consiste à ne pas considérer qu’il s’agit d’un nombre signé et de le convertir en
-décimal et le soutraire à2
-8, si on a choisi une représentation sur 8 bits. Ici on
-a128 + 1 = 129. On retranche alors129à256ce qui donne256−129 = 127 . Le
-nombre correspondait alors à−127.
-De la même manière, si on a1111_1011¯2 , il s’agit de255−4 = 251 . Si on calcule
-256−251, on obtient5. On en déduit que1111_1011¯2correspond à−5.
 
-## 2.3 Que ce soit en notation binaire naturelle pour les entiers non signés ou en
+```
+y  = 1000_0001̅₂
+   − 0000_0001₂
+   = 1000_0000₂
+y̅  = 0111_1111₂
+```
 
+Donc *1000_0001̅₂* correspond finalement à la représentation binaire en complément
+à deux de *−127*. Comme on peut le voir sur la Figure 2.2, à partir de 127,
+si on se déplace dans le sens des aiguilles d'une montre de deux positions, on se
+positionne sur *−127*. La boucle est bouclée !
+
+Une autre méthode qui permet de savoir à quel nombre correspond *1000_0001̅₂*
+consiste à ne pas considérer qu'il s'agit d'un nombre signé et de le convertir en
+décimal et le soustraire à *2⁸*, si on a choisi une représentation sur 8 bits. Ici on
+a *128 + 1 = 129*. On retranche alors 129 à 256 ce qui donne *256 − 129 = 127*. Le
+nombre correspondait alors à *−127*.
+De la même manière, si on a *1111_1011̅₂*, il s'agit de *255 − 4 = 251*. Si on calcule
+*256 − 251*, on obtient 5. On en déduit que *1111_1011̅₂* correspond à *−5*.
+
+## 2.3 Opérations arithmétiques binaires
+
+Que ce soit en notation binaire naturelle pour les entiers non signés ou en
 notation binaire en complément à deux pour les entiers signés, on applique les
-mêmes schéma d’opérations qu’en arithmétique classique.
+mêmes schémas d'opérations qu'en arithmétique classique.
 
-### 2.3.1 L’addition de deux nombres binaires est assez simple, il suffit d’appliquer les
+### 2.3.1 Addition
 
-régles suivantes :
-•02+ 02= 02
-•02+ 12= 12
-•12+ 02= 12
-•12+ 12= 102, on abaisse le0et on génère une retenue de1
-•
-enfin le dernier cas correspond à une retenue en entrée de1, dès lors12+
-12+ 12= 112
-, on abaisse le premier1et on génère une retenue en sortie de1
-Ces règles s’appliquent aussi bien pour les nombres signés que les non signés.
+L'addition de deux nombres binaires est assez simple, il suffit d'appliquer les
+règles suivantes :
+
+- 0₂ + 0₂ = 0₂
+- 0₂ + 1₂ = 1₂
+- 1₂ + 0₂ = 1₂
+- 1₂ + 1₂ = 10₂, on abaisse le 0 et on génère une retenue de 1
+- Le dernier cas correspond à une retenue en entrée de 1, dès lors 1₂ + 1₂ + 1₂ = 11₂, on abaisse le premier 1 et on génère une retenue en sortie de 1
+
+Ces règles s'appliquent aussi bien pour les nombres signés que les non signés.
 Considérons une représentation des nombres sur 8 bits, pour le calcul de
-1101_10102+ 1110_11112 . Dans ce cas on ne garde que les 8 premiers bits du
-résultats :
-Retenue(s)1
-1 1 0 1 1 0 1 0
+`1101_1010`₂ + `1110_1111`₂. Dans ce cas on ne garde que les 8 premiers bits du résultat :
+
+```
+ Retenue(s) 1
+  1 1 0 1 1 0 1 0
 + 1 1 1 0 1 1 1 1
 = 1 1 0 0 1 0 0 1
-Le résultat est-il correct? Il suffit de traduire les nombres binaires en décimal
+```
+
+Le résultat est-il correct ? Il suffit de traduire les nombres binaires en décimal
 en décidant si on travaille avec des valeurs signées ou non signées :
-•
-s’il s’agit de valeurs non signées, alors on effectue le calcul218 + 239 = 457
-qui modulo256est égal à201
-•
-s’il s’agit de valeurs signées, alors on effectue le calcul−38 + (−17) =−55
-qui est juste car−5510= 1100_1001¯2
 
-### 2.3.2 La multiplication fonctionne comme en décimal :
+- S'il s'agit de valeurs **non signées**, alors on effectue le calcul *218 + 239 = 457*
+  qui modulo 256 est égal à 201
+- S'il s'agit de valeurs **signées**, alors on effectue le calcul *−38 + (−17) = −55*
+  qui est juste car *−55₁₀ = 1100_1001̅₂*
 
-1 1 1 1 1 1 1 0
-×1 1 1 1 1 1 0 1
-1 1 1 1 1 1 1 0
-+ .
+### 2.3.2 Multiplication
+
+La multiplication fonctionne comme en décimal :
+
+```
+  1 1 1 1 1 1 1 0
+× 1 1 1 1 1 1 0 1
+  1 1 1 1 1 1 1 0
++ 0 . . . . . . .
 + 1 1 1 1 1 0 . .
 + 1 1 1 1 0 . . .
 + 1 1 1 0 . . . .
 + 1 1 0 . . . . .
-+ 1 0. . . . . .
-+ 0. . . . . . .
++ 1 0 . . . . . .
++ 0 . . . . . . .
 = 0 0 0 0 0 1 1 0
-Le seul problème que l’on rencontre est celui de la somme des valeurs, on peut
+```
+
+Le seul problème que l'on rencontre est celui de la somme des valeurs, on peut
 alors procéder de deux manières différentes :
-•soit en faisant la somme comme on le ferait en décimal :
-Colonnes8 7 6 5 4 3 2 1
-Retenues 1←
-1 ←
-1 ←
-1←
-1 1 1 1 1 1 1 0
+
+- **Soit en faisant la somme comme on le ferait en décimal :**
+
+```
+Colonnes  8 7 6 5 4 3 2 1
+Retenues  1← 1← 1← 1←
+  1 1 1 1 1 1 1 0
 + 1 1 1 1 1 0 0 0
 + 1 1 1 1 0 0 0 0
 + 1 1 1 0 0 0 0 0
 + 1 1 0 0 0 0 0 0
 + 1 0 0 0 0 0 0 0
 = 0 0 0 0 0 1 1 0
+```
+
 Pour la cinquième colonne en partant de la droite on a une retenue en entrée
-et trois 1, ce qui fait 4, soit1002, on aura donc une retenue pour la septième
+et trois 1, ce qui fait 4, soit `100`₂, on aura donc une retenue pour la septième
 colonne. De la même manière, la somme des valeurs de la sixième colonne
-donne4 = 1002 , on aura donc une retenue de 1 pour la huitième colonne. Pour
-la septième colonne on a5plus une retenue en entrée ce qui fait6 = 1102 , ce
+donne *4 = `100`₂*, on aura donc une retenue de 1 pour la huitième colonne. Pour
+la septième colonne on a 5 plus une retenue en entrée ce qui fait *6 = `110`₂*, ce
 qui provoque une retenue pour la huitième et la neuvième colonne. Comme
 on a fixé une représentation sur 8 bits, la retenue pour la neuvième colonne
 ne doit pas être prise en compte. Enfin pour la huitième colonne, on a deux
-retenues en entrée plus6, ce qui fait8 = 10002 , on abaisse donc le premier 0
+retenues en entrée plus 6, ce qui fait *8 = `1000`₂*, on abaisse donc le premier 0
 et on ne tient pas compte de la retenue pour la onzième colonne.
-•soit en faisant des additions deux à deux :
-1 1 1 1 1 1 1 0
+
+- **Soit en faisant des additions deux à deux :**
+
+```
+  1 1 1 1 1 1 1 0
 + 1 1 1 1 1 0 0 0
-⊃
-= 1 1 1 1 0 1 1 0 (s1)
-1 1 1 1 0 0 0 0
+= 1 1 1 1 0 1 1 0  (s1)
+  1 1 1 1 0 0 0 0
 + 1 1 1 0 0 0 0 0
-⊃
-= 1 1 0 1 0 0 0 0 (s2)
-1 1 0 0 0 0 0 0
+= 1 1 0 1 0 0 0 0  (s2)
+  1 1 0 0 0 0 0 0
 + 1 0 0 0 0 0 0 0
-⊃
-= 0 1 0 0 0 0 0 0 (s3)
-1 1 1 1 0 1 1 0 ( s1)
-+ 1 1 0 1 0 0 0 0 ( s2)
-⊃
-= 1 1 0 0 0 1 1 0 (s4)
-0 1 0 0 0 0 0 0 ( s3)
-+ 1 1 0 0 0 1 1 0 ( s4)
-⊃
-= 0 0 0 0 0 1 1 0 (s5)
-Au final on obtient0000_01102 . Si on se place dans le cadre de valeurs non
-signées le calcul effectué est254×253 = 64_262 qui modulo256donne6car
-64_262 = 251×256 + 6 . Si on considère que l’on traite des valeurs signées, on
-effectue le calcul−2× −3 = 6.
-
-### 2.3.3 Le principe de la soustraction est le même qu’en décimal. Lorsque l’on calcule
-
-25−16 , on commence à s’intéresser aux unités.5étant inférieur à6, on ajoute
-une dizaine à5et on calcule15−6 ce qui donne9. On passe ensuite aux dizaines.
-Sachant que l’on a ajouté une dizaine précédemment, on retire cette dizaine et on
-calcule2−1auquel on retranche la dizaine, soit2−1−1 = 0.
-Il suffit donc d’appliquer les régles suivantes :
-•02−02= 02
-•02−12
-, étant donné que0<1 il faut calculer102−12= 12 et propager une
-retenue de1
-•12−02= 12
-•12−12= 02
-•02−(12+ 12) = 02−102
-, on ajoute une dizaine, ce qui donne102−102= 02
-et on propage une retenue de1
-•12−(12+ 12) = 12−102
-, on ajoute une dizaine, ce qui donne112−102= 12
-et on propage une retenue de1
-Voyons cela sur un exemple et calculons5−10, soit en binaire sur 4 bits
-01012−10102. Dans ce cas on ne garde que les 4 premiers bits du résultats :
-Retenue(s) en sortie1
-0 1 0 1
-−1 0 1 0
-Retenue(s) en entrée1
-= 1 0 1 1
-Soit au final10112 qui dans le cadre de la représentation signée en complément
-à2correspond à−5. On a donc bien le résultat escompté.
-
-#### 2.3.3.1 Pour soustraire1d’un nombre binairex, il suffit :
-
-•si le nombrexse termine par un1, de transformer ce1en0
-•par contre, si le nombre se termine par un ou plusieurs0, il suffit de trouver
-le premier bit à1, puis de complémenter sur cette partie
-Par exemple :
-•11012−12= 11002
-•11_10002−12donne11_01112puisqu’on prend le complément de10002
-
-### 2.3.4 La division, tout comme en décimal, est difficile à appréhender. Elle consiste à
-
-diviser le dividendenpar le diviseurdet obtenir un quotientqainsi qu’un rester.
-On a doncn=q×d+r. On va considérer quen≥dpar la suite.
-Comment divise t-on en binaire? Il suffit de rechercher la position (numéro du
-bit) dans le dividendenoù il est possible de soustraire le diviseurdle plus à gauche
-possible, puis d’effectuer la soustraction. On réitère ensuite l’opération en plaçant
-un1à droite du quotient et en le décalant dek−1 rangs vers la gauche lorsque
-k−1≥0 , aveckqui représente la différence entre deux positions successives
-comme on peut le voir sur l’exemple de la Figure.
-FIGURE2.3 – Division binaire sur un exemple
-Dans cet exemple, on divise1136par7. C’est à partir de la position (ou bit)7
-que l’on obtient au niveau du dividende, un nombre plus grand que le diviseur, en
-l’occurrence10002= 8 . On soustrait alors7à8, il nous reste1et on abaisse les
-chiffres restants du dividende. Etant donné que l’on vient de soustraire une fois7
-au dividende, on place un1à droite du quotient qui était initialement égal à 0.
-On s’intéresse alors au dividende modifié qui est1111_00002 et on trouve que
-l’on peut lui retrancher le diviseur7 = 1112 à partir de la position5. On calcule
-alorsk= 7−5−1 = 1 , il faut donc décaler le quotient de 1 rang vers la gauche.
-Le quotient est alors102et on place un1à droite du quotient qui devient1012en
-raison de la soustraction effectuée.
-Le dividende restant est alors1_00002 . On peut lui retrancher le diviseur à partir
-de la position1. Dans ce cas,k= 5−1−1 = 3 . On décale donc le quotient de3
-rangs vers la gauche, celui-ci devient alors10_1000.
-On réalise la soustraction du diviseur au dividende et on place un1à droite du
-quotient qui est à présent égal à101_00012.
-Le dividende devient102, il est inférieur au diviseur donc on arrête la division,
-mais comme la dernière soustraction a été réalisée en position1, il est nécessaire de
-décaler le quotient d’un rang vers la droite. Finalement le quotient est1010_00102 ,
-soit162et le reste est de2.
-On peut en dégager l’algorithme suivant extrait d’une librairie C++ que j’ai
-écrite :
-1int =greater_or_equal_at(dividend,divisor);
-2while(pos>=0)
-3{
-4 quotient.shl(1);
-5 quotient.set_bit(BIT_0,1);
-6 sub_at(dividend,divisor,pos);
-
-```text
-int =greater_or_equal_at(dividend,divisor);
-int =pos-next_pos-1;
-if(shift>0)quotient.shl(shift);
-pos=next_pos;
-11}
+= 0 1 0 0 0 0 0 0  (s3)
+  1 1 1 1 0 1 1 0  (s1)
++ 1 1 0 1 0 0 0 0  (s2)
+= 1 1 0 0 0 1 1 0  (s4)
+  0 1 0 0 0 0 0 0  (s3)
++ 1 1 0 0 0 1 1 0  (s4)
+= 0 0 0 0 0 1 1 0  (s5)
 ```
 
-Ce code repose sur l’utilisation d’une structure de données appeléeBitsqui
-représente une suite de bits par un tableau de caractères, ainsi que sur l’utilisation
+Au final on obtient `0000_0110`₂. Si on se place dans le cadre de valeurs non
+signées le calcul effectué est *254 × 253 = 64 262* qui modulo 256 donne 6 car
+*64 262 = 251 × 256 + 6*. Si on considère que l'on traite des valeurs signées, on
+effectue le calcul *−2 × −3 = 6*.
+
+### 2.3.3 Soustraction
+
+Le principe de la soustraction est le même qu'en décimal. Lorsque l'on calcule
+*25 − 16*, on commence à s'intéresser aux unités. 5 étant inférieur à 6, on ajoute
+une dizaine à 5 et on calcule *15 − 6* ce qui donne 9. On passe ensuite aux dizaines.
+Sachant que l'on a ajouté une dizaine précédemment, on retire cette dizaine et on
+calcule *2 − 1* auquel on retranche la dizaine, soit *2 − 1 − 1 = 0*.
+
+Il suffit donc d'appliquer les règles suivantes :
+
+- 0₂ − 0₂ = 0₂
+- 0₂ − 1₂ : étant donné que 0 < 1 il faut calculer 10₂ − 1₂ = 1₂ et propager une retenue de 1
+- 1₂ − 0₂ = 1₂
+- 1₂ − 1₂ = 0₂
+- 0₂ − (1₂ + retenue) = 0₂ − 10₂ : on ajoute une dizaine, ce qui donne 10₂ − 10₂ = 0₂ et on propage une retenue de 1
+- 1₂ − (1₂ + retenue) = 1₂ − 10₂ : on ajoute une dizaine, ce qui donne 11₂ − 10₂ = 1₂ et on propage une retenue de 1
+
+Voyons cela sur un exemple et calculons *5 − 10*, soit en binaire sur 4 bits
+`0101`₂ − `1010`₂. Dans ce cas on ne garde que les 4 premiers bits du résultat :
+
+```
+Retenue(s) en sortie 1
+  0 1 0 1
+- 1 0 1 0
+Retenue(s) en entrée 1
+= 1 0 1 1
+```
+
+Soit au final `1011`₂ qui dans le cadre de la représentation signée en complément
+à 2 correspond à *−5*. On a donc bien le résultat escompté.
+
+#### 2.3.3.1 Soustraire 1 d'un nombre binaire
+
+Pour soustraire 1 d'un nombre binaire *x*, il suffit :
+
+- Si le nombre *x* se termine par un 1, de transformer ce 1 en 0
+- Par contre, si le nombre se termine par un ou plusieurs 0, il suffit de trouver
+  le premier bit à 1, puis de complémenter sur cette partie
+
+Par exemple :
+
+- `1101`₂ − 1 = `1100`₂
+- `11_1000`₂ − 1 donne `11_0111`₂ puisqu'on prend le complément de `1000`₂
+
+### 2.3.4 Division
+
+La division, tout comme en décimal, est difficile à appréhender. Elle consiste à
+diviser le dividende *n* par le diviseur *d* et obtenir un quotient *q* ainsi qu'un reste *r*.
+On a donc *n = q × d + r*. On va considérer que *n ≥ d* par la suite.
+
+Comment divise t-on en binaire ? Il suffit de rechercher la position (numéro du
+bit) dans le dividende *n* où il est possible de soustraire le diviseur *d* le plus à gauche
+possible, puis d'effectuer la soustraction. On réitère ensuite l'opération en plaçant
+un 1 à droite du quotient et en le décalant de *k − 1* rangs vers la gauche lorsque
+*k − 1 ≥ 0*, avec *k* qui représente la différence entre deux positions successives
+comme on peut le voir sur l'exemple de la Figure 2.3.
+
+*FIGURE 2.3 – Division binaire sur un exemple*
+
+Dans cet exemple, on divise 1136 par 7. C'est à partir de la position (ou bit) 7
+que l'on obtient au niveau du dividende, un nombre plus grand que le diviseur, en
+l'occurrence `1000`₂ = 8. On soustrait alors 7 à 8, il nous reste 1 et on abaisse les
+chiffres restants du dividende. Etant donné que l'on vient de soustraire une fois 7
+au dividende, on place un 1 à droite du quotient qui était initialement égal à 0.
+
+On s'intéresse alors au dividende modifié qui est `1111_0000`₂ et on trouve que
+l'on peut lui retrancher le diviseur *7 = `111`₂* à partir de la position 5. On calcule
+alors *k = 7 − 5 − 1 = 1*, il faut donc décaler le quotient de 1 rang vers la gauche.
+Le quotient est alors `10`₂ et on place un 1 à droite du quotient qui devient `101`₂ en
+raison de la soustraction effectuée.
+
+Le dividende restant est alors `1_0000`₂. On peut lui retrancher le diviseur à partir
+de la position 1. Dans ce cas, *k = 5 − 1 − 1 = 3*. On décale donc le quotient de 3
+rangs vers la gauche, celui-ci devient alors `10_1000`₂.
+
+On réalise la soustraction du diviseur au dividende et on place un 1 à droite du
+quotient qui est à présent égal à `101_0001`₂.
+
+Le dividende devient `10`₂, il est inférieur au diviseur donc on arrête la division,
+mais comme la dernière soustraction a été réalisée en position 1, il est nécessaire de
+décaler le quotient d'un rang vers la droite. Finalement le quotient est `1010_0010`₂,
+soit 162 et le reste est de 2.
+
+On peut en dégager l'algorithme suivant extrait d'une librairie C++ que j'ai
+écrite :
+
+```cpp
+int pos = greater_or_equal_at(dividend, divisor);
+while (pos >= 0) {
+    quotient.shl(1);
+    quotient.set_bit(BIT_0, 1);
+    sub_at(dividend, divisor, pos);
+    int next_pos = greater_or_equal_at(dividend, divisor);
+    int shift = pos - next_pos - 1;
+    if (shift > 0) quotient.shl(shift);
+    pos = next_pos;
+}
+```
+
+Ce code repose sur l'utilisation d'une structure de données appelée `Bits` qui
+représente une suite de bits par un tableau de caractères, ainsi que sur l'utilisation
 de deux fonctions :
-•greater_or_equal_at
-qui détermine à partir de quel bit dans le dividende on
-peut soustraire le diviseur de manière à ce que le résultat soit supérieur ou
-égal à0
-•sub_at
-qui réalise la soustraction à la position trouvée par le sous-programme
-précédent
 
-## 2.4 La norme IEEE 754 (Standard for Binary Floating-Point Arithmetic) date de
+- `greater_or_equal_at` qui détermine à partir de quel bit dans le dividende on
+  peut soustraire le diviseur de manière à ce que le résultat soit supérieur ou égal à 0
+- `sub_at` qui réalise la soustraction à la position trouvée par le sous-programme précédent
 
-. Elle définit initialement quatre représentations de nombres réels qui sont
-appelés nombres flottants ou nombres à virgule flottante en informatique
-:
-•simple précision (32 bits), correspond au typefloatdu langage C
-•double précision (64 bits), correspond au typedoubledu langage C
-•simple précision étendue (43 bits et plus)
-•
-double précision étendue (79 bits et plus), on utilise généralement 80 bits
-ce qui correspond à la modélisation des nombres au sein du coprocesseur
-arithmétique (cf. Chapitre)
-D’autres formats de représentations ont été ajoutés par la suite :
-•
-la demi précision (half precision) qui code sur 16 bits et est utilisée dans le
-cadre des réseaux de neurones
-•la quadruple précision qui code sur 128 bits
-•l’octuple précision qui code sur 256 bits
-Dans la norme IEEE 754, les nombres sont décomposés en trois parties dis-
-tinctes :
-•
-le Signe (S) qui vaut0pour un nombre positif et1pour un nombre négatif et
-qui correspondra au bit le plus significatif
-•
-suivi de l’Exposant (E) que nous appelonsExposant décalé(Ed) car on lui
-ajoute une valeur positive
-•
-et de la Mantisse (M) que nous qualifions deMantisse tronquéeMt car on
-supprime le premier 1 une fois le nombre normalisé
-On peut voir Table
-la précision de la réprésentation. Nous avons indiqué également les plus petites et
-plus grandes valeurs que l’on peut représenter.
-Précision 16 32 bits 64 bits 128 bits
-Signe (bits) 1 1 1 1
-Exposant (bits) 5 8 11 15
-Mantisse (bits) 11 23 52 113
-Plus petit nombre±6,10310
-−5
-±1,17510
-−38
-±2,22510
-−308
-±3.36210
-−4932
-Plus grand nombre±65504 ±1,70110
-±1,79710
-±1.18910
-Décimales 3 7 16 34
-TABLE2.7 – Caractéristiques des nombres flottants en fonction de la précision.
-Ainsi, dans le format IEEE 754 en 32 bits, un nombrens’exprime par :
-n= (−1)
-S
-×M×2
-(E)
-= (−1)
-S
-×1,Mt×2
-(Ed−127)
-. Les Anglo-saxons utilisent le point pour représenter la virgule, on parle donc defloating point
-number.
-On voit que l’on retire127à l’exposant décalé car celui-ci est augmenté, par
-convention, de127comme nous allons le voir ci-après.
+## 2.4 Nombres à virgule flottante (IEEE 754)
 
-### 2.4.1 FIGURE2.4 – Codage d’un nombre flottant en IEEE 754 32 bits
+La norme IEEE 754 (*Standard for Binary Floating-Point Arithmetic*) date de 1985.
+Elle définit initialement quatre représentations de nombres réels qui sont
+appelés **nombres flottants** ou **nombres à virgule flottante** en informatique[^fp_note] :
 
-Comment coder un nombre réel au format IEEE 754? Prenons l’exemple de
-la représentation en simple précision sur 32 bits (cf. Figure) du codage de
-n=−1027,625. On procède comme suit :
-•il s’agit d’un nombre négatif doncS= 1
-•on code la partie entière en valeur absolue :
-102710= 102410+ 210+ 110= 2
-+ 2
-+ 2
-= 100_0000_00112
-•on code la partie décimale en utilisant des puissances de 2 négatives :
-0,625 = 0,5 + 0,125 = 2
-−1
-+ 2
-−3
-•la mantisse qui regroupe partie entière et décimale est alors
-M= 100_0000_0011,1012
-Pour obtenir la mantisse tronquée et l’exposant décalé, il suffit de déplacer la
-virgule vers la gauche derrière le premier 1, on parle alors denormalisationdu
+- **Simple précision** (32 bits), correspond au type `float` du langage C
+- **Double précision** (64 bits), correspond au type `double` du langage C
+- **Simple précision étendue** (43 bits et plus)
+- **Double précision étendue** (79 bits et plus), on utilise généralement 80 bits
+  ce qui correspond à la modélisation des nombres au sein du coprocesseur arithmétique
+
+[^fp_note]: Les Anglo-saxons utilisent le point pour représenter la virgule, on parle donc de *floating point number*.
+
+D'autres formats de représentations ont été ajoutés par la suite :
+
+- La **demi précision** (*half precision*) qui code sur 16 bits et est utilisée dans le cadre des réseaux de neurones
+- La **quadruple précision** qui code sur 128 bits
+- L'**octuple précision** qui code sur 256 bits
+
+Dans la norme IEEE 754, les nombres sont décomposés en trois parties distinctes :
+
+- Le **Signe (S)** qui vaut `0` pour un nombre positif et `1` pour un nombre négatif et
+  qui correspondra au bit le plus significatif
+- Suivi de l'**Exposant (E)** que nous appelons **Exposant décalé (Ed)** car on lui ajoute une valeur positive
+- Et de la **Mantisse (M)** que nous qualifions de **Mantisse tronquée Mt** car on
+  supprime le premier 1 une fois le nombre normalisé
+
+On peut voir dans la Table 2.7 la précision de la représentation. Nous avons indiqué également les plus petites et
+plus grandes valeurs que l'on peut représenter.
+
+| Précision | 16 bits | 32 bits | 64 bits | 128 bits |
+|---|---|---|---|---|
+| Signe (bits) | 1 | 1 | 1 | 1 |
+| Exposant (bits) | 5 | 8 | 11 | 15 |
+| Mantisse (bits) | 11 | 23 | 52 | 113 |
+| Plus petit nombre | ±6,103×10⁻⁵ | ±1,175×10⁻³⁸ | ±2,225×10⁻³⁰⁸ | ±3,362×10⁻⁴⁹³² |
+| Plus grand nombre | ±65504 | ±1,701×10³⁸ | ±1,797×10³⁰⁸ | ±1,189×10⁴⁹³² |
+| Décimales | 3 | 7 | 16 | 34 |
+
+*TABLE 2.7 – Caractéristiques des nombres flottants en fonction de la précision*
+
+Ainsi, dans le format IEEE 754 en 32 bits, un nombre *n* s'exprime par :
+
+*n = (−1)ˢ × M × 2ᴸ = (−1)ˢ × 1,Mt × 2*(Ed−127)
+
+On voit que l'on retire 127 à l'exposant décalé car celui-ci est augmenté, par
+convention, de 127 comme nous allons le voir ci-après.
+
+### 2.4.1 Codage d'un nombre flottant en IEEE 754
+
+*FIGURE 2.4 – Codage d'un nombre flottant en IEEE 754 32 bits*
+
+Comment coder un nombre réel au format IEEE 754 ? Prenons l'exemple de
+la représentation en simple précision sur 32 bits (cf. Figure 2.4) du codage de
+*n = −1027,625*. On procède comme suit :
+
+- Il s'agit d'un nombre négatif donc *S = 1*
+- On code la partie entière en valeur absolue :
+  *1027₁₀ = 1024₁₀ + 2₁₀ + 1₁₀ = 2¹⁰ + 2¹ + 2⁰ = `100_0000_0011`₂*
+- On code la partie décimale en utilisant des puissances de 2 négatives :
+  *0,625 = 0,5 + 0,125 = 2⁻¹ + 2⁻³*
+- La mantisse qui regroupe partie entière et décimale est alors *M = `100_0000_0011,101`₂*
+
+Pour obtenir la mantisse tronquée et l'exposant décalé, il suffit de déplacer la
+virgule vers la gauche derrière le premier 1, on parle alors de **normalisation** du
 nombre à représenter :
-1,00000000111012
-Par conséquent, on a déplacé la virgule de 10 rangs vers la gauche (voir Fi-
-gure), ce qui correspond à E= 10.
-•
-la mantisse tronquée est alors égale à la mantisse à laquelle on a enlevé le
-premier 1 devant la virgule, on obtient doncMt= 00000000111012
-•
-l’exposant décalé est égal, par convention en 32 bits, à127 +E , dans notre
-casE= 10, donc :
-Ed= 127 + 10 = 13710= 1000_10012
-On remplit alors chacun des champs du nombre flottant (Figure) et on
-complète la mantisse tronquée par des zéros à droite. Au final on obtient une valeur
-sur 32 bits que l’on exprime généralement en hexadécimal pour plus de lisibilité.
-On obtient doncC4_80_74_0016.
 
-### 2.4.2 Pour coder la partie décimale d’un nombre il existe une autre méthode que celle
+*1,0000000011101₂*
 
+Par conséquent, on a déplacé la virgule de 10 rangs vers la gauche (voir
+Figure 2.4), ce qui correspond à *E = 10*.
+
+- La mantisse tronquée est alors égale à la mantisse à laquelle on a enlevé le
+  premier 1 devant la virgule, on obtient donc *Mt = `0000000011101`₂*
+- L'exposant décalé est égal, par convention en 32 bits, à *127 + E*, dans notre
+  cas *E = 10*, donc : *Ed = 127 + 10 = 137₁₀ = `1000_1001`₂*
+
+On remplit alors chacun des champs du nombre flottant (Figure 2.4) et on
+complete la mantisse tronquée par des zéros à droite. Au final on obtient une valeur
+sur 32 bits que l'on exprime généralement en hexadécimal pour plus de lisibilité.
+On obtient donc `C4_80_74_00`₁₆.
+
+### 2.4.2 Méthode de codage de la partie décimale
+
+Pour coder la partie décimale d'un nombre il existe une autre méthode que celle
 qui consiste à sommer les puissances de deux négatives afin de retrouver la valeur
 cherchée.
-Cette méthode consiste à multiplier la partie décimale par2jusqu’à obtenir 0
+
+Cette méthode consiste à multiplier la partie décimale par 2 jusqu'à obtenir 0
 quand cela est possible.
-A chaque étape on garde le chiffre le plus à gauche du résultat de la multipli-
-cation qui sera 1 ou 0 puis on réitère la multiplication sur la partie décimale du
-résultat de la multiplication en supprimant le premier1s’il existe.
-Prenons un exemple simple, on désire obtenir le codage en binaire de0,8125:
-n n ×2r
-0,8125 ,625
-0,625 ,25
-0,25 ,5
-0,5 ,0
-0,0
-•
-on multiplie0,8125par deux ce qui donne1,625, on garde le premier chiffre1
-et on réitère sur1,625−1
-•
-on multiplie0,625par deux ce qui donne1,25, on garde le premier chiffre 1
-et on réitère sur1,25−1
-•
-on multiplie0,25par deux ce qui donne0,5, on garde le premier chiffre 0 et
-on réitère sur0,5−0
-•
-on multiplie0,5par deux ce qui donne1,0, on garde le premier chiffre 1 et
-on s’arrête car1−1 = 0
-Au final on obtient0,8125 = 0,11012.
-Un exemple plus problématique est le codage de0,3:
-n n×2r
-0,3,6
-0,6,2
-0,2,4
-0,4,8
-0,8,6
-0,6,2
-· · ·
-Dans le cas de0,3le résultat ne tombe pas juste et on obtient une séquence qui
-se répète à l’infini (et même au-delà) :
-0, 0 1001 1001 1001 ...
-Si on code0,3au format IEEE 754 en 32 bits, on a :
-•le signe estS= 0car le nombre est positif
-•
-la normalisation du nombre donneM= 0,0100110011001... et doncE=−2
-car on doit déplacer la virgule de deux rangs vers la droite pour atteindre le
-premier 1 du nombre
-•en conséquence l’exposant décalé est deEd= 127−2 = 125 = 0111_11012
-•la mantisse tronquée est00110011...
-•la représentation de0,3est donc3E_99_99_9A_h
 
-### 2.4.3 La constante127est utilisée pour les nombres flottants en simple précision afin
+A chaque étape on garde le chiffre le plus à gauche du résultat de la multiplication
+qui sera 1 ou 0 puis on réitère la multiplication sur la partie décimale du
+résultat de la multiplication en supprimant le premier `1` s'il existe.
 
+Prenons un exemple simple, on désire obtenir le codage en binaire de 0,8125 :
+
+| n | n × 2 | r |
+|---|---|---|
+| 0,8125 | 1,625 | 1 |
+| 0,625 | 1,25 | 1 |
+| 0,25 | 0,5 | 0 |
+| 0,5 | 1,0 | 1 |
+| 0,0 | - | - |
+
+- On multiplie 0,8125 par deux ce qui donne 1,625, on garde le premier chiffre 1
+  et on réitère sur 1,625 − 1
+- On multiplie 0,625 par deux ce qui donne 1,25, on garde le premier chiffre 1
+  et on réitère sur 1,25 − 1
+- On multiplie 0,25 par deux ce qui donne 0,5, on garde le premier chiffre 0 et
+  on réitère sur 0,5 − 0
+- On multiplie 0,5 par deux ce qui donne 1,0, on garde le premier chiffre 1 et
+  on s'arrête car 1 − 1 = 0
+
+Au final on obtient *0,8125 = `0,1101`₂*.
+
+Un exemple plus problématique est le codage de 0,3 :
+
+| n | n×2 | r |
+|---|---|---|
+| 0,3 | 0,6 | 0 |
+| 0,6 | 1,2 | 1 |
+| 0,2 | 0,4 | 0 |
+| 0,4 | 0,8 | 0 |
+| 0,8 | 1,6 | 1 |
+| 0,6 | 1,2 | 1 |
+| ··· | ··· | ··· |
+
+Dans le cas de 0,3 le résultat ne tombe pas juste et on obtient une séquence qui
+se répète à l'infini (et même au-delà) :
+
+*0, 0 1001 1001 1001 ...*
+
+Si on code 0,3 au format IEEE 754 en 32 bits, on a :
+
+- Le signe est *S = 0* car le nombre est positif
+- La normalisation du nombre donne *M = 0,0100110011001...* et donc *E = −2*
+  car on doit déplacer la virgule de deux rangs vers la droite pour atteindre le premier 1 du nombre
+- En conséquence l'exposant décalé est de *Ed = 127 − 2 = 125 = `0111_1101`₂*
+- La mantisse tronquée est `00110011...`₂
+- La représentation de 0,3 est donc `3E_99_99_9A`₁₆
+
+### 2.4.3 Le biais de l'exposant
+
+La constante 127 est utilisée pour les nombres flottants en simple précision afin
 de pouvoir coder les nombres dont la partie entière est égale à 0. Dans ce cas
-l’exposantEest négatif, par exemple0,0625 = 2
-−4 , on ajoute un décalage de127
+l'exposant *E* est négatif, par exemple *0,0625 = 2⁻⁴*, on ajoute un décalage de 127
 pour pouvoir représenter ces nombres.
-Notons que l’assembleurnasmque nous utiliserons est capable de convertir
-automatiquement une valeur décimale en sa représentation IEEE 754, nous n’aurons
-donc pas à réaliser ces calculs fastidieux d’encodage des nombres à virgule flottante.
-SymboleHexadécimalSigneExposantMantisse
 
-## 0.0 00000000 0 00000000 200. . .02
+Notons que l'assembleur `nasm` que nous utiliserons est capable de convertir
+automatiquement une valeur décimale en sa représentation IEEE 754, nous n'aurons
+donc pas à réaliser ces calculs fastidieux d'encodage des nombres à virgule flottante.
 
-∞ 7F800000 0 11111111 200. . .02
-−∞ FF800000 1 11111111 200. . .02
-−NaN FFC00000 1 11111111 210. . .02
-TABLE2.8 – Constantes prédéfinies pour les nombres en virgule flottante
-Certaines valeurs ont une signification particulière (cf. Table). Notamment
-NaNqui en anglais signifieNot a Numberet qui est utilisée pour signaler une erreur
-lors d’un calcul. Il existe deux types de valeurs NaN :
-•
-qNaN ouquietNaN, ne produit pas d’exception et sera propagée afin que le
-calcul se termine sans provoquer l’arrêt du programme
-•sNaN ousignalingNaN est sensée provoquer une exception
+| Symbole | Hexadécimal | Signe | Exposant | Mantisse |
+|---|---|---|---|---|
+| 0,0 | `00000000` | 0 | `00000000` | `00...0`₂ |
+| ∞ | `7F800000` | 0 | `11111111` | `00...0`₂ |
+| −∞ | `FF800000` | 1 | `11111111` | `00...0`₂ |
+| NaN | `FFC00000` | 1 | `11111111` | `10...0`₂ |
+
+*TABLE 2.8 – Constantes prédéfinies pour les nombres en virgule flottante*
+
+Certaines valeurs ont une signification particulière (cf. Table 2.8). Notamment
+`NaN` qui en anglais signifie *Not a Number* et qui est utilisée pour signaler une erreur
+lors d'un calcul. Il existe deux types de valeurs NaN :
+
+- `qNaN` ou *quiet NaN*, ne produit pas d'exception et sera propagée afin que le
+  calcul se termine sans provoquer l'arrêt du programme
+- `sNaN` ou *signaling NaN* est sensée provoquer une exception
+
 Pour les système POSIX/Unix les exceptions générées lors de calculs sur les
-nombres à virgule flottante mettent fin à l’exécution du programme à moins qu’elles
-ne soient interceptées par un gestionnaire (handler) qui captera le signalSIGFPE
-4 .
-On pourra utiliser le convertisseur IEEE-754 Floating Point
-écrit en Javascript
-qui permet à partir d’un nombre réel d’obtenir son codage en norme IEEE 754 32
-bits.
+nombres à virgule flottante mettent fin à l'exécution du programme à moins qu'elles
+ne soient interceptées par un gestionnaire (*handler*) qui captera le signal `SIGFPE`[^sigfpe].
 
-### 2.4.4 2
+[^sigfpe]: `SIGFPE` signifie *SIGnal Floating Point Exception* (ou Error).
 
-−1
-=0,5 5
-−2
-=0,25 5
-−3
-=0,125 5
-−4
-=0,0625 5
-−5
-=0,03125 5
-−6
-=0,015625 5
-−7
-=0,0078125 5
-−8
-=0,00390625 5
-. . . . . .
-−23
-=0.00000011920928955078125 5
-TABLE2.9 – Puissances de 2 négatives
-On notera que les puissances de 2 négatives se terminent par des puissances de
-−3
-se termine par5
-= 125.
-Lorsque l’on utilise la représentation IEEE 754, on rencontre deux problèmes :
-•
-le premier est la conséquence de l’utilisation des puissances de 2, car comme
-on le voit Table, les puissances de 2 négatives se terminent par 5, on
-ne peut donc coder la plupart des nombres décimaux qu’en utilisant une
-combinaison de puissances de 2 négatives et cela engendre une erreur de
-précision
-4. SIGFPE signifie SIGnal Floating Point Exception (ou Error).
-1#include
-2#include
-3#include
-4using ;
-6float =1.2;
-7float =1.3;
-8float =1.3001;
-9float =1.3001001;
-11int ()
+On pourra utiliser le [convertisseur IEEE-754 Floating Point](https://www.h-schmidt.net/FloatConverter/IEEE754.html)
+écrit en Javascript qui permet à partir d'un nombre réel d'obtenir son codage en norme IEEE 754 32 bits.
 
-```text
-float =v1-v2;
-float =v2-v3;
-cout<<setprecision(10);
-cout<<"v1-v2 = "<<diff_v1_v2<<endl;
-cout<<"v2-v3 = "<<diff_v2_v3<<endl;
-float =fabs(v3-v4);
-cout<<"|v3-v4| = "<<diff_v3_v4<<endl;
-if(diff_v3_v4<1E-6)
-cout<<"v3 = v4"<<endl;
-else
-cout<<"v3 != v4"<<endl;
-return ;
-28}
+### 2.4.4 Puissances de 2 négatives
+
+| n | Valeur de 2ⁿ |
+|---|---|
+| −1 | = 0,5 |
+| −2 | = 0,25 |
+| −3 | = 0,125 |
+| −4 | = 0,0625 |
+| −5 | = 0,03125 |
+| −6 | = 0,015625 |
+| −7 | = 0,0078125 |
+| −8 | = 0,00390625 |
+| ... | ... |
+| −23 | = 0,00000011920928955078125 |
+
+*TABLE 2.9 – Puissances de 2 négatives*
+
+On notera que les puissances de 2 négatives se terminent toutes par des puissances de
+chiffres finissant par 5 (car *5³ = 125*).
+
+Lorsque l'on utilise la représentation IEEE 754, on rencontre deux problèmes :
+
+- **Le premier** est la conséquence de l'utilisation des puissances de 2, car comme
+  on le voit dans la Table 2.9, les puissances de 2 négatives se terminent par 5, on
+  ne peut donc coder la plupart des nombres décimaux qu'en utilisant une
+  combinaison de puissances de 2 négatives et cela engendre une erreur de
+  précision.
+
+```cpp
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+float v1 = 1.2;
+float v2 = 1.3;
+float v3 = 1.3001;
+float v4 = 1.3001001;
+
+int main() {
+    float diff_v1_v2 = v1 - v2;
+    float diff_v2_v3 = v2 - v3;
+    cout << setprecision(10);
+    cout << "v1-v2 = " << diff_v1_v2 << endl;
+    cout << "v2-v3 = " << diff_v2_v3 << endl;
+    float diff_v3_v4 = fabs(v3 - v4);
+    cout << "|v3-v4| = " << diff_v3_v4 << endl;
+    if (diff_v3_v4 < 1E-6)
+        cout << "v3 = v4" << endl;
+    else
+        cout << "v3 != v4" << endl;
+    return 0;
+}
 ```
 
 > *Listing 2.4.1 – Précision et nombres flottants*
 
-•
-le second découle du premier et tient au fait que la taille de la mantisse peut
-être trop petite pour représenter certains nombres qui comportent beaucoup
-de chiffres, notamment en 32 bits, car on dispose de 7 chiffres significatifs.
-C’est pour cela que le coprocesseur arithmétique qui réalise les opérations
-sur les nombres flottants utilise un codage sur 80 bits afin de minimiser les
-erreurs de précision
-On peut voir sur le Listing
-la différence entre des valeurs proches. Cependant le résultat de l’exécution ne
+- **Le second** découle du premier et tient au fait que la taille de la mantisse peut
+  être trop petite pour représenter certains nombres qui comportent beaucoup
+  de chiffres, notamment en 32 bits, car on dispose de 7 chiffres significatifs.
+  C'est pour cela que le coprocesseur arithmétique qui réalise les opérations
+  sur les nombres flottants utilise un codage sur 80 bits afin de minimiser les
+  erreurs de précision.
+
+On peut voir sur le Listing 2.4.1 la différence entre des valeurs proches. Cependant le résultat de l'exécution ne
 correspond pas à ce que nous devrions obtenir :
+
+```
 v1-v2 = -0.09999990463 ! et non -0.1
 v2-v3 = -0.0001000165939 ! et non -0.0001
 |v3-v4| = 1.192092896e-07 ! et non 0.0000001
 v3 = v4
-•la différencev1 - v2devrait être égale à−0.1
-•et celle dev2 - v3devrait être de−0.0001
-Cela est dû au fait qu’il est impossible de coder exactement certaines valeurs
-comme nous l’avons expérimenté pour représenter0,3.
-Attention
-Le problème lié aux erreurs de précision implique que pour comparer deux
-valeurs en virgule flottante on ne peut pas utiliser l’opérateur d’égalité (==)
-du langage C comme on le ferait pour des entiers, il est nécessaire d’utiliser
-la valeur absolue de la différence des deux valeurs (ligne 20 du Listing)
-et de vérifier que cette différence est bien inférieure à unϵdonné (ligne 23).
-Si on utilise une précision plus grande de 64 bits, c’est à dire undoubleen
+```
+
+- La différence `v1 - v2` devrait être égale à *−0,1*
+- Et celle de `v2 - v3` devrait être de *−0,0001*
+
+Cela est dû au fait qu'il est impossible de coder exactement certaines valeurs
+comme nous l'avons expérimenté pour représenter *0,3*.
+
+> **Attention**
+> Le problème lié aux erreurs de précision implique que pour comparer deux
+> valeurs en virgule flottante on ne peut pas utiliser l'opérateur d'égalité (`==`)
+> du langage C comme on le ferait pour des entiers, il est nécessaire d'utiliser
+> la valeur absolue de la différence des deux valeurs (ligne 20 du Listing 2.4.1)
+> et de vérifier que cette différence est bien inférieure à un *ϵ* donné (ligne 23).
+
+Si on utilise une précision plus grande de 64 bits, c'est à dire un `double` en
 langage C, on obtient un résultat qui correspond à un calcul exact :
+
+```
 v1-v2 = -0.1
 v2-v3 = -0.0001
 |v3-v4| = 1.000000001e-07
 v3 = v4
+```
+
 Néanmoins, on obtiendra les mêmes erreurs de précision dès lors que les
 nombres à traiter possèdent un nombre de chiffres après la virgule important qui
 dépasse la capacité de représentation des nombres en double précision.
-2.4.5
-La valeur décimale0,3est codée au format IEEE 754 sur 32 bits par3E99999A.
-De même0,4 =3ECCCCCD.
-Si nous calculons la différence0x3ECCCCCD-0x3E99999A, nous obtenons0x333333
-= 3_355_443
-, c’est à dire que l’on peut coder un peu plus de3,3millions de valeurs
-entre0,3et0,4.
-De la même manière si on code1,0on obtient0x3F800000. Le nombre qui suit
-1,0est donc3F800001qui correspond à la valeur décimale1,0000001, le suivant est
-0x3F800002qui correspond à la valeur décimale1,0000002. On a donc une précision
-de 7 chiffres après la virugle.
-En revanche si on code1024on obtient0x44800000. Le nombre qui suit1024est,
-en hexadécimal, égal à0x44800001et correspond à1024,0001 , soit une précision
+
+### 2.4.5 Précision de la représentation IEEE 754
+
+La valeur décimale *0,3* est codée au format IEEE 754 sur 32 bits par `3E99999A`.
+De même *0,4 = `3ECCCCCD`*.
+Si nous calculons la différence *0x3ECCCCCD - 0x3E99999A*, nous obtenons *0x333333 = 3 355 443*,
+c'est à dire que l'on peut coder un peu plus de 3,3 millions de valeurs
+entre 0,3 et 0,4.
+
+De la même manière si on code *1,0* on obtient `0x3F800000`. Le nombre qui suit
+*1,0* est donc `3F800001` qui correspond à la valeur décimale *1,0000001*, le suivant est
+`0x3F800002` qui correspond à la valeur décimale *1,0000002*. On a donc une précision
+de 7 chiffres après la virgule.
+
+En revanche si on code *1024* on obtient `0x44800000`. Le nombre qui suit *1024* est,
+en hexadécimal, égal à `0x44800001` et correspond à *1024,0001*, soit une précision
 de 4 chiffres après la virgule.
-Ceci montre qu’en représentation IEEE 754 sur 32 bits on dispose de 8 chiffres
+
+Ceci montre qu'en représentation IEEE 754 sur 32 bits on dispose de 8 chiffres
 significatifs.
 
-### 2.4.6 Pour conclure sur la partie liée au nombres flottants, demandons nous comment
+### 2.4.6 La valeur absolue d'un flottant
 
-coder la fonctionfabsqui calcule la valeur absolue d’un nombre. Logiquement
+Pour conclure sur la partie liée aux nombres flottants, demandons nous comment
+coder la fonction `fabs` qui calcule la valeur absolue d'un nombre. Logiquement
 cette fonction devrait être implantée sous la forme suivante :
-1float (float )
 
-```text
-if(v>=0.0)
-return ;
-}else{
-return-v;
+```cpp
+float fabs(float v) {
+    if (v >= 0.0)
+        return v;
+    else
+        return -v;
 }
-7}
 ```
 
-C’est à dire qu’il faudrait changer le signe du nombre seulement s’il est négatif
-et cela implique donc de comparervà 0.0. Mais il exite une méthode beaucoup
-plus simple pour obtenir la valeur absolue, puisque le bit de poids fort d’un flottant
+C'est à dire qu'il faudrait changer le signe du nombre seulement s'il est négatif
+et cela implique donc de comparer *v* à 0.0. Mais il existe une méthode beaucoup
+plus simple pour obtenir la valeur absolue, puisque le bit de poids fort d'un flottant
 représente le signe du nombre. Il suffit donc de le mettre à 0 en utilisant un masque.
-On peut écrire cela en C
-++de la manière suivante :
-1float =-1.5;
-2unsigned *p=reinterpret_cast<unsigned *>(&v);
-3*p=*p );
+On peut écrire cela en C++ de la manière suivante :
+
+```cpp
+float v = -1.5;
+unsigned *p = reinterpret_cast<unsigned *>(&v);
+*p = (*p & 0x7FFFFFFF);
+```
+
 On convertit le nombre flottant 32 bits en un entier non signé 32 bits auquel on
 applique un masque qui préserve tous les bits sauf le bit de signe. En assembleur
 on peut traduire ce code par une seule instruction :
-1section
-2 v -1.5
-4section
-5 and [v],0x7FFFFFFF
-Il faut noter que l’on a utilisé ici une instruction (and) qui travaille sur les entiers,
-mais comme nous le verrons dans le Chapitre, il est normalement nécessaire
-d’utiliser les instructions liées au coprocesseur pour faire des calculs avec les réels.
 
-### 2.4.7 Dans le cas d’une division entière (non signée) sur 32 bits par une constante
+```nasm
+section .data
+v dd -1.5
+section .text
+and [v], 0x7FFFFFFF
+```
 
-d, il est possible de rendre la division plus efficace en la remplaçant par une
-multiplication car on exécute alorsx×(1/d) . On va alors chercheraetstels que :
-d
-=
-a
-32+s
-car on ne peut pas représenter une valeur inférieure à 0 comme0,3avec des
-entiers. Dans ce cas,x/d=x×a suivi d’un décalage à droite de32 +s bits car la
+Il faut noter que l'on a utilisé ici une instruction (`and`) qui travaille sur les entiers,
+mais comme nous le verrons dans le Chapitre suivant, il est normalement nécessaire
+d'utiliser les instructions liées au coprocesseur pour faire des calculs avec les réels.
+
+### 2.4.7 Division entière par multiplication et décalage
+
+Dans le cas d'une division entière (non signée) sur 32 bits par une constante
+*d*, il est possible de rendre la division plus efficace en la remplaçant par une
+multiplication car on exécute alors *x × (1/d)*. On va alors chercher *a* et *s* tels que :
+
+*1/d = a × 2⁻³²⁻ˢ*
+
+car on ne peut pas représenter une valeur inférieure à 0 comme *0,3* avec des
+entiers. Dans ce cas, *x/d = x × a* suivi d'un décalage à droite de *32 + s* bits car la
 multiplication des deux valeurs 32 bits donne un résultat sur 64 bits.
-Prenons un exemple concret avecd= 10. Dans ce cas,a=CCCCCCCD16=
-3_435_973_837ets= 3. Si on prendx= 173, on obtient alors :
-x×a= 173×3_435_973_837
-= 594_423_473_801
-=8A_66_66_66_89
-= 1000_1010×2
-+..._10012
-Le décalage de35bits vers la droite ou dans le cas présent de la partie haute
-du résultat (8A16) de 3 bits vers la droite, donne au final1_00012= 17 et permet
-d’obtenir un résultat sur 32 bits.
-Si on reste en 32 bits, on utilisera le code qui suit pour lequel la partie haute de
-la multiplication (edx) sera décalé de35−32 = 3bits à droite :
-1mov ,173 ; x
-2mov ,0xCCCCCCCD ; a
-3mul
-4mov ,edx
-5shr ,3
-Comment trouve t-onaets? C’est assez simple, il suffit de calculer1/det le
-coder sous forme d’un flottant. Dans l’exemple précédent,1/d= 0,1 , soit au format
-IEEE 754 :3D_CC_CC_CD
-16 . Pour avoir une meilleure précision, on code sur 64
-bits sous forme d’undouble, ce qui donne3FB9_9999_9999_999A
-16 . La taille de
-l’exposant étant de 11 bits dans le format IEEE 754 64 bits :
-•on décale le nombre de 64 bits de 11 bits vers la gauche
-01001100110011001...2=4CCC...16
-•
-on fixe à 1 le bit de poids fort (bit 63) pour obtenir la mantisse, car on ne
-disposait que de la mantisse tronquée
-11001100110011001...2=CCC...C16
-•on décale de 32 bits vers la droite pour obtenir une valeur sur 32 bits
-•on fixe le bit de poids faible (bit 0) à 1
-On retrouve alors CCCCCCCD16.
-Une fois qu’on a déterminé la valeur dea, il est assez simple de trouvers, en
-testant par une boucleforle décalage qui donnera le résultat escompté ou en
-utilisant les instructions assembleur telles quebsroubsf. Le code C correspondant
-est le suivant et devrait donner dans la majorité des cas les valeurs deaet desde
-manière précise :
-1void (u32 )
 
-```text
-// on calcule 1/d sous forme d'une double
-double =1.0/d;
-u64*a=u64*)ratio;
-// décalage de 11 bits (exposant)
-// et on fixe le bit de la mantisse tronquée
-// on décale ensuite de 32 bits
-*a= *a<<11) 0x8000000000000000)) 32;
-// on fixe le bit de poids faible
-*a=*a|0x01;
-u32 ;
-u64 =*a)*d;
-for(shift=32;shift<63; shift)
-u64 =prod>>shift;
-if(r==1)
-break;
+Prenons un exemple concret avec *d = 10*. Dans ce cas, *a = `CCCCCCCD`₁₆ = 3 435 973 837*
+et *s = 3*. Si on prend *x = 173*, on obtient alors :
+
+*x × a = 173 × 3 435 973 837 = 594 423 473 801 = `8A_66_66_66_89`₁₆ = `1000_1010 × 2³² + ..._1001`₂*
+
+Le décalage de 35 bits vers la droite ou dans le cas présent de la partie haute
+du résultat (`8A`₁₆) de 3 bits vers la droite, donne au final *`1_0001`₂ = 17* et permet
+d'obtenir un résultat sur 32 bits.
+
+Si on reste en 32 bits, on utilisera le code assembleur qui suit pour lequel la partie haute de
+la multiplication (`edx`) sera décalée de *35 − 32 = 3* bits à droite :
+
+```nasm
+mov eax, 173        ; x
+mov edx, 0xCCCCCCCD ; a
+mul edx
+mov eax, edx
+shr eax, 3
+```
+
+Comment trouve t-on *a* et *s* ? C'est assez simple, il suffit de calculer *1/d* et le
+coder sous forme d'un flottant. Dans l'exemple précédent, *1/d = 0,1*, soit au format
+IEEE 754 : `3D_CC_CC_CD`₁₆. Pour avoir une meilleure précision, on code sur 64
+bits sous forme d'un `double`, ce qui donne `3FB9_9999_9999_999A`₁₆. La taille de
+l'exposant étant de 11 bits dans le format IEEE 754 64 bits :
+
+- On décale le nombre de 64 bits de 11 bits vers la gauche :
+  *`01001100110011001...`₂ = `4CCC...`₁₆*
+- On fixe à 1 le bit de poids fort (bit 63) pour obtenir la mantisse, car on ne
+  disposait que de la mantisse tronquée :
+  *`11001100110011001...`₂ = `CCC...C`₁₆*
+- On décale de 32 bits vers la droite pour obtenir une valeur sur 32 bits
+- On fixe le bit de poids faible (bit 0) à 1
+
+On retrouve alors `CCCCCCCD`₁₆.
+
+Une fois qu'on a déterminé la valeur de *a*, il est assez simple de trouver *s*, en
+testant par une boucle `for` le décalage qui donnera le résultat escompté ou en
+utilisant les instructions assembleur telles que `bsr` ou `bsf`. Le code C correspondant
+est le suivant et devrait donner dans la majorité des cas les valeurs de *a* et de *s* de
+manière précise :
+
+```cpp
+void find_a_s(u32 d) {
+    // on calcule 1/d sous forme d'une double
+    double ratio = 1.0 / d;
+    u64 *a = (u64*)&ratio;
+    // décalage de 11 bits (exposant)
+    // et on fixe le bit de la mantisse tronquée
+    // on décale ensuite de 32 bits
+    *a = ((*a << 11) | 0x8000000000000000) >> 32;
+    // on fixe le bit de poids faible
+    *a = *a | 0x01;
+    u32 shift;
+    u64 prod = (*a) * d;
+    for (shift = 32; shift < 63; shift++) {
+        u64 r = prod >> shift;
+        if (r == 1)
+            break;
+    }
+    cout << "a=" << hex << *a << endl;
+    cout << "s=" << dec << shift << endl;
 }
-}
-cout<<"a="<<hex<<a<<endl;
-cout<<"s="<<dec<<shift<<endl;
-25}
 ```
 
 Un test simple qui consiste à réaliser 10 milliards de divisions par différentes
-valeurs (11,127,1027,11279,44567187) en emlpoyant soit l’instructiondivde
-l’assembleur, soit la multiplication avec décalage pourd= 10, donne les temps
-d’exécution reportés Table.
-Méthode AMD IntelIntel Intel
-Ryzen 5Core i5Core i5Core i5
-5600g 740012400f10850H
-division (div) 13,53 19,67 13,95 13,60
-mult + décalage 4,27 7,70 3,37 5,32
-gain ×3,16×2,55×4,13 ×2,55
-TABLE2.10 – 10 milliards de divisions sur différentes architectures
-On voit clairement que la multiplication suivie d’un décalage est plus perfor-
-mante que la division. On va notamment3,16fois plus vite sur AMD Ryzen 5600g.
-2.5
+valeurs (11, 127, 1027, 11279, 44567187) en employant soit l'instruction `div` de
+l'assembleur, soit la multiplication avec décalage pour *d = 10*, donne les temps
+d'exécution reportés dans la Table 2.10.
 
-### 2.5.1 Le stockage des caractères ainsi que des chaînes de caractères est généralement
+| Méthode | AMD Ryzen 5 5600g | Intel Core i5 7400 | Intel Core i5 12400f | Intel Core i5 10850H |
+|---|---|---|---|---|
+| division (`div`) | 13,53 | 19,67 | 13,95 | 13,60 |
+| mult + décalage | 4,27 | 7,70 | 3,37 | 5,32 |
+| gain | ×3,16 | ×2,55 | ×4,13 | ×2,55 |
 
-réalisé en ASCII 8 bits afin de pouvoir coder sur un octet 256 valeurs différentes.
+*TABLE 2.10 – 10 milliards de divisions sur différentes architectures*
+
+On voit clairement que la multiplication suivie d'un décalage est plus performante
+que la division. On va notamment **3,16 fois plus vite** sur AMD Ryzen 5600g.
+
+## 2.5 Codage des caractères
+
+### 2.5.1 ASCII
+
+Le stockage des caractères ainsi que des chaînes de caractères est généralement
+effectué en ASCII 8 bits afin de pouvoir coder sur un octet 256 valeurs différentes.
 Dans un langage comme le C cela est suffisant si on utilise les langues européennes.
-Dans le codage ASCII (voirwww.ascii-code.comainsi qu’en annexe de cet
+
+Dans le codage ASCII (voir [www.ascii-code.com](https://www.ascii-code.com) ainsi qu'en annexe de cet
 ouvrage), les caractères 0 à 31 sont des caractères de contrôle qui ne représentent
 pas un symbole mais permettent la mise en page de texte (comme le saut de page
-FF, le saut de ligneLF, le retour-chariotCRou la tabulation horizontaleHT), ou la
-transmission d’information pour les liaisons RS232 (port série) commeSTXetETX.
-•les plages de caractères de 32 à 47, 58 à 64, 91 à 96, 123 à 126 représentent
-des symboles tels que l’espace, les opérations arithmétiques, les signes de
-ponctuations (virgule, point, point-virgule, etc), les parenthèses, les crochets,
-•les caractères 48 à 57 sont les chiffres
-•
-les lettres majuscules occupent la plage 65 à 90, alors que les lettres minus-
-cules s’étendent de 97 à 122
-•
-de 128 à 255 les caractères codés sont les lettres avec accents ainsi que des
-symboles mathématiques ou de ponctuation et des symboles qui permettent
-la mise en forme de tableaux
+`FF`, le saut de ligne `LF`, le retour-chariot `CR` ou la tabulation horizontale `HT`), ou la
+transmission d'information pour les liaisons RS232 (port série) comme `STX` et `ETX`.
+
+- Les plages de caractères de 32 à 47, 58 à 64, 91 à 96, 123 à 126 représentent
+  des symboles tels que l'espace, les opérations arithmétiques, les signes de
+  ponctuations (virgule, point, point-virgule, etc), les parenthèses, les crochets,
+- Les caractères 48 à 57 sont les chiffres
+- Les lettres majuscules occupent la plage 65 à 90, alors que les lettres minuscules
+  s'étendent de 97 à 122
+- De 128 à 255 les caractères codés sont les lettres avec accents ainsi que des
+  symboles mathématiques ou de ponctuation et des symboles qui permettent
+  la mise en forme de tableaux
+
 On notera que la distance entre les majuscules et minuscules est de 32. Ainsi
-pour transformer’A’en’a’, il suffit d’ajouter 32 au code ASCII de’A’. Du point
-de vue du binaire, il suffit de positionner le bit 5 à 1, puisque2
-= 32.
-En langage C le codage des chaînes consiste à stocker l’ensemble des caractères
-de la chaîne de manière contigüe (consécutive) puis à marquer la fin de chaîne par
-le caractère0, représenté en en C par’\0’.
-Cette représentation possède l’avantage de pouvoir coder des chaînes très
-longues puisqu’elle ne pose aucune limitation sur la longueur, si ce n’est celle de
-la mémoire. Cependant, elle possède un inconvénient dû au fait qu’on ne peut
-connaître la longueur de la chaîne qu’en la parcourant.
+pour transformer `'A'` en `'a'`, il suffit d'ajouter 32 au code ASCII de `'A'`. Du point
+de vue du binaire, il suffit de positionner le bit 5 à 1, puisque *2⁵ = 32*.
+
+En langage C le codage des chaînes consiste à stocker l'ensemble des caractères
+de la chaîne de manière contiguë (consécutive) puis à marquer la fin de chaîne par
+le caractère 0, représenté en C par `'\0'`.
+
+Cette représentation possède l'avantage de pouvoir coder des chaînes très
+longues puisqu'elle ne pose aucune limitation sur la longueur, si ce n'est celle de
+la mémoire. Cependant, elle possède un inconvénient dû au fait qu'on ne peut
+connaître la longueur de la chaîne qu'en la parcourant.
+
 Si une chaîne possède 1000 caractères, elle occupera donc en mémoire 1001
-caractères, c’est à dire les 1000 caractères de la chaîne plus le marqueur de fin de
+caratères, c'est à dire les 1000 caractères de la chaîne plus le marqueur de fin de
 chaîne.
-Si l’on désire changer les caractères minuscules en majuscules il ne faut surtout
-pas écrire le code du Listing
-une première fois lors du calcul de sa longueur (ligne 10) et la deuxième fois lors
-du passage en majuscules (lignes 11 à 13). Il vaut mieux passer par des pointeurs :
-1#include
-2#include
-3#include
-4#include
-5using ;
-7int ()
 
-```text
-char [] "abracadabra...";
-int =strlen(chaine);
-for(int =0;i<longueur;i)
-if(isalpha(chaine[i]))chaine[i]toupper(chaine[i]);
+Si l'on désire changer les caractères minuscules en majuscules il ne faut surtout
+pas parcourir la chaîne deux fois (à cause du `strlen`). Il vaut mieux passer par des pointeurs :
+
+```cpp
+#include <iostream>
+#include <cctype>
+#include <cstring>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    char chaine[] = "abracadabra...";
+    int longueur = strlen(chaine);
+    for (int i = 0; i < longueur; i++)
+        if (isalpha(chaine[i])) chaine[i] = toupper(chaine[i]);
+    cout << chaine << endl;
+    return 0;
 }
-cout<<chaine<<endl;
-return ;
-18}
 ```
 
-> *Listing 2.5.1 – Convertir une chaine en majuscules*
+> *Listing 2.5.1 – Convertir une chaine en majuscules (inefficace)*
 
-1char*s=chaine;
-2while(*s!='\0')
+Il vaut mieux cependant passer par des pointeurs, en évitant le double parcours :
 
-```text
-if(isalpha(*s))*s=toupper(*s);
-++s;
-5}
-2.5.2
+```cpp
+char *s = chaine;
+while (*s != '\0') {
+    if (isalpha(*s)) *s = toupper(*s);
+    ++s;
+}
 ```
 
-Le problème de l’ASCII est qu’il ne permet de coder que 256 caractères différents
+> *Listing 2.5.2 – Convertir une chaine en majuscules (avec pointeurs)*
+
+### 2.5.2 Unicode et UTF
+
+Le problème de l'ASCII est qu'il ne permet de coder que 256 caractères différents
 ce qui est insuffisant au regard de toutes les langues qui existent ainsi que des
-symboles (mathématiques, physique, chimie) que l’on peut utiliser dans l’écriture
+symboles (mathématiques, physique, chimie) que l'on peut utiliser dans l'écriture
 courante.
-Le standard Unicode dans sa version 15.0 (Septembre 2022) permet de co-
-der149_186 caractères ce qui couvre la presque totalité des caractères connus.
-Le Consortium Unicode a pour but d’identifier de manière précise et distincte
-l’ensemble des caractères.
-Chaque caractère est clairement identifié par sonpoint de codequi est en fait
-un indice entier. Par exemple le symbole
-Ca pour point de code la valeur 8364 soit
-U+20AC en hexadécimal dans le standard Unicode.
-L’UTF (Universal character set Transformation Format) permet de transformer le
-point de code des caractères Unicode en une série d’octets. En fonction des besoins
-de l’utilisateur on utilisera une représentation 8, 16 ou 32 bits, sachant que l’on
-peut passer de l’une à l’autre sans perte.
-L’encodage par octet, UTF-8, a été conçu pour coder des chaînes à la manière
-de ce que l’on peut faire avec l’ASCII et est très utilisé par le protocole HTML et les
+
+Le standard Unicode dans sa version 15.0 (Septembre 2022) permet de coder
+149 186 caractères ce qui couvre la presque totalité des caractères connus.
+Le Consortium Unicode a pour but d'identifier de manière précise et distincte
+l'ensemble des caractères.
+
+Chaque caractère est clairement identifié par son **point de code** qui est en fait
+un indice entier. Par exemple le symbole € a pour point de code la valeur 8364 soit
+`U+20AC` en hexadécimal dans le standard Unicode.
+
+L'UTF (*Universal character set Transformation Format*) permet de transformer le
+point de code des caractères Unicode en une série d'octets. En fonction des besoins
+de l'utilisateur on utilisera une représentation 8, 16 ou 32 bits, sachant que l'on
+peut passer de l'une à l'autre sans perte.
+
+L'encodage par octet, **UTF-8**, a été conçu pour coder des chaînes à la manière
+de ce que l'on peut faire avec l'ASCII et est très utilisé par le protocole HTML et les
 éditeurs de texte :
-•
-les 127 premiers caractères de l’ASCII 7 bits ont les mêmes valeurs en UTF-8
-et sont donc codés sur un octet
-•
-pour coder les caractères de valeurs comprises entre 128 et 2047 on utilise
-deux octets
-•
-puis trois octets pour coder les caractères de valeurs comprises entre 2048 et
-65535
-•
-enfin, on utilise quatre octets pour les caractères de valeurs supérieures à
-65535
-En UTF-32, par contre, chaque caractère est codé par une valeur 32 bits ce qui
-prend plus de place que l’UTF-8.
-Par exemple la chaîne"abàé=C"sera codée :
+
+- Les 127 premiers caractères de l'ASCII 7 bits ont les mêmes valeurs en UTF-8
+  et sont donc codés sur un octet
+- Pour coder les caractères de valeurs comprises entre 128 et 2047 on utilise deux octets
+- Puis trois octets pour coder les caractères de valeurs comprises entre 2048 et 65535
+- Enfin, on utilise quatre octets pour les caractères de valeurs supérieures à 65535
+
+En **UTF-32**, par contre, chaque caractère est codé par une valeur 32 bits ce qui
+prend plus de place que l'UTF-8.
+
+Par exemple la chaîne `"abàé=€"` sera codée :
+
+```
 ASCII
-00000000 61 | 62 | e0 | e9 | a4 | 0a
+00000000  61 | 62 | e0 | e9 | a4 | 0a
 00000006
 UTF-8
-00000000 61 | 62 | c3 a0 | c3 a9 | e2 82 ac | 0a
+00000000  61 | 62 | c3 a0 | c3 a9 | e2 82 ac | 0a
 0000000a
 UTF-16
-00000000 ff fe | 61 00 | 62 00 | e0 00 | e9 00 | ac 20 | 0a 00
+00000000  ff fe | 61 00 | 62 00 | e0 00 | e9 00 | ac 20 | 0a 00
 0000000e
 UTF-32
-00000000 ff fe 00 00 | 61 00 00 00 | 62 00 00 00 | e0 00 00 00
-00000010 e9 00 00 00 | ac 20 00 00 | 0a 00 00 00
+00000000  ff fe 00 00 | 61 00 00 00 | 62 00 00 00 | e0 00 00 00
+00000010  e9 00 00 00 | ac 20 00 00 | 0a 00 00 00
 0000001c
 HTML Entities
 00000000 61 62 26 61 67 72 61 76 65 3b 26 65 61 63 75 74 |ab&agrave;&eacut|
@@ -1198,147 +1255,163 @@ HTML Entities
 HTML Hexadecimal
 00000000 61 62 26 23 78 45 30 3b 26 23 78 45 39 3b 26 23 |ab&#xE0;&#xE9;&#|
 00000010 78 32 30 41 43 3b 0a |x20AC;.|
-Pour la transformation en ASCII, j’ai utilisékonwertmais comme le symbole de
-l’Euro n’existe pas en ASCII, il a été traduit par le symbole de codeA4.
-La suite de valeursFF FEen UTF-16 bits etFF FE 00 00en UTF-32 indique
-l’ordre de lecture des caractères. Il s’agit du BOM (Byte Order Mark). Ici cela signifie
-qu’il faut commencer par la première valeur trouvée. Dans le cas de l’UTF-32,
-la séquence d’octets61 00 00 00doit donc être considérée comme la valeur
-hexadécimale00_00_00_61= 9710qui correspond au caractère’a’.
+```
+
+Pour la transformation en ASCII, j'ai utilisé `konwert` mais comme le symbole de
+l'Euro n'existe pas en ASCII, il a été traduit par le symbole de code `A4`.
+
+La suite de valeurs `FF FE` en UTF-16 bits et `FF FE 00 00` en UTF-32 indique
+l'ordre de lecture des caractères. Il s'agit du **BOM** (*Byte Order Mark*). Ici cela signifie
+qu'il faut commencer par la première valeur trouvée. Dans le cas de l'UTF-32,
+la séquence d'octets `61 00 00 00` doit donc être considérée comme la valeur
+hexadécimale `00_00_00_61` = *97₁₀* qui correspond au caractère `'a'`.
+
 On trouvera les séquences :
-•FF FEqui indique que le fichier utilise le format Little Endian (LE)
-•ou l’inverse,FE FF, qui indique un encodage en Big Endian (BE).
 
-## 2.6 Nous avons vu précédemment que certaines données tels que les nombres
+- `FF FE` qui indique que le fichier utilise le format **Little Endian (LE)**
+- Ou l'inverse, `FE FF`, qui indique un encodage en **Big Endian (BE)**.
 
+## 2.6 Endianness
+
+Nous avons vu précédemment que certaines données tels que les nombres
 entiers ou les nombres flottants peuvent être représentées sur plusieurs octets.
-L’ordre dans lequel ces octets sont ordonnés en mémoire est appelé endianness
-.
-Dans le modebig endian, l’octet de poids le plus fort est enregistré à l’adresse
-mémoire la plus petite alors que dans le modelittle endianc’est l’inverse.
-Pour le monde x86, c’est le modelittle endianqui est utilisé, ainsi la valeur
-FFFE020116 sera stockée en mémoire dans l’ordre croissant des adresses sous la
-forme :0116suivi de0216,FE16et finalementFF16.
-2.7
+L'ordre dans lequel ces octets sont ordonnés en mémoire est appelé ***endianness***[^endian].
 
-### 2.7.1 ▷
+[^endian]: Terme issu du livre les Voyages de Gulliver, conte satirique de Jonathan Swift et qui se traduit en français par *boutisme* ou par *endianisme*.
 
-l’information est codée sur un ordinateur au format binaire et sera modélisée
-par des types scalaires comme le caractère, l’entier court, l’entier, le flottant
-simple ou double précision qui occupent un, deux, quatre ou huit octets
-▷
-la représentation binaire en complément à deux permet de modéliser les
-entiers relatifs et de pouvoir leur appliquer les opérations arithmétiques de
-base (addition, multiplication, soustraction, division)
-▷
-la norme IEEE 754 définit le format de codage des nombres réels qui sont
-qualifiés de nombres à virgule flottante, ou encore de manière plus succinte
-de flottants
-▷
-le codage des nombres à virgule flottante ne permet pas de représenter tous
-les nombres et cela peut conduire à des erreurs de précision lors de calculs
-▷
-deux nombres à virgule flottante sont égaux si la différence de leur valeur
-absolue est inférieure à un epsilon donné, ou en d’autres termes, s’ils sont
-proches.
+Dans le mode ***big endian***, l'octet de poids le plus fort est enregistré à l'adresse
+mémoire la plus petite alors que dans le mode ***little endian*** c'est l'inverse.
+Pour le monde x86, c'est le mode *little endian* qui est utilisé, ainsi la valeur
+`FFFE0201`₁₆ sera stockée en mémoire dans l'ordre croissant des adresses sous la
+forme : `01`₁₆ suivi de `02`₁₆, `FE`₁₆ et finalement `FF`₁₆.
 
-### 2.7.2 Après lecture et travail sur ce chapitre, on doit être capable de :
+## 2.7 Résumé du chapitre
 
-. Terme issu du livre les Voyages de Gulliver, conte satirique de Jonathan Swift et qui se traduit
-en français parboutismeou parendianisme.
-□convertir un nombre décimal dans une autre base
-□convertir un nombre en binaire, en octal ou en hexadécimal en décimal
-□convertir un nombre réel en son équivalent flottant
-□convertir un nombre flottant en son équivalent réel
-□réaliser une addition et une multiplication en binaire
-□
-déterminer si un nombre entier est dans l’intervalle de représentation du
-codage binaire naturel ou binaire en complément à deux en fonction du
-nombre d’octets utilisé pour sa représentation
+### 2.7.1 Ce qu'il faut retenir
 
-## 2.8 Exercice 3 -Trouvez l’équivalent décimal des nombres suivants :
+- L'information est codée sur un ordinateur au format binaire et sera modélisée
+  par des types scalaires comme le caractère, l'entier court, l'entier, le flottant
+  simple ou double précision qui occupent un, deux, quatre ou huit octets
+- La représentation binaire en complément à deux permet de modéliser les
+  entiers relatifs et de pouvoir leur appliquer les opérations arithmétiques de
+  base (addition, multiplication, soustraction, division)
+- La norme IEEE 754 définit le format de codage des nombres réels qui sont
+  qualifiés de nombres à virgule flottante, ou encore de manière plus succincte
+  de **flottants**
+- Le codage des nombres à virgule flottante ne permet pas de représenter tous
+  les nombres et cela peut conduire à des erreurs de précision lors de calculs
+- Deux nombres à virgule flottante sont égaux si la différence de leur valeur
+  absolue est inférieure à un epsilon donné, ou en d'autres termes, s'ils sont
+  proches
 
-•101010_b,10011_b
-•201_3,1111_3
-•421_o,732_o
-•A0_h, FF_h
-Exercice 4 -Convertir les nombres décimaux suivants :
-•11 et 10 en base 2
-•26 et 210 en base 8
-•250 et 49 en base 16
-Exercice 5 -Utilisez la méthode par complémentation afin de coder en notation
+### 2.7.2 Objectifs
+
+Après lecture et travail sur ce chapitre, on doit être capable de :
+
+- ☐ Convertir un nombre décimal dans une autre base
+- ☐ Convertir un nombre en binaire, en octal ou en hexadécimal en décimal
+- ☐ Convertir un nombre réel en son équivalent flottant
+- ☐ Convertir un nombre flottant en son équivalent réel
+- ☐ Réaliser une addition et une multiplication en binaire
+- ☐ Déterminer si un nombre entier est dans l'intervalle de représentation du
+  codage binaire naturel ou binaire en complément à deux en fonction du
+  nombre d'octets utilisé pour sa représentation
+
+## 2.8 Exercices
+
+**Exercice 3** – Trouvez l'équivalent décimal des nombres suivants :
+
+- `101010`b, `10011`b
+- `201`₃, `1111`₃
+- `421`o, `732`o
+- `A0`h, `FF`h
+
+**Exercice 4** – Convertir les nombres décimaux suivants :
+
+- 11 et 10 en base 2
+- 26 et 210 en base 8
+- 250 et 49 en base 16
+
+**Exercice 5** – Utilisez la méthode par complémentation afin de coder en notation
 binaire naturelle non signée, les nombres suivants :
-•249
-•1011
-•16373
-•131069
-Exercice 6 -Réaliser la somme des nombres naturels suivants en base 2. Que
-remarquez-vous?
-•0000_0010_b+0000_0011_b
-•0000_1010_b+0000_1111_b
-Exercice 7 -Quels sont les plus grands entiers naturels que l’on peut représenter
-avec 8, 16 ou 32 bits?
-Exercice 8 -Donner la représentation en complément à deux des nombres décimaux
-suivants :−1,−2,−127,−128,−129 . Combien de nombres peut-on représenter
-avec 8 bits en notation en complément à deux?
-Exercice 9 -Calculer la somme des nombresen complément à deuxsuivants. Que
-remarquez vous?
-•0000_0111_¯2+0000_0101¯2
-•0000_0111_¯2+1000_0101¯2
-•0000_0011_¯2+1111_1011¯2
-•0100_0000_¯2+0100_0001¯2
-Exercice 10 -Calculer le produit des nombres en complément à deux suivants. Que
-remarquez vous?
-•7×5
-•7× −5
-•48× −2
-•48× −3
-Exercice 11 -
-•commentmultipliersimplement un nombre binaire par 2, 4, 8 ou2
-n
-?
-•commentdivisersimplement un nombre binaire par 2, 4, 8 ou2
-n
-?
-Exercice 12 -Représentez en norme IEEE 754, les nombres suivants :
-•133,87510
-•14,687510
-•5,5937510
-•0,6610
-Exercice 13 -Trouvez à quels nombres réels correspondent les représentations
+
+- 249
+- 1011
+- 16373
+- 131069
+
+**Exercice 6** – Réaliser la somme des nombres naturels suivants en base 2. Que remarquez-vous ?
+
+- `0000_0010`b + `0000_0011`b
+- `0000_1010`b + `0000_1111`b
+
+**Exercice 7** – Quels sont les plus grands entiers naturels que l'on peut représenter
+avec 8, 16 ou 32 bits ?
+
+**Exercice 8** – Donner la représentation en complément à deux des nombres décimaux
+suivants : *−1, −2, −127, −128, −129*. Combien de nombres peut-on représenter
+avec 8 bits en notation en complément à deux ?
+
+**Exercice 9** – Calculer la somme des nombres **en complément à deux** suivants. Que remarquez vous ?
+
+- `0000_0111`̅₂ + `0000_0101`̅₂
+- `0000_0111`̅₂ + `1000_0101`̅₂
+- `0000_0011`̅₂ + `1111_1011`̅₂
+- `0100_0000`̅₂ + `0100_0001`̅₂
+
+**Exercice 10** – Calculer le produit des nombres en complément à deux suivants. Que remarquez vous ?
+
+- 7 × 5
+- 7 × −5
+- 48 × −2
+- 48 × −3
+
+**Exercice 11** –
+
+- Comment **multiplier** simplement un nombre binaire par 2, 4, 8 ou *2ⁿ* ?
+- Comment **diviser** simplement un nombre binaire par 2, 4, 8 ou *2ⁿ* ?
+
+**Exercice 12** – Représentez en norme IEEE 754, les nombres suivants :
+
+- *133,875₁₀*
+- *14,6875₁₀*
+- *5,59375₁₀*
+- *0,66₁₀*
+
+**Exercice 13** – Trouvez à quels nombres réels correspondent les représentations
 IEEE 754 :
-•42_C8_40_00
-•48_92_F5_40
-•C2_92_F0_00
-•C3_B0_30_00
-Exercice 14 -Codez la chaîne de caractèresHola mundo!en ASCII.
-Exercice 15 -Ouvrir un éditeur de texte commegedit, saisir la chaîne "éAèBàCçD
-C"
-sans les guillemets et sauvegarder le fichier en le nommanta.txt. Utilisez ensuite
-la commande Unixhexdump -C a.txtafin d’obtenir le contenu du fichier sous
-forme d’octets. Regardez comment sont codés les caractères accentués et le symbole
-de l’euro.
-Exercice 16 -Programmer la soustraction binaire en C ou tout autre langage que
+
+- `42_C8_40_00`
+- `48_92_F5_40`
+- `C2_92_F0_00`
+- `C3_B0_30_00`
+
+**Exercice 14** – Codez la chaîne de caractères `Hola mundo!` en ASCII.
+
+**Exercice 15** – Ouvrir un éditeur de texte comme `gedit`, saisir la chaîne `"éAèBàCçD€"`
+sans les guillemets et sauvegarder le fichier en le nommant `a.txt`. Utilisez ensuite
+la commande Unix `hexdump -C a.txt` afin d'obtenir le contenu du fichier sous
+forme d'octets. Regardez comment sont codés les caractères accentués et le symbole
+de l'euro.
+
+**Exercice 16** – Programmer la soustraction binaire en C ou tout autre langage que
 vous maîtrisez. On considère que les nombres sont codés soit sous forme de listes
-d’entiers ou de booléens. On peut également utiliser des chaînes de caractères ou
-la classebitsetdu C
-++. On réalise l’opérationx−yen supposant quex≥y.
-Exercice 17 -Programmer la division binaire en C ou tout autre langage que
+d'entiers ou de booléens. On peut également utiliser des chaînes de caractères ou
+la classe `bitset` du C++. On réalise l'opération *x − y* en supposant que *x ≥ y*.
+
+**Exercice 17** – Programmer la division binaire en C ou tout autre langage que
 vous maîtrisez. On considère que les nombres sont codés soit sous forme de listes
-d’entiers ou de booléens. On peut également utiliser des chaînes de caractères.
+d'entiers ou de booléens. On peut également utiliser des chaînes de caractères.
 Initialement le quotient est à 0 et la dernière position à laquelle on a réalisé une
-soustraction (k1) est égale à la taille du dividende.
+soustraction (*k1*) est égale à la taille du dividende.
+
 Tant que le dividende est supérieur ou égal au diviseur, on effectue les opérations
 suivantes :
-1.
-on recherche la positionk2à laquelle on peut soustraire le diviseur dans le
-dividende
-2.
-on décale le quotient de(k1−k2−1) rangs vers la gauche si cette quantité
-est supérieure à 0
-3.
-on soustrait le diviseur ou dividende à la positionk2et on place un1à droite
-du quotient
-4.k1=k2
-Enfin, lorsque le dividende est inférieur au diviseur, sik1n’est pas égal à 0, on
-décale le quotient dek1rangs vers la gauche
+
+1. On recherche la position *k2* à laquelle on peut soustraire le diviseur dans le dividende
+2. On décale le quotient de *(k1 − k2 − 1)* rangs vers la gauche si cette quantité est supérieure à 0
+3. On soustrait le diviseur au dividende à la position *k2* et on place un `1` à droite du quotient
+4. *k1 = k2*
+
+Enfin, lorsque le dividende est inférieur au diviseur, si *k1* n'est pas égal à 0, on
+décale le quotient de *k1* rangs vers la gauche.
