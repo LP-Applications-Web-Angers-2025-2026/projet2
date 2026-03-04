@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="../../img/classroom.png" />
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
+<script src="../../javascript/jquery-3.4.1.min.js"></script>
+<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 6 : Appel de sous-programme</h1>
+
+<h2 class="section">6.1 Introduction</h2>
+
+<p>Dans ce chapitre nous allons voir comment réaliser l'appel de sous-programme
+en 32 et 64 bits. Malheureusement les conventions d'appel dans ces deux
+architectures sont très différentes sous Linux et elles diffèrent également entre
+Linux et Windows. Il faut donc soit penser méticuleusement au choix des registres,
+soit revoir entièrement son code lors du passage du 32 bits au 64 bits.</p>
+<h2 class="section">6.2 Convention d'appel en 32 bits</h2>
+
+<h3 class="subsection">6.2.1 La pile</h3>
+
+<p>Lorsque l'on appelle un sous-programme en 32 bits on passe les paramètres dans
+la pile. La pile est une partie de la mémoire centrale qui sert d'espace de stockage.
+Elle permet de :</p>
+<ul>
+<li>Garder trace des appels de sous-programmes</li>
+<li>Passer les paramètres des sous-programmes</li>
+<li>Créer des variables locales à un sous-programme</li>
+</ul>
+<p>En architecture 32 bits, le segment <code>ss</code> contient l'adresse du début de la pile et
+le sommet de pile se trouve dans le registre <code>esp</code>. On utilise le registre <code>ebp</code> afin de
+récupérer les paramètres placés dans la pile.</p>
+<p>Sous Linux, la pile d'un programme possède une taille de <strong>8 Mo</strong>. On peut obtenir
+la valeur de cette taille grâce à la commande <code>ulimit -a</code> dans le terminal.</p>
+<p>Les deux instructions principales utilisées pour manipuler la pile sont <code>push</code> et
+<code>pop</code> mais les instructions <code>call</code> et <code>ret</code> agissent également sur celle-ci.</p>
+<h4 class="subsubsection">6.2.1.1 push</h4>
+
+<p>L'instruction <code>push</code> consiste à mettre la valeur d'un registre, un emplacement
+mémoire ou une constante dans la pile. La pile est un tableau d'octets rempli <strong>par le
+haut</strong> (adresses décroissantes).</p>
+<p>Par exemple <code>push eax</code> consiste à <strong>abaisser</strong> le sommet de pile puis y écrire la
+valeur contenue dans <code>eax</code>, ce qui se résume aux deux instructions suivantes :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_001.asm" target="_blank">code/chapitre_6/code_001.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On soustrait ici 4 octets à <code>esp</code> car <code>eax</code> est un registre 32 bits.</p>
+<h4 class="subsubsection">6.2.1.2 pop</h4>
+
+<p>L'instruction <code>pop</code> fonctionne de manière inverse. Par exemple <code>pop eax</code> lit la
+valeur en sommet de pile et la stocke dans <code>eax</code> puis <strong>remonte</strong> le sommet de pile :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_002.asm" target="_blank">code/chapitre_6/code_002.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Il existe d'autres instructions pour empiler/dépiler :</p>
+<ul>
+<li><code>pusha</code> : place dans la pile l'ensemble des registres généraux 16 bits (<code>ax</code>, <code>cx</code>, <code>dx</code>, <code>bx</code>, <code>sp</code>, <code>bp</code>, <code>si</code>, <code>di</code>)</li>
+<li><code>pushad</code> : place dans la pile l'ensemble des registres généraux 32 bits (<code>eax</code>, <code>ecx</code>, <code>edx</code>, <code>ebx</code>, <code>esp</code>, <code>ebp</code>, <code>esi</code>, <code>edi</code>)</li>
+<li><code>pushf</code> : place dans la pile le registre 16 bits <code>flags</code></li>
+<li><code>pushfd</code> : place dans la pile le registre 32 bits <code>eflags</code></li>
+</ul>
+<p>Et leurs équivalents inverses : <code>popa</code>, <code>popad</code>, <code>popf</code>, <code>popfd</code>.</p>
+<h3 class="subsection">6.2.2 Procédure d'appel en 32 bits</h3>
+
+<p>L'appel de sous-programme en 32 bits suit la convention d'appel du langage C
+sous Linux. On distingue le sous-programme <strong>appelant</strong> (<em>caller</em>) et le sous-programme
+<strong>appelé</strong> (<em>callee</em>).</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Étape</th>
+<th>Sous-programme appelant (Caller)</th>
+<th>Sous-programme appelé (Callee)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Placer les paramètres dans la pile dans l'ordre inverse</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Appel du sous-programme (<code>call</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>Entrée : sauvegarde de <code>ebp</code>, mise à jour de <code>ebp</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td>Récupération des paramètres grâce à <code>ebp</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td>Exécution du sous-programme</td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td>Sortie : mise à jour de <code>esp</code>, restauration de <code>ebp</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Suppression des paramètres mis dans la pile</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 6.1 – Appel de sous-programme en 32 bits, convention du langage C</em></p>
+<h3 class="subsection">6.2.3 Registres à préserver</h3>
+
+<p>La convention d'appel en 32 bits en langage C impose que le sous-programme
+appelé ne modifie pas certains registres. Ces registres sont <code>ebp</code>, <code>ebx</code>, <code>esi</code> et <code>edi</code>.
+Il est donc nécessaire, une fois entré dans le sous-programme appelé, de <strong>sauvegarder
+ces registres dans la pile</strong> si on a l'intention de les modifier.</p>
+<p>Les registres qui peuvent être modifiés librement sont : <code>eax</code>, <code>ecx</code> et <code>edx</code>.</p>
+<p><em>Moyen mnémotechnique</em> :
+<strong>AuX CieuX, les DieuX,</strong>
+<strong>BaPtisent des DIsSIdents BelliqueuX.</strong></p>
+</div>
+- 1ère ligne → registres modifiables : `ax`, `cx`, `dx` (soit `eax`, `ecx`, `edx`)
+- 2ème ligne → registres à préserver : `bp`, `di`, `si`, `bx` (soit `ebp`, `edi`, `esi`, `ebx`)
+<h3 class="subsection">6.2.4 Valeur de retour</h3>
+
+<p>Lorsqu'un sous-programme retourne une valeur il doit le faire en suivant la
+convention du langage C :</p>
+<ul>
+<li>S'il s'agit d'une valeur entière (entier, pointeur), on la place dans le registre <code>eax</code></li>
+<li>S'il s'agit d'un nombre à virgule flottante, on le place dans <code>st0</code> le sommet de pile du coprocesseur</li>
+</ul>
+<h3 class="subsection">6.2.5 Exemple complet en 32 bits</h3>
+
+<p>Prenons un exemple simple :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_003.c" target="_blank">code/chapitre_6/code_003.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> sum<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> a<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> b<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #993333;">int</span> r<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; r <span style="color: #339933;">=</span> a <span style="color: #339933;">+</span> b<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> r<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; sum<span style="color: #009900;">&#40;</span><span style="color: #0000dd;">4</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">5</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Le <em>caller</em> (<code>main</code>) appelle le <em>callee</em> (<code>sum</code>) qui retourne une valeur entière.</p>
+<h4 class="subsubsection">6.2.5.1 Le sous-programme main (caller)</h4>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_004.asm" target="_blank">code/chapitre_6/code_004.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; Listing 6.2.1 – Appelant en 32 bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">main<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">5</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; place dans un registre le second paramètre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; place dans la pile le second paramètre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #ff0000;">4</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; place le premier paramètre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> sum &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; appel du sous-programme</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; supprime les paramètres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 6.2.1 – Appelant en 32 bits</em></p>
+<p><strong>Convention — ordre des paramètres</strong> : par convention en C (architecture 32 bits),
+on place le <strong>dernier</strong> paramètre en premier dans la pile et le <strong>premier</strong> paramètre en
+dernier. Pour notre exemple : on commence par 5 et on termine par 4.</p>
+<h4 class="subsubsection">6.2.5.2 Le sous-programme sum (callee)</h4>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_005.asm" target="_blank">code/chapitre_6/code_005.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; Listing 6.2.2 – Appelé en 32 bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sum<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; entrée : sauvegarde de ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ebp pointe sur le sommet de pile actuel</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; création de la variable locale 'r'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; sauvegarde de ebx (registre à préserver)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; chargement de 'a'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; chargement de 'b'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; calcul du résultat</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; stockage du résultat dans 'r'</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; valeur de retour dans eax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; restauration de ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; sortie : restauration de esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; restauration de ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 6.2.2 – Appelé en 32 bits</em></p>
+<p><strong>Entrée dans la fonction</strong> (3 étapes) :</p>
+<ol>
+<li>Sauvegarder <code>ebp</code> puis affecter à <code>ebp</code> la valeur de <code>esp</code> — cela permet d'accéder
+aux paramètres et aux variables locales via <code>ebp</code></li>
+<li>Créer les variables locales en abaissant <code>esp</code> (ici 4 octets pour la variable <code>r</code>)</li>
+<li>Sauvegarder les registres à préserver (ici <code>ebx</code>)</li>
+</ol>
+<p><strong>Accès aux paramètres</strong> via <code>ebp</code> :</p>
+<ul>
+<li>1er paramètre <code>a</code> : <code>[ebp + 8]</code></li>
+<li>2ème paramètre <code>b</code> : <code>[ebp + 12]</code></li>
+<li>nème paramètre : <code>[ebp + 4×(n+1)]</code></li>
+<li>Variables locales : <code>[ebp - x]</code></li>
+</ul>
+<p><strong>Taille des paramètres</strong> : que le paramètre soit un octet ou un mot, on le stocke
+sur 32 bits. S'il s'agit d'une chaîne ou d'un tableau, on passe son adresse (32 bits).</p>
+<p><strong>Sortie de la fonction</strong> (ordre inverse) :</p>
+<ol>
+<li>Placer la valeur de retour dans <code>eax</code></li>
+<li>Restaurer <code>ebx</code></li>
+<li>Rétablir <code>esp</code> à sa valeur d'entrée, puis restaurer <code>ebp</code></li>
+<li>Exécuter <code>ret</code></li>
+</ol>
+<div class="cadre_note"><strong>Note</strong> : il n'est pas nécessaire de supprimer explicitement la variable locale `r`
+car l'instruction `mov esp, ebp` (étape 3 de la sortie) le fait automatiquement.
+<h4 class="subsubsection">6.2.5.3 Suppression des paramètres</h4>
+
+<p>Les paramètres mis dans la pile dans <code>main</code> doivent être supprimés après l'appel.
+On a placé deux entiers 32 bits donc 2 × 4 = 8 octets. D'où l'instruction <code>add esp, 8</code>
+dans <code>main</code> après le <code>call</code>.</p>
+<p>La convention du langage C impose que ce soit le <strong>sous-programme appelant</strong> qui
+supprime les paramètres (contrairement au Pascal où c'est le sous-programme appelé).
+Ceci permet à C de supporter des fonctions à nombre variable de paramètres comme <code>printf</code>.</p>
+<h3 class="subsection">6.2.6 Instructions enter et leave</h3>
+
+<p>L'entrée et la sortie d'un sous-programme peuvent également être réalisées avec les
+instructions <code>enter</code> et <code>leave</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_006.asm" target="_blank">code/chapitre_6/code_006.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; équivalent avec enter/leave :</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; → enter 4, 0 (remplace push ebp + mov ebp, esp + sub esp, 4)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; → leave (remplace mov esp, ebp + pop ebp)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">6.2.7 Appel rapide (fastcall)</h3>
+
+<p>La convention classique <code>cdecl</code> consiste à passer les paramètres dans la pile.
+Il existe en 32 bits la possibilité d'un appel dit <strong>rapide</strong> (<em>fastcall</em>) : on passe les
+paramètres dans les registres <code>ecx</code> et <code>edx</code>. Si un sous-programme dispose de plus
+de 2 paramètres, les registres sont utilisés pour les premiers et la pile pour le reste.</p>
+<p>Pour déclarer une fonction <code>fastcall</code> depuis un fichier C ou C++ :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_007.c" target="_blank">code/chapitre_6/code_007.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// en C</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #000000; font-weight: bold;">extern</span> <span style="color: #993333;">int</span> ma_fonction<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> a<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> b<span style="color: #009900;">&#41;</span> __attribute__<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>fastcall<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_008.cpp" target="_blank">code/chapitre_6/code_008.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666;">// en C++</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">extern</span> <span style="color: #FF0000;">&quot;C&quot;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">int</span> ma_fonction<span style="color: #008000;">&#40;</span><span style="color: #0000ff;">int</span> a, <span style="color: #0000ff;">int</span> b<span style="color: #008000;">&#41;</span> __attribute__<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#40;</span>fastcall<span style="color: #008000;">&#41;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">6.3 Convention d'appel en 64 bits (System V AMD64 ABI)</h2>
+
+<p>Afin d'écrire des fonctions en assembleur et de pouvoir les interfacer avec un
+programme C il est nécessaire de définir une convention d'appel. Sous Linux on
+utilise la convention <strong>System V AMD64 ABI</strong>.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>64 bits</th>
+<th>32 bits</th>
+<th>16 bits</th>
+<th>8 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>rdi</code></td>
+<td><code>edi</code></td>
+<td><code>di</code></td>
+<td><code>dil</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>rsi</code></td>
+<td><code>esi</code></td>
+<td><code>si</code></td>
+<td><code>sil</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>rdx</code></td>
+<td><code>edx</code></td>
+<td><code>dx</code></td>
+<td><code>dl</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>rcx</code></td>
+<td><code>ecx</code></td>
+<td><code>cx</code></td>
+<td><code>cl</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>r8</code></td>
+<td><code>r8d</code></td>
+<td><code>r8w</code></td>
+<td><code>r8b</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>r9</code></td>
+<td><code>r9d</code></td>
+<td><code>r9w</code></td>
+<td><code>r9b</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 6.2 – Ordre des registres entiers pour la convention d'appel C sous Linux 64 bits</em></p>
+<p>Caractéristiques de la convention 64 bits :</p>
+<ul>
+<li>Les paramètres sont passés <strong>dans des registres</strong> (fastcall), s'il n'y en a pas assez on utilise la pile</li>
+<li>Pour les entiers/pointeurs : <code>rdi</code>, <code>rsi</code>, <code>rdx</code>, <code>rcx</code>, <code>r8</code>, <code>r9</code></li>
+<li>Pour les flottants : partie basse des registres <code>xmm0</code> à <code>xmm7</code></li>
+<li>Valeur de retour entière : <code>rax</code></li>
+<li>Valeur de retour flottante : partie basse de <code>xmm0</code></li>
+<li>Registres à préserver : <code>rbp</code>, <code>rbx</code>, <code>r12</code> à <code>r15</code></li>
+</ul>
+<p>Un maximum de <strong>14 paramètres</strong> (6 entiers + 8 réels) peuvent être passés dans des registres.</p>
+<h3 class="subsection">6.3.1 Entrée et sortie d'un sous-programme en 64 bits</h3>
+
+<p>Pour entrer dans une fonction on peut procéder comme en 32 bits :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_009.asm" target="_blank">code/chapitre_6/code_009.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rbp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rsp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">pop</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Néanmoins si tous les paramètres sont dans des registres cela n'est pas nécessaire
+et on peut faire l'économie de ces 4 instructions.</p>
+<h3 class="subsection">6.3.2 La red zone</h3>
+
+<p>En 64 bits sous Linux, la zone mémoire de <strong>128 octets</strong> située de <code>[rsp-128]</code> à <code>[rsp]</code>
+juste après l'appel d'un sous-programme (la <strong><em>red zone</em></strong>) <strong>ne sera pas modifiée</strong> par
+les interruptions. On peut donc l'utiliser pour stocker temporairement des valeurs,
+à condition de ne pas faire de <code>push</code> ou de <code>call</code>.</p>
+<div class="cadre_note"><strong>Note</strong> : sous Windows cette zone n'est **pas** disponible.
+<h3 class="subsection">6.3.3 Adressage en 64 bits</h3>
+
+<p>Les adresses doivent être précisées en utilisant les registres 64 bits uniquement.
+La manipulation de la pile par <code>push</code> et <code>pop</code> impose également d'utiliser des registres
+de 64 bits.</p>
+<h3 class="subsection">6.3.4 Exemple en 64 bits</h3>
+
+<p>On considère la fonction C suivante qui calcule la somme des éléments <code>t[i]/a</code> d'un
+tableau <code>t</code> avec <code>a</code> une constante :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_010.c" target="_blank">code/chapitre_6/code_010.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> sum<span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> <span style="color: #339933;">*</span>t<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #339933;">,</span> <span style="color: #993333;">float</span> a<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #993333;">float</span> s <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; s <span style="color: #339933;">=</span> s <span style="color: #339933;">+</span> t<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">/</span> a<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> s<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>D'après la convention 64 bits, lors de l'entrée dans le sous-programme :</p>
+<ul>
+<li><code>t</code> (pointeur float) est dans <code>rdi</code></li>
+<li><code>n</code> (taille, <code>int</code>) est dans <code>esi</code> (32 bits suffisent)</li>
+<li><code>a</code> (float) est dans <code>xmm0</code></li>
+</ul>
+<p>Traduction avec <code>g++ -O2</code> (Listing 6.3.1) :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_011.asm" target="_blank">code/chapitre_6/code_011.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; Listing 6.3.1 – Traduction en 64 bits de la fonction sum</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sum<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">test</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esi</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si n == 0 alors sortir</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jle</span> &nbsp; <span style="color: #339933;">.</span>L4 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; du sous-programme</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">+</span><span style="color: #ff0000;">1</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pxor</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; s = xmm2 = 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">rax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">rax</span><span style="color: #339933;">*</span><span style="color: #ff0000;">4</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>L3<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movss</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ++tab</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">divss</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; xmm1 /= a</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">addss</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; s += xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si &amp;t[i] &lt; &amp;tab[N] boucler</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jne</span> &nbsp; <span style="color: #339933;">.</span>L3</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movaps</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; résultat placé dans xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>L4<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pxor</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; résultat mis à 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movaps</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 6.3.1 – Traduction en 64 bits de la fonction sum</em></p>
+<p>Version plus concise (Listing 6.3.2) :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_012.asm" target="_blank">code/chapitre_6/code_012.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; Listing 6.3.2 – Traduction en 64 bits de la fonction sum - version améliorée</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sum<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">xorps</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; s = 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">test</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esi</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; si n &lt;= 0 alors sortir</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jle</span> &nbsp; <span style="color: #339933;">.</span>end</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">rax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">*</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp;<span style="color: #666666; font-style: italic;">; rax = adresse de fin du tableau</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movss</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ++tab</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">divss</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm1 /= a</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">addss</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; s += tab[i] / a</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si &amp;t[i] &lt; &amp;tab[N] boucler</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jne</span> &nbsp; <span style="color: #339933;">.</span>while</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>end<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movaps</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; résultat placé dans xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 6.3.2 – Traduction en 64 bits de la fonction sum — version améliorée</em></p>
+<div class="cadre_note"><strong>Note</strong> : puisque `a` est une constante, la division peut être sortie de la boucle :
+`∑ t[i]/a = (1/a) × ∑ t[i]`
+<h3 class="subsection">6.3.5 Points importants en 64 bits</h3>
+
+<h4 class="subsubsection">6.3.5.1 Appel de fonctions externes (PLT)</h4>
+
+<p>L'appel de fonctions externes, comme <code>printf</code>, doit être réalisé en utilisant le
+mécanisme de <strong>PLT</strong> (<em>Procedure Linkage Table</em>). Ce mécanisme permet l'appel de
+fonctions dont l'adresse n'est pas connue lors de l'édition de liens.</p>
+<p>Il faut alors suffixer les fonctions par <code>WRT ..plt</code> où <em>WRT</em> signifie <em>With Respect to</em> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_013.asm" target="_blank">code/chapitre_6/code_013.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">call</span> printf <span style="color: #0000ff; font-weight: bold;">WRT</span><span style="color: #339933;">..</span>plt</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h4 class="subsubsection">6.3.5.2 PIC et PIE</h4>
+
+<p>En 64 bits, on utilise généralement le <strong>PIC</strong> (<em>Position Independent Code</em>) qui se
+base sur l'adressage relatif par rapport au registre <code>rip</code>.</p>
+<p>Le <strong>PIE</strong> (<em>Position Independent Executable</em>) est une fonction de sécurité qui permet
+aux exécutables d'être chargés à des adresses mémoire aléatoires (protection contre
+les attaques ROP et débordements de tampon).</p>
+<p>Par défaut, certaines distributions modernes de <code>gcc</code> génèrent du PIE. Dans le cadre
+de la programmation assembleur de cet ouvrage, on utilisera l'option <strong><code>-no-pie</code></strong> lors
+de l'édition de liens pour simplifier notre code :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_014.sh" target="_blank">code/chapitre_6/code_014.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">gcc</span> <span style="color: #660033;">-no-pie</span> <span style="color: #660033;">-o</span> mon_prog mon_prog.o</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Avec <code>nasm</code> l'adressage est absolu par défaut. Pour passer à l'adressage relatif :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_015.asm" target="_blank">code/chapitre_6/code_015.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #adadad; font-style: italic;">defa</span>ult <span style="color: #0000ff; font-weight: bold;">rel</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h4 class="subsubsection">6.3.5.3 Alignement de la pile sur 16 octets</h4>
+
+<p>Les conventions d'appel en 64 bits imposent qu'avant l'appel d'un sous-programme,
+<code>rsp</code> soit <strong>multiple de 16 octets</strong>. Or <code>call</code> place 8 octets dans la pile (adresse de
+retour), donc une fois dans le sous-programme appelé, <code>rsp</code> est multiple de 8.</p>
+<p>Si on appelle une fonction de la bibliothèque C (ex. <code>scanf</code>), certaines versions de
+la <code>glibc</code> utilisent des instructions comme <code>movaps</code> qui requièrent une adresse
+multiple de 16. Si <code>rsp</code> n'est pas aligné, on obtient une <strong>erreur de segmentation</strong>.</p>
+<p>Pour résoudre le problème, avant l'appel on aligne <code>rsp</code> sur un multiple de 16 :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_016.asm" target="_blank">code/chapitre_6/code_016.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rbx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ou tout autre registre 64 bits (ajoute 8 octets)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; ou :</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; abaisse le sommet de pile de 8 octets</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; ou :</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">and</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> ~<span style="color: #ff0000;">0xF</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; alignement sur le multiple de 16 inférieur</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Exemple complet pour lire un entier en 64 bits :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_017.asm" target="_blank">code/chapitre_6/code_017.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">extern</span> scanf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; s<span style="color: #339933;">:</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">db</span> <span style="color: #7f007f;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; a<span style="color: #339933;">:</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; scanf(&quot;%d&quot;, &amp;a)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">my_call_to_scanf<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; rsp multiple de 16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>s<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>a<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; pas de flottant traité</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> scanf <span style="color: #0000ff; font-weight: bold;">WRT</span><span style="color: #339933;">..</span>plt</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; on supprime les octets utilisés pour l'alignement</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Le désassemblage montre l'adressage absolu vs relatif (PIC) :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_018.asm" target="_blank">code/chapitre_6/code_018.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; adressage absolu (-no-pie) :</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">0</span><span style="color: #339933;">:</span> &nbsp;<span style="color: #ff0000;">48</span> <span style="color: #ff0000;">83</span> ec <span style="color: #ff0000;">08</span> &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">4</span><span style="color: #339933;">:</span> &nbsp;<span style="color: #ff0000;">48</span> 8d 3c <span style="color: #ff0000;">25</span> &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ds</span><span style="color: #339933;">:</span><span style="color: #ff0000;">0x0</span> &nbsp; <span style="color: #666666; font-style: italic;">; R_X86_64_32S</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">c<span style="color: #339933;">:</span> &nbsp;<span style="color: #ff0000;">48</span> 8d <span style="color: #ff0000;">34</span> <span style="color: #ff0000;">25</span> &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ds</span><span style="color: #339933;">:</span><span style="color: #ff0000;">0x0</span> &nbsp; <span style="color: #666666; font-style: italic;">; R_X86_64_32S</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">14</span><span style="color: #339933;">:</span> b8 <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">19</span><span style="color: #339933;">:</span> e8 <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> scanf &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; R_X86_64_PLT32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">1e<span style="color: #339933;">:</span> <span style="color: #ff0000;">48</span> <span style="color: #ff0000;">83</span> c4 <span style="color: #ff0000;">08</span> &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; adressage relatif (PIC) :</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">0</span><span style="color: #339933;">:</span> &nbsp;<span style="color: #ff0000;">48</span> <span style="color: #ff0000;">83</span> ec <span style="color: #ff0000;">08</span> &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">4</span><span style="color: #339933;">:</span> &nbsp;<span style="color: #ff0000;">48</span> 8d 3d <span style="color: #ff0000;">00</span> &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>rip<span style="color: #339933;">+</span><span style="color: #ff0000;">0x0</span><span style="color: #009900; font-weight: bold;">&#93;</span> <span style="color: #666666; font-style: italic;">; R_X86_64_PC32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">b<span style="color: #339933;">:</span> &nbsp;<span style="color: #ff0000;">48</span> 8d <span style="color: #ff0000;">35</span> <span style="color: #ff0000;">00</span> &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>rip<span style="color: #339933;">+</span><span style="color: #ff0000;">0x0</span><span style="color: #009900; font-weight: bold;">&#93;</span> <span style="color: #666666; font-style: italic;">; R_X86_64_PC32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">12</span><span style="color: #339933;">:</span> b8 <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #ff0000;">17</span><span style="color: #339933;">:</span> e8 <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> <span style="color: #ff0000;">00</span> &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> scanf &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; R_X86_64_PLT32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">1c<span style="color: #339933;">:</span> <span style="color: #ff0000;">48</span> <span style="color: #ff0000;">83</span> c4 <span style="color: #ff0000;">08</span> &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x8</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h4 class="subsubsection">6.3.5.4 Macro-instructions defsp / endsp</h4>
+
+<p>Pour l'entrée dans un sous-programme en 64 bits, il est recommandé de procéder
+comme en 32 bits en passant par <code>rbp</code> :</p>
+<ol>
+<li>Sauvegarder <code>rbp</code></li>
+<li>Copier <code>rsp</code> dans <code>rbp</code></li>
+<li>Sauvegarder les registres à préserver si modifiés</li>
+<li>Aligner <code>rsp</code> sur un multiple de 16</li>
+</ol>
+<p>Pour la sortie :</p>
+<ol>
+<li>Restaurer les registres sauvegardés</li>
+<li>Copier <code>rbp</code> dans <code>rsp</code></li>
+<li>Restaurer <code>rbp</code></li>
+<li><code>ret</code></li>
+</ol>
+<p>Afin de simplifier l'écriture, on peut définir deux macro-instructions <code>nasm</code> :</p>
+<ul>
+<li><code>defsp</code> (<em>define sub program</em>) — gère l'entrée</li>
+<li><code>endsp</code> (<em>end sub program</em>) — gère la sortie</li>
+</ul>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_019.asm" target="_blank">code/chapitre_6/code_019.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%macro</span> defsp <span style="color: #ff0000;">1</span><span style="color: #339933;">-*</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%rotate</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rbp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rsp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #339933;">%</span><span style="color: #00007f; font-weight: bold;">rep</span> <span style="color: #0000ff; font-weight: bold;">%0</span> <span style="color: #339933;">-</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%ifnum</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%else</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%endif</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%rotate</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%endrep</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">and</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> ~<span style="color: #ff0000;">0xF</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endmacro</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Appel de la macro :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_020.asm" target="_blank">code/chapitre_6/code_020.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">defsp main<span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">100</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rbx</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Ce qui génère :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_021.asm" target="_blank">code/chapitre_6/code_021.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">main<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rbp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rsp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rdi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rsi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">100</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rbx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">and</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> ~<span style="color: #ff0000;">0xF</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La macro <code>endsp</code> permet de récupérer les valeurs mises dans la pile :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_022.asm" target="_blank">code/chapitre_6/code_022.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%macro</span> endsp <span style="color: #ff0000;">1</span><span style="color: #339933;">-*</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">end_<span style="color: #339933;">%</span><span style="color: #ff0000;">1</span><span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%rotate</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%assign</span> i <span style="color: #ff0000;">8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #339933;">%</span><span style="color: #00007f; font-weight: bold;">rep</span> <span style="color: #0000ff; font-weight: bold;">%0</span> <span style="color: #339933;">-</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%ifnum</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%assign</span> i i <span style="color: #339933;">+</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%else</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rbp</span><span style="color: #339933;">-</span>i<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%assign</span> i i <span style="color: #339933;">+</span> <span style="color: #ff0000;">8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%endif</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%rotate</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">%endrep</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endmacro</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Appel :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_023.asm" target="_blank">code/chapitre_6/code_023.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">endsp main<span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">100</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rbx</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Ce qui génère :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_024.asm" target="_blank">code/chapitre_6/code_024.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">end_main<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rbx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">124</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">6.4 Comparaison 32 bits vs 64 bits</h2>
+
+<p>Un code C compilé en 64 bits s'exécute normalement plus rapidement que du code
+32 bits parce que :</p>
+<ul>
+<li>Le passage des paramètres se fait dans les registres (pas de lecture/écriture en mémoire pile)</li>
+<li>On dispose de plus de registres de calcul (pour stocker des résultats temporaires)</li>
+</ul>
+<p>Il semble donc préférable d'écrire le code assembleur uniquement en 64 bits.
+Cependant dans certains cas particuliers, un programme 32 bits peut être plus rapide.</p>
+<h2 class="section">6.5 Bilan</h2>
+
+<h3 class="subsection">6.5.1 Résumé</h3>
+
+<ul>
+<li>En architecture 32 bits, les paramètres sont passés dans la <strong>pile</strong>. Les valeurs
+de retour entières sont dans <code>eax</code>, les flottantes dans <code>st0</code> (sommet FPU)</li>
+<li>En architecture 64 bits, les paramètres entiers/pointeurs sont passés dans
+<code>rdi</code>, <code>rsi</code>, <code>rdx</code>, <code>rcx</code>, <code>r8</code>, <code>r9</code> et les flottants dans <code>xmm0</code>–<code>xmm7</code>.
+Les valeurs de retour entières sont dans <code>rax</code>, les flottantes dans <code>xmm0</code></li>
+<li>Les conventions d'appel en 32 et 64 bits étant très différentes, il est souvent
+nécessaire de modifier le code assembleur pour passer d'une architecture à l'autre</li>
+</ul>
+<h3 class="subsection">6.5.2 Objectifs</h3>
+
+<p>Il faut être en mesure de :</p>
+<ul>
+<li>Réaliser un appel de sous-programme en 32 bits</li>
+<li>Récupérer les arguments d'un sous-programme écrit en 32 bits</li>
+<li>Réaliser un appel de sous-programme en 64 bits</li>
+<li>Savoir dans quels registres se trouvent les arguments d'un sous-programme écrit en 64 bits</li>
+</ul>
+<h2 class="section">6.6 Exercices</h2>
+
+<p><strong>Exercice 27</strong> – Réaliser le codage du sous-programme suivant en 32 bits, puis en 64 bits :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_025.c" target="_blank">code/chapitre_6/code_025.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> exercise27<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">*</span>tab<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #993333;">float</span> sum <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; tab<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> tab<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">*</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; sum <span style="color: #339933;">+=</span> tab<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">*</span> <span style="color:#800080;">1.25f</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> sum<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Exercice 28</strong> – Réaliser le codage du sous-programme suivant en 32 bits, puis en 64 bits :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_6/code_026.c" target="_blank">code/chapitre_6/code_026.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">double</span> exercise28<span style="color: #009900;">&#40;</span><span style="color: #993333;">double</span> <span style="color: #339933;">*</span>tab<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #339933;">,</span> <span style="color: #993333;">double</span> k<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #993333;">double</span> sum <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; sum <span style="color: #339933;">+=</span> tab<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">+</span> k<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> sum<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>
