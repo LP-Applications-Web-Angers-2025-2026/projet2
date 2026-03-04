@@ -141,8 +141,8 @@ où $[0, k-1]$ représente l'intervalle de valeurs entre 0 et $k-1$. De ces déf
 <p><strong>Théorème 17.1.3.</strong> $\sum_{i=0}^{k-1} c<em>i = \sum</em>{i=0}^{k-1} d_i = k$
 <em>Démonstration.</em> Si par définition les $c_i$ représentent le nombre d'occurrences de chaque chiffre, leur somme doit donc être égale à $k$. Étant donné que par définition $c_i = d_i$, on en déduit également que la somme des $d_i$ est égale à $k$.</p>
 <p><strong>Théorème 17.1.4.</strong> Un nombre auto-descriptif se termine par un 0.
-<em>Démonstration.</em> Appelons $S(k) = \sum_{i=0}^{k-1} d<em>i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d</em>{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d<em>{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d</em>{k-1} &gt; 0$, et on en déduit que $S(k-1) &lt; k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d<em>1$ à $d</em>{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d<em>{k-1}$, on a donc $S(k) - S(k-1) = d</em>{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.</p>
-<p><strong>Théorème 17.1.5.</strong> Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i &lt; k, \forall i \in [0, k-1]$
+<em>Démonstration.</em> Appelons $S(k) = \sum_{i=0}^{k-1} d<em>i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d</em>{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d<em>{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d</em>{k-1} &gt; 0$, et on en déduit que $S(k-1) \lt k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d<em>1$ à $d</em>{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d<em>{k-1}$, on a donc $S(k) - S(k-1) = d</em>{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.</p>
+<p><strong>Théorème 17.1.5.</strong> Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i \lt k, \forall i \in [0, k-1]$
 <em>Démonstration.</em> Si $x$ possède $k$ chiffres alors $d<em>0$ à $d</em>{k-1}$ sont définis. Si $d_i \geq k$ cela implique que $c_i \geq k$ ce qui est en contradiction avec la définition du nombre.</p>
 <h2 class="section">17.2 Fonction de référence (<code>std::string</code>)</h2>
 
@@ -711,7 +711,7 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 </table>
 <h2 class="section">Annexe D : Implantation optimisée de la fonction Signe</h2>
 
-<p>Pour la fonction signe ($&lt;0 \rightarrow -1$, $&gt;0 \rightarrow 1$, $=0 \rightarrow 0$) :</p>
+<p>Pour la fonction signe ($x &lt; 0 \rightarrow -1$, $x &gt; 0 \rightarrow 1$, $x = 0 \rightarrow 0$) :</p>
 <p><strong>Solution SANS saut (cdq, neg, adc) :</strong></p>
 
 <details>

@@ -51,9 +51,9 @@ où $[0, k-1]$ représente l'intervalle de valeurs entre 0 et $k-1$. De ces déf
 > *Démonstration.* Si par définition les $c_i$ représentent le nombre d'occurrences de chaque chiffre, leur somme doit donc être égale à $k$. Étant donné que par définition $c_i = d_i$, on en déduit également que la somme des $d_i$ est égale à $k$.
 
 > **Théorème 17.1.4.** Un nombre auto-descriptif se termine par un 0.
-> *Démonstration.* Appelons $S(k) = \sum_{i=0}^{k-1} d_i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d_{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d_{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d_{k-1} > 0$, et on en déduit que $S(k-1) < k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d_1$ à $d_{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d_{k-1}$, on a donc $S(k) - S(k-1) = d_{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.
+> *Démonstration.* Appelons $S(k) = \sum_{i=0}^{k-1} d_i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d_{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d_{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d_{k-1} > 0$, et on en déduit que $S(k-1) \lt k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d_1$ à $d_{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d_{k-1}$, on a donc $S(k) - S(k-1) = d_{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.
 
-> **Théorème 17.1.5.** Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i < k, \forall i \in [0, k-1]$
+> **Théorème 17.1.5.** Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i \lt k, \forall i \in [0, k-1]$
 > *Démonstration.* Si $x$ possède $k$ chiffres alors $d_0$ à $d_{k-1}$ sont définis. Si $d_i \geq k$ cela implique que $c_i \geq k$ ce qui est en contradiction avec la définition du nombre.
 
 ## 17.2 Fonction de référence (`std::string`)
@@ -389,7 +389,7 @@ L'instruction `bsr` (Bit Scan Reverse) recherche le bit le plus significatif, ta
 
 ## Annexe D : Implantation optimisée de la fonction Signe
 
-Pour la fonction signe ($<0 \rightarrow -1$, $>0 \rightarrow 1$, $=0 \rightarrow 0$) :
+Pour la fonction signe ($x < 0 \rightarrow -1$, $x > 0 \rightarrow 1$, $x = 0 \rightarrow 0$) :
 
 **Solution SANS saut (cdq, neg, adc) :**
 ```nasm
