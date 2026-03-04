@@ -1,0 +1,15 @@
+; declaration d'une chaine
+msg: db"hello world!",,
+10; ==== CODE ====
+11section.text
+13; fonction main
+14main:
+push
+mov,
+pushdwordmsg
+call
+add,
+xor,
+mov,
+pop
+ret

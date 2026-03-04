@@ -1,0 +1,224 @@
+#include <iostream>
+#include <stdint.h>
+#include <stdlib.h>
+#include <vector>
+#include "cpu_timer.h"
+using namespace std;
+typedef uint32_t u32;
+
+typedef u32 (*MethodType)(u32 *t, u32 size);
+
+/**
+ * SUBPROGRAM
+ *    
+ *   function_bsr
+ *
+ * DESCRIPTION
+ *  
+ *   Function that find the most significant bit
+ *   in a 32 bits unsigned value by using a loop 
+ *   that start from bit 31 and goes down to bit 0
+ *
+ * PARAMETERS
+ *
+ *   n		int		number to check
+ *
+ * RETURN VALUE
+ *
+ *  the most significant bit or 0xFF if 'n' == 0
+ *
+ **/
+u32 function_bsr(u32 a) {
+	for (int i = 31; i >= 0; --i) { 
+		if ((a & (1 << i)) != 0) return (u32) i;
+	}
+	return 0xFF;
+}
+
+/**
+ * SUBPROGRAM
+ *    
+ *   method_1
+ *
+ * DESCRIPTION
+ *  
+ *   Function that sums the result of the function
+ *   that finds the most significant bit
+ *   in a 32 bits unsigned value by calling
+ *   'function_bsr'
+ *
+ * PARAMETERS
+ *
+ *   t			int *		array of unsigned values
+ *   size		uint		size of the array
+ *
+ * RETURN VALUE
+ *
+ *  the sum of most significant bits of the array t
+ *
+ **/
+u32 method_1(u32 *t, u32 size) {
+	u32 sum = 0; 
+	for (u32 i = 0; i < size; ++i) {
+		sum += function_bsr(t[i]);
+	}
+	return sum;
+}
+
+/**
+ * SUBPROGRAM
+ *    
+ *   method_2
+ *
+ * DESCRIPTION
+ *  
+ *   Function that sums the result of the function
+ *   that finds the most significant bit
+ *   in a 32 bits unsigned value by calling
+ *   __builtin_clz
+ *
+ * PARAMETERS
+ *
+ *   t			int *		array of unsigned values
+ *   size		uint		size of the array
+ *
+ * RETURN VALUE
+ *
+ *  the sum of most significant bits of the array t
+ *
+ **/
+u32 method_2(u32 *t, u32 size) {
+	u32 sum = 0; 
+	for (u32 i = 0; i < size; ++i) {
+		sum += (31 - __builtin_clz(t[i]));
+	}
+	return sum;
+}
+
+/**
+ * SUBPROGRAM
+ *    
+ *   method_2
+ *
+ * DESCRIPTION
+ *  
+ *   Function that sums the result of the function
+ *   that finds the most significant bit
+ *   in a 32 bits unsigned value by calling
+ *   the bsr assembly instruction
+ *
+ * PARAMETERS
+ *
+ *   t			int *		array of unsigned values
+ *   size		uint		size of the array
+ *
+ * RETURN VALUE
+ *
+ *  the sum of most significant bits of the array t
+ *
+ **/
+u32 method_3(u32 *t, u32 size) {
+	u32 sum = 0; 
+	for (u32 i = 0; i < size; ++i) {
+		u32 input = t[i];
+		u32 output;
+		asm("bsr %0, %1"
+			: "=r" (output)
+			: "r" (input)
+			:
+		);
+		sum += output;
+	}	
+	return sum;
+}
+
+extern "C" {
+	u32 method_4(u32 *t, u32 size);
+	u32 method_5(u32 *t, u32 size);
+	u32 method_6(u32 *t, u32 size);
+	u32 method_7(u32 *t, u32 size);
+	u32 method_8(u32 *t, u32 size);
+	u32 method_9(u32 *t, u32 size);
+}
+
+/*
+ctz : returns the number of trailing 0-bits in x, starting at the least 
+		significant bit position. If x is 0, the result is undefined
+		
+clz : returns the number of leading 0-bits in x, starting at the most 
+	significant bit position. If x is 0, the result is undefined
+	
+ffs : Returns one plus the index of the least significant 1-bit of x, 
+	or if x is zero, returns zero.
+	
+*/
+void test() {
+	cout << "=== TEST ===" << endl;
+	vector<u32> values = { 0, 1, 2, 3, 0x7FFFFFFF, 0xFFFFFFFF };
+	
+	for (auto v : values) {
+		cout << "v=" << v << ", " << (u32) __builtin_ctz(v);
+		cout << " " << (u32) (31 - (u32) __builtin_clz(v));
+		cout << " " << (u32) function_bsr(v);
+		cout << endl;
+	}
+}
+
+typedef struct {
+	MethodType function;
+	string name;
+} MethodEntry;
+
+MethodEntry tab_entries[] = {
+	{ nullptr, "unknown"},
+	{ method_1, "C_call_function_bsr" },
+	{ method_2, "C_call_builtin_clz" },
+	{ method_3, "C_call_bsr" },
+	{ method_4, "assembly_use_bsr" },
+	{ method_5, "assembly_use_lzcnt" },
+	{ method_6, "assembly_use_lzcnt_ur4" },
+	{ method_7, "assembly_use_lzcnt_ur8" },
+	{ method_8, "assembly_use_vplzcnt" },
+	{ nullptr, "unknown"}
+};
+
+
+/**
+ * main function
+ */
+int main(int  argc, char *argv[]) {
+	srand(19702013);
+	int method = 0;
+	
+	if (argc > 1) {
+		method = atoi(argv[1]);
+	}
+	
+	const u32 N = 100000;
+	const u32 R = 10000;
+	u32 *tab = new u32 [ N ];
+	
+	// initialization of array with values that at least contain
+	// a bit set to 1
+	for (u32 i=0; i<N; ++i) {
+		tab[i] = (rand() & 0xFFFFF) + 1;
+	}
+	
+	CPUTimer timer;
+	
+	u32 sum = 0;
+	
+	if (method == 0) {
+		test();
+	} else {
+		cout << "method=" << tab_entries[ method].name << endl;
+		timer.start();
+		for (u32 r = 0; r < R; ++r) sum = tab_entries[ method ].function(tab, N);
+		timer.stop();
+	}
+
+	cout << "cycles=" << timer << endl;	
+	cout << "sum=" << sum << endl;
+	
+	return 0;
+}

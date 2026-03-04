@@ -1,0 +1,19 @@
+trois: ; constante
+4section
+; x + 1
+fld [x]
+fld1
+faddp ,st0
+; x - 1
+fld [x]
+fld1
+fsubp ,st0
+; (x+1)*(x-1)
+fmulp ,st0
+; 3 - sqrt(x)
+fld [trois]
+fld [x]
+fsqrt
+fsubp ,st0
+; (x+1)*(x-1) / (3 - sqrt(x))
+fdivp ,st0

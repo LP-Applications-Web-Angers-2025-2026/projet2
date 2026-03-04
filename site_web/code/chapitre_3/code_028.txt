@@ -1,0 +1,23 @@
+...
+Running memory speed test with the following options:
+  block size: 256KiB
+  total size: 102400MiB
+  operation: write
+  scope: global
+
+Initializing worker threads...
+Threads started!
+
+Total operations: 199824 (19977.75 per second)
+2149956.00 MiB transferred (4994.44 MiB/sec)
+
+General statistics:
+   total time:  10.0002s
+   total number of events: 199824
+
+Latency (ms):
+   min: 0.05   avg: 0.05   max: 5.53   95th: 0.05   sum: 9875.07
+
+Threads fairness:
+   events (avg/stddev): 199824.0000/0.00
+   execution time (avg/stddev): 9.8751/0.00

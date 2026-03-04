@@ -1,0 +1,804 @@
+=== PAGES CONTENANT 'CHAPITRE' ===
+
+Page 4:
+  [chapitres est disponible sur le site web de l’auteur à l'adresse]
+
+Page 28:
+  [chapitres introduisent les notions fondamentales (Chapitres) et les suivants]
+  [Lechapitre traite de notions générales et fondamentales en informatique et]
+
+Page 29:
+  [Lechapitre concerne le codage de l’information notamment des nombres]
+  [Lechapitre aborde les notions liées à la mémoire (comme l’alignement,]
+  [Lechapitre traite des logiciels utilisés dans le cadre de cet ouvrage c’est à]
+  [Lechapitre reprend les notions vues sur les registres dans le chapitre]
+  [Lechapitre apprend comment passer des paramètres à un sous-programme]
+
+Page 30:
+  [Lechapitre aborde le traitement desnombres à virgule flottanteparle coproces-]
+  [Lechapitre traite des unités vectorielles et des instructions liées à ces unités]
+  [Le dernier chapitre académique (chapitre ) traite de l’algèbre de Boole. Même]
+  [la logique. Ce chapitre quelque peu disgressif peut néanmoins faire partie de ce]
+  [Plusieurs études de cas (chapitres) permettent de mettre en oeuvre]
+
+Page 31:
+  [Enfin, le dernier chapitre des études de cas]
+
+Page 33:
+  [Chapitre1]
+
+Page 34:
+  [28 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+  [pourPopulation Countet est très efficace (voir Chapitre) comparativement à]
+
+Page 35:
+  [Chapitre suivant).]
+
+Page 36:
+  [30 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 37:
+  [que provient l’efficacité de l’exécution du code (voir le Chapitre),]
+
+Page 38:
+  [32 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+  [début de chapitre. Ce test s’exécutait en 8 secondes sur un microprocesseur Intel]
+  [en utilisant la partie basse des registres vectoriels SSE (cf. Chapitres,) car]
+
+Page 40:
+  [34 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 42:
+  [36 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 43:
+  [Chapitre). Il se peut également que la complexité du problème rende impossible]
+
+Page 44:
+  [38 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 46:
+  [40 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 48:
+  [42 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 50:
+  [44 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 51:
+  [lecteur intéressé la lecture du chapitre 4 de [4] et des chapitres 6 et 7 de [3].]
+
+Page 52:
+  [46 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 54:
+  [48 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 56:
+  [50 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 58:
+  [52 CHAPITRE 1. INFORMATIQUE, INFORMATICIEN ET ASSEMBLEUR]
+
+Page 59:
+  [Chapitre2]
+  [Dans ce chapitre nous allons découvrir comment est modélisée l’information]
+  [de la Section) ou le calcul de certaines valeurs (voir Chapitre).]
+
+Page 60:
+  [54	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 62:
+  [56	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 64:
+  [58	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 65:
+  [La phrase introductive de ce chapitre reprend dans l’ordre, pour chaque mot, la]
+
+Page 66:
+  [60	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 68:
+  [62	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 70:
+  [64	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 72:
+  [66	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 74:
+  [68	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 76:
+  [70	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 77:
+  [arithmétique (cf. Chapitre)]
+
+Page 78:
+  [72	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 80:
+  [74	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 82:
+  [76	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 84:
+  [78	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+  [mais comme nous le verrons dans le Chapitre, il est normalement nécessaire]
+
+Page 86:
+  [80	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 88:
+  [82	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 90:
+  [84	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+  [Après lecture et travail sur ce chapitre, on doit être capable de :]
+
+Page 92:
+  [86	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 94:
+  [88	CHAPITRE 2. REPRÉSENTATION DE L’INFORMATION]
+
+Page 95:
+  [Chapitre3]
+  [Ce chapitre introduit les bases de l’organisation interne d’un microprocesseur]
+  [le Chapitre)]
+
+Page 96:
+  [90 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+  [ce que nous allons voir au travers de ce chapitre. Nous avons fait le choix de rester]
+
+Page 98:
+  [92 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 99:
+  [Chapitre).]
+
+Page 100:
+  [94 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 102:
+  [96 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 104:
+  [98 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 106:
+  [100 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 108:
+  [102 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+  [Nous nous intéressons dans ce chapitre aux microprocesseurs de la famille x86]
+
+Page 110:
+  [104 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+  [En prévision de ce que nous verrons dans le prochain chapitre, nous indiquons]
+
+Page 112:
+  [106 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 114:
+  [108 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 115:
+  [plus d’information sur les registres, on consultera le Chapitre.]
+
+Page 116:
+  [110 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 118:
+  [112 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+  [Nous allons donc passer en revue ces techniques dans la suite de ce chapitre.]
+
+Page 120:
+  [114 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 122:
+  [116 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+  [que nous verrons dans le Chapitre, nous avons fait figurer le code assembleur]
+
+Page 124:
+  [118 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 126:
+  [120 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 128:
+  [122 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 130:
+  [124 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 132:
+  [126 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 134:
+  [128 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 136:
+  [130 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 138:
+  [132 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 140:
+  [134 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 142:
+  [136 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 144:
+  [138 CHAPITRE 3. LE FONCTIONNEMENT DU MICROPROCESSEUR]
+
+Page 145:
+  [Chapitre4]
+  [Dans ce chapitre nous allons installer et découvrir les logiciels qui nous permet-]
+
+Page 146:
+  [140 CHAPITRE 4. OUTILS POUR LA PROGRAMMATION ASSEMBLEUR]
+
+Page 148:
+  [142 CHAPITRE 4. OUTILS POUR LA PROGRAMMATION ASSEMBLEUR]
+
+Page 150:
+  [144 CHAPITRE 4. OUTILS POUR LA PROGRAMMATION ASSEMBLEUR]
+  [Chapitre) qui appelle la fonction printfde la librairie C pour afficher une chaîne]
+
+Page 152:
+  [146 CHAPITRE 4. OUTILS POUR LA PROGRAMMATION ASSEMBLEUR]
+
+Page 154:
+  [148 CHAPITRE 4. OUTILS POUR LA PROGRAMMATION ASSEMBLEUR]
+
+Page 155:
+  [Chapitre5]
+  [Dans ce chapitre nous allons découvrir et nous familiariser avec les instructions]
+  [de base de l’assembleur x86. Avant de nous diriger dans les chapitres suivants]
+  [Nous avons déjà évoqué les registres dans le Chapitre. Nous allons revoir, en]
+
+Page 156:
+  [150	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 157:
+  [Nous avons en outre évoqué, Chapitre, les registres de segments qui contiennent]
+
+Page 158:
+  [152	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 160:
+  [154	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 162:
+  [156	CHAPITRE 5. TRAITEMENTS DE BASE]
+  [Un exemple concret est celui du Chapitre]
+
+Page 164:
+  [158	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 166:
+  [160	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 168:
+  [162	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 170:
+  [164	CHAPITRE 5. TRAITEMENTS DE BASE]
+  [•call : réalise un appel de sous-programme (cf. Chapitre)]
+
+Page 172:
+  [166	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 173:
+  [Dans la suite de ce chapitre et de l’ouvrage, nous allons traduire du code écrit]
+  [la pile (cf. Chapitre). Il faudra donc les placer dans des registres. C’est le cas pour]
+
+Page 174:
+  [168	CHAPITRE 5. TRAITEMENTS DE BASE]
+  [chapitre un autre type de label utilisé parnasm.]
+
+Page 176:
+  [170	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 178:
+  [172	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 180:
+  [174	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 182:
+  [176	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 184:
+  [178	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 186:
+  [180	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 188:
+  [182	CHAPITRE 5. TRAITEMENTS DE BASE]
+  [chemin emprunter (cf. Chapitre).]
+
+Page 190:
+  [184	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 191:
+  [prenant en compte que la partie basse du registre (cf. Chapitre), on obtient :]
+
+Page 192:
+  [186	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 194:
+  [188	CHAPITRE 5. TRAITEMENTS DE BASE]
+  [Nous avons vu dans ce chapitre comment traduire les structures de contrôle du]
+  [ifsoit en le remplaçant par des instructions spécifiques (cf Chapitre), soit]
+  [en le vectorisant (cf. Chapitre)]
+
+Page 196:
+  [190	CHAPITRE 5. TRAITEMENTS DE BASE]
+
+Page 197:
+  [Chapitre6]
+  [Dans ce chapitre nous allons voir comment réaliser l’appel de sous-programme]
+
+Page 198:
+  [192	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 200:
+  [194	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+  [les deux vers qui figurent en préambule de ce chapitre, représentent un moyen]
+  [pile du coprocesseur (cf. Chapitre)]
+
+Page 202:
+  [196	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 204:
+  [198	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 206:
+  [200	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 207:
+  [basse des registresxmm0àxmm7(cf. Chapitre)]
+
+Page 208:
+  [202	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 210:
+  [204	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 212:
+  [206	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 213:
+  [movapsimpose que l’adresse de destination soit multiple de 16 (voir le Chapitre).]
+
+Page 214:
+  [208	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 216:
+  [210	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 218:
+  [212	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 220:
+  [214	CHAPITRE 6. APPEL DE SOUS-PROGRAMME]
+
+Page 221:
+  [Chapitre7]
+  [Dans ce chapitre nous allons voir comment utiliser le coprocesseur arithmétique]
+  [dans le Chapitre.]
+
+Page 222:
+  [216	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+
+Page 224:
+  [218	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+
+Page 226:
+  [220	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+
+Page 228:
+  [222	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+
+Page 230:
+  [224	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+  [Chapitre) pour réaliser les calculs avec les nombres flottants. En prévision de ce]
+  [que nous verrons dans le prochain chapitre nous montrons comment le compilateur]
+  [On a vu Chapitre	xetysont respectivement placées dans les]
+
+Page 232:
+  [226	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+
+Page 234:
+  [228	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+
+Page 236:
+  [230	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+  [Après lecture et travail sur ce chapitre, on doit être capable de :]
+
+Page 238:
+  [232	CHAPITRE 7. COPROCESSEUR ARITHMÉTIQUE]
+
+Page 239:
+  [Chapitre8]
+
+Page 240:
+  [234	CHAPITRE 8. UNITÉS VECTORIELLES]
+  [Nous nous intéresserons et décrirons dans la suite de ce chapitre les instructions]
+
+Page 242:
+  [236	CHAPITRE 8. UNITÉS VECTORIELLES]
+  [16. Nous renvoyons le lecteur au Chapitre, Section]
+
+Page 244:
+  [238	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 245:
+  [tant le Chapitre.]
+
+Page 246:
+  [240	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 248:
+  [242	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 249:
+  [eXtensions) et AVX2 256 bits. Nous ne nous intéresserons qu’en fin de chapitre à]
+
+Page 250:
+  [244	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 252:
+  [246	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 254:
+  [248	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 256:
+  [250	CHAPITRE 8. UNITÉS VECTORIELLES]
+  [Pour en revenir à la fonction initiale de ce chapitre, qui consiste à additionner]
+
+Page 258:
+  [252	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 260:
+  [254	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 262:
+  [256	CHAPITRE 8. UNITÉS VECTORIELLES]
+  [aux Chapitres]
+
+Page 264:
+  [258	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 265:
+  [pourra consulter les chapitres qui concernent les différentes études de cas que]
+
+Page 266:
+  [260	CHAPITRE 8. UNITÉS VECTORIELLES]
+
+Page 267:
+  [Chapitre9]
+  [Nous rappelons que ce chapitre est quelque peu digressif par rapport à l’appren-]
+  [plus simplement ou rapidement. Nous en verrons un exemple en fin de chapitre]
+  [ce n’est pas le cas, nous recommandons la lecture des premiers chapitres de [23].]
+
+Page 268:
+  [262	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 270:
+  [264	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 272:
+  [266	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 274:
+  [268	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 276:
+  [270	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 278:
+  [272	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 280:
+  [274	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 282:
+  [276	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 284:
+  [278	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 286:
+  [280	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 288:
+  [282	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 290:
+  [284	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 292:
+  [286	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 294:
+  [288	CHAPITRE 9. ALGÈBRE DE BOOLE]
+
+Page 295:
+  [Chapitre10]
+  [points cruciaux que nous avons évoqués, nous allons détailler dans ce chapitre les]
+
+Page 296:
+  [290	CHAPITRE 10. ETUDES DE CAS]
+
+Page 298:
+  [292	CHAPITRE 10. ETUDES DE CAS]
+
+Page 300:
+  [294	CHAPITRE 10. ETUDES DE CAS]
+
+Page 302:
+  [296	CHAPITRE 10. ETUDES DE CAS]
+  [Le chapitre 2 contient deux tests, le premier concerne l’utilisation de l’instruction]
+
+Page 304:
+  [298	CHAPITRE 10. ETUDES DE CAS]
+
+Page 305:
+  [Chapitre11]
+  [Nous abordons dans ce chapitre le problème du produit de matrices qui est un]
+
+Page 306:
+  [300 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 308:
+  [302 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 310:
+  [304 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 312:
+  [306 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 314:
+  [308 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 316:
+  [310 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 317:
+  [Une autre technique d’amélioration, évoquée Chapitre, consiste à réaliser le]
+
+Page 318:
+  [312 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 320:
+  [314 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 322:
+  [316 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 324:
+  [318 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 326:
+  [320 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 328:
+  [322 CHAPITRE 11. ETUDE DE CAS PRODUIT DE MATRICES]
+
+Page 329:
+  [Chapitre12]
+
+Page 330:
+  [324	CHAPITRE 12. ETUDE DE CAS POPCNT]
+
+Page 332:
+  [326	CHAPITRE 12. ETUDE DE CAS POPCNT]
+
+Page 334:
+  [328	CHAPITRE 12. ETUDE DE CAS POPCNT]
+
+Page 336:
+  [330	CHAPITRE 12. ETUDE DE CAS POPCNT]
+  [chapitres précédents a pour but de compter le nombre de bits à 1 dans un re-]
+
+Page 338:
+  [332	CHAPITRE 12. ETUDE DE CAS POPCNT]
+
+Page 340:
+  [334	CHAPITRE 12. ETUDE DE CAS POPCNT]
+
+Page 342:
+  [336	CHAPITRE 12. ETUDE DE CAS POPCNT]
+
+Page 344:
+  [338	CHAPITRE 12. ETUDE DE CAS POPCNT]
+
+Page 345:
+  [Chapitre13]
+  [Ce chapitre traite de l’implantation de la fonctionsaxpyet permet de mettre en]
+  [pratique ce qui a été vu au Chapitre]
+  [au Chapitre]
+
+Page 346:
+  [340	CHAPITRE 13. ETUDE DE CAS VARIANTE DE SAXPY]
+
+Page 348:
+  [342	CHAPITRE 13. ETUDE DE CAS VARIANTE DE SAXPY]
+
+Page 350:
+  [344	CHAPITRE 13. ETUDE DE CAS VARIANTE DE SAXPY]
+
+Page 352:
+  [346	CHAPITRE 13. ETUDE DE CAS VARIANTE DE SAXPY]
+
+Page 354:
+  [348	CHAPITRE 13. ETUDE DE CAS VARIANTE DE SAXPY]
+
+Page 356:
+  [350	CHAPITRE 13. ETUDE DE CAS VARIANTE DE SAXPY]
+
+Page 357:
+  [le chapitre, cela provient de l’option de compilation -std=c++11. En effet avec]
+  [Nous avons vu dans ce chapitre comment utiliser les instructions de la FPU pour]
+
+Page 358:
+  [352	CHAPITRE 13. ETUDE DE CAS VARIANTE DE SAXPY]
+
+Page 359:
+  [Chapitre14]
+  [Ce chapitre traite de l’implantation de la fonction deFitchdans le cadre de la]
+
+Page 360:
+  [354 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 362:
+  [356 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 364:
+  [358 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 366:
+  [360 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 368:
+  [362 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 370:
+  [364 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 372:
+  [366 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 374:
+  [368 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 376:
+  [370 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 378:
+  [372 CHAPITRE 14. ETUDE DE CAS MAXIMUM DE PARCIMONIE]
+
+Page 379:
+  [Chapitre15]
+  [Nous allons dans ce chapitre nous intéresser à un problème simple qui sert]
+  [connaissances que nous avons mises en avant dans les Chapitres. L’utilisation]
+
+Page 380:
+  [374 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 382:
+  [376 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 384:
+  [378 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 386:
+  [380 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 388:
+  [382 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 390:
+  [384 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 392:
+  [386 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 394:
+  [388 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 396:
+  [390 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 398:
+  [392 CHAPITRE 15. ETUDE DE CAS COMPTER LES VOYELLES]
+
+Page 399:
+  [Chapitre16]
+  [Ce chapitre traite de l’implantation de fonctions qui permettent de calculer]
+
+Page 400:
+  [394 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 402:
+  [396 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 404:
+  [398 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 406:
+  [400 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 408:
+  [402 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 410:
+  [404 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 412:
+  [406 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 414:
+  [408 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 416:
+  [410 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 418:
+  [412 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 420:
+  [414 CHAPITRE 16. ETUDE DE CAS SUITE DE FIBONACCI]
+
+Page 421:
+  [Chapitre17]
+
+Page 422:
+  [416 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 424:
+  [418 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 426:
+  [420 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 428:
+  [422 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 430:
+  [424 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 432:
+  [426 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 434:
+  [428 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 436:
+  [430 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 438:
+  [432 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 440:
+  [434 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 442:
+  [436 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+
+Page 444:
+  [438 CHAPITRE 17. ETUDE DE CAS NOMBRES AUTO-DESCRIPTIFS]
+

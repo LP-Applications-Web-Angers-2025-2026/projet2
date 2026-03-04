@@ -1,0 +1,1 @@
+endsp main, rdi, rsi, 100, rbx

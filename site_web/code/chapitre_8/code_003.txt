@@ -1,0 +1,4 @@
+movdqa ,ebx]
+; mémoire (Load)
+movdqa[edi+ecx*4],xmm7; idem (Store)
+movdqa ,xmm1 ; deux opérandes SSE

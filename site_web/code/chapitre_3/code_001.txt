@@ -1,0 +1,16 @@
+Host: zentopia Kernel: 5.4.0-40-generic x86_64 bits: 64
+Desktop: Gnome 3.36.2 Distro: Ubuntu 20.04 LTS (Focal Fossa)
+4Machine:
+Type: Desktop Mobo: Micro-Star model: MPG X570 GAMING EDGE WIFI (MS-7C37)
+v: 1.0 serial: <superuser/root required> UEFI: American Megatrends v: 1.50
+date: 10/29/2019
+8CPU:
+Topology: 6-Core model: AMD Ryzen 5 3600 bits: 64 type: MT MCP
+L2 cache: 3072 KiB
+Speed: 2200 MHz min/max: 2200/3600 MHz Core speeds (MHz): 1: 2209 2: 2200
+3: 2200 4: 2199 5: 2200 6: 2199 7: 2200 8: 2198 9: 2199 10: 2200 11: 2199
+12: 2200
+14Graphics:
+Device-1: NVIDIA GP104 [GeForce GTX 1070] driver: nvidia v: 440.100
+16...
+3.9.1.2

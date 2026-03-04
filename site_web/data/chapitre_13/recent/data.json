@@ -1,0 +1,145 @@
+{
+    "chapter": 13,
+    "title": "Variante de SAXPY",
+    "description": "Temps d'exécution en secondes pour 50 000 répétitions sur des vecteurs de 524 287 éléments (a×X+Y avec retour de la somme).",
+    "CPUs": [
+        "Core i7 10850H",
+        "Ryzen 5 5600g",
+        "Core i5 12400F",
+        "Ryzen 5 9600X"
+    ],
+    "Years": [
+        2020,
+        2021,
+        2022,
+        2024
+    ],
+    "Methods": [
+        {
+            "name": "C",
+            "values": [
+                16.05,
+                38.86,
+                18.5,
+                29.19
+            ]
+        },
+        {
+            "name": "asm fpu",
+            "values": [
+                16.22,
+                39.81,
+                18.35,
+                29.09
+            ]
+        },
+        {
+            "name": "asm fpu ur4",
+            "values": [
+                16.14,
+                39.95,
+                18.62,
+                29.09
+            ]
+        },
+        {
+            "name": "asm sse",
+            "values": [
+                5.49,
+                5.36,
+                4.51,
+                3.77
+            ]
+        },
+        {
+            "name": "C sse intrin.",
+            "values": [
+                5.35,
+                5.31,
+                4.6,
+                2.54
+            ]
+        },
+        {
+            "name": "asm avx",
+            "values": [
+                3.79,
+                3.75,
+                4.41,
+                1.6
+            ]
+        },
+        {
+            "name": "asm avx2 ur2",
+            "values": [
+                3.75,
+                3.47,
+                4.42,
+                1.58
+            ]
+        },
+        {
+            "name": "asm avx2 ur4",
+            "values": [
+                3.72,
+                3.44,
+                4.49,
+                1.55
+            ]
+        },
+        {
+            "name": "C avx2 intrin.",
+            "values": [
+                3.62,
+                3.26,
+                4.79,
+                1.54
+            ]
+        },
+        {
+            "name": "C avx2 ez_ii",
+            "values": [
+                3.62,
+                3.39,
+                4.75,
+                1.56
+            ]
+        },
+        {
+            "name": "asm fma",
+            "values": [
+                3.66,
+                3.3,
+                4.4,
+                1.58
+            ]
+        },
+        {
+            "name": "C fma ez_ii",
+            "values": [
+                3.61,
+                3.38,
+                4.81,
+                1.56
+            ]
+        },
+        {
+            "name": "C avx512 intrin.",
+            "values": [
+                null,
+                null,
+                null,
+                1.49
+            ]
+        },
+        {
+            "name": "C avx512 fma intr.",
+            "values": [
+                null,
+                null,
+                null,
+                1.53
+            ]
+        }
+    ]
+}

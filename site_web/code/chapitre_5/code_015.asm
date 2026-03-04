@@ -1,0 +1,1 @@
+lea eax, [ebx+ecx*4+9]

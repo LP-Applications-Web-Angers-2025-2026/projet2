@@ -1,0 +1,10 @@
+angle: ; degrés
+cqv: ; degrés
+5section
+; calcul de pi *60 / 180 pour avoir la mesure en radians
+fild [angle]
+fild [cqv]
+fdivp ,st0 ; st1 = 60.0 / 180.0, puis pop st0 = 0.3333...
+fldpi ; st0 = pi, st1 = 0.3333...
+fmulp ,st0 ; st0 = pi*0.3333...
+fsincos

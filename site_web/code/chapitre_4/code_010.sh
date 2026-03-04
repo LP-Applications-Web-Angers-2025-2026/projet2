@@ -1,0 +1,1 @@
+g++ -o mon_binaire.exe *.o [options de compilation C/C++]

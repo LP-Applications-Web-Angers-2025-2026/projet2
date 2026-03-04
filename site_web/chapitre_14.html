@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 14 : Étude de cas (Fonction de Fitch)</h1>
+
+<h2 class="section">14.1 Introduction</h2>
+
+<p>Ce chapitre traite de l'implantation de la fonction de <em>Fitch</em> dans le cadre de la
+résolution du problème de la recherche du Maximum de Parcimonie en Bioinfor-
+matique. Il permet d'introduire plusieurs instructions assembleur liées au calcul
+vectoriel avec unités SSE sur les entiers.</p>
+<p>Le problème de recherche du Maximum de Parcimonie consiste étant donné un
+ensemble de $n$ séquences d'ADN de même longueur $k$ à trouver un arbre binaire
+dont le coût est minimum étant donné un critère d'optimisation.
+Pour calculer ce coût qui correspond au nombre de mutations entre séquences,
+chaque feuille de l'arbre contient une des séquences initiale du problème et les
+noeuds internes contiennent des séquences dites <em>hypothétiques</em> qui sont calculées en
+utilisant la fonction de Fitch. Celle-ci sera notre fonction de référence à améliorer
+et pour laquelle toute mutation engendre un coût d'une unité.</p>
+<p>Le coût total d'un arbre est égal à la somme des coûts de chaque séquence
+hypothétique. Pour le calculer, on part de la racine et on descend jusqu'aux feuilles,
+puis on remonte vers la racine en calculant les séquences hypothétiques tout en
+sommant leurs coûts.</p>
+<p>Prenons un exemple avec les quatre séquences d'ADN suivantes :</p>
+<ul>
+<li>$S1$ = AAAAA</li>
+<li>$S2$ = AAAAC</li>
+<li>$S3$ = CCCTT</li>
+<li>$S4$ = CCCAT</li>
+</ul>
+<p>On rappelle que les acides nucléiques qui composent les séquences d'ADN sont
+l'adénine (A), la cytosine (C), la guanine (G) et la thymine (T). La séquence $S1$ est
+donc composée de 5 adénines, $S2$ de quatre adénines suivies d'une cytosine, etc.</p>
+<p>Le premier arbre, qui dans la notation Newick est $T1 = ((S1,S3),(S2,S4))$,
+possède un coût total de $4 + 5 + 0 = 9$. En effet, lorsque l'on calcule la séquence
+hypothétique qui résulte de $(S1,S3)$, on a cinq mutations : trois modifications où A
+est muté en C et deux où A subit une mutation en T. Sur la branche de droite qui
+correspond à séquence hypothétique qui résulte de $(S2,S4)$, on a quatre mutations :
+trois modifications où A est muté en C, puis A en regard de A, donc aucune mutation,
+et enfin, une mutation de C en T. Au niveau de la racine, on n'aura aucune mutation
+car on a à chaque fois des sous-ensembles de caractères communs. On trouve trois
+fois le sous-ensemble <code>{A,C}</code> en regard de lui-même, puis <code>{A,T}</code> en regard de <code>{A}</code>
+dont l'intersection est <code>{A}</code> et enfin <code>{A,T}</code> en regard de <code>{C,T}</code> dont l'intersection
+est <code>{T}</code>.</p>
+<p>Le second arbre $T2 = ((S1,S2),(S3,S4))$ possède un coût inférieur à $T1$, égal à
+$4 + 1 + 1 = 6$. C'est donc $T2$ qui est le plus <em>parcimonieux</em>, c'est à dire qui possède le
+moins de mutations et qui doit être gardé comme solution au problème.</p>
+<p>Le problème de recherche de l'arbre de parcimonie maximum est un problème
+d'optimisation combinatoire et est <strong>NP-Complet</strong> ce qui signifie, en simplifiant à
+outrance, qu'il n'existe pas d'algorithme qui nous permette de trouver la solution
+autre qu'une recherche exhaustive. Malheureusement, le nombre d'arbres binaires à examiner est exponentiel, par
+exemple pour 50 séquences, il y a $2,8 \times 10^{74}$ arbres possibles. On ne peut donc
+envisager une recherche exhaustive et il faut faire appel à des métaheuristiques qui
+sont des techniques de recherche liées à la résolution de ce genre de problème.</p>
+<h2 class="section">14.2 Fonction à implanter (Référence en C)</h2>
+
+<p>La fonction à implanter est donnée <em>Listing 14.2.1</em>. Elle comporte quatre para-
+mètres qui sont les séquences en entrée <code>x</code> et <code>y</code>, la séquence hypothétique <code>z</code> qui est
+calculée par la fonction ainsi que la longueur des séquences (<code>size</code>). En retour on
+donne le nombre de mutations trouvées.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_14/code_001.c" target="_blank">code/chapitre_14/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 fitch_ref<span style="color: #009900;">&#40;</span>u8<span style="color: #339933;">*</span> x<span style="color: #339933;">,</span> u8<span style="color: #339933;">*</span> y<span style="color: #339933;">,</span> u8<span style="color: #339933;">*</span> z<span style="color: #339933;">,</span> u32 size<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 mutations <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>u32 i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> size<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">&amp;</span> y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">|</span> y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #339933;">++</span>mutations<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> mutations<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 14.2.1 – Maximum de Parcimonie fonction de référence en C</em></p>
+<p>Les séquences sont modélisées sous forme de tableaux d'octets et pour coder
+efficacement la possibilité d'avoir des combinaisons d'acides nucléiques comme 'A
+ou C', 'A ou C ou T', on utilise des puissances de 2 :</p>
+<ul>
+<li>A = $2^0 = 1$</li>
+<li>C = $2^1 = 2$</li>
+<li>G = $2^2 = 4$</li>
+<li>T = $2^3 = 8$</li>
+</ul>
+<p>Ainsi 'A ou C' qui en notation ensembliste se note ${A} \cup {C}$ (ou encore ${A,C}$)
+est codé par $2^0 + 2^1 = 1 + 2 = 3$. La fonction de Fitch vérifie que pour chacun des
+sous-ensembles de caractères en regard des deux séquences en entrée, il existe
+un caractère ou un sous-ensemble commun en réalisant une <strong>intersection</strong> des sous-
+ensembles de caractères de <code>x[i]</code> avec <code>y[i]</code>. Si cet ensemble est vide (égal à <code>0</code>) c'est qu'il
+n'existe aucun caractère en commun : on a une mutation et il faut alors prendre
+l'<strong>union</strong> des ensembles de caractères (<code>x[i] | y[i]</code>).</p>
+<h2 class="section">14.3 Implantation Assembleur de base x86 (32 bits)</h2>
+
+<p>La difficulté de l'implantation réside dans le fait que l'on ne dispose en 32 bits
+que de 6 registres généraux et que la fonction fait apparaître 6 variables :</p>
+<ul>
+<li>les séquences $x,y,z$,</li>
+<li>la taille $size$ des séquences,</li>
+<li>la variable de boucle $i$,</li>
+<li>le nombre de $mutations$.</li>
+</ul>
+<p>Cependant il faudra réaliser des calculs comme <code>x[i] &amp; y[i]</code>, il est donc néces-
+saire de disposer d'au minimum un registre pour les calculs.
+L'association variables / registres est celle de la Table 14.1. </p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Cste/Param/Var</th>
+<th>Type</th>
+<th>Paramètre</th>
+<th>Registre</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td></td>
+<td><code>[ebp+8]</code></td>
+<td><code>esi</code></td>
+<td>séquence <code>x</code></td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td></td>
+<td><code>[ebp+12]</code></td>
+<td><code>edi</code></td>
+<td>séquence <code>y</code></td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td></td>
+<td><code>[ebp+16]</code></td>
+<td><code>ebx</code></td>
+<td>séquence <code>z</code></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td></td>
+<td><code>[ebp+20]</code></td>
+<td>pile</td>
+<td>taille des séquences</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td></td>
+<td></td>
+<td><code>ecx</code></td>
+<td>variable de boucle</td>
+</tr>
+<tr>
+<td><code>mutations</code></td>
+<td><code>u32</code></td>
+<td></td>
+<td><code>eax</code></td>
+<td>nombre de mutations</td>
+</tr>
+<tr>
+<td><em>calculs</em></td>
+<td></td>
+<td></td>
+<td><code>edx</code></td>
+<td>tampon temporaire</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 14.1 – Association entre variables et registres pour la fonction de référence de Fitch</em></p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_14/code_002.asm" target="_blank">code/chapitre_14/code_002.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">fitch_asm<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; entrée dans la fonction</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">20</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">test</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; si size == 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jz</span> <span style="color: #339933;">.</span>end</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; sauvegarde des registres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">esi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">edi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; chargement des paramètres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; mutations = 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; i = 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>for<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">20</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jge</span> <span style="color: #339933;">.</span>endfor</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">dl</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; dl = x[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">and</span> <span style="color: #46aa03; font-weight: bold;">dl</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; dl = x[i] &amp; y[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jnz</span> <span style="color: #339933;">.</span>endif &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si dl != 0 alors pas de mutation</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">dl</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">or</span> <span style="color: #46aa03; font-weight: bold;">dl</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; dl = x[i] | y[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">inc</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ++mutations</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>endif<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">dl</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; z[i] = dl</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">inc</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ++i</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jmp</span> <span style="color: #339933;">.</span>for</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>endfor<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">edi</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; restauration des registres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">esi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>end<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; sortie de fonction</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 14.3.1 – Maximum de Parcimonie fonction de référence en assembleur</em></p>
+<p><strong>Temps de référence</strong>
+Pour l'implantation assembleur ci-dessus <code>(50 000 tics sur une matrice de 524 287)</code>, l'exécution dure environ 84,37 secondes sur un processeur Intel Core i7.</p>
+<h2 class="section">14.4 Suppression du branchement (Élimination du IF)</h2>
+
+<p>L'implantation précédente se révèle inefficace pour une simple raison que
+nous avons déjà évoquée. La présence d'une conditionnelle (<code>if</code>) non prédictible
+à l'intérieur d'une boucle (<code>for</code>). Si on a choisi le mauvais chemin d'exécution il
+faudra vider le <em>pipeline</em> ce qui nous ralentit.</p>
+<p>Afin d'améliorer l'efficacité du traitement il est nécessaire de supprimer le branchement conditionnel.
+On peut, dans ce cas précis, choisir d'utiliser des instructions comme <code>setCC</code> ou
+<code>cmovCC</code> qui s'exécutent en fonction de la condition, modélisée ici par les deux lettres
+<code>CC</code>.</p>
+<p>On modifie l'association variables afin de libérer <code>eax</code>, <code>ebx</code> et <code>edx</code>.
+On charge <code>x[i]</code> en partie basse de <code>eax</code> et <code>ebx</code> puis <code>y[i]</code> en partie basse de <code>edx</code>.</p>
+<p>On calcule ensuite :</p>
+<ul>
+<li><code>x[i] | y[i]</code> dans <code>ebx</code></li>
+<li><code>x[i] &amp; y[i]</code> dans <code>eax</code></li>
+</ul>
+<p>L'instruction <code>and eax, edx</code> met à jour le registre de <em>flags</em>, dès lors on peut utiliser
+deux instructions conditionnelles :</p>
+<ul>
+<li><code>setz dl</code> (donc <code>edx</code>) : fixe <code>dl</code> à $1$ si <code>x[i] &amp; y[i] == 0</code>, sinon $0$.</li>
+<li><code>cmovz eax, ebx</code> : remonte <code>x[i] | y[i]</code> vers <code>eax</code> si le flag <code>Z</code> est actif.</li>
+</ul>
+<p>Ces deux instructions réalisent la conditionnelle <code>if</code> de la fonction de référence sans introduire la moindre notion de prédiction de pile.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_14/code_003.asm" target="_blank">code/chapitre_14/code_003.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>for<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">20</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jge</span> <span style="color: #339933;">.</span>endfor</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">movzx</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">byte</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; dl = y[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">movzx</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">byte</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; al = x[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; bl = x[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">or</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; bl = x[i] | y[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">and</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; al = x[i] &amp; y[i]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">setz</span> <span style="color: #46aa03; font-weight: bold;">dl</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; dl = (al == 0) ? 1 : 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmovz</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; eax = (al == 0) ? ebx : eax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">-</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; mutations += edx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">al</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; z[i] = al</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ++i</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jmp</span> <span style="color: #339933;">.</span>for</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 14.4.1 – Maximum de Parcimonie fonction de référence sans if</em></p>
+<p><strong>Amélioration sans if</strong>
+En éliminant le <code>if</code> on ne met plus que <strong>34,68 secondes</strong>, on va donc environ <strong>2,43 fois plus vite</strong> qu'avec les sauts non-prédictibles.</p>
+<p><strong>Optimisation supplémentaire</strong> (<code>Listing 14.5.1</code>) : En accédant aux pointeurs directement sur <code>esp</code> (sans <code>ebp</code>), on libère 7 registres. Remplacer les accès mémoire pour <code>mutations</code> par des registres pur diminue le temps jusqu'à <strong>5,24 secondes</strong>, soit <strong>16 fois plus vite</strong> que la référence.</p>
+<h2 class="section">14.6 Amélioration Vectorielle (SSE2 et SSE4.1)</h2>
+
+<p>L'implantation de la fonction de référence en utilisant des instructions SSE est
+relativement simple. On traitera
+16 octets en parallèle ce qui apporte un gain substantiel. Pour réaliser le OU-binaire, on utilisera l'instruction <code>por</code> (<em>Parallel OR</em>) et
+pour le ET-binaire, on dispose de l'instruction <code>pand</code> (<em>Parallel AND</em>).</p>
+<p>La difficulté repose sur l'extraction de l'information liée au résultat du ET-binaire (le <em>if == 0</em>).
+On dispose heureusement pour cela de deux instructions vectorielles :</p>
+<ul>
+<li><code>pcmpeqb xmm1, xmm2</code> (<em>Parallel CoMPare EQual Bytes</em>) qui compare les éléments octet par octet. Si <code>xmm1.b[i] == xmm2.b[i]</code> alors
+<code>xmm1.b[i] = 0xFF</code>, sinon <code>0x00</code>.</li>
+<li><code>pmovmskb eax, xmm1</code> (<em>Parallel MOVe MaSK of Bytes</em>) est utilisée pour récupérer
+le résultat de la comparaison précédente, on extrait le bit de poids fort de
+chaque octet de <code>xmm1</code> et on le place dans un registre non-vectoriel 32 bits (<code>eax</code>).</li>
+</ul>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_14/code_004.asm" target="_blank">code/chapitre_14/code_004.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>for_u16<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Chargement x</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Chargement y</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; xmm1 = x</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pand</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; xmm0 = x &amp; y</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">por</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm1 = x | y</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm4</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; xmm4 = x &amp; y (tampon pour comparer à 0)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pcmpeqb</span> <span style="color: #46aa03; font-weight: bold;">xmm4</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm6</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm6 = [0]*16. Fait xmm4 = 0xFF si vide.</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pmovmskb</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm4</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Le masque vers ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Compter le nombre de bit à 1 (= mutations !)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Ajout aux mutations totales</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pand</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm4</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Conserver le OU là où c'était vide</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pandn</span> <span style="color: #46aa03; font-weight: bold;">xmm4</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Conserver le ET de l'autre côté</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">por</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm0 contient maintenant le Z définitif</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqa</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; z[i:i+15] = xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; boucle sur size / 16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jnz</span> <span style="color: #339933;">.</span>for_u16</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 14.6.1 – Maximum de Parcimonie version SSE2</em></p>
+<p><strong>Amélioration SSE2</strong>
+On abaisse le temps d'exécution à <strong>2,70 secondes</strong>, soit un <strong>facteur d'amélioration de ~31</strong>.</p>
+<p>Sur les plateformes plus récentes, le <strong>SSE4.1</strong> a introduit l'instruction <code>pblendvb</code> (<em>Variable Blend Packed Bytes</em>). Elle permet de sélectionner des octets de chacune de ses deux opérandes suivant
+le masque de sélection contenu dans le registre <code>xmm0</code> de base.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_14/code_005.asm" target="_blank">code/chapitre_14/code_005.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; ... (pand et por calculés dans xmm1 et xmm2)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pcmpeqb</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm0 est 0. Si le ET est vide, octet à 0xFF</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pmovmskb</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Gestion des mutations inchangée</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pblendvb</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; z[i:i+15] est calculé en 1 tic matériel !</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ...</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 14.7.1 – Extrait de Parcimonie version SSE4.1</em> (2.60 secondes).</p>
+<h2 class="section">14.8/14.11 Amélioration Vectorielle AVX2 et AVX512</h2>
+
+<p>La version AVX utilise les registres <code>ymm</code> qui ont une taille de 32 octets (soit 256
+bits). Le code est similaire à celui de la version SSE 4.1 mais traite 32 acides nucléiques à la fois.</p>
+<p>On trouvera sur AVX512 la capacité de traiter 64 octets avec les registres <code>zmm</code> (512 bits) : </p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_14/code_006.asm" target="_blank">code/chapitre_14/code_006.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; (Exemple partiel AVX512 avec registres k1/k2)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpcmpeqb</span> k1<span style="color: #339933;">,</span> zmm0<span style="color: #339933;">,</span> zmm1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Comparaison stockée dans le registre de masque k</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; vmovdqu8 zmm1 <span style="color: #009900; font-weight: bold;">&#123;</span>k1<span style="color: #009900; font-weight: bold;">&#125;</span><span style="color: #339933;">,</span> zmm2 &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Remplacement conditionnel ultra-rapide</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Extraction du masque k1 vers des registres généraux pour faire les popcnt</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Amélioration AVX2 et AVX512</strong>
+Le temps d'exécution est ramené à 1,35 secondes en AVX2 et 0,42 secondes en AVX512 natif (soit une divisibilité de performance de ×200 par rapport au code C).</p>
+<h2 class="section">14.10 Variante <em>C Intrinsics</em> : Directives Compilateur</h2>
+
+<p>La version <em>intrinsics</em> en AVX2 nécessite, pour être efficacement traduite par le
+compilateur, de fournir quelques informations à ce dernier. Notamment le mot clé <code>__restrict__</code>, qui indique que pour la durée de vie du pointeur, il n'y aura pas d'aliasing (personne d'autre ne modifiera cette plage en même temps).</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_14/code_007.c" target="_blank">code/chapitre_14/code_007.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">#include &lt;immintrin.h&gt;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 fitch_intrin<span style="color: #009900;">&#40;</span>u8<span style="color: #339933;">*</span> __restrict__ x<span style="color: #339933;">,</span> u8<span style="color: #339933;">*</span> __restrict__ y<span style="color: #339933;">,</span> u8<span style="color: #339933;">*</span> __restrict__ z<span style="color: #339933;">,</span> u32 size<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 i<span style="color: #339933;">,</span> mutations <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>u8<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>__builtin_assume_aligned<span style="color: #009900;">&#40;</span>x<span style="color: #339933;">,</span> <span style="color: #0000dd;">32</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; y <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>u8<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>__builtin_assume_aligned<span style="color: #009900;">&#40;</span>y<span style="color: #339933;">,</span> <span style="color: #0000dd;">32</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; z <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>u8<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>__builtin_assume_aligned<span style="color: #009900;">&#40;</span>z<span style="color: #339933;">,</span> <span style="color: #0000dd;">32</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; __m256i v_x<span style="color: #339933;">,</span> v_y<span style="color: #339933;">,</span> v_z<span style="color: #339933;">,</span> v_x_and_y<span style="color: #339933;">,</span> v_x_or_y<span style="color: #339933;">,</span> v_zero<span style="color: #339933;">,</span> v_cmp<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v_zero <span style="color: #339933;">=</span> _mm256_setzero_si256<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #009900;">&#40;</span>size <span style="color: #339933;">&amp;</span> ~<span style="color: #0000dd;">31</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> i <span style="color: #339933;">+=</span> <span style="color: #0000dd;">32</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_x <span style="color: #339933;">=</span> _mm256_load_si256<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m256i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">&amp;</span>x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_y <span style="color: #339933;">=</span> _mm256_load_si256<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m256i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">&amp;</span>y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_x_and_y <span style="color: #339933;">=</span> _mm256_and_si256<span style="color: #009900;">&#40;</span>v_x<span style="color: #339933;">,</span> v_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_x_or_y &nbsp;<span style="color: #339933;">=</span> _mm256_or_si256<span style="color: #009900;">&#40;</span>v_x<span style="color: #339933;">,</span> v_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_cmp <span style="color: #339933;">=</span> _mm256_cmpeq_epi8<span style="color: #009900;">&#40;</span>v_zero<span style="color: #339933;">,</span> v_x_and_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 r <span style="color: #339933;">=</span> _mm256_movemask_epi8<span style="color: #009900;">&#40;</span>v_cmp<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; mutations <span style="color: #339933;">+=</span> _mm_popcnt_u32<span style="color: #009900;">&#40;</span>r<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> </div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// Ou en AVX2 natif : v_z = _mm256_blendv_epi8(v_x_and_y, v_x_or_y, v_cmp)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_x <span style="color: #339933;">=</span> _mm256_andnot_si256<span style="color: #009900;">&#40;</span>v_cmp<span style="color: #339933;">,</span> v_x_and_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_y <span style="color: #339933;">=</span> _mm256_and_si256<span style="color: #009900;">&#40;</span>v_cmp<span style="color: #339933;">,</span> v_x_or_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; v_z <span style="color: #339933;">=</span> _mm256_or_si256<span style="color: #009900;">&#40;</span>v_x<span style="color: #339933;">,</span> v_y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; _mm256_store_si256<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m256i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">&amp;</span>z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> v_z<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// ... fin de traitement</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> mutations<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">14.12 Benchmark Récapitulatif</h2>
+
+<p>Afin de tester les différentes versions que nous avons écrites, nous allons exami-
+ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en fonction du processeur.
+(Méthode : <code>ref_v1_O3</code> (pur C avec -O3 GCC), <code>no_if_asm</code> (Assembleur optimisé sans saut), <code>sse41</code> et <code>avx2</code> natifs).</p>
+<h3 class="subsection">14.12.1 Architectures Anciennes (Avant 2015)</h3>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Pentium D 925</th>
+<th>Core 2 Q9300</th>
+<th>Core i7 860</th>
+<th>AMD Phenom X6</th>
+<th>Core i5 3570K</th>
+<th>Core i7 4790</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref_v1_O2</code></td>
+<td>224.64</td>
+<td>170.22</td>
+<td>131.86</td>
+<td>110.89</td>
+<td>140.27</td>
+<td>103.54</td>
+</tr>
+<tr>
+<td><code>ref_v1_O3</code></td>
+<td>29.86</td>
+<td>11.80</td>
+<td>5.47</td>
+<td>-</td>
+<td>-</td>
+<td>2.56</td>
+</tr>
+<tr>
+<td><code>no_if_asm</code></td>
+<td>133.48</td>
+<td>98.36</td>
+<td>67.72</td>
+<td>52.67</td>
+<td>48.67</td>
+<td>41.62</td>
+</tr>
+<tr>
+<td><code>sse2_v1</code></td>
+<td>27.64</td>
+<td>9.37</td>
+<td>5.84</td>
+<td>11.75</td>
+<td>4.49</td>
+<td>3.66</td>
+</tr>
+<tr>
+<td><code>sse41</code></td>
+<td>-</td>
+<td>9.25</td>
+<td>5.72</td>
+<td>-</td>
+<td>4.42</td>
+<td>3.73</td>
+</tr>
+<tr>
+<td><code>avx2</code> / <code>intrin.</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>1.86 / 1.89</td>
+</tr>
+<tr>
+<td><strong>Gain SSE max</strong></td>
+<td><strong>~ 8.1x</strong></td>
+<td><strong>~ 18.2x</strong></td>
+<td><strong>~ 22.6x</strong></td>
+<td><strong>~ 9.4x</strong></td>
+<td><strong>~ 31.2x</strong></td>
+<td><strong>~ 55.7x</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 14.3 – Architectures anciennes : temps d'exécution en secondes.</em></p>
+<h3 class="subsection">14.12.2 Architectures Modernes (2015 à 2019)</h3>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Core i3 6100</th>
+<th>Ryzen 7 1700X</th>
+<th>Core i5 7400</th>
+<th>Core i7 8700</th>
+<th>Ryzen 5 3600</th>
+<th>Xeon 4208</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref_v1_O2</code></td>
+<td>139.36</td>
+<td>111.55</td>
+<td>148.59</td>
+<td>96.72</td>
+<td>103.41</td>
+<td>118.36</td>
+</tr>
+<tr>
+<td><code>ref_v1_O3</code></td>
+<td>2.20</td>
+<td>2.50</td>
+<td>2.45</td>
+<td>1.85</td>
+<td>2.02</td>
+<td>3.61</td>
+</tr>
+<tr>
+<td><code>no_if_asm</code></td>
+<td>42.58</td>
+<td>53.86</td>
+<td>45.42</td>
+<td>34.68</td>
+<td>47.03</td>
+<td>42.45</td>
+</tr>
+<tr>
+<td><code>sse2_v1</code></td>
+<td>3.58</td>
+<td>3.59</td>
+<td>3.52</td>
+<td>2.70</td>
+<td>3.16</td>
+<td>4.30</td>
+</tr>
+<tr>
+<td><code>sse41</code></td>
+<td>3.58</td>
+<td>3.61</td>
+<td>3.46</td>
+<td>2.60</td>
+<td>3.19</td>
+<td>4.28</td>
+</tr>
+<tr>
+<td><code>avx2</code> / <code>intrin.</code></td>
+<td>1.54 / 1.81</td>
+<td>1.14 / 1.39</td>
+<td>1.76 / 1.82</td>
+<td>1.35 / 1.39</td>
+<td><strong>0.79</strong> / 1.09</td>
+<td>2.87 / 3.03</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 14.4 – Architectures modernes : temps d'exécution en secondes.</em>
+<em>(Le Ryzen 5 3600 boucle le traitement en <strong>0,79 secondes</strong>, un record avec AVX2 natif).</em></p>
+<h3 class="subsection">14.12.3 Architectures Récentes (2020+)</h3>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Core i7 10850H</th>
+<th>Core i5 12400F</th>
+<th>AMD Ryzen 5 5600G</th>
+<th>AMD Ryzen 5 9600X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref_v1_O2</code></td>
+<td>83.50</td>
+<td>104.50</td>
+<td>91.38</td>
+<td>76.97</td>
+</tr>
+<tr>
+<td><code>ref_v1_O3</code></td>
+<td>1.85</td>
+<td>1.69</td>
+<td>1.98</td>
+<td>0.64</td>
+</tr>
+<tr>
+<td><code>no_if_asm</code></td>
+<td>27.44</td>
+<td>44.54</td>
+<td>29.31</td>
+<td>13.06</td>
+</tr>
+<tr>
+<td><code>sse2_v1</code></td>
+<td>2.56</td>
+<td>1.82</td>
+<td>1.74</td>
+<td>1.07</td>
+</tr>
+<tr>
+<td><code>avx2</code></td>
+<td>1.36</td>
+<td>0.96</td>
+<td>0.93</td>
+<td><strong>0.50</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 14.5 – Architectures récentes : temps d'exécution en secondes.</em>
+<em>(Avec le jeu d'instructions natif <strong>AVX512</strong> le Ryzen 9600X compile et exécute en moins de <strong>0.50s</strong>).</em></p>
+<h2 class="section">14.13 Bilan</h2>
+
+<p>Dans cette étude de cas, la fonction de référence peut être optimisée de manière
+spectaculaire par le compilateur en utilisant les options de compilation liées à
+la vectorisation (<code>-O3 -mavx2</code>) et le dépliage de boucle. </p>
+<p>Cependant nous voyons que les versions
+en langage assembleur avec jeu d'instruction AVX2 écrites à la main (ou la version intrinsics sous C)
+sont les plus ultra-efficaces. Nous sommes bien entendu tributaires de la disponibilité
+d'instructions liées à ce traitement comme <code>pcmpeqb</code> et <code>pmovmskb</code> pour déjouer les branchements <code>if</code>.</p>
+<p>Enfin, on remarquera que l'utilisation de <strong>l'AVX512</strong> permet de grandement simplifier le codage du
+traitement en raison de l'utilisation des registres de masque <code>k1</code> et <code>k2</code> sans avoir à récupérer de masques vers des registres externes de 32 bits, faisant chuter le temps d'exécution des processeurs des dernières tranches.</p>
+<h2 class="section">14.14 Exercices</h2>
+
+<p><strong>Exercice 49</strong> - Réalisez un dépliage de la version SSE 4.1 par 4, puis par 8. Intégrez
+votre code au projet et comparez les résultats obtenus aux méthodes existantes.</p>
+<p><strong>Exercice 50</strong> - Réalisez un dépliage de la version AVX par 4, puis par 8. Intégrez
+votre code au projet et comparez les résultats obtenus aux méthodes existantes.</p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

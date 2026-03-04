@@ -1,0 +1,2 @@
+movups ,esp+4]
+pshufd ,xmm0,00011011b

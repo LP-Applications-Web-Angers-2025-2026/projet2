@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 8 : Unités vectorielles</h1>
+
+<h2 class="section">8.1 Introduction</h2>
+
+<p>Les unités vectorielles permettent de <strong>vectoriser</strong> le code, en d'autres termes, de
+le paralléliser au sein du microprocesseur. On exécutera la même instruction sur
+plusieurs données différentes stockées dans un registre de type MMX (64 bits), SSE
+(128 bits) ou AVX (256 bits).</p>
+<p>Par exemple avec la technologie SSE, au lieu d'écrire :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_001.c" target="_blank">code/chapitre_8/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> v1<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> v2<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> v3<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> vector_sum<span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #339933;">*</span> x<span style="color: #339933;">,</span> <span style="color: #993333;">float</span><span style="color: #339933;">*</span> y<span style="color: #339933;">,</span> <span style="color: #993333;">float</span><span style="color: #339933;">*</span> z<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #0000dd;">4</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; z<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> x<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">+</span> y<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">vector_sum<span style="color: #009900;">&#40;</span>v1<span style="color: #339933;">,</span> v2<span style="color: #339933;">,</span> v3<span style="color: #339933;">,</span> <span style="color: #0000dd;">4</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On réalise une seule opération en parallèle sur un registre capable de contenir 4 <code>float</code>, ce que l'on note mentalement (cette notation n'est pas du C valide) :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_002.c" target="_blank">code/chapitre_8/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">z<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">:</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> x<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">:</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">+</span> y<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">:</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La notation <code>x[0:3]</code> symbolise <code>x[0]</code> à <code>x[3]</code>, elle nous permet seulement d'exprimer de manière concise le traitement réalisé. On parle alors de traitement <strong>SIMD</strong> pour <em>Single Instruction Multiple Data</em>, cela signifie que la même instruction est appliquée sur des données différentes et pour que cela ait un intérêt en terme de performance, on réalise les calculs en parallèle et non pas de manière séquentielle.</p>
+<p>Par la suite nous allons nous intéresser aux technologies SSE et AVX et nous ne traiterons pas du MMX, désuet à présent.</p>
+<p>La technologie MMX pour <em>MultiMedia eXtensions</em> est apparue sur les processeurs Intel Pentium MMX en 1997. Il s'agit d'un jeu d'instructions de 57 instructions qui traitent uniquement des entiers d'un maximum de 64 bits. Le MMX souffre d'un défaut majeur : on ne peut travailler simultanément avec la FPU et le MMX car ils partagent les mêmes registres. Ce défaut a été corrigé avec l'introduction du SSE.</p>
+<p>Notons également que nous allons suivre la convention de représentation Intel pour les instructions SSE qui consiste à écrire les valeurs d'un vecteur en mémoire ou d'un registre en plaçant la partie haute à gauche et la partie basse à droite. Cette convention reprend le principe du <em>little endian</em>.</p>
+<h2 class="section">8.2 SSE (Streaming SIMD Extensions)</h2>
+
+<p>Sous le sigle SSE nous réunissons tous les jeux d'instructions successifs SSE, SSE2, SSE3, SSSE3, SSE4A, SSE4.1 et SSE4.2. La première version du SSE est un jeu de 70 instructions apparu en 1999 sur le Pentium III en réponse à la technologie 3DNow! d'AMD. Ces instructions traitent des entiers ou des réels. Les versions suivantes ont apporté de nouvelles instructions, par exemple <code>dpps</code> (<em>Dot Product of Packed Single Precision</em>) de SSE4.1 qui réalise le produit scalaire.</p>
+<p>En architecture 32 bits, il existe 8 registres SSE de 128 bits nommés <code>xmm0</code> à <code>xmm7</code> (à ne pas confondre avec les registres MMX <code>mm0</code> à <code>mm7</code>). Ce nombre est doublé en architecture 64 bits avec l'ajout de <code>xmm8</code> à <code>xmm15</code>.</p>
+<p>Les registres SSE possèdent des instructions qui traitent les valeurs qu'ils contiennent (voir Figure 8.1) :</p>
+<ul>
+<li>Soit sous forme d'entiers :<ul>
+<li>16 octets</li>
+<li>8 mots</li>
+<li>4 doubles mots (entiers 32 bits signés ou non)</li>
+<li>2 quadruples mots (entiers 64 bits signés ou non)</li>
+<li>1 double quadruple mot (128 bits total)</li>
+</ul>
+</li>
+<li>Soit sous forme de flottants :<ul>
+<li>4 flottants simple précision (<code>float</code>)</li>
+<li>2 flottants double précision (<code>double</code>)</li>
+</ul>
+</li>
+</ul>
+<p>On disposera de plusieurs instructions similaires avec des mnémoniques différents selon le type. Ces instructions sont suffixées par une ou deux lettres (cf. Table 8.1).</p>
+<p>Par exemple, <code>paddb</code> réalise l'addition entre 16 octets, alors que <code>paddd</code> traite 4 entiers de 32 bits. De même, <code>addps</code> additionne 4 flottants simple précision, et <code>addpd</code> traite 2 flottants double précision. On note aussi les suffixes <code>ss</code> et <code>sd</code> qui ne traitent que la partie basse du registre (32 ou 64 bits).</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Type</th>
+<th>Taille en octets</th>
+<th>Nom</th>
+<th>Quantité dans 128 bits</th>
+<th>Suffixe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>entier</td>
+<td>1</td>
+<td>byte</td>
+<td>16</td>
+<td><code>b</code></td>
+</tr>
+<tr>
+<td>entier</td>
+<td>2</td>
+<td>word</td>
+<td>8</td>
+<td><code>w</code></td>
+</tr>
+<tr>
+<td>entier</td>
+<td>4</td>
+<td>double word</td>
+<td>4</td>
+<td><code>d</code></td>
+</tr>
+<tr>
+<td>entier</td>
+<td>8</td>
+<td>quad word</td>
+<td>2</td>
+<td><code>q</code></td>
+</tr>
+<tr>
+<td>flottant</td>
+<td>4</td>
+<td>float</td>
+<td>4</td>
+<td><code>ps</code></td>
+</tr>
+<tr>
+<td>flottant</td>
+<td>8</td>
+<td>double</td>
+<td>2</td>
+<td><code>pd</code></td>
+</tr>
+<tr>
+<td>flottant</td>
+<td>4</td>
+<td>float</td>
+<td>1</td>
+<td><code>ss</code></td>
+</tr>
+<tr>
+<td>flottant</td>
+<td>8</td>
+<td>double</td>
+<td>1</td>
+<td><code>sd</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 8.1 – Suffixes des instructions SSE</em></p>
+<p><strong>Notation pseudo-code</strong> : pour décrire les comportements, on utilise la notation <code>xmm0.T[i]</code> où <code>T</code> est le type (<code>b</code>, <code>w</code>, <code>d</code>, <code>q</code>, <code>ps</code>, <code>pd</code>) et <code>i</code> l'index. Ainsi <code>xmm0.b[15]</code> est le dernier octet de <code>xmm0</code> (poids fort), et <code>xmm0.b[0]</code> celui de poids faible.
+Dans la doc Intel, on parle plutôt en bits : <code>xmm0[127:120]</code>.</p>
+<h3 class="subsection">8.2.1 Chargement des données</h3>
+
+<p>Pour les entiers, on utilise <code>movdqu</code> (<em>Unaligned</em>) ou <code>movdqa</code> (<em>Aligned</em>).</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_003.asm" target="_blank">code/chapitre_8/code_003.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; mémoire (Load)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">*</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm7</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; mémoire (Store)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; deux opérandes SSE</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Pour les flottants, on utilise <code>movups</code> ou <code>movaps</code>. Bien que les instructions existent séparément pour les entiers et les flottants, elles sont interchangeables au niveau du transfert brut de 128 bits.</p>
+<p>Il existe des instructions pour la partie basse uniquement : <code>movd</code> (entiers), <code>movss</code>, <code>movsd</code> (flottants).</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_004.asm" target="_blank">code/chapitre_8/code_004.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x01010101</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movd</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm1.d[0] = 0x01010101, autres inchangés</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">movss</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<div class="cadre_warning"><strong>Attention</strong> : avec `movss`, on ne peut charger une valeur que depuis la mémoire (ou un autre registre xmm), pas depuis un registre général.
+<h3 class="subsection">8.2.2 Opérations arithmétiques</h3>
+
+<p>Pour les entiers : <code>padd</code> (addition), <code>psub</code> (soustraction), <code>pmull</code> (multiplication), suffixées par la quantité (<code>b</code>, <code>w</code>, <code>d</code>, <code>q</code>). Il n'y a pas d'instruction (<code>pdiv</code>) pour la division entière vectorielle.
+Pour les flottants : <code>addps</code>, <code>subps</code>, <code>mulps</code>, <code>divps</code> et leurs équivalents <code>pd</code>.</p>
+<p>Instructions asymétriques/horizontales :</p>
+<ul>
+<li><code>addsubps xmm1, xmm2</code> : soustrait les éléments d'indice pair (0, 2) et additionne ceux d'indice impair (1, 3).</li>
+<li><code>haddps xmm1, xmm2</code> : addition horizontale.</li>
+</ul>
+<p><em>Schéma conceptuel de haddps xmm1, xmm2</em> :</p>
+<ol>
+<li><code>xmm_tmp.ps[0] = xmm1.ps[0] + xmm1.ps[1]</code></li>
+<li><code>xmm_tmp.ps[1] = xmm1.ps[2] + xmm1.ps[3]</code></li>
+<li><code>xmm_tmp.ps[2] = xmm2.ps[0] + xmm2.ps[1]</code></li>
+<li><code>xmm_tmp.ps[3] = xmm2.ps[2] + xmm2.ps[3]</code></li>
+<li><code>xmm1 = xmm_tmp</code></li>
+</ol>
+<p>Pour faire la somme des 4 floats de <code>xmm1</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_005.asm" target="_blank">code/chapitre_8/code_005.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">haddps</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; <span style="color: #666666; font-style: italic;">; étape 1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">haddps</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; <span style="color: #666666; font-style: italic;">; étape 2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; xmm1.ps[0:3] contiennent alors tous la somme totale des 4 éléments originaux</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">8.2.3 Fonctions trigonométriques</h3>
+
+<p>Il n'existe pas d'instructions natives SSE pour trigonometrie/log/exp. Il faut utiliser des bibliothèques externes comme <em>Intel MKL</em> ou <em>AMD libM</em>.</p>
+<h3 class="subsection">8.2.4 Opérations logiques (binaires)</h3>
+
+<p>Ces instructions agissent sur la totalité des 128 bits : <code>pand</code>, <code>por</code>, <code>pxor</code>, <code>pandn</code> (Et binaire avec le NOT du registre de destination).</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_006.asm" target="_blank">code/chapitre_8/code_006.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pand</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm1 = xmm1 AND xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">por</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; xmm1 = xmm1 OR [esi]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">pandn</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm4</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; xmm1 = NOT(xmm1) AND xmm4</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">8.2.5 Conversions</h3>
+
+<p>Mnémoniques commençant par <code>cvt</code> :</p>
+<ul>
+<li><code>cvtss2sd</code> : simple → double précision</li>
+<li><code>cvtsd2ss</code> : double → simple précision</li>
+<li><code>cvtps2pd</code> : 4 float → 2 double</li>
+<li><code>cvtpd2ps</code> : 2 double → 4 float (les 2 floats du haut sont mis à 0)</li>
+<li><code>cvtss2si</code> : float en partie basse → entier (dans registre 32/64 bits)</li>
+<li><code>cvtsi2ss</code> : entier → float en partie basse</li>
+</ul>
+<p>Exemple :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_007.asm" target="_blank">code/chapitre_8/code_007.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">12.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">14.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">16.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">20.0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movups</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>v<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">cvtss2si</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax contiendra l'entier 12</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">8.2.6 Masquage et réorganisation (Shuffle / Blend / Broadcast)</h3>
+
+<p>Les instructions <code>pshufd</code> (entiers) et <code>shufps</code> (flottants) utilisent un masque <code>imm8</code> (constante 8 bits) pour sélectionner et réorganiser les valeurs.</p>
+<p>Pour <code>pshufd xmm1, xmm2, imm8</code> (ne prend en compte que la source) :</p>
+<ul>
+<li><code>xmm1.ps[0] = xmm2.ps[ imm8 &amp; 0x03 ]</code></li>
+<li><code>xmm1.ps[1] = xmm2.ps[ (imm8 &gt;&gt; 2) &amp; 0x03 ]</code></li>
+<li><code>xmm1.ps[2] = xmm2.ps[ (imm8 &gt;&gt; 4) &amp; 0x03 ]</code></li>
+<li><code>xmm1.ps[3] = xmm2.ps[ (imm8 &gt;&gt; 6) &amp; 0x03 ]</code></li>
+</ul>
+<p>Pour <code>shufps xmm1, xmm2, imm8</code> (mélange destination et source) :</p>
+<ul>
+<li><code>xmm_tmp[0] = xmm1.ps[ imm8 &amp; 0x03 ]</code></li>
+<li><code>xmm_tmp[1] = xmm1.ps[ (imm8 &gt;&gt; 2) &amp; 0x03 ]</code></li>
+<li><code>xmm_tmp[2] = xmm2.ps[ (imm8 &gt;&gt; 4) &amp; 0x03 ]</code></li>
+<li><code>xmm_tmp[3] = xmm2.ps[ (imm8 &gt;&gt; 6) &amp; 0x03 ]</code></li>
+<li><code>xmm1 = xmm_tmp</code></li>
+</ul>
+<p><code>blendps xmm1, xmm2, imm8</code> remplace les valeurs de <code>xmm1</code> par celles de <code>xmm2</code> selon les 4 bits de poids faible de <code>imm8</code>.
+<code>pblendvb xmm1, xmm2</code> (et <code>blendvps</code>) utilisent un registre fantôme <code>xmm0</code> comme masque de sélection byte par byte (le MSB de chaque byte dicte la copie).</p>
+<p>Broadcast : <code>vpbroadcastb xmm1, xmm1</code> copie l'octet de poids faible dans tout le registre (16 copies).</p>
+<p>Insert : <code>insertps xmm1, xmm2, imm8</code></p>
+<ol>
+<li>Sélection de 1 float de xmm2 via les bits 6-7.</li>
+<li>Insertion dans xmm1 à la position dictée par les bits 4-5.</li>
+<li>Mise à zéro des emplacements dans xmm1 selon les bits 0-3.</li>
+</ol>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_008.asm" target="_blank">code/chapitre_8/code_008.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; a <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">1.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">2.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4.0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; b <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">5.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">6.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">7.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8.0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movups</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>a<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; [4.0, 3.0, 2.0, 1.0]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movups</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>b<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; [8.0, 7.0, 6.0, 5.0]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">insertps</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span>_11_0011b </div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Sélection (10b = index 2 de xmm2 = 7.0)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Insertion (11b = index 3 de xmm1)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Mise à 0 (0011b = index 0 et 1 de xmm1 mis à 0)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Résultat xmm1 = [7.0, 3.0, 0.0, 0.0]</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">8.3 AVX (Advanced Vector eXtensions)</h2>
+
+<h3 class="subsection">8.3.1 Concept</h3>
+
+<p>Sous le sigle AVX nous plaçons les jeux d'instructions AVX et AVX2 256 bits. Les registres s'appellent <code>ymm0</code> à <code>ymm15</code> (en 64 bits).</p>
+<p>Changements majeurs :</p>
+<ul>
+<li>Toutes les instructions commencent par le préfixe <code>v</code> (ex: <code>vpaddd</code> au lieu de <code>paddd</code>).</li>
+<li>Elles acceptent trois opérandes : destination, source 1, source 2 (ce qui évite d'écraser la source 1).</li>
+</ul>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_009.asm" target="_blank">code/chapitre_8/code_009.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; SSE : à 2 opérandes</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">paddd</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; xmm1 = xmm1 + xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; AVX : à 3 opérandes</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vpaddd</span> <span style="color: #46aa03; font-weight: bold;">xmm3</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> <span style="color: #666666; font-style: italic;">; xmm3 = xmm1 + xmm2 (xmm1 préservé)</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">8.3.2 Manipulations hautes/basses</h3>
+
+<p>Certaines instructions SSE comme <code>insertps</code> ne peuvent pas être directement déclinées en version haute sur 256 bits (la constante de masque est trop courte). L'AVX a donc des instructions pour extraire ou insérer des blocs de 128 bits.</p>
+<ul>
+<li><code>vinsertf128 ymm3, ymm2, xmm1, 0/1</code> : copie <code>ymm2</code> dans <code>ymm3</code> puis remplace la partie basse (0) ou haute (1) par <code>xmm1</code>.</li>
+<li><code>vextractf128 xmm1, ymm2, 0/1</code> : extrait la partie basse ou haute.</li>
+</ul>
+<h3 class="subsection">8.3.3 La difficulté de l'AVX avec les opérations horizonales</h3>
+
+<p>L'instruction <code>vhaddps ymm0, ymm0</code> ne fera PAS la somme des 8 valeurs. Elle opère fonctionnellement comme deux <code>haddps xmm, xmm</code> en parallèle sur les 128 bits du bas et les 128 bits du haut de façon indépendante.</p>
+<p>Il faut plutôt utiliser :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_010.asm" target="_blank">code/chapitre_8/code_010.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vhaddps</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; 1ère addition horizontale (intra lanes)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vhaddps</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; 2ème addition horizontale (intra lanes)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vextractf128</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; extrait les 128 bits du haut dans xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vaddps</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; additionne le haut et le bas</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">8.4 Affichage et débogage d'un registre vectoriel</h2>
+
+<h3 class="subsection">8.4.1 Macros pour architecture 32 bits</h3>
+
+<p>Il est utile d'avoir des macros <code>nasm</code> pour afficher un registre afin de déboguer.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_011.asm" target="_blank">code/chapitre_8/code_011.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">extern</span> printf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; str_sse_int<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">db</span> <span style="color: #7f007f;">&quot;[%d %d %d %d] &quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; str_sse_flt<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">db</span> <span style="color: #7f007f;">&quot;[%f %f %f %f] &quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%macro</span> print_sse_int <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; affichage Intel</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pshufd</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">00011011b</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> str_sse_int</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> printf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">20</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; rétablir les valeurs initiales</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pshufd</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">00011011b</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endmacro</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%macro</span> print_sse_flt <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">48</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; 16 + 4*8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movups</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; stocke le registre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fstp</span> <span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">40</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fstp</span> <span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fstp</span> <span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">24</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fstp</span> <span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> str_sse_flt</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> printf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">52</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; 48 + 4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endmacro</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">8.4.2 Macros pour architecture 64 bits</h3>
+
+<p>En 64 bits, c'est plus complexe car les arguments de <code>printf</code> doivent être passés via les registres (<code>rsi</code>, <code>rdx</code>, <code>rcx</code>, <code>r8</code> pour les entiers ; <code>xmm0</code>–<code>xmm3</code> pour les flottants). Il faut aussi sauver ces registres + la pile (red zone).</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_012.asm" target="_blank">code/chapitre_8/code_012.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">extern</span> printf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #adadad; font-style: italic;">defa</span>ult <span style="color: #0000ff; font-weight: bold;">rel</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; str_sse_int<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">db</span> <span style="color: #7f007f;">&quot;[%d %d %d %d] &quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; str_sse_flt<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">db</span> <span style="color: #7f007f;">&quot;[%f %f %f %f] &quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%macro</span> print_sse_int <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">128</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #339933;">*</span><span style="color: #ff0000;">6</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rdi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rsi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rdx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">24</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rcx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">r8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">40</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>str_sse_int<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pshufd</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">00011011b</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">56</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">56</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">60</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">64</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">r8d</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">68</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">rax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> printf <span style="color: #0000ff; font-weight: bold;">WRT</span> <span style="color: #0000ff; font-weight: bold;">..plt</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pshufd</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">00011011b</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">40</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">r8</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rcx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">24</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rdx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">128</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #339933;">*</span><span style="color: #ff0000;">6</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endmacro</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%macro</span> print_sse_flt <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">128</span><span style="color: #339933;">+</span><span style="color: #ff0000;">5</span><span style="color: #339933;">*</span><span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> </div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> </div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">48</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> </div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">64</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">%1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">cvtss2sd</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">cvtss2sd</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">cvtss2sd</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">cvtss2sd</span> <span style="color: #46aa03; font-weight: bold;">xmm3</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>str_sse_flt<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> printf <span style="color: #0000ff; font-weight: bold;">WRT</span> <span style="color: #0000ff; font-weight: bold;">..plt</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #46aa03; font-weight: bold;">xmm3</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">64</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">48</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqu</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">128</span><span style="color: #339933;">+</span><span style="color: #ff0000;">5</span><span style="color: #339933;">*</span><span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%endmacro</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">8.5 Les "Intrinsics" en C++</h2>
+
+<p>Les <em>intrinsics</em> sont une interface entre le langage C et les instructions assembleur vectorielles. Elles permettent de scripter le code SIMD sans faire de l'assemblage pur, en laissant le compilateur s'occuper de l'allocation des registres.</p>
+<p>L'inclusion d'un fichier en-tête permet l'utilisation de ces types et fonctions :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Fichier</th>
+<th>Jeu d'instructions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;mmintrin.h&gt;</code></td>
+<td>MMX</td>
+</tr>
+<tr>
+<td><code>&lt;xmmintrin.h&gt;</code></td>
+<td>SSE</td>
+</tr>
+<tr>
+<td><code>&lt;emmintrin.h&gt;</code></td>
+<td>SSE2</td>
+</tr>
+<tr>
+<td><code>&lt;pmmintrin.h&gt;</code></td>
+<td>SSE3</td>
+</tr>
+<tr>
+<td><code>&lt;tmmintrin.h&gt;</code></td>
+<td>SSSE3</td>
+</tr>
+<tr>
+<td><code>&lt;smmintrin.h&gt;</code></td>
+<td>SSE4.1</td>
+</tr>
+<tr>
+<td><code>&lt;nmmintrin.h&gt;</code></td>
+<td>SSE4.2</td>
+</tr>
+<tr>
+<td><code>&lt;ammintrin.h&gt;</code></td>
+<td>SSE4A</td>
+</tr>
+<tr>
+<td><code>&lt;immintrin.h&gt;</code></td>
+<td>AVX / AVX2 / AVX512</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 8.2 – Fichiers d'entête SIMD</em></p>
+<p>Il est grandement recommandé d'utiliser l'<strong>Intel Intrinsics Guide</strong> (outil web) pour trouver la documentation précise pour chaque fonction.</p>
+<h3 class="subsection">8.5.1 Les Types Intrinsics et Suffixes</h3>
+
+<p>Il faut indiquer au compilateur C les types que l'on manipule :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Exemple d'instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__m128</code></td>
+<td>4 floats</td>
+<td><code>_mm_add_ps</code></td>
+</tr>
+<tr>
+<td><code>__m128d</code></td>
+<td>2 doubles</td>
+<td><code>_mm_add_pd</code></td>
+</tr>
+<tr>
+<td><code>__m128i</code></td>
+<td>entiers divers (8/16/32/64 bits)</td>
+<td><code>_mm_add_epi32</code></td>
+</tr>
+<tr>
+<td><code>__m256</code></td>
+<td>8 floats (AVX)</td>
+<td><code>_mm256_add_ps</code></td>
+</tr>
+<tr>
+<td><code>__m256d</code></td>
+<td>4 doubles</td>
+<td><code>_mm256_add_pd</code></td>
+</tr>
+<tr>
+<td><code>__m256i</code></td>
+<td>entiers (AVX2)</td>
+<td><code>_mm256_add_epi32</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 8.3 – Types intrinsiques (SSE/AVX)</em></p>
+<p>Les noms de fonctions se basent sur <code>_mm_&lt;oper&gt;_&lt;suffix&gt;</code> (ou <code>_mm256_...</code> en AVX). Par exemple, <code>epi32</code> signifie <em>Extended Packed Integers 32-bits</em>.</p>
+<p>Exemple de boucle vectorisée avec intrinsics (somme de 2 vecteurs, boucle déroulée) :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_013.c" target="_blank">code/chapitre_8/code_013.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">#include &lt;immintrin.h&gt;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> sum_intrinsics_sse<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span><span style="color: #339933;">*</span> u<span style="color: #339933;">,</span> <span style="color: #993333;">int</span><span style="color: #339933;">*</span> v<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> size<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #009900;">&#40;</span>size <span style="color: #339933;">&amp;</span> ~<span style="color: #0000dd;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> i <span style="color: #339933;">+=</span> <span style="color: #0000dd;">4</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> &nbsp; <span style="color: #666666; font-style: italic;">// Equivalent à i &lt; size - (size%4)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// charger quatre entiers de chaque tableau (unaligned)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; __m128i x1 <span style="color: #339933;">=</span> _mm_loadu_si128<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m128i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&amp;</span>u<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; __m128i x2 <span style="color: #339933;">=</span> _mm_loadu_si128<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m128i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&amp;</span>v<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// additionner en parallèle</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; x1 <span style="color: #339933;">=</span> _mm_add_epi32<span style="color: #009900;">&#40;</span>x1<span style="color: #339933;">,</span> x2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// stocker le résultat</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; _mm_storeu_si128<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>__m128i<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&amp;</span>u<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> x1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// traiter le reliquat (si non multiple de 4)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">&lt;</span> size<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> u<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">+</span> v<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; i<span style="color: #339933;">++;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>En utilisant l'AVX (256 bits), la boucle se déplie par groupe de 8 au lieu de 4 avec <code>_mm256_loadu_si256</code> et <code>_mm256_add_epi32</code>.</p>
+<h3 class="subsection">8.5.2 Exemples de chargement et stockage</h3>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Nom de fonction intrinsèque</th>
+<th>Tableaux / Registre final (ex: Float SSE)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_mm_load_ss</code></td>
+<td>Charge un réel <code>p[0]</code>, reste = 0</td>
+</tr>
+<tr>
+<td><code>_mm_load1_ps</code></td>
+<td>Charge un réel <code>p[0]</code>, copié 4 fois</td>
+</tr>
+<tr>
+<td><code>_mm_loadu_ps</code></td>
+<td>Charge 4 réels (non alignés)</td>
+</tr>
+<tr>
+<td><code>_mm_load_ps</code></td>
+<td>Charge 4 réels (alignés, adresse multiple de 16)</td>
+</tr>
+<tr>
+<td><code>_mm_set_ss</code></td>
+<td>Affecte un réel 0 0 0 w</td>
+</tr>
+<tr>
+<td><code>_mm_set1_ps</code></td>
+<td>Affecte 4 fois le même réel</td>
+</tr>
+<tr>
+<td><code>_mm_setzero_ps</code></td>
+<td>Registre mis à zéro</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 8.4 – Chargement des flottants / Intrinsics</em></p>
+<p>Les fonctions de sauvegarde sont de type <code>_mm_storeu_ps</code>, <code>_mm_store_ps</code>, <code>_mm_store_ss</code>, etc.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Architecture</th>
+<th>Add (non vectorisé C standard)</th>
+<th>SSE Unaligned</th>
+<th>SSE Aligned</th>
+<th>AVX Unaligned</th>
+<th>AVX Aligned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AMD Ryzen 7 1700X</strong></td>
+<td>5.53 s</td>
+<td>1.71 s</td>
+<td>1.70 s</td>
+<td>1.62 s</td>
+<td>1.62 s</td>
+</tr>
+<tr>
+<td><strong>AMD Ryzen 5 5600G</strong></td>
+<td>3.37 s</td>
+<td>1.51 s</td>
+<td>1.51 s</td>
+<td>1.16 s</td>
+<td>0.95 s</td>
+</tr>
+<tr>
+<td><strong>Intel Core i5 10400</strong></td>
+<td>4.97 s</td>
+<td>2.23 s</td>
+<td>2.18 s</td>
+<td>2.00 s</td>
+<td>1.93 s</td>
+</tr>
+<tr>
+<td><strong>Intel Core i5 12400F</strong></td>
+<td>3.45 s</td>
+<td>1.25 s</td>
+<td>1.35 s</td>
+<td>1.34 s</td>
+<td>1.22 s</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 8.5 – Temps d’exécution en secondes (Somme de vecteurs de 131_079 entiers, répétée 100_000 fois)</em></p>
+<p>On constate l'énorme avantage de la vectorisation, et que la différence entre l'aligné et non-aligné s'estompent sur certaines microarchitectures récentes, mais reste décisive sur d'autres. L'AVX surclasse généralement le SSE.</p>
+<h2 class="section">8.6 AVX-512</h2>
+
+<h3 class="subsection">8.6.1 Généralités</h3>
+
+<p>L'AVX-512 est un jeu étendu introduit en 2013 (processeurs Xeon Phi, Skylake-X, etc). L'AVX-512 double encore la taille à <strong>512 bits</strong> (registres <code>zmm0</code> à <code>zmm31</code>). Seize (16) registres supplémentaires ont été ajoutés par rapport à AVX.</p>
+<p>Il existe près d'une vingtaine de "sous-jeux" d'instructions AVX-512, tels que :</p>
+<ul>
+<li><strong>AVX512-F</strong> (Foundations)</li>
+<li><strong>AVX512-BW</strong> (Byte and Word)</li>
+<li><strong>AVX512-VNNI</strong> (Neural Networks)</li>
+</ul>
+<p><strong>Registres masques (<code>k0</code> à <code>k7</code>)</strong> : Un ajout majeur. Ces 8 registres (jusqu'à 64 bits de taille avec BW) permettent de <em>masquer</em> opérationnellement des "voies" (<em>lanes</em>) d'un vecteur, appliquant une instruction de manière conditionnelle sans avoir à utiliser l'astuce de fusion <code>blendps</code>.
+Toutes ces opérations commencent par la lettre <code>k</code> (<code>kadd</code>, <code>kand</code>, <code>kmov</code>, <code>ktest</code>).</p>
+<p><strong>Pénalités AVX-512</strong> : Le processeur abaisse parfois sa fréquence (downclock) lors de très lourds calculs AVX-512 pour éviter la surchauffe. Sur d'anciennes architectures, il est en effet recommandé d'émettre un <code>vzeroupper</code> (mise à zéro de l'état étendu du registre) avant de revenir aux exécutions SSE standards, pour éviter des délais (pénalités causées par des états CPU incompatibles). AMD a commencé le support de AVX-512 à partir de Zen 4.</p>
+<h3 class="subsection">8.6.2 Exemples avec Masques et Opérations AVX-512 (zmm)</h3>
+
+<p>Exemple d'opération de type <code>if(x[i] &gt; 0.0) y[k++] = x[i]</code> pour <em>compresser</em> un tableau en sélectionnant uniquement les valeurs voulues.
+AVX-512 introduit l'instruction révolutionnaire <code>vcompressps</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_014.asm" target="_blank">code/chapitre_8/code_014.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #b00040;">vxorps</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Registre nul (0.0) [Dans ymm0 - 256 bits]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovups</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Charge 8 floats depuis x</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vcmpps</span> k1<span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">5</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Compare 8 floats : Si ymm1[i] &gt; 0.0, k1.bit[i] = 1 (pseudo-op 5 = Not_Less_Than_Or_Equal)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; vcompressps <span style="color: #46aa03; font-weight: bold;">ymm2</span> <span style="color: #009900; font-weight: bold;">&#123;</span>k1<span style="color: #009900; font-weight: bold;">&#125;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Magie : Tasse les floats validés par le masque k1 de ymm1 et les plaque consécutivement en ymm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovups</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm2</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Envoie dans le vecteur final</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; kmovq <span style="color: #46aa03; font-weight: bold;">rax</span><span style="color: #339933;">,</span> k1</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #46aa03; font-weight: bold;">rax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Compte les bits : rax = count ++</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vzeroupper</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">8.7 Vers l'AVX10</h2>
+
+<p>L'AVX10 (<em>Advanced Instruction Extensions 10</em>), introduit par Intel fin 2023, uniformise l'accès au jeu d'instruction AVX-512 (les types de masquages, instructions poussées) tout en s'exécutant sur des registres coupés en 256 bits (<code>ymm</code>). 
+Cette technologie est apparue pour régler la dualité entre P-Core (gérant le 512 bit) et E-Core (Alder Lake limités à 256 bits). Ceci permet au développeur de recompiler son code AVX-512-idéal tout en le rendant physiquement exécutable sur des cores hybrides limités au registre 256-bit.</p>
+<h2 class="section">8.8 Bilan</h2>
+
+<h3 class="subsection">8.8.1 Résumé</h3>
+
+<ul>
+<li>Les unités vectorielles qualifiées de <strong>SIMD</strong> (<em>Single Instruction Multiple Data</em>) permettent de paralléliser les calculs en effectuant la même opération sur des données différentes.</li>
+<li><strong>SSE</strong> gère les 128 bits (<code>xmm</code>), <strong>AVX</strong> 256 bits (<code>ymm</code>), <strong>AVX-512</strong> 512 bits (<code>zmm</code>).</li>
+<li><strong>L'AVX</strong> apporte un gain net. Il est recommandé de compiler pour tirer profit des vecteurs pour des gros calculs répétitifs.</li>
+<li>Les <strong>intrinsics</strong> exposent aux développeurs C++ la puissance des vecteurs sans le fardeau d'écrire l'assembleur pur, permettant au compilateur de faire son travail d'allocation.</li>
+<li><strong>L'AVX-512</strong> révolutionne le système de manipulation interne avec la présence des "registres de masques" (<code>k0</code> à <code>k7</code>).</li>
+</ul>
+<h2 class="section">8.9 Exercices</h2>
+
+<p><strong>Exercice 35</strong> – Implanter, en utilisant les registres SSE (et intrinsics ensuite), la fonction <code>iota</code> définie par :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_8/code_015.c" target="_blank">code/chapitre_8/code_015.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> iota<span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> <span style="color: #339933;">*</span>t<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; t<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span>i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On commencera par déplier par 4.
+Indice : Initialiser un registre SSE incrémenteur avec <code>[4.0, 3.0, 2.0, 1.0]</code> (à additionner au bloc initial <code>[3.0, 2.0, 1.0, 0.0]</code>).</p>
+<p><strong>Exercice 36</strong> – Donner une version <strong>Intrinsics (C/C++)</strong> de la fonction <code>iota</code>.</p>
+<p><strong>Exercice 37</strong> – Créer une fonction vectorielle en assembleur qui convertit une chaîne de caractères majuscules (<code>void toUpper(char *s, size_t size);</code>).</p>
+<p><strong>Exercice 38</strong> – Créer une fonction vectorielle qui convertit en minuscules ET retourne le total de modifications (<code>size_t toLower(char *s, size_t size);</code>).</p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

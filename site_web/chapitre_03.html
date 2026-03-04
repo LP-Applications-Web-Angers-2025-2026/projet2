@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 3 : Le Fonctionnement du Microprocesseur</h1>
+
+<h2 class="section">3.1 Introduction</h2>
+
+<p>Ce chapitre introduit les bases de l'organisation interne d'un microprocesseur
+et du sous-système mémoire associé. Il ne s'agit pas d'un cours d'architecture à
+proprement parler qui nécessiterait à lui seul un ouvrage entier mais d'une revue
+des notions et principes qui nous serviront plus tard pour coder efficacement. Le
+lecteur averti voudra bien nous pardonner de prendre parfois certains raccourcis
+afin de simplifier la machinerie complexe du microprocesseur, notre but étant de
+focaliser l'attention du novice sur les points cruciaux qui seront exploités par la suite
+dans la traduction en assembleur des traitements de haut niveau.</p>
+<p>L'invention du microprocesseur, également qualifié de <strong>CPU</strong> en anglais pour
+<em>Central Processing Unit</em> ou Unité Centrale de Traitement en français, remonte à
+<strong>1971</strong> avec la commercialisation de l'<strong>Intel 4004</strong> en novembre de la même année.
+Le microprocesseur représente à l'époque une invention majeure car il réunit les
+fonctions d'un processeur sur un seul circuit intégré. L'utilisation de transistors pour
+son implantation, la miniaturisation de ces derniers ainsi que le développement de
+nombreuses techniques issues de la gestion des chaînes de production
+ont conduit à nos processeurs actuels.</p>
+<p>Le microprocesseur est défini comme la partie d'un ordinateur qui exécute les
+instructions et traite les données des programmes. On le qualifie parfois de cerveau
+de l'ordinateur mais ce terme est galvaudé car il laisse à penser que l'ordinateur est
+intelligent. Or, un ordinateur n'est qu'un simple automate, il reproduit une série
+d'actions prédéterminées et n'a d'intelligence que celle des personnes qui ont mis
+au point les programmes qu'il exécute.</p>
+<p>Les différents travaux qui ont mené à son élaboration datent des inventions de
+<strong>Charles Babbage</strong> (1791 - 1871) avec sa machine différentielle (1822) dont le but
+était de calculer des polynômes en utilisant une méthode de calcul dite méthode
+des différences, puis sa machine analytique (imaginée en 1834) qu'il n'achèvera
+jamais. La machine analytique comprenait beaucoup de concepts repris par la suite
+durant la seconde guerre mondiale pour la conception des ordinateurs que l'on
+peut qualifier de préhistoriques.</p>
+<p>Mais on peut considérer que ce furent principalement les travaux et échanges
+d'idées entre les américains <strong>John Von Neumann</strong>, <strong>John Eckert</strong>, <strong>John William Mauchly</strong>
+et le britannique <strong>Alan Turing</strong> dans les années 40 et 50 qui permirent
+d'aboutir à nos ordinateurs modernes.</p>
+<p>Intrinsèquement, le microprocesseur ne sait faire que trois choses : lire des
+données en provenance de la mémoire, les combiner au travers d'opérations (arithmétiques, logiques) et stocker le résultat de ces opérations en mémoire. Afin de
+réaliser ces trois opérations de manière efficace il est nécessaire de développer des
+techniques élaborées, souvent difficiles à concevoir, puis à mettre en oeuvre. C'est
+ce que nous allons voir au travers de ce chapitre. Nous avons fait le choix de rester
+synthetique afin de permettre au lecteur de comprendre les principes sous-jacents
+au traitement des instructions par le microprocesseur. Le lecteur intéressé par plus
+de détails pourra consulter les ouvrages suivants [5].</p>
+<h2 class="section">3.2 Sous-système mémoire</h2>
+
+<p>Avant de parler du microprocesseur, il est nécessaire d'évoquer le sous-système
+mémoire puisque c'est la mémoire qui fournit au processeur sa matière première :
+les données et les instructions. Il faut savoir qu'il existe deux approches différentes
+dans la gestion des flux d'instructions et de données : celle de <strong>Von Neumann</strong> que
+nous utilisons ici, pour laquelle données et instructions sont contenues dans une
+seule mémoire, et celle dite de <strong>Harvard</strong> où données et instructions sont stockées
+dans des mémoires séparées.</p>
+<p>Du point de vue de l'utilisateur la mémoire centrale apparaît comme un long
+tableau unidimensionnel d'octets qui permet de stocker les programmes à exécuter.
+De nos jours il n'est pas rare de trouver sur nos ordinateurs personnels de l'ordre
+de 8 à 16 Go de mémoire ce qui représente une quantité énorme de stockage
+généralement sous utilisée pour la plupart des tâches courantes.</p>
+<p>La mémoire centrale est de type <strong>DDRx-SDRAM</strong> où <em>x</em> peut prendre des valeurs
+entre 1 et 5 à l'heure où nous écrivons cet ouvrage. Le sigle <strong>RAM</strong> (<em>Random Access
+Memory</em>) signifie que l'on peut accéder à n'importe quel octet de la mémoire en
+lecture ou en écriture.</p>
+<ul>
+<li>Le terme <strong>DRAM</strong> (<em>Dynamic RAM</em>) tient à la composition de la mémoire centrale
+pour représenter un bit d'information. Celle-ci est formée à l'aide de
+condensateurs. Si le condensateur est chargé c'est qu'il représente un bit à 1,
+sinon il représente un 0. Le problème d'un condensateur est qu'il a tendance
+à se décharger. Pour maintenir l'information valide, il est nécessaire de lire
+et réécrire les données en mémoire afin de recharger les condensateurs. On
+appelle cette étape un <strong>rafraîchissement mémoire</strong>. Durant cette période de
+temps très courte la mémoire est indisponible et il est nécessaire de rafraîchir
+la mémoire plusieurs fois par seconde.</li>
+<li>Le terme <strong>SDRAM</strong> (<em>Synchronous DRAM</em>) implique que les lectures et écritures
+se font à intervalles réguliers de manière synchrone.</li>
+<li>Le terme <strong>DDR</strong> (<em>Dual Data Rate</em>) implique que nous doublons le taux de
+transfert des données en envoyant celles-ci sur le front montant et sur le front
+descendant du signal d'horloge.</li>
+<li>Enfin le nombre <code>x</code> situé après <code>DDR</code> est un facteur qui définit le nombre d'octets
+que l'on peut lire ou écrire lors du transfert des données.</li>
+</ul>
+<p><strong>Débit mémoire</strong>
+Le débit ou bande passante (<em>bandwidth</em> en anglais) de la mémoire est donné
+par la formule suivante en Mo/s :</p>
+</div>
+*bandwidth = [frequency × 2 × 2^(x−1)] × 8*  &emsp; (3.1)
+</div>
+- `frequency` est la fréquence de fonctionnement de la mémoire exprimée en MHz
+- Le facteur 2 correspond à la DDR qui double le taux de transfert
+- `x` correspond au type de `DDRx`
+- 8 est la largeur du bus de données en octets (soit 64 bits)
+<p>Par exemple une <strong>DDR4-SDRAM</strong> fonctionnant à 100 MHz possède un débit
+théorique de <em>100 × 2 × 2^(4−1) × 8 = 12 800 Mo/s</em>. On désigne également ce type de
+mémoire par les sigles :</p>
+<ul>
+<li><code>PC4-12800</code> qui indique le débit en Mo/s</li>
+<li>ou <code>DDR4-1600</code> qui indique le débit des données en MT/s (Méga Transferts par
+secondes) et correspond au produit des trois premiers termes de la formule</li>
+</ul>
+<p>Les dernières mémoires les plus utilisées en début d'année 2025 sont
+des <code>DDR5-6000</code> (<em>PC5-48000</em>) ou <code>DDR5-6400</code> (<em>PC5-51200</em>) mais il existe également
+de la <code>DDR5-8000</code> (<em>PC5-64000</em>), voire de la <code>DDR5-8400</code> (<em>PC5-67200</em>).</p>
+<p>Plus le débit est important, plus la mémoire pourra alimenter le processeur en
+données à traiter. Mais il faut également prendre en compte d'autres facteurs appelés
+<strong><em>timings</em></strong> associés à la fréquence mémoire et liés intrinèquement à la structure
+matrielle des mémoires vives. Ces timings sont indiqués par les constructeurs ou
+lisibles par le BIOS de la carte mère grâce à un circuit électronique situé sur les
+barrettes mémoires appelé <strong>SPD</strong> pour <em>Serial Presence Detect</em>.</p>
+<p>La mémoire centrale n'est pas organisée sous forme d'un long tableau unidimensionnel
+d'octets mais sous forme d'une matrice carrée, c'est à dire qui possède
+le même nombre de lignes et de colonnes, ceci afin de diminuer l'espace occupé
+par les circuits d'accès. Comme on a le même nombre de lignes et de colonnes on
+utilisera un seul canal pour transmettre le numéro de la ligne puis de la colonne
+qui nous intéresse.</p>
+<p>Pour simplifier considérons que nous disposons d'une mémoire de 4 Go organisée
+sous forme d'une matrice de <code>65_536</code> lignes et <code>65_536</code> colonnes car <em>65 536 = 2¹⁶</em>
+et <em>4 Go = 2³²</em>. Il faut dans un premier temps envoyer un signal <strong>RAS</strong> (<em>Row Access Strobe</em>)
+au circuit mémoire afin de lui indiquer que nous allons lui envoyer le numéro de
+ligne. On envoie ensuite le numéro de ligne, suivi du signal <strong>CAS</strong> (<em>Column Access
+Strobe</em>) pour indiquer qu'on va à présent envoyer le numéro de colonne. Puis on
+envoie le numéro de colonne. Après quelques cycles d'attente (parfois plusieurs
+dizaines), on obtient les données sur le bus de données.</p>
+<p><em>Figure 3.1 – RAS, CAS, Image issue du site de Samsung</em></p>
+<p>Les timings ont pour objectif de définir les délais entre l'envoi d'un signal
+et le début du signal suivant ou entre l'envoi d'un signal et la réception d'un
+autre. Le réglage des timings peut donc influer sur l'efficacité de la mémoire mais
+pour un utilisateur standard il est préférable d'utiliser les valeurs préconisées
+par le constructeur. Pour plus d'information concernant les timings mémoire je
+recommande la lecture de l'article du site <a href="https://www.hardwaresecrets.com">hardwaresecrets.com</a>
+qui traite du sujet.</p>
+<p>Les technologies liées à la conception des mémoires centrales sont en constante
+évolution (cf. Table 3.1) et sont régies par un organisme de normalisation des
+semi-conducteurs appelé <strong>JEDEC</strong> (<em>Joint Electron Device Engineering Council</em>).</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Type de mémoire</th>
+<th>Année</th>
+<th>Transferts (MT/s)</th>
+<th>Débit (Go/s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDR SDRAM</td>
+<td>2000</td>
+<td>266–400</td>
+<td>2,1–3,2</td>
+</tr>
+<tr>
+<td>DDR2 SDRAM</td>
+<td>2003</td>
+<td>533–800</td>
+<td>4,2–6,4</td>
+</tr>
+<tr>
+<td>DDR3 SDRAM</td>
+<td>2007</td>
+<td>1066–3100</td>
+<td>8,5–24,8</td>
+</tr>
+<tr>
+<td>DDR4 SDRAM</td>
+<td>2014</td>
+<td>1600–4800</td>
+<td>12,8–38,4</td>
+</tr>
+<tr>
+<td>DDR5 SDRAM</td>
+<td>2020</td>
+<td>3200–8400</td>
+<td>25,6–67,2</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.1 – Types de mémoire et caractéristiques</em></p>
+<h3 class="subsection">3.2.1 Bancs mémoire et alignement</h3>
+
+<p>D'un point de vue conceptuel la mémoire SDRAM est organisée sous forme de
+bancs mémoire indépendants qui correspondent au nombre d'octets que le circuit
+mémoire est capable de délivrer en une lecture.</p>
+<p>Cette répartition était un facteur important il y a quelques années car le fait
+d'accéder à des données non alignées ralentissait l'exécution des programmes. Aujourd'hui
+avec la DDR4-SDRAM et les contrôleurs mémoire dédiés ce ralentissement
+n'est plus perceptible et ne constitue plus dans la plupart des cas un facteur de
+ralentissement.</p>
+<p><strong>Alignement mémoire</strong>
+<strong>Aligner les données</strong> signifie les placer à une adresse multiple d'une puissance
+de 2 qui dépend du type de mémoire ou des données accédées. En général
+on prendra un multiple de 16 ou de 32 pour les tableaux. Si on manipule
+des données qui seront placées dans des registres vectoriels on utilisera un
+multiple de 16 pour le SSE, de 32 pour l'AVX et de 64 pour l'AVX-512.</p>
+<p><em>Figure 3.2 – Bancs mémoire</em></p>
+<p>Lorsque l'on requête un entier de type <code>int</code> qui
+occupe 4 octets à l'adresse <code>04</code> la lecture des données peut se faire en une seule fois
+car les données sont sur la même ligne. Par contre si les données sont situées sur
+des lignes différentes (adresses <code>10</code> et <code>19</code>) cela implique l'envoi de deux requêtes au
+contrôleur mémoire, une pour chaque ligne.</p>
+<p>L'alignement concerne généralement les variables globales mais peut également
+être appliqué aux variables locales dans la pile. Le code peut également être aligné
+de manière à faire commencer le début d'une boucle à une adresse mémoire
+multiple de 4, 8 ou 16. Par exemple, le compilateur <code>gcc</code> comporte des options en
+ligne de commande comme :</p>
+<ul>
+<li><code>-falign-functions</code> : aligne le début d'une fonction</li>
+<li><code>-falign-jumps</code> et <code>-falign-labels</code> : aligne le code des branches du code</li>
+<li><code>-falign-loops</code> : aligne le début des boucles</li>
+</ul>
+<h3 class="subsection">3.2.2 Double canal (dual channel)</h3>
+
+<p>La technologie de <strong>double canal</strong> (<em>dual channel</em> en anglais, cf. Figure 3.3)
+permet en théorie de doubler le taux de transfert des données en proposant d'utiliser
+deux canaux au travers desquels on peut échanger des données avec deux barrettes
+mémoires qui doivent être identiques (même fréquence, même capacité, mêmes
+caractéristiques)[^ddr_note]. Initialement les deux canaux étaient dépendants c'est à dire que
+le premier canal lisait 8 octets et le second lisait les 8 suivants, on avait finalement
+un bus de 128 bits au lieu d'un bus 64 bits d'une mémoire DDR-SDRAM. Ces deux
+canaux sont ensuite devenus indépendants. Les gains obtenus par le dual channel
+sont généralement faibles, de l'ordre de quelques pourcents car pour avoir un
+impact significatif et pouvoir en tirer parti il est nécessaire de travailler sur des
+tableaux de grande taille ce qui est rarement le cas pour la plupart des applications.</p>
+<p>[^ddr_note]: A ne pas confondre avec le Dual Data Rate (DDR) vu précédemment.</p>
+<p><em>Figure 3.3 – Double ou simple canal</em>
+Lors de tests que j'ai pu effectuer il y a quelques années avec un Intel Core i5-
+4570 et de la mémoire de type DDR3 sur le problème de Maximum de Parcimonie
+en Bioinformatique, je me suis aperçu que l'on pouvait atteindre une diminution
+du temps d'exécution de l'ordre de 15 à 40% à partir du moment où les séquences
+ont une longueur de plus de <code>32_768</code> octets.</p>
+<p>Sur les processeurs haut de gamme on utilise aujourd'hui du <strong><em>quad channel</em></strong>, c'est
+à dire quatre canaux d'accès à la mémoire voire du <strong><em>hexa channel</em></strong> sur les derniers
+Intel Xeon W-3275M.</p>
+<h4 class="subsubsection">3.2.2.1 Détail d'une barrette mémoire</h4>
+
+<p>On considère une mémoire de 16 Go soit <em>2⁴ × 2³⁰ = 2³⁴ octets</em>. Une barrette
+de mémoire est composée de 8 chips répartis en <em>2 × 4 chips</em> qui délivrent 32 bits
+<em>(4 × 8)</em>. En effet un chip délivre 8 bits. Au final, une barrette mémoire délivre <strong>64
+bits</strong> soit <em>2 × 32 bits</em> suivant deux canaux (channels) A et B (voir Figure 3.4).
+Chaque chip stocke donc <em>16/8 = 2 Go</em> ou autrement dit, <em>2 × 8 Gbits = 2³⁴ bits</em>.</p>
+<p>Les 2 Go sont répartis en <strong>32 bancs mémoire</strong> sous la forme de <strong>8 groupes de 4 bancs</strong>.
+Un banc stocke donc <em>2³⁴/32 = 2²⁹ octets</em>, soit <em>2³² bits</em>.</p>
+<p>Un banc mémoire est organisé sous la forme d'une matrice de <strong>65 536 lignes</strong> par
+<strong>8 192 colonnes</strong> soit <em>2¹⁶ × 2¹³ bits</em>. On peut voir cette organisation sous la forme de
+65 536 lignes de 1024 octets soit 64 Mo (voir Figure 3.5).</p>
+<p>Pour accéder à un octet il faut donc au moins <strong>34 bits</strong> :</p>
+<ul>
+<li>3 bits pour le chip</li>
+<li>3 bits pour le groupe de bancs</li>
+<li>2 bits pour le banc à l'intérieur du groupe</li>
+<li>16 bits pour la ligne à l'intérieur du banc</li>
+<li>10 bits pour la colonne à l'intérieur du banc</li>
+</ul>
+<p><em>Figure 3.4 – Barrette mémoire</em> | <em>Figure 3.5 – Banc mémoire</em></p>
+<p>Lors de l'accès à un octet dans un banc mémoire, il faut activer la ligne associée
+à l'adresse de cet octet. Il est plus rapide d'accéder à un octet sur la même ligne,
+qu'un octet sur une autre ligne. Le fait d'accéder à une autre ligne nécessite la
+fermeture de la ligne actuelle et l'ouverture de la nouvelle ligne en quelque sorte.
+Il s'agit d'activer et désactiver des circuits électriques/électroniques ce qui prend
+du temps et ralentit l'accès mémoire.</p>
+<h3 class="subsection">3.2.3 Mémoire cache</h3>
+
+<p>La mémoire centrale est relativement lente par rapport au microprocesseur. Il
+en a toujours été ainsi et cet écart n'a fait que s'accroître au cours du temps. Le
+microprocesseur est donc pénalisé car il est en attente de données en provenance
+de la mémoire. Pour palier ce problème différents mécanismes ont été mis en place
+comme par exemple l'élargissement du bus de données qui consiste à récupérer
+plusieurs octets consécutifs. Mais le mécanisme le plus intéressant est celui qualifié
+de <strong>mémoire cache</strong>. Il consiste à utiliser une mémoire de petite taille mais très rapide
+d'accès qui contient les données les plus souvent ou les plus récemment utilisées[^cache_note].</p>
+<p>[^cache_note]: En informatique les algorithmes associés à ces techniques s'appellent <strong>LRU</strong> pour <em>Least Recently Used</em> et <strong>LFU</strong> pour <em>Least Frequently Used</em> et sont utilisés pour remplacer les données les plus anciennes ou les moins utilisées.</p>
+<p>On dit généralement que la mémoire cache repose sur les principes de <strong><em>localité</em></strong>
+et de <strong><em>temporalité</em></strong>. Si on accède une donnée à l'instant <em>t</em> à l'adresse <em>a</em>, il y a une
+forte probabilité d'accéder à l'instant <em>t+1</em>, une donnée à l'adresse <em>a+ϵ</em>. C'est le
+cas lorsque l'on écrit <code>x = x + y;</code> ou que l'on parcourt les éléments d'un tableau.
+A tout moment un programme ne travaille que sur une partie de la mémoire, il
+semble donc intéressant de copier la partie de la mémoire sur laquelle on travaille
+dans une mémoire locale rapide.</p>
+<p>Pour faire une analogie, on pourrait prendre l'exemple du réfrigérateur et du
+supermarché. Lorsque l'on a besoin de s'approvisionner, on fait des courses au
+supermarché ce qui prend beaucoup de temps. On stocke les denrées achetées
+dans un réfrigérateur et elles sont dès lors très rapidement accessibles. Le réfrigérateur
+représente donc la mémoire cache et le supermarché représente la mémoire
+centrale.</p>
+<p>La rapidité des mémoires cache tient à deux facteurs. Premièrement, un bit de
+mémoire cache est de type <strong>SRAM</strong> (<em>Static RAM</em>) et est représenté par une bascule
+(<em>latch</em> en anglais) composée de plusieurs transistors et non pas d'un condensateur
+comme pour les DRAM. Le rafraîchissement qui a tendance à ralentir l'accès à la
+mémoire DRAM n'existe plus dans le cas des SRAM. Deuxièmement, les mémoires
+caches stockent les données mais également les adresses où se situent ces données.
+Il est donc très facile de savoir si une adresse est dans le cache ou non.</p>
+<p>Au fil des années les mémoires caches se sont développées et sont devenues de
+plus en plus volumineuses en raison notamment de l'apparition des microprocesseurs
+multi-coeurs. Initialement absentes, elles ont commencé à être disponibles
+sur la carte mère, puis ont été progressivement intégrées au microprocesseur.</p>
+<h3 class="subsection">3.2.4 Niveaux de cache</h3>
+
+<p>On distingue aujourd'hui au moins trois niveaux de cache sur les processeurs
+multi-coeurs. Sur la Figure 3.6, on a fait figurer une architecture de cache pour un
+microprocesseur quad core, c'est à dire possédant quatre coeurs de calcul.</p>
+<ul>
+<li>Le cache le plus proche de la mémoire centrale est le cache de niveau 3, noté
+<strong>L3</strong> pour <em>Level 3</em>. Il contient données et instructions et permet de garder la
+cohérence des données entre les quatre coeurs.</li>
+<li>Le cache de niveau 2 (<strong>L2</strong>) contient également données et instructions mais
+est plus petit que le cache L3 et est associé à un seul coeur de calcul.</li>
+<li>Enfin au premier niveau de cache, on scinde le cache en un cache d'instructions
+<strong>L1i</strong> et un cache de données <strong>L1d</strong> car instructions et données ne suivent pas le
+même cheminement dans le traitement des instructions.</li>
+</ul>
+<p><em>Figure 3.6 – Niveaux de mémoire cache</em></p>
+<p>Sur la Figure 3.6, nous avons fait le choix de montrer une organisation de
+quatre coeurs disposant chacun de leur propre cache L2. Il est possible, dans des
+architectures plus anciennes (Intel Core) que deux coeurs partagent (<em>share</em>) le
+même cache L2.</p>
+<p>On remarquera que plus on s'éloigne du coeur de calcul plus le cache est de
+grande taille et plus il sera lent. Pour donner un ordre d'idée on peut consulter la
+Table 3.2.</p>
+<p>Par exemple, pour le AMD Ryzen 7 1700X, on dispose de 32 ou 64 ko pour
+les caches L1, 512 ko pour le cache L2 et 16 Mo pour le cache L3.</p>
+<h3 class="subsection">3.2.5 Caches inclusifs et exclusifs</h3>
+
+<p>Il existe deux organisations principales des mémoires cache lorsqu'elles doivent
+coopérer :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Processeur / Cache</th>
+<th>L1i (ko)</th>
+<th>L1d (ko)</th>
+<th>L2 (ko)</th>
+<th>L3 (Mo)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AMD Ryzen 7 1700X</td>
+<td>64</td>
+<td>32</td>
+<td>512</td>
+<td>16</td>
+</tr>
+<tr>
+<td>associativité</td>
+<td>4-way</td>
+<td>8-way</td>
+<td>8-way</td>
+<td>16-way</td>
+</tr>
+<tr>
+<td>latence (cycles)</td>
+<td>4</td>
+<td>4 à 5</td>
+<td>17</td>
+<td>37 à 43</td>
+</tr>
+<tr>
+<td>Intel i7-7820X</td>
+<td>32</td>
+<td>32</td>
+<td>1024</td>
+<td>11</td>
+</tr>
+<tr>
+<td>associativité</td>
+<td>8-way</td>
+<td>8-way</td>
+<td>16-way</td>
+<td>11-way</td>
+</tr>
+<tr>
+<td>latence (cycles)</td>
+<td>4</td>
+<td>4 à 5</td>
+<td>14</td>
+<td>68</td>
+</tr>
+<tr>
+<td>Intel i7-1065</td>
+<td>32</td>
+<td>48</td>
+<td>512</td>
+<td>2</td>
+</tr>
+<tr>
+<td>associativité</td>
+<td>8-way</td>
+<td>12-way</td>
+<td>8-way</td>
+<td>16-way</td>
+</tr>
+<tr>
+<td>latence (cycles)</td>
+<td>5</td>
+<td>5</td>
+<td>13</td>
+<td>30 à 36</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.2 – Caractéristiques des caches (taille, latence, associativité) – <a href="http://www.7-cpu.com">www.7-cpu.com</a></em></p>
+<ul>
+<li>Les caches <strong><em>inclusifs</em></strong> qui sont conçus de manière à ce que toute donnée présente
+dans le cache L1 soit aussi présente dans le cache L2. La taille totale du cache
+L1+L2 est donc celle du cache L2 puisque les données de L1 sont incluses
+dans L2.</li>
+<li>Les caches <strong><em>exclusifs</em></strong>, pour lesquels une donnée est soit dans le cache L1, soit
+dans le cache L2. Lorsqu'une donnée sort du cache L1 pour être placée dans
+le cache L2 on parle d'<strong>éviction</strong>. La taille totale du cache L1+L2 est donc la
+somme des tailles des caches L1 et L2.</li>
+</ul>
+<p>Intel a fait le choix des caches inclusifs alors qu'AMD utilise des caches de type
+exclusifs.</p>
+<p>Un autre problème concerne le remplacement des lignes de cache. Lorsque l'on
+remplace (voir ci-après) une ligne de cache qui est soit la plus ancienne (<strong>LRU</strong>) ou
+la moins utilisée (<strong>LFU</strong>) se pose alors le problème du traitement de la ligne de cache
+évincée afin de garder la cohérence des données.</p>
+<p>Deux stratégies peuvent être envisagées :</p>
+<ul>
+<li>L'<strong>écriture immédiate</strong> (<em>Write Through</em>) consiste à mettre immédiatement à
+jour la donnée en mémoire centrale dès lors que sa valeur dans le cache est
+modifiée.</li>
+<li>L'<strong>écriture différée</strong> (<em>Write Back</em>) consiste à mettre à jour la mémoire centrale
+lors de la modification de l'entrée du cache correspondante.</li>
+</ul>
+<p>Un compromis entre coût de production, complexité de réalisation et performances
+doit être trouvé lors de la conception d'une mémoire cache, puis un
+équilibre doit être trouvé entre les différents niveaux de cache.</p>
+<p>Par exemple la stratégie d'écriture immédiate augmente le trafic vers la mémoire
+centrale. Si la stratégie d'écriture différée pallie ce problème elle en crée un
+nouveau : en effet, certains circuits d'entrées sorties de type <strong>DMA</strong> (<em>Direct Memory
+Access</em>) sont capables de lire ou écrire des données en mémoire sans passer par le
+processeur et risquent par exemple de lire des données qui ne sont pas à jour. On
+peut contourner ce problème mais cela augmente la complexité du système.</p>
+<h3 class="subsection">3.2.6 Organisation associative du cache</h3>
+
+<p>Les mémoires caches sont organisées sous forme <strong><em>associative par groupe</em></strong>, on
+dit en anglais <em>n-way set associative</em>. On peut considérer la mémoire cache comme
+une table composée de blocs de <em>k</em> lignes et <em>m</em> colonnes qui stockent des données
+ainsi qu'une partie de l'adresse où se trouvent les données en mémoire.</p>
+<p><em>Figure 3.7 – Cache associatif à 2 groupes</em></p>
+<p>L'associativité permet d'organiser les adresses sous formes de classes d'équivalence
+comme le montre la Figure 3.7. Imaginons que le cache contienne deux blocs
+qui permettent de stocker chacun <em>32 × 4 octets</em>. On dit dans ce cas que la taille de
+la ligne de cache est de 4 octets et que le cache a une taille de <em>2 × 32 × 4 = 256
+octets</em>, soit deux blocs de 32 lignes de 4 octets. On ne compte pas la partie stockant
+l'adresse.</p>
+<h4 class="subsubsection">3.2.6.1 Exemple d'adressage dans le cache</h4>
+
+<p>Considérons pour simplifier les choses que notre microprocesseur possède un
+bus d'adresses de <strong>16 bits</strong> c'est à dire que les adresses ont une taille de 16 bits. Pour
+stocker dans le cache l'octet situé à l'adresse <code>48_854</code>, on écrit l'adresse en binaire et
+on la décompose ainsi :</p>
+<ul>
+<li><code>48_854 = 1011_1110_1101_0110</code>₂</li>
+<li>Les deux premiers bits sont mis à 0 pour obtenir l'adresse <code>48_852</code> car on charge
+les données par groupe de <strong>4 octets</strong>, c'est à dire la taille d'une ligne de cache,
+on chargera donc les octets situés aux adresses multiples de 4</li>
+<li>La ligne de cache où on devra placer les quatre octets est obtenue par les
+<strong>5 bits</strong> suivants, car il y a 32 lignes de cache et <em>32 = 2⁵</em>, soit dans notre cas
+<code>10101</code>₂ = 21</li>
+<li>Les <strong>9 bits</strong> restants représentent ce que l'on appelle l'<strong>étiquette</strong> (<em>tag</em>) et seront stockés
+dans le cache car ils permettent de reconstruire l'adresse exacte</li>
+</ul>
+<p>On remarque donc pour cet exemple que toute adresse dont les bits d'indices 2
+à 6 ont la même valeur sera stockée dans la même ligne du cache associatif. Afin
+d'améliorer l'efficacité du cache on crée donc <em>n</em> blocs de ce type et on essaye de
+répartir au mieux les adresses entre les blocs en utilisant un algorithme de type
+LRU ou LFU comme évoqué précédemment.</p>
+<h4 class="subsubsection">3.2.6.2 Cache hit et cache miss</h4>
+
+<p>Pour déterminer si l'octet à l'adresse <code>41687 = 1010_0010_1101_0100</code>₂ est dans
+le cache, on calcule la ligne du cache où devrait se trouver l'adresse. Dans le cas
+présent il s'agit de <code>1_0101</code>₂ = 21 (qui correspond aux bits 2 à 6), puis on compare
+en parallèle dans chaque bloc si l'étiquette <code>1_0100_0101</code> est présente. Si c'est le cas,
+l'adresse et la donnée qui lui correspond sont présentes dans le cache.</p>
+<p>Lorsque la donnée recherchée se trouve présente dans le cache, on parle de
+<strong><em>cache hit</em></strong>. Dans le cas où elle est absente il s'agit d'un <strong><em>cache miss</em></strong> ou <strong>défaut de cache</strong>
+en français. Pour donner un ordre de grandeur, déterminer si une donnée est dans
+le cache L1 prend de l'ordre de 4 à 5 ns, dans le cache L2 environ une dizaine voire
+une vingtaine de ns, puis dans le cache L3 entre 30 et 70 ns et finalement l'obtenir
+depuis la mémoire une centaine de ns.</p>
+<p><strong>Facteur d'amélioration</strong>
+Un programme s'exécutera donc plus vite si les données sont déjà présentes
+dans le cache et d'autant plus vite que les données sont présentes dans un
+cache de niveau faible (L1), c'est à dire, le plus proche du coeur de calcul.
+C'est le <strong><em>premier facteur d'amélioration</em></strong> de la vitesse d'exécution des
+programmes : faire en sorte, quand cela est possible, que les données soient
+présentes dans le cache au moment où on les traite car elles seront accessibles rapidement.</p>
+</div>
+La mémoire cache possède une influence très importante pour certains traitements
+liés à la lecture et l'écriture en mémoire. Un exemple typique de cette
+influence est celui du produit de matrices où des techniques d'inversion de
+boucles, ou de **blocage de boucles** (*loop blocking*) associée au **tuilage** (*tiling*)
+permettent de diminuer le temps de calcul de manière drastique par rapport
+à une implantation directe de la formule de calcul.
+<p>Le produit de matrices est la première étude de cas de ce livre (cf. Cha-
+pitre).</p>
+<h2 class="section">3.3 Les microprocesseurs x86</h2>
+
+<p>Nous nous intéressons dans ce chapitre aux microprocesseurs de la famille <strong>x86</strong>
+c'est à dire compatibles avec le jeu d'instructions de l'<strong>Intel 8086</strong>. Intel a fait le choix
+de garder une compatibilité dite descendante (ou ascendante suivant la vision des
+choses) de son jeu d'instructions assembleur. Ainsi, un microprocesseur en 2018 est
+capable d'exécuter un programme compilé pour l'Intel 8086 conçu en 1978, c'est à
+dire il y a 40 ans. Sachez que lorsque vous allumez votre ordinateur il se place en
+mode 8086, puis ensuite en mode 32 ou 64 bits.</p>
+<p>On utilise la dénomination <strong>IA-32</strong> (pour <em>Intel Architecture 32 bits</em>) pour les
+processeurs, à partir du Pentium chez Intel, qui utilisent des registres 32 bits.</p>
+<p>Les deux grands constructeurs de processeurs x86 sont <strong>Intel</strong> et <strong>AMD</strong>, deux
+sociétés américaines[^cyrix].</p>
+<p>[^cyrix]: On pensera également à Cyrix (1988-1997) qui a créé des clones du 80486 et du Pentium d'Intel.</p>
+<p><strong>Intel</strong> (<em>Integrated Electronics</em>) fut fondée en 1968 par Gordon Moore, Robert
+Noyce et Andrew Grove, trois docteurs en chimie et physique issus du monde
+de l'électronique numérique qui décidèrent de quitter l'entreprise <em>Fairchild Semiconductor</em>.
+Intel est devenu le leader mondial de la famille x86 et ses nombreux
+produits sont connus du grand public dont notamment le Pentium, Pentium Pro,
+les processeurs Core, Core 2 et plus récemment les microprocesseurs estampillés i3,
+i5, i7 et les derniers i9.</p>
+<p><strong>AMD</strong> (<em>Advanced Micro Devices</em>) fut fondée en 1969, soit un an après Intel, par un
+groupe d'ingénieurs et de dirigeants de <em>Fairchild Semiconductor</em> dont notamment
+Jerry Sanders. AMD est entré sur le marché des microprocesseurs x86 en 1975
+en produisant par rétro-ingénierie une version de l'Intel 8080. C'est au début des
+années 80 qu'AMD devint un producteur de microprocesseurs sous licence Intel car
+la société IBM désirait ne pas dépendre du seul fournisseur Intel pour la production
+de ses PCs. AMD a également conçu ses propres microprocesseurs faits maison
+comme les fameux K5, K6, Athlon et dernièrement les microprocesseurs Ryzen et
+Threadripper.</p>
+<h3 class="subsection">3.3.1 Fréquence de fonctionnement</h3>
+
+<p>Tout comme la mémoire le microprocesseur fonctionne à une fréquence donnée
+qui donne la cadence d'exécution des différentes unités de traitement. La fréquence
+de fonctionnement fut durant de nombreuses années le nerf de la guerre. Produire
+un processeur avec une fréquence de fonctionnement supérieure permettait de
+surpasser son concurrent. Cependant plus la fréquence est élevée, plus le processeur
+consomme de l'énergie et dégage de la chaleur. Ces dernières années la fréquence
+a été régulée afin que l'on puisse gérer de manière plus fine l'énergie. En effet un
+microprocesseur n'a pas besoin de tourner en permanence à une fréquence élevée,
+uniquement lorsqu'il est sollicité par un ou plusieurs programmes. Le choix a donc
+été fait d'utiliser, dans un premier temps, trois fréquences de fonctionnement :</p>
+<ul>
+<li>Une fréquence au repos (<em>idle</em>), par exemple 1,0 GHz</li>
+<li>Une fréquence de fonctionnement rapide (<em>boost</em>), lorsqu'un seul coeur est
+actif (3,5 GHz)</li>
+<li>Une fréquence de fonctionnement moyenne lorsque plusieurs coeurs sont
+actifs (3,0 GHz)</li>
+</ul>
+<p>A partir de 2018, Intel et AMD ont introduit une gestion encore plus fine de
+l'énergie avec une diminution progressive de la fréquence en fonction du nombre
+de coeurs qui travaillent, comme indiqué Table 3.3.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Nombre de coeurs actifs</th>
+<th>1–2</th>
+<th>3–4</th>
+<th>5–12</th>
+<th>13–16</th>
+<th>17–18</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel Core i9-7980XE</td>
+<td>4,4</td>
+<td>4,0</td>
+<td>3,9</td>
+<td>3,5</td>
+<td>3,4</td>
+</tr>
+<tr>
+<td>Intel Core i9-9980XE</td>
+<td>4,5</td>
+<td>4,2</td>
+<td>4,1</td>
+<td>3,9</td>
+<td>3,8</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.3 – Modification de la fréquence en GHz en fonction du nombre de coeurs actifs</em></p>
+<p>L'objectif est de repousser les limites de la fréquence de fonctionnement tout
+en restant dans l'enveloppe thermique du microprocesseur appelée <strong>TDP</strong> pour
+<em>Thermal Design Power</em>. Le TDP caractérise l'énergie (chaleur) dégagée par un circuit
+intégré. Si la chaleur est trop forte le circuit risque d'être endomagé. Il risque de
+fondre ou d'être soumis à des phénomènes d'électro-migration qui consistent en
+un déplacement d'atomes des parties conductrices du courant électrique vers les
+parties isolantes.</p>
+<p>Il semble que la valeur du TDP soit calculée différemment suivant les fabricants
+et les gammes de processeurs. Elle sert d'indicateur afin de prévoir un circuit de
+refroidissement proportionné à la chaleur dégagée[^tdp_note].</p>
+<p>[^tdp_note]: On pourra consulter le site <a href="https://www.anandtech.com">anandtech.com</a> et notamment l'article <em>Intel Core i7 10700 vs Intel Core i7 10700k, is 65W Comet Lake an option?</em> afin d'en savoir plus sur le TDP.</p>
+<p>Pour ne pas simplifier les choses, depuis l'architecture Alder Lake de 2021, Intel
+définit deux valeurs de fréquence :</p>
+<ul>
+<li>Le <strong>PBP</strong> pour <em>Processor Base Power</em>, ce qui correspond au TDP ou au PL1</li>
+<li>Le <strong>MTP</strong> pour <em>Maximum Turbo Power</em>, ce qui correspond au PL2</li>
+</ul>
+<p>Le <strong>MTP</strong> représente la puissance ou la fréquence maximale que l'on peut atteindre
+pendant une période de temps fixée, appelée <strong><em>tau</em></strong>, avant de revenir au PBP. L'exemple
+donné dans l'article de Hardware Mag[^hwmag] est
+celui d'un Core i5-13400 avec un PBP de 65 Watts, un MTP de 154 Watts et une
+période <em>tau</em> de 56 secondes.</p>
+<p>[^hwmag]: Voir Hardware Mag 123, Août-Septembre 2023, Best of Cooling CPU, page 90.</p>
+<p>Cependant, les microprocesseurs estampillés K comme le Core i9-13900K ont
+un <em>tau</em> infini, et dans ce cas ont par exemple un PBP de 125 W et un MTP de 253
+W ! Il est alors nécessaire de disposer d'un système de refroidissement approprié si
+on ne veut pas endommager son CPU.</p>
+<h3 class="subsection">3.3.2 Les trois types d'opérations</h3>
+
+<p>Le microprocesseur n'est en fait capable de réaliser que <strong>3 types d'opérations</strong> :</p>
+<ul>
+<li><code>LOAD r, [mem]</code> : charger dans un registre <code>r</code> une donnée située en
+mémoire à une adresse fournie en paramètre</li>
+<li><code>STORE [mem], r</code> : stocker une donnée contenue dans un registre
+<code>r</code> dans la mémoire à une adresse fournie en paramètre</li>
+<li><code>OP r3, r2, r1</code> : où <code>OP</code> est une opération arithmétique ou logique et qui signifie
+mettre dans le registre <code>r3</code> le résultat de <code>r1 OP r2</code></li>
+</ul>
+<p>En prévision de ce que nous verrons dans le prochain chapitre, nous indiquons
+que pour les microprocesseurs de type x86, on utilise seulement deux opérandes
+dans la plupart des instructions. On note donc <code>OP r1, r2</code> ce qui correspond à <code>r1 = r1 OP r2</code>. Dans ce cas l'opérande <code>r1</code> est appelée <strong>destination</strong> et l'opérande <code>r2</code> est
+qualifiée de <strong>source</strong>.</p>
+<p>On distingue historiquement deux classes d'architectures (cf. Table 3.4) pour
+les microprocesseurs :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Architecture</th>
+<th>Sigle</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RISC</td>
+<td>MIPS</td>
+<td><em>Microprocessor without Interlocked Pipeline Stage</em></td>
+</tr>
+<tr>
+<td>RISC</td>
+<td>ARM</td>
+<td><em>Acorn Risc Machine</em> (1987) ou <em>Advanced Risc Machine</em></td>
+</tr>
+<tr>
+<td>RISC</td>
+<td>POWER</td>
+<td><em>Performance Optimization With Enhanced RISC 1–8</em></td>
+</tr>
+<tr>
+<td>CISC</td>
+<td>x86</td>
+<td>Intel, AMD</td>
+</tr>
+<tr>
+<td>CISC</td>
+<td>680x0</td>
+<td>Motorola</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.4 – Exemples d'architectures CISC et RISC</em></p>
+<ul>
+<li><strong>RISC</strong> (<em>Reduced Instruction Set Computer</em>) : dans ce type d'architecture, on utilise
+le format d'instruction précédent et l'adressage mémoire reste simple (i.e. il
+n'existe que peu de manières différentes d'accéder à la mémoire)</li>
+<li><strong>CISC</strong> (<em>Complex Instruction Set Computer</em>) : pour ce type d'architecture on a tendance
+à combiner une instruction de chargement ou de stockage avec un calcul et
+l'adressage mémoire peut être complexe</li>
+</ul>
+<p>Prenons un exemple CISC issu du jeu d'instruction x86 :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_001.asm" target="_blank">code/chapitre_3/code_001.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">*</span><span style="color: #ff0000;">4</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Cette instruction réalise plusieurs opérations, à savoir :</p>
+<ul>
+<li>Le calcul de l'adresse mémoire <em>A = ebx + ecx </em> 4 + 8*</li>
+<li>Le chargement de la donnée <em>D</em> stockée sur 4 octets à l'adresse <code>Mem[A]</code> dans un
+registre temporaire <em>R</em>, soit <em>R = Mem[A]</em></li>
+<li>L'addition de la donnée <em>D</em> stockée dans <em>R</em> avec le registre <code>eax</code> : <em>R = R + eax</em></li>
+<li>L'écriture du résultat à l'adresse <em>A</em>, <em>Mem[A] = R</em></li>
+</ul>
+<p>Ce qui rend cette instruction complexe est le fait qu'elle combine plusieurs choses
+à réaliser dont un calcul d'adresse, un chargement de donnée depuis la mémoire,
+un calcul et un stockage du résultat en mémoire.</p>
+<p>Les microprocesseurs RISC vont, quant à eux, éviter ce genre d'instruction complexe
+en ne permettant par exemple que de lire une donnée depuis la mémoire pour
+la stocker dans un registre. On n'autorise alors que l'addition entre deux registres.
+L'instruction CISC précédente sera traduite en RISC par quatre instructions.</p>
+<p>Actuellement beaucoup de processeurs RISC sont utilisés dans les systèmes dits
+embarqués (téléphones, tablettes, robots) en raison de leur efficacité énergétique,
+les processeurs RISC consomment en général moins d'énergie que les CISC[^risc_note].</p>
+<p>[^risc_note]: Notons que le terme <em>Reduced</em> c'est à dire <em>réduit</em> en français est mal choisi, on devrait plutôt dire <em>simplifié</em>.</p>
+<p>La conception d'un microprocesseur pose de nombreux problèmes. Plus sa
+structure est complexe, plus les procédures de test sont longues et plus il est
+difficile de déterminer d'éventuels défauts de conception. Un processeur RISC, de
+structure moins complexe qu'un processeur CISC, est donc plus simple à concevoir
+et tester.</p>
+<p>Plusieurs facteurs ont encouragé par le passé la conception de machines à jeu
+d'instruction complexe (CISC) :</p>
+<ul>
+<li>Premièrement, la lenteur de la mémoire par rapport au processeur laissait
+à penser qu'il était plus intéressant de soumettre au CPU des instructions
+complexes. Pour réaliser un traitement donné, il était préférable de définir
+une instruction complexe plutôt que plusieurs instructions élémentaires. De
+plus une instruction complexe prend alors moins de temps de chargement
+depuis la mémoire qu'une série d'instructions simples. Dans les années 70
+les ordinateurs utilisaient de la mémoire magnétique (conçue à partir de
+tores) pour stocker les programmes. Ce type de mémoire était cher et lent.
+Un premier changement s'opéra avec l'arrivée des DRAM plus rapides mais
+restait l'épineux problème du prix des DRAM. Par exemple en 1977, 1 Mo de
+DRAM coûtait environ $5000 alors qu'il ne valait plus que $6 en 1994.</li>
+<li>Deuxièmement, le développement des langages de haut niveau (Fortran, Pascal, Ada)
+a posé quelques difficultés quant à la conception de compilateurs
+capables de traduire efficacement des programmes d'un langage évolué vers
+l'assembleur. On a donc eu tendance à incorporer au niveau processeur des
+instructions plus proches de la structure de ces langages. Le processus de
+compilation des langages de haut niveau comme Pascal et C était lent et le code
+assembleur obtenu n'était pas toujours optimisé : mieux valait coder à la main.
+Certains ont proposé de combler le fossé sémantique entre langage de haut
+niveau et assembleur afin de faciliter la tâche des programmeurs.</li>
+</ul>
+<p>A partir de la fin des années 70, deux facteurs sont venus ébranler les idées
+ancrées dans les esprits par les décennies précédentes et qui tendaient à favoriser
+l'approche CISC. D'une part, les mémoires sont devenues plus rapides, moins chères
+et de plus grande capacité qu'elles ne l'étaient auparavant et, d'autre part, des
+études conduites sur des langages de haut niveau montrèrent que les
+programmes sont constitués à 85% d'affectations, d'instructions <code>if</code> et d'appels de
+procédures et que 80% des affectations sont de la forme <code>variable = valeur</code>.</p>
+<p>Les résultats précédents ont été résumés par la phrase suivante : <em>80% des
+traitements des langages de haut niveau font appel à 20% des instructions du CPU.</em>
+D'où l'idée d'améliorer la vitesse de traitement des instructions les plus souvent
+utilisées ce qui a conduit à l'architecture RISC.</p>
+<p>Aujourd'hui les processeurs modernes de type CISC (comme les processeurs de
+la famille x86) possèdent des instructions CISC qui, comme nous le verrons plus
+tard, sont ensuite traduites en une série d'instructions de type RISC (que l'on qualifie
+de <strong>micro-opérations</strong>). On peut donc considérer que le coeur de fonctionnement
+d'un microprocesseur de type CISC est de type RISC.</p>
+<h3 class="subsection">3.3.3 Architecture et loi de Moore</h3>
+
+<p>Si la fréquence de fonctionnement est un facteur important qui permet de
+caractériser la puissance d'un microprocesseur un autre facteur primordial est son
+<strong>architecture</strong>. Le terme architecture est à différencier de ce que nous venons de
+voir pour les architectures CISC et RISC. Quand nous parlerons d'architecture d'un
+processeur nous évoquerons les caractéristiques et l'organisation des éléments qui
+le constituent. L'architecture détermine la taille des caches, leur organisation mais
+également toute la partie liée au traitement des instructions. L'accès à la mémoire
+et le type de mémoire qui pourra être utilisé est généralement déterminé par le
+<strong>chipset</strong>[^chipset] de la carte mère qui définit entre autres choses comment les données sont
+échangées entre le microprocesseur, la mémoire et les périphériques.</p>
+<p>[^chipset]: Un chipset est un ensemble de composants électroniques qui permet la communication entre microprocesseur, mémoire et périphériques.</p>
+<p>La <strong>finesse de gravure</strong> détermine grosso-modo la taille des transistors. Plus la
+finesse de gravure est petite, plus les transistors sont petits. Si un transistor est
+gravé plus finement il est plus rapide, consomme moins d'énergie et possède une
+plus grande densité d'intégration, c'est à dire qu'on peut en mettre plus sur la même
+surface, ce qui économiquement est plus intéressant.</p>
+<p>Une architecture est aujourd'hui identifiée par un nom (cf. Table 3.5) qui
+détermine sa finesse de gravure ainsi que l'étape de production et la génération du
+processeur.</p>
+<p>La société Intel s'est engagée en 2007 sur la voie d'un mode de production de
+ses microprocesseurs en deux temps appelés <strong>tick-tock</strong> :</p>
+<ul>
+<li>Un <strong><em>tick</em></strong> correspond à une diminution de la finesse de gravure</li>
+<li>Un <strong><em>tock</em></strong> correspond à la création d'une nouvelle architecture</li>
+</ul>
+<p>Puis, entre 2014 et 2016, ce modèle a été amendé en raison du retard pris
+par Intel sur la gravure en 10 nm pour inclure une troisième étape qui consiste à
+améliorer une architecture existante et le modèle a été rebaptisé <strong>PAO</strong> pour <em>Process–Architecture–Optimization</em>.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Année</th>
+<th>Etape</th>
+<th>Architecture</th>
+<th>Génération</th>
+<th>Finesse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2008</td>
+<td>Tock</td>
+<td>Nehalem</td>
+<td>1</td>
+<td>45 nm</td>
+</tr>
+<tr>
+<td>2010</td>
+<td>Tick</td>
+<td>Westmere</td>
+<td>1</td>
+<td>32 nm</td>
+</tr>
+<tr>
+<td>2011</td>
+<td>Tock</td>
+<td>Sandy Bridge</td>
+<td>2</td>
+<td>32 nm</td>
+</tr>
+<tr>
+<td>2012</td>
+<td>Tick</td>
+<td>Ivy Bridge</td>
+<td>3</td>
+<td>22 nm</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>Tock</td>
+<td>Haswell</td>
+<td>4</td>
+<td>22 nm</td>
+</tr>
+<tr>
+<td>2014</td>
+<td>Optimization</td>
+<td>Haswell Refresh</td>
+<td>4</td>
+<td>22 nm</td>
+</tr>
+<tr>
+<td>2014</td>
+<td>Tick</td>
+<td>Broadwell</td>
+<td>5</td>
+<td>14 nm</td>
+</tr>
+<tr>
+<td>2015</td>
+<td>Tock</td>
+<td>Skylake</td>
+<td>6</td>
+<td>14 nm</td>
+</tr>
+<tr>
+<td>2017</td>
+<td>Optimization</td>
+<td>Kaby Lake</td>
+<td>7</td>
+<td>14 nm</td>
+</tr>
+<tr>
+<td>2017</td>
+<td>Optimization</td>
+<td>Kaby Lake Refresh</td>
+<td>8</td>
+<td>14 nm</td>
+</tr>
+<tr>
+<td>2017</td>
+<td>Optimization</td>
+<td>Coffee Lake</td>
+<td>8, 9</td>
+<td>14 nm</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>Optimization</td>
+<td>Whiskey Lake</td>
+<td>8</td>
+<td>14 nm</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>Process</td>
+<td>Canon Lake</td>
+<td>–</td>
+<td>10 nm</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.5 – Nom des architectures Intel en fonction des années</em></p>
+<h4 class="subsubsection">3.3.3.1 Loi de Moore</h4>
+
+<p>En 1965, <strong>Gordon Moore</strong> (l'un des fondateurs d'Intel) alors ingénieur chez
+Fairchild Semiconductor, postule le doublement de la complexité des semi-conducteurs
+tous les ans à coût constant en se basant sur des données depuis 1959, date de leur
+invention.</p>
+<p>Une dizaine d'années plus tard, Moore révisera sa prédiction pour un doublement
+tous les deux ans du nombre de transistors dans un microprocesseur. C'est
+cette seconde prédiction que l'on qualifie de <strong>loi de Moore</strong> mais qui n'est pas une loi
+au sens strict du terme, c'est à dire toujours vraie, mais définit une tendance que
+les fabricants de circuits intégrés et de microprocesseurs en particulier, tendent à
+suivre, plus ou moins bien.</p>
+<p>Enfin une troisième version postule le doublement de quoi que ce soit tous les
+dix-huit mois. Elle est attribuée à David House, travaillant chez Intel qui aurait
+combiné la multiplication du nombre de transistors et l'augmentation de leur vitesse
+ou de la fréquence de fonctionnement des microprocesseurs.</p>
+<h3 class="subsection">3.3.4 Registres</h3>
+
+<p>Le microprocesseur possède plusieurs variables, appelées <strong>registres</strong>, qui permettent
+de stocker de manière temporaire des valeurs qui serviront pour des calculs
+ultérieurs. En architecture 32 bits, les registres utilisés pour faire des calculs sont
+au nombre de 8 et stockent des valeurs entières de 32 bits (entier signé, non signé,
+adresse mémoire).</p>
+<p>Ils sont qualifiés de <strong>registres généraux</strong> (<em>General Purpose Registers</em>) identifiés par les noms
+<code>eax</code>, <code>ebx</code>, <code>ecx</code>, <code>edx</code> ainsi que les registres d'index <code>edi</code> (<em>Destination Index</em>) et <code>esi</code> (<em>Source Index</em>).
+Il existe également des registres qui servent à gérer la pile et à accéder aux paramètres des
+fonctions et aux variables locales. Ce sont <code>esp</code> (<em>Stack Pointer</em>) et <code>ebp</code> (<em>Base Pointer</em>)[^esp_note].</p>
+<p>[^esp_note]: <code>ESP</code> et <code>EBP</code> sont généralement décrits comme faisant partie des registres d'index mais je préfère les distinguer des autres registres car ils ont un usage spécifique lié à la pile.</p>
+<p>On dénombre également plusieurs autres registres comme les registres de
+segment (<code>cs</code>, <code>ds</code>, <code>ss</code>, <code>es</code>), le registre <code>eflags</code> qui stocke les effets des opérations
+(retenue, résultat à 0, débordement, ...) ainsi que le registre <code>eip</code> (<em>Instruction
+Pointer</em>) qui stocke l'adresse mémoire de la prochaine instruction à exécuter.</p>
+<h3 class="subsection">3.3.5 Modes d'adressage mémoire</h3>
+
+<p>Une adresse mémoire est définie soit par une valeur constante, soit par la valeur
+d'un registre, soit par une combinaison de registres qui permet une correspondance
+avec les expressions liées aux tableaux ou aux structures de données.</p>
+<p>Une adresse a donc la forme suivante :</p>
+<p><em>adresse = [base + index × scale + offset]</em></p>
+<ul>
+<li><code>base</code> et <code>index</code> sont des registres avec une restriction concernant <code>index</code> qui ne
+peut être le registre <code>esp</code></li>
+<li><code>scale</code> est un facteur d'échelle et peut prendre les valeurs 1, 2, 4 ou 8 qui
+vont correspondre à la taille d'un octet, d'un mot, d'un double mot ou d'un
+quadruple mot</li>
+<li><code>offset</code> est une constante entière positive, négative ou nulle qualifiée de décalage
+ou de déplacement</li>
+</ul>
+<p>Chacun de ces termes est optionnel. Par exemple si on désire accéder au <em>i</em>ème
+élément d'un tableau d'entiers <code>t</code> on pourra choisir de stocker l'adresse de <code>t</code> dans le
+registre <code>ebx</code>, stocker <code>i</code> dans le registre <code>ecx</code>, utiliser <code>eax</code> pour lire la valeur <code>t[i]</code> et
+ainsi écrire <code>mov eax, [ebx+ecx*4]</code>. Le facteur d'échelle utilisé ici est 4 car un
+entier occupe 4 octets en mémoire.</p>
+<p>Les registres de segment ont été introduits sur l'<strong>Intel 8086</strong>, un microprocesseur
+16 bits, afin de pouvoir gérer 1 Mo de mémoire, alors que 16 bits ne permettent de
+gérer que 64 ko[^16bit]. Chacun de ces segments est lié à la structure d'un programme :
+<code>cs</code> correspond au segment de code (<em>Code Segment</em>), <code>ds</code> au segment de données
+(<em>Data Segment</em>), <code>ss</code> à la pile (<em>Stack Segment</em>) et <code>es</code> (<em>Extra Segment</em>) peut être utilisé
+pour pointer sur une adresse quelconque de la mémoire.</p>
+<p>[^16bit]: <em>2¹⁶ = 65 536 = 64 × 1 024 = 64 ko</em>.</p>
+<p><em>Figure 3.8 – Adressage mémoire</em></p>
+<p>Grâce à ce mécanisme une adresse mémoire est définie par une combinaison
+registre de segment et registre général ou registre d'index. Par exemple, <code>eip</code> est
+associé à <code>cs</code>. Le registre <code>edi</code> est associé à <code>es</code> et <code>esi</code> est associé à <code>ds</code>. Les registres <code>esp</code>
+et <code>ebp</code> sont liés au segment de pile <code>ss</code>. Lorsque l'on accède à la prochaine instruction
+au travers de <code>ip</code> (ou <code>eip</code> en 32 bits), on fait implicitement référence au segment <code>cs</code>,
+l'adresse que l'on accède est donc calculée par :</p>
+<p><em>address = segment × 16 + offset = cs × 16 + ip</em></p>
+<p>Le fait de multiplier par 16 le registre <code>cs</code> consiste à réaliser un décalage à gauche
+de 4 bits du registre <code>cs</code> car <em>16 = 2⁴</em>, ce qui donne une adresse sur <em>16 + 4 = 20 bits</em>.</p>
+<p>Notons que les programmes que nous allons écrire par la suite feront référence à
+ces registres implicitement et nous n'aurons pas à les spécifier car nous fonctionnerons
+dans une architecture 32 ou 64 bits. Cela permettra de simplifier l'écriture des
+programmes et les segments seront gérés par l'assembleur <code>nasm</code> et le compilateur <code>C++</code>.</p>
+<h2 class="section">3.4 Temps d'exécution et améliorations</h2>
+
+<p>Le temps d'exécution d'un programme est donné par les deux formules suivantes :</p>
+<p><em>Te = Σ(CPIi × Tc) = N × CPIm × Tc</em> &emsp; (3.2)</p>
+<p>La première exprime que le temps d'exécution en secondes (<em>Te</em>) d'un programme
+de <em>N</em> instructions est donné par la somme du nombre de cycles que nécessite chaque
+instruction (<em>CPIi = Cycles Per Instruction</em>) pour s'exécuter multiplié par le temps de
+cycle (<em>Tc</em>) qui est l'inverse de la fréquence de fonctionnement du microprocesseur.</p>
+<p>La seconde est une version synthétique pour laquelle on calcule un nombre
+moyen de cycles par instruction (<em>CPIm</em>) pour <em>N</em> instructions :</p>
+<p><em>CPIm = (1/N) × Σ CPIi</em> &emsp; (3.3)</p>
+<p>Par exemple, si un sous-programme est composé de :</p>
+<ul>
+<li>3 instructions qui s'exécutent en 2 cycles</li>
+<li>1 instruction de 4 cycles</li>
+<li>1 instruction de 10 cycles</li>
+</ul>
+<p>On a alors au total <em>3×2 + 1×4 + 1×10 = 20 cycles</em>, soit un CPI moyen de <em>20/5
+instructions</em> et donc une moyenne de <strong>4 cycles par instruction</strong>.</p>
+<p>Les différentes évolutions des microprocesseurs ont pour but de diminuer le
+temps d'exécution des programmes. D'après la formule, étant donné que le
+temps d'exécution est un produit de facteurs, il suffit de diminuer l'un des facteurs
+pour diminuer le temps total d'exécution du programme.</p>
+<p>La première amélioration consiste à diminuer le temps de cycle. Pour cela il suffit
+d'augmenter la fréquence des processeurs. Un processeur doté d'une fréquence de
+3 Ghz fonctionne 3 fois plus vite qu'un processeur à 1 Ghz. Cependant augmenter
+la fréquence pose de nombreux problèmes à résoudre notamment l'élévation de la
+température dégagée par le circuit électronique.</p>
+<p>On peut ensuite diminuer le nombre d'instructions <em>N</em> ou le nombre moyen de
+cycles par instructions (<em>CPIm</em>). Or dans ce cas, il semble que le produit <em>N × CPIm</em>
+reste constant, en effet :</p>
+<ul>
+<li>Si on diminue le nombre d'instructions on crée des instructions plus complexes
+(de type CISC) qui nécessitent plus de cycles pour être exécutées, on augmente
+donc <em>CPIm</em></li>
+<li>Par contre, si on diminue le nombre moyen de cycles par instructions on crée
+des instructions simples (de type RISC) et il faut utiliser plusieurs instructions
+pour réaliser le même traitement qu'une instruction CISC, on augmente donc <em>N</em></li>
+</ul>
+<p>Il a donc fallu élaborer des solutions capables de diminuer le temps nécessaire
+au traitement des instructions qu'elles soient CISC ou RISC.</p>
+<p>Les architectures des processeurs modernes jouent sur plusieurs plans, en tentant
+de maximiser :</p>
+<ul>
+<li>L'<strong>ILP</strong> (<em>Instruction Level Parallelism</em>) d'un flux d'instructions, c'est à dire, tenter
+d'exécuter le plus possible d'instructions en parallèle</li>
+<li>Le <strong>DLP</strong> (<em>Data Level Parallelism</em>) qui consiste à exécuter la même instruction
+sur plusieurs données différentes en parallèle</li>
+<li>Le <strong>TLP</strong> (<em>Thread Level Parallelism</em>) qui consiste à disposer de plusieurs coeurs
+d'exécution, c'est ce que l'on appelle les processeurs multi-coeurs</li>
+</ul>
+<table class="data-table">
+<thead>
+<tr>
+<th>Amélioration</th>
+<th>Technique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ILP</td>
+<td>pipeline, super-scalaire, exécution dans le désordre, coprocesseur</td>
+</tr>
+<tr>
+<td>DLP</td>
+<td>registres et calcul vectoriel (unités MMX, SSE, AVX)</td>
+</tr>
+<tr>
+<td>TLP</td>
+<td>multi-coeurs, SMT, HyperThreading</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.6 – Techniques d'amélioration des microprocesseurs</em></p>
+<p>Nous allons donc passer en revue ces techniques dans la suite de ce chapitre.</p>
+<h2 class="section">3.5 Étapes de traitement d'une instruction</h2>
+
+<p>Afin de simplifier la compréhension du traitement des instructions par le microprocesseur,
+on peut dire que traiter une instruction consiste à passer par cinq
+étapes principales (cf. Figure 3.9) :</p>
+<ol>
+<li>Le <strong>chargement</strong> (<em>Fetch Instruction</em>) de l'instruction depuis la mémoire (cache L1i)</li>
+<li>Le <strong>décodage</strong> (<em>Decode Instruction</em>) de l'instruction afin de connaître les opérations à réaliser lors de
+son exécution</li>
+<li>Le <strong>chargement des opérandes</strong> (<em>Read Operands</em>) : lecture des données nécessaires à l'exécution</li>
+<li>L'<strong>exécution</strong> (<em>Execute</em>) proprement dite de l'instruction</li>
+<li>L'<strong>écriture du résultat</strong> (<em>Write Back</em>) en mémoire ou dans un registre</li>
+</ol>
+<p>Le programme à exécuter réside en mémoire centrale et il se décompose en
+plusieurs parties :</p>
+<ul>
+<li>Le <strong>code</strong>, c'est à dire les instructions à exécuter</li>
+<li>Les <strong>données</strong> qui peuvent être initialisées, non initialisées ou en lecture seule</li>
+<li>La <strong>pile</strong> des appels de sous-programmes</li>
+<li>Le <strong>tas</strong> (<em>heap</em> en anglais) qui représente le reste de la mémoire et c'est notamment
+dans cette zone que l'on allouera les données grâce à <code>malloc</code> en C ou
+<code>new</code> en C++</li>
+</ul>
+<p>L'ensemble des données en mémoire (attention, ici le terme donnée signifie tout
+octet de la mémoire centrale), s'il est accédé par le processeur au travers d'une
+adresse, va transiter par les différents niveaux de cache.</p>
+<p><em>Figure 3.9 – Etapes de traitement d'une instruction</em></p>
+<p>Les deux premières étapes de traitement (chargement et décodage) représentent
+ce que l'on appelle le <strong><em>frontal</em></strong> (ou <strong><em>front-end</em></strong> en anglais), c'est à dire la partie émergée,
+donc visible de l'iceberg. Les trois dernières sont qualifiées de <strong><em>back-end</em></strong> en anglais,
+que l'on trouve parfois traduit par <strong><em>dorsal</em></strong>, c'est la partie immergée et la plus
+complexe.</p>
+<p>Imaginons, de manière grossière que chacune de ces étapes prend une nanoseconde
+(<em>10⁻⁹ s</em>). Le traitement de chaque instruction demande 5 étapes d'une
+nanoseconde donc <strong>5 ns</strong>. En d'autres termes, on traite une instruction toutes les 5 ns.</p>
+<p>C'est ce que nous avons représenté sur la partie haute de la Figure 3.9. La
+première instruction <em>i₁</em> passe successivement par les 5 étapes de traitement avant
+que l'instruction suivante <em>i₂</em> puisse être traitée.</p>
+<h2 class="section">3.6 Pipeline d'instructions</h2>
+
+<p>Afin d'améliorer la vitesse de traitement des instructions un mécanisme de
+<strong>pipeline</strong> a été mis en place. Il consiste à ne pas attendre que l'ensemble des étapes
+de traitement aient été réalisées avant de passer à l'instruction suivante. Pour
+cela on rend chaque étape de traitement indépendante. Une première instruction
+passe dans l'étape de chargement au temps <em>t = 0</em>, puis au temps <em>t + 1</em>, elle passe
+dans l'étape de décodage, pendant que l'instruction suivante passe dans l'étape de
+chargement et ainsi de suite. C'est le même principe qui est utilisé sur les chaînes
+de montage dans les usines. On qualifie généralement le pipeline de mécanisme
+d'<strong>amélioration en longueur</strong>.</p>
+<p><em>Figure 3.10 – Pipeline d'instructions</em></p>
+<p>Ce mécanisme général est utilisé à plusieurs niveaux du traitement des instructions,
+notamment lorsqu'une instruction est exécutée par une Unité de Traitement
+(cf. ci-après).</p>
+<p>La question que l'on peut légitimement se poser est : quel gain apporte le
+pipeline ? Pour répondre à cette question il suffit de comparer les temps d'exécution
+avec et sans pipeline pour traiter <em>n</em> instructions :</p>
+<ul>
+<li><strong>Sans pipeline</strong> : une instruction est exécutée toutes les 5 ns, si on a <em>n</em> instructions
+à exécuter il faut donc <em>5 × n ns</em>.</li>
+<li><strong>Avec pipeline</strong> : il faut 5 ns pour que la première instruction soit exécutée, puis
+<em>n − 1 ns</em> pour exécuter les <em>n − 1</em> instructions restantes</li>
+</ul>
+<p>Le gain obtenu est donné par le rapport du temps d'exécution sans pipeline par
+le temps d'exécution avec pipeline :</p>
+<p><em>gain = lim(n→∞) [5n / (5 + n − 1)] ≈ 5n/n ≈ 5</em> &emsp; (3.4)</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Micro architecture</th>
+<th>Pipeline</th>
+<th>Micro architecture</th>
+<th>Pipeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P5 (Pentium)</td>
+<td>5</td>
+<td>NetBurst (Cedar Mill)</td>
+<td>31</td>
+</tr>
+<tr>
+<td>P6 (Pentium 3)</td>
+<td>10</td>
+<td>Core</td>
+<td>14</td>
+</tr>
+<tr>
+<td>P6 (Pentium Pro)</td>
+<td>14</td>
+<td>Sandy Bridge</td>
+<td>14</td>
+</tr>
+<tr>
+<td>NetBurst (Willamette)</td>
+<td>20</td>
+<td>Haswell</td>
+<td>14</td>
+</tr>
+<tr>
+<td>NetBurst (Northwood)</td>
+<td>20</td>
+<td>Skylake</td>
+<td>14</td>
+</tr>
+<tr>
+<td>NetBurst (Prescott)</td>
+<td>31</td>
+<td>Kabylake</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.7 – Nombre d'étages de pipeline pour différentes architectures Intel</em></p>
+<p>Un pipeline de <em>k</em> étapes (on parle également d'étages ou <em>stages</em> en anglais),
+permet théoriquement de diviser le temps de traitement par <em>k</em>. Cependant, le
+nombre d'étages de traitement est limité par le nombre d'étapes élémentaires à
+réaliser et est influencé par les accès à la mémoire et le nombre d'unités de
+traitement (cf. sections suivantes). Plus le pipeline est long, plus il est coûteux de
+le vider et le réalimenter, c'est ce qui arrive lors de l'exécution des instructions
+conditionnelles ou lors du traitement des boucles. Il se limite à une quinzaine
+d'étages sur la plupart des microprocesseurs actuels (cf. Table 3.7).</p>
+<p>Voyons à présent comment les différentes étapes de traitement des instructions
+s'enchaînent.</p>
+<h2 class="section">3.7 Frontal : chargement et décodage</h2>
+
+<p>Sur le schéma de la Figure 3.11, les étapes 1 et 2 correspondent au frontal.
+A partir de <code>cs:eip</code> on obtient l'adresse de la prochaine instruction à exécuter.
+Cependant, certaines instructions assembleur modifient <code>eip</code> et il est nécessaire
+d'utiliser un mécanisme de <strong>prédiction de branchement</strong>, représenté sur la figure
+par <strong>BPU</strong> pour <em>Branch Prediction Unit</em>, afin de savoir si l'on devra lire l'instruction
+suivante ou si on devra se déplacer à une autre adresse du code.</p>
+<p>Une fois que l'on dispose de la bonne adresse, on récupère l'instruction à
+exécuter dans le cache L1 d'instructions (<code>L1i</code>). Il se peut que l'instruction ne soit pas
+présente dans le cache L1i, il faudra alors chercher si elle est dans le cache L2, puis
+dans le cache L3 et finalement, si elle n'est présente dans aucun cache, il faudra
+lancer une requête d'accès en mémoire pour récupérer les octets situés à l'adresse à
+lire et les charger dans les différents caches ou dans le cache L1i uniquement.</p>
+<p><em>Figure 3.11 – Chargement et décodage</em></p>
+<h3 class="subsection">3.7.1 Prédiction de branchement</h3>
+
+<p>Comme nous venons de le dire, le chargement d'une instruction fait appel à
+plusieurs mécanismes dits de <strong><em>prédiction de branchement</em></strong> qui permettent de prédire
+à quelle adresse le pointeur d'instruction (<code>eip</code>) doit se placer. Généralement il s'agit
+de l'instruction suivante. Mais dans le cas de branchements, d'une boucle <code>for</code> par
+exemple, il faut revenir au début de la boucle après avoir exécuté son corps ou
+sortir de la boucle lorsque la condition d'arrêt est atteinte. On dit alors qu'il existe
+plusieurs <strong>chemins d'exécution</strong>.</p>
+<p>Considérons le code C de la Figure 3.12 qui calcule la somme des
+entiers de 1 à 10. On voit sur l'organigramme de gauche qu'il existe deux chemins :
+le premier est pris lorsque <code>i ≤ 10</code> et le second lorsque <code>i &gt; 10</code>.</p>
+<p>Le registre <code>eax</code> contient la somme des valeurs et le registre <code>ecx</code>
+représente la variable de boucle (<code>i</code>).
+Après l'utilisation de l'instruction <code>cmp ecx, 10</code> qui compare le registre <code>ecx</code> à la
+constante 10, on place une instruction de branchement conditionnel <code>jg .end_for</code>,
+qui signifie <em>jump on greater</em>.</p>
+<p>Ces instructions de branchement conditionnel sont source de ralentissement au
+sein du pipeline puisqu'il est nécessaire de le vider si le chemin d'exécution
+suivi n'est pas le bon. Si <code>ecx</code> est supérieur à 10 il faut sortir de la boucle et
+modifier <code>eip</code> pour qu'il pointe sur l'instruction après le label <code>.end_for</code>, c'est à
+dire l'instruction <em>i8</em>. Cependant les instructions suivant la comparaison (<em>i5</em>, <em>i6</em>, <em>i7</em>)</p>
+<p><em>Figure 3.12 – Exemple de boucle for</em></p>
+<p>ont déjà été chargées dans le pipeline pendant le traitement de <em>i3</em> et <em>i4</em>. On doit
+donc invalider leur traitement en vidant le pipeline et recommencer à partir de
+l'instruction <em>i8</em>.</p>
+<p>Afin d'éviter le plus possible de vider le pipeline, la prédiction de branchement,
+comme son nom l'indique, permet de prédire dès lors qu'une instruction de type
+branchement est présente, si le branchement sera emprunté ou non.</p>
+<p>Notons également que les conditionnelles de type <code>if then</code> ou <code>if then else</code> à
+l'intérieur d'une boucle (<code>for</code> ou <code>while</code>) sont les plus pénalisantes.</p>
+<h3 class="subsection">3.7.2 Micro-opérations (µ-ops)</h3>
+
+<p>Les instructions assembleur peuvent être qualifiées de <strong>macro-instructions</strong> car
+elles définissent des traitements parfois très complexes. Au sein du microprocesseur,
+ces macro-instructions sont décomposées en une série d'instructions plus simples
+appelées <strong>micro-opérations</strong> et notées <strong><em>µ-ops</em></strong>.</p>
+<p>L'instruction <code>add [ebx+ecx*4+8], eax</code> sera décomposée en plusieurs micro-opérations :</p>
+<ol>
+<li><em>µ-op1</em> : calcul de l'adresse <em>A = ebx + ecx </em> 4 + 8*</li>
+<li><em>µ-op2</em> : chargement de la donnée à l'adresse mémoire <em>A</em> dans le registre <em>R</em></li>
+<li><em>µ-op3</em> : exécution de l'addition <em>R + eax</em> et stockage dans <em>R</em></li>
+<li><em>µ-op4</em> : stockage de <em>R</em> à l'adresse mémoire <em>A</em></li>
+</ol>
+<p>Une fois chargée dans une file d'instructions x86, la prochaine instruction à
+exécuter doit être décodée en micro-instructions. Généralement, il existe un
+mécanisme de cache de traduction représenté sur la figure par le <strong><em>µ-Ops Cache</em></strong>.
+Ce cache a pour objectif de stocker la série de micro-instructions générées par le
+décodage d'une instruction x86 précédemment décodée. Si l'instruction x86 est
+présente dans ce cache, on approvisionnera la file de µ-ops avec les données du
+cache, sinon on utilisera le décodeur qui est le circuit dédié à la traduction d'une
+instruction x86 en µ-ops.</p>
+<p>De nos jours la partie décodage est capable de décoder plusieurs instructions à
+la fois, généralement de l'ordre de 3 à 5 sur les microprocesseurs récents.</p>
+<h2 class="section">3.8 Dorsal : exécution des instructions</h2>
+
+<p><em>Figure 3.13 – Traitement instruction</em></p>
+<h3 class="subsection">3.8.1 Exécution dans le désordre (Out Of Order)</h3>
+
+<p>Au niveau du dorsal (voir Figure 3.13), c'est un ensemble de µ-ops associées à
+des instructions x86 que l'on doit traiter. Afin de diminuer les temps d'attentes et ne
+pas ralentir l'exécution du traitement on utilise un mécanisme d'<strong>exécution dans le
+désordre</strong> (<em>Out Of Order</em>) qui consiste à traiter les µ-ops dès lors qu'elles disposent
+de toutes les ressources nécessaires pour être traitées.</p>
+<p>Cependant, cette exécution dans le désordre pose un problème crucial à
+résoudre : faire en sorte qu'au final les instructions x86 soient traitées dans l'ordre
+dans lequel elles sont entrées dans le pipeline de traitement.</p>
+<p>Pour ce faire, on utilise deux tampons (<em>buffers</em>) appelés <strong>Reservation Station</strong> et
+<strong>ReOrder Buffer</strong> notés respectivement <strong>RS</strong> et <strong>ROB</strong> :</p>
+<ul>
+<li><strong>ROB</strong>, comme son nom l'indique est chargé de garder la cohérence et maintenir
+l'ordre d'exécution, il est également chargé de l'allocation de registres</li>
+<li><strong>RS</strong> est chargé de stocker les instructions et de les garder jusqu'à ce qu'elles
+soient exécutées</li>
+</ul>
+<p>L'<strong><em>allocation avec renommage de registres</em></strong> est une technique essentielle pour traiter
+les instructions dans le désordre. En interne le microprocesseur dispose de plusieurs
+registres et lorsqu'il traite une instruction x86 il établit une correspondance entre
+les registres visibles par le programmeur (<code>eax</code>, <code>ebx</code>, etc.) et ses registres internes
+de manière à pouvoir traiter chaque instruction de manière indépendante.</p>
+<h3 class="subsection">3.8.2 Unités de traitement</h3>
+
+<p>Dès qu'une instruction est prête à être traitée au niveau de la RS elle est envoyée
+à une unité de traitement dédiée. Les différentes unités sont de type entier, flottant,
+vectoriel et chargement / stockage de donnée. On les qualifie respectivement d'<strong>ALU</strong>,
+<strong>FPU</strong>, <strong>VPU</strong> et <strong>LSU</strong> :</p>
+<ul>
+<li><strong>ALU</strong> (<em>Arithmetic and Logic Unit</em>) ou unité de traitement arithmétique et logique
+traite les opérations sur les valeurs entières et travaille avec les registres
+généraux</li>
+<li><strong>FPU</strong> (<em>Floating Point Unit</em>) ou unité de traitement des nombres à virgule
+flottante traite les opérations sur les réels, cette unité s'appelait auparavant
+coprocesseur</li>
+<li><strong>VPU</strong> (<em>Vector Processing Unit</em>) ou unité de traitement vectorielle s'intéresse aux
+vecteurs, ce sont les instructions de type MMX, SSE ou AVX</li>
+<li><strong>LSU</strong> (<em>Load and Store Unit</em>) ou unité d'accès à la mémoire traite le chargement
+et le stockage des données ainsi que le calcul des adresses mémoire</li>
+</ul>
+<p>Là encore, afin d'améliorer l'efficacité du traitement des instructions on a
+introduit une technologie qualifiée de <strong><em>super-scalaire</em></strong> (<em>Superscalar</em>) qui consiste à
+disposer de plusieurs unités de traitement de même type afin de mieux répartir
+la charge de travail. On qualifie cette technique d'<strong>amélioration en largeur</strong> du
+microprocesseur. Les instructions sont réparties (<em>dispatch</em>) sur les différentes unités
+de traitement dès qu'elles sont prêtes à être exécutées.</p>
+<h3 class="subsection">3.8.3 Retrait des instructions</h3>
+
+<p>Après son exécution une instruction est finalement traitée par le ROB de manière
+à propager son résultat dans l'ordre de traitement du flux d'instructions soumis
+au microprocesseur. Il peut s'agir d'une écriture en mémoire, de la modification
+de la valeur d'un registre suivie éventuellement par la mise à jour du registre
+<code>eflags</code>.</p>
+<h3 class="subsection">3.8.4 Pipeline vs super-scalaire</h3>
+
+<p>Nous avons vu que l'utilisation d'un pipeline était qualifiée d'amélioration en
+longueur et que l'amélioration en largeur consistait à avoir plusieurs unités de
+traitement. On peut combiner ces deux techniques. Un pipeline trop long
+ou trop court aura un effet de ralentissement. Disposer de nombreuses unités de
+traitement mais les sous-utiliser affecte la rentabilité.</p>
+<p>Une analogie pour comprendre l'interaction de ces deux techniques est celle du
+<strong><em>fast food</em></strong>. Lorsque l'on entre dans un fast food on dispose de plusieurs files d'attentes
+pour lesquelles une personne traite votre commande, va chercher les produits et prend
+en compte votre règlement. Il s'agit d'un système avec de nombreuses unités de
+traitement mais un pipeline court.</p>
+<p>L'autre alternative est le <strong><em>drive</em></strong> où se trouve une longue
+file de clients en voiture qui seront servis par trois personnes différentes : l'une va
+prendre votre commande, la seconde s'occupe de votre règlement et la troisième
+vous livre votre commande. Il s'agit d'un système avec peu d'unités de traitement
+mais un long pipeline.</p>
+<h3 class="subsection">3.8.5 SMT (Simultaneous MultiThreading)</h3>
+
+<p>Le <strong>Simultaneous MultiThreading</strong> (<strong>SMT</strong>) est une technique qui permet le partage
+d'un coeur de processeur superscalaire entre plusieurs threads dans le but d'optimiser
+l'utilisation des ressources. Généralement il s'agit d'un seul autre thread, un
+processeur qui possède le SMT apparaît alors comme ayant le double de coeurs de
+calculs.</p>
+<p>Cette technologie a été réintroduite sur le Pentium 4 d'Intel en 2003[^ht_note]
+et a été qualifiée de technologie <strong><em>Hyper-Threading</em></strong> (<strong>HT</strong>). Intel évoque un gain
+de 30 % par rapport à un même processeur sans HT.</p>
+<p>[^ht_note]: Le Pentium 4 d'architecture Willamette date de Novembre 2000. C'est seulement à partir de l'architecture Northwood et pour une fréquence de 3,06 GHz que le Pentium 4 possède l'Hyper-Threading.</p>
+<p>Pour certains traitements parallèles, utiliser 4 coeurs dotés du SMT, c'est à dire
+8 threads, peut se révéler un atout. Dans d'autres cas, il sera préférable de se
+cantonner à utiliser les 4 coeurs sans le SMT.</p>
+<p>Après ce bref aperçu des technologies mises en oeuvre afin de diminuer le temps
+d'exécution des instructions, nous allons nous intéresser au matériel et en découvrir
+les caractéristiques.</p>
+<h2 class="section">3.9 Apprendre à connaître son ordinateur sous Linux</h2>
+
+<h3 class="subsection">3.9.1 Outils graphiques et ligne de commande</h3>
+
+<p>Si vous utilisez <strong>Windows</strong> comme système d'exploitation vous trouverez de
+nombreux outils professionnels pour obtenir des informations sur votre machine.
+L'un des plus connus est <strong>CPU-Z</strong>, doté d'une interface graphique donnant de nombreux
+détails sur le matériel. Il existe également <strong>GPU-Z</strong> pour les cartes graphiques.</p>
+<p>Sous Linux l'offre est plus restreinte. On trouve notamment l'utilitaire graphique
+<strong>CPU-X</strong> qui est l'équivalent de CPU-Z.</p>
+<p>Il existe différentes manières de récupérer l'information sous Linux par l'intermédiaire
+d'utilitaires en ligne de commande :</p>
+<ul>
+<li><code>lshw</code> (<em>list hardware</em>)</li>
+<li><code>dmidecode</code> : décode une table DMI (<em>Desktop Management Interface</em>)</li>
+<li><code>lscpu</code> (<em>list cpu</em>)</li>
+<li><code>cat /proc/cpuinfo</code> : informations sur le microprocesseur</li>
+<li><code>lstopo</code> du package <code>hwloc</code></li>
+</ul>
+<p>Par exemple pour obtenir des informations sur le microprocesseur, on peut
+utiliser la commande <code>lscpu</code> ou, de manière équivalente, la commande <code>lshw</code> avec
+les arguments suivants :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_002.sh" target="_blank">code/chapitre_3/code_002.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> lshw <span style="color: #660033;">-C</span> processor</div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_003.asm" target="_blank">code/chapitre_3/code_003.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">*-</span><span style="color: #0000ff; font-weight: bold;">cpu</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;description<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">CPU</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;produit<span style="color: #339933;">:</span> AMD Ryzen <span style="color: #ff0000;">5</span> <span style="color: #ff0000;">3600</span> <span style="color: #ff0000;">6</span><span style="color: #339933;">-</span>Core Processor</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;fabricant<span style="color: #339933;">:</span> Advanced Micro Devices <span style="color: #009900; font-weight: bold;">&#91;</span>AMD<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;identifiant matériel<span style="color: #339933;">:</span> <span style="color: #ff0000;">15</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;information bus<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">cpu</span>@<span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;version<span style="color: #339933;">:</span> AMD Ryzen <span style="color: #ff0000;">5</span> <span style="color: #ff0000;">3600</span> <span style="color: #ff0000;">6</span><span style="color: #339933;">-</span>Core Processor</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;numéro de série<span style="color: #339933;">:</span> Unknown</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;emplacement<span style="color: #339933;">:</span> AM4</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;taille<span style="color: #339933;">:</span> 2166MHz</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;capacité<span style="color: #339933;">:</span> 4200MHz</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;<span style="color: #0000ff; font-weight: bold;">bits</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">64</span> <span style="color: #0000ff; font-weight: bold;">bits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;horloge<span style="color: #339933;">:</span> 100MHz</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;fonctionnalités<span style="color: #339933;">:</span> lm fpu fpu_exception wp vme de pse tsc msr pae</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;mce cx8 apic sep mtrr pge mca cmov pat pse36 <span style="color: #00007f; font-weight: bold;">clflush</span> mmx fxsr sse</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;sse2 ht <span style="color: #00007f; font-weight: bold;">syscall</span> nx mmxext fxsr_opt pdpe1gb <span style="color: #00007f; font-weight: bold;">rdtscp</span> x86<span style="color: #339933;">-</span><span style="color: #ff0000;">64</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;constant_tsc rep_good nopl nonstop_tsc <span style="color: #00007f; font-weight: bold;">cpuid</span> extd_apicid</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;aperfmperf pni <span style="color: #00007f; font-weight: bold;">pclmulqdq</span> <span style="color: #00007f; font-weight: bold;">monitor</span> ssse3 fma cx16 sse4_1 sse4_2</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;<span style="color: #00007f; font-weight: bold;">movbe</span> <span style="color: #00007f; font-weight: bold;">popcnt</span> aes <span style="color: #00007f; font-weight: bold;">xsave</span> avx f16c <span style="color: #00007f; font-weight: bold;">rdrand</span> lahf_lm cmp_legacy svm</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;<span style="color: #00007f; font-weight: bold;">skinit</span> wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;mwaitx cpb cat_l3 cdp_l3 hw_pstate sme ssbd mba sev ibpb stibp</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;<span style="color: #00007f; font-weight: bold;">vmmcall</span> fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;clflushopt clwb sha_ni <span style="color: #00007f; font-weight: bold;">xsaveopt</span> xsavec xgetbv1 xsaves cqm_llc</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;vgif umip rdpid overflow_recov succor smca cpufreq</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp;configuration <span style="color: #339933;">:</span> cores=<span style="color: #ff0000;">6</span> enabledcores=<span style="color: #ff0000;">6</span> threads=<span style="color: #ff0000;">12</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On obtient le nom du microprocesseur, sa fréquence maximale de fonctionnement
+de 4200 Mhz (<code>capacité</code>) ainsi que les différentes technologies implantées
+(<code>fonctionnalités</code>) comme <code>avx2</code>, <code>bmi2</code> et <code>popcnt</code> pour celles qui nous intéresseront
+par la suite. On trouve également le nombre de coeurs (<code>cores=6</code>) et le nombre de
+threads (<code>threads=12</code>).</p>
+<p>La ligne <code>taille</code> ne correspond en fait pas à une fréquence fixe et varie si on
+relance la commande plusieurs fois. Il s'agit probablement de la fréquence de l'un
+des coeurs.</p>
+<h4 class="subsubsection">3.9.1.1 La commande inxi</h4>
+
+<p>Un petit utilitaire intéressant sous Linux est <code>inxi</code>. Il permet d'afficher dans
+le terminal les informations principales de la configuration d'une machine. Pour
+obtenir toutes les informations relatives à une machine, on peut par exemple saisir
+dans le terminal :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_004.sh" target="_blank">code/chapitre_3/code_004.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">inxi <span style="color: #660033;">-F</span> <span style="color: #660033;">-c</span> <span style="color: #000000;">18</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>L'option <code>-F</code> signifie <em>full</em> et l'option <code>-c</code> permet de choisir un mode de coloration.
+On obtient alors le compte rendu suivant (extrait) :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_005.txt" target="_blank">code/chapitre_3/code_005.txt</a></summary>
+<pre class="code-block"><code>Host: zentopia Kernel: 5.4.0-40-generic x86_64 bits: 64
+Desktop: Gnome 3.36.2 Distro: Ubuntu 20.04 LTS (Focal Fossa)
+Machine:
+Type: Desktop Mobo: Micro-Star model: MPG X570 GAMING EDGE WIFI (MS-7C37)
+v: 1.0 serial: &lt;superuser/root required&gt; UEFI: American Megatrends v: 1.50
+date: 10/29/2019
+CPU:
+Topology: 6-Core model: AMD Ryzen 5 3600 bits: 64 type: MT MCP
+L2 cache: 3072 KiB
+Speed: 2200 MHz min/max: 2200/3600 MHz Core speeds (MHz): 1: 2209 2: 2200
+3: 2200 4: 2199 5: 2200 6: 2199 7: 2200 8: 2198 9: 2199 10: 2200 11: 2199
+12: 2200
+Graphics:
+Device-1: NVIDIA GP104 [GeForce GTX 1070] driver: nvidia v: 440.100
+...</code></pre>
+</details>
+
+<p>Pour utiliser <code>lstopo</code> il faut installer le paquet <code>hwloc</code> sous Ubuntu :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_006.sh" target="_blank">code/chapitre_3/code_006.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> apt <span style="color: #c20cb9; font-weight: bold;">install</span> hwloc</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On utilise ensuite la commande <code>lstopo</code> ou <code>lstopo-no-graphics</code> comme suit :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_007.sh" target="_blank">code/chapitre_3/code_007.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">lstopo</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">lstopo <span style="color: #660033;">--no-io</span> file.png</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">lstopo-no-graphics -.ascii <span style="color: #660033;">--no-io</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La première commande (ligne 1) ouvre une fenêtre qui donne la topologie du
+processeur (Figure 3.14) avec les informations des coeurs, l'organisation des caches.
+Cette dernière partie peut être supprimée en utilisant l'option <code>--no-io</code> (ligne 2).
+Enfin, la ligne 3 affiche les informations au format ASCII dans un terminal.</p>
+<p>Sur la Figure 3.14 avec le AMD Ryzen 7 1700X, on voit clairement comment sont
+répartis et numérotés les coeurs ainsi que la taille et la répartition des mémoires
+caches. Ce processeur d'architecture <em>Summit Ridge</em> est décrit comme possédant 8
+coeurs, 16 threads et est doté de 4 Mo de cache L2 ainsi que 16 Mo de cache L3.
+Cependant, sur la figure, on voit que le cache L3 est scindé en deux fois 8 Mo
+chacun associé à 4 coeurs SMT, ce qui fait 8 Mo pour 8 threads. Chaque groupe
+de 2 threads dispose de 512 ko de cache L2, 64 ko de cache L1i et 32 ko de cache L1d.</p>
+<p><em>Figure 3.14 – Résultat de la commande lstopo sur AMD Ryzen 7 1700X</em></p>
+<p>Ce schéma indique également la numérotation des threads (<code>P#0</code> à <code>P#15</code> sur fond gris) :</p>
+<ul>
+<li>Les coeurs ont un numéro d'identification pair (<code>P#0</code>, <code>P#2</code> à <code>P#14</code>)</li>
+<li>Les coeurs SMT ont des numéros impairs (<code>P#1</code>, <code>P#3</code> à <code>P#15</code>)</li>
+</ul>
+<p>Quant à la mémoire cache, on peut obtenir beaucoup d'informations en listant
+le contenu du répertoire :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_008.sh" target="_blank">code/chapitre_3/code_008.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">ls</span> <span style="color: #000000; font-weight: bold;">/</span>sys<span style="color: #000000; font-weight: bold;">/</span>devices<span style="color: #000000; font-weight: bold;">/</span>system<span style="color: #000000; font-weight: bold;">/</span>cpu<span style="color: #000000; font-weight: bold;">/</span>cpu0<span style="color: #000000; font-weight: bold;">/</span>cache<span style="color: #000000; font-weight: bold;">/</span>index<span style="color: #000000; font-weight: bold;">*</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Chaque <code>index</code> correspond à un cache, l'index 0 est le cache L1 de données, l'index 1
+est le cache L1 d'instructions, l'index 2 est le cache L2 et l'index 3 correspond
+au cache L3. Voici un petit script bash qui permet d'afficher ces informations :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_009.sh" target="_blank">code/chapitre_3/code_009.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">#!/bin/sh</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #007800;">input_dir</span>=<span style="color: #ff0000;">&quot;/sys/devices/system/cpu/cpu0/cache&quot;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #007800;">levels</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #c20cb9; font-weight: bold;">ls</span> <span style="color: #660033;">-d</span> <span style="color: #800000;">${input_dir}</span><span style="color: #000000; font-weight: bold;">/</span>index<span style="color: #7a0874; font-weight: bold;">&#91;</span><span style="color: #000000;">0</span>-<span style="color: #000000;">9</span><span style="color: #7a0874; font-weight: bold;">&#93;</span><span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #007800;">levels</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #7a0874; font-weight: bold;">echo</span> <span style="color: #007800;">$levels</span> <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">tr</span> <span style="color: #ff0000;">' '</span> <span style="color: #ff0000;">'\n'</span> <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">wc</span> -l<span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #007800;">level</span>=<span style="color: #000000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #000000; font-weight: bold;">while</span> <span style="color: #7a0874; font-weight: bold;">&#91;</span> <span style="color: #007800;">$level</span> <span style="color: #660033;">-lt</span> <span style="color: #007800;">$levels</span> <span style="color: #7a0874; font-weight: bold;">&#93;</span> ; <span style="color: #000000; font-weight: bold;">do</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #007800;">size</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #800000;">${input_dir}</span><span style="color: #000000; font-weight: bold;">/</span>index<span style="color: #800000;">${level}</span><span style="color: #000000; font-weight: bold;">/</span><span style="color: #c20cb9; font-weight: bold;">size</span> <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">awk</span> <span style="color: #ff0000;">'{ printf(&quot;%6s&quot;,$1);}'</span><span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #007800;">type</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #800000;">${input_dir}</span><span style="color: #000000; font-weight: bold;">/</span>index<span style="color: #800000;">${level}</span><span style="color: #000000; font-weight: bold;">/</span><span style="color: #7a0874; font-weight: bold;">type</span> <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">awk</span> <span style="color: #ff0000;">'{ printf(&quot;%12s&quot;,$1);}'</span><span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #007800;">levl</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #800000;">${input_dir}</span><span style="color: #000000; font-weight: bold;">/</span>index<span style="color: #800000;">${level}</span><span style="color: #000000; font-weight: bold;">/</span>level<span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #007800;">assc</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #800000;">${input_dir}</span><span style="color: #000000; font-weight: bold;">/</span>index<span style="color: #800000;">${level}</span><span style="color: #000000; font-weight: bold;">/</span>ways_of_associativity<span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #007800;">lnsz</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #800000;">${input_dir}</span><span style="color: #000000; font-weight: bold;">/</span>index<span style="color: #800000;">${level}</span><span style="color: #000000; font-weight: bold;">/</span>coherency_line_size<span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #7a0874; font-weight: bold;">echo</span> <span style="color: #ff0000;">&quot;L<span style="color: #007800;">$levl</span> <span style="color: #007800;">$type</span> <span style="color: #007800;">$size</span> <span style="color: #007800;">${assc}</span>-way-set-associative <span style="color: #007800;">${lnsz}</span> bytes&quot;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; <span style="color: #007800;">level</span>=<span style="color: #000000; font-weight: bold;">`</span><span style="color: #c20cb9; font-weight: bold;">expr</span> <span style="color: #007800;">$level</span> + <span style="color: #000000;">1</span><span style="color: #000000; font-weight: bold;">`</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #000000; font-weight: bold;">done</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On peut également utiliser la commande <code>sudo lshw -short -C memory</code>.</p>
+<h3 class="subsection">3.9.2 Informations sur la carte mère (dmidecode)</h3>
+
+<p>Le framework logiciel <strong>DMI</strong> pour <em>Desktop Management Interface</em> fournit un standard
+afin de gérer et de suivre les modifications de composants sur un ordinateur.
+L'utilitaire <code>dmidecode</code> permet de lire les informations DMI de l'ordinateur et de les
+afficher dans un format texte compréhensible par un humain.</p>
+<p>Pour obtenir des informations sur la carte mère, on peut utiliser la commande
+suivante :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_010.sh" target="_blank">code/chapitre_3/code_010.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> dmidecode <span style="color: #660033;">-t</span> baseboard</div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_011.txt" target="_blank">code/chapitre_3/code_011.txt</a></summary>
+<pre class="code-block"><code># dmidecode 3.2
+Getting SMBIOS data from sysfs.
+SMBIOS 2.8 present.
+
+Handle 0x0002, DMI type 2, 15 bytes
+Base Board Information
+   Manufacturer: Micro-Star International Co., Ltd.
+   Product Name: MPG X570 GAMING EDGE WIFI (MS-7C37)
+   Version: 1.0
+   Serial Number: J816453611
+   Asset Tag: To be filled by O.E.M.
+   Features:
+      Board is a hosting board
+      Board is replaceable
+   Location In Chassis: To be filled by O.E.M.
+   Chassis Handle: 0x0003
+   Type: Motherboard
+   Contained Object Handles: 0
+
+Handle 0x0039, DMI type 41, 11 bytes
+Onboard Device
+   Reference Designation: RTL8111EPV
+   Type: Ethernet
+   Status: Disabled
+   Type Instance: 1
+   Bus Address: 0000:03:00.0</code></pre>
+</details>
+
+<p>Ici, il s'agit d'une carte MSI X570 GAMING EDGE WIFI.</p>
+<h3 class="subsection">3.9.3 Informations sur la mémoire (dmidecode)</h3>
+
+<p>De la même manière, pour obtenir des informations concernant le sous-système
+mémoire, il suffit d'utiliser <code>dmidecode</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_012.sh" target="_blank">code/chapitre_3/code_012.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> dmidecode <span style="color: #660033;">-t</span> memory</div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_013.txt" target="_blank">code/chapitre_3/code_013.txt</a></summary>
+<pre class="code-block"><code># dmidecode 3.2
+Getting SMBIOS data from sysfs.
+SMBIOS 2.8 present.
+
+Handle 0x000F, DMI type 16, 23 bytes
+Physical Memory Array
+   Location: System Board Or Motherboard
+   Use: System Memory
+   Error Correction Type: None
+   Maximum Capacity: 128 GB
+   Error Information Handle: 0x000E
+   Number Of Devices: 4
+
+Handle 0x0017, DMI type 17, 40 bytes
+Memory Device
+   Array Handle: 0x000F
+   Error Information Handle: 0x0016
+   Total Width: 64 bits
+   Data Width: 64 bits
+   Size: 8192 MB
+   Form Factor: DIMM
+   Set: None
+   Locator: DIMM 0
+   Bank Locator: P0 CHANNEL A
+   Type: DDR4
+   Type Detail: Synchronous Unbuffered (Unregistered)
+   Speed: 3200 MT/s
+   Manufacturer: Unknown
+   Serial Number: 00000000
+   Asset Tag: Not Specified
+   Part Number: F4-3200C16-8GVKB
+   Rank: 1
+   Configured Memory Speed: 3200 MT/s
+   Minimum Voltage: 1.2 V
+   Maximum Voltage: 1.2 V
+   Configured Voltage: 1.2 V
+   ...</code></pre>
+</details>
+
+<p>On voit que la carte mère possède quatre slots de connexion (<em>Number Of Devices</em>),
+on peut donc positionner quatre barrettes de mémoires mais il ne faut pas dépasser
+128 Go (<em>Maximum Capacity</em>), soit par exemple quatre barrettes de 32 Go. Le premier
+slot mémoire DIMM0 est occupé par une barrette de 8 Go de PC-3200 (<code>F4-3200C16-8GVKB</code>).</p>
+<p>On peut également utiliser la commande <code>lshw</code> pour obtenir un sommaire des
+différentes mémoires :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_014.sh" target="_blank">code/chapitre_3/code_014.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> lshw <span style="color: #660033;">-short</span> <span style="color: #660033;">-C</span> memory</div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_015.txt" target="_blank">code/chapitre_3/code_015.txt</a></summary>
+<pre class="code-block"><code>Chemin ...          Classe   Description
+=====================================================================
+/0/0               memory   64KiB BIOS
+/0/f               memory   32GiB Mémoire Système
+/0/f/0             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/f/1             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/f/2             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/f/3             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/12              memory   384KiB L1 cache
+/0/13              memory   3MiB L2 cache
+/0/14              memory   32MiB L3 cache</code></pre>
+</details>
+
+<p>On voit ici que la mémoire centrale possède une taille de 32 Go organisée en 4
+fois 8 Go. Les mémoires cache de niveau L1 font 32 ko, le cache L2 possède
+une taille de 512 ko et le cache L3 fait 32 Mo (2×16 Mo).</p>
+<p>Nous avons évoqué la présence d'informations liées aux timings mémoires (Section 3.2).
+On peut obtenir ces informations en installant <code>i2c-tools</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_016.sh" target="_blank">code/chapitre_3/code_016.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> apt <span style="color: #c20cb9; font-weight: bold;">install</span> i2c-tools</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> modprobe eeprom</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">decode-dimms</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On obtient entre autres informations :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_017.txt" target="_blank">code/chapitre_3/code_017.txt</a></summary>
+<pre class="code-block"><code>EEPROM CRC of bytes 128-253 OK (0xA01C)
+
+---=== Memory Characteristics ===---
+Maximum module speed 2132 MHz (PC4-17000)
+Size 8192 MB
+Banks x Rows x Columns x Bits 16 x 16 x 10 x 64
+SDRAM Device Width 8 bits
+Ranks 1
+AA-RCD-RP-RAS (cycles) 15-15-15-36
+Supported CAS Latencies 16T, 15T, 14T, 13T, 12T, 11T, 10T
+
+---=== Timings at Standard Speeds ===---
+AA-RCD-RP-RAS (cycles) as DDR4-1866 13-13-13-31
+AA-RCD-RP-RAS (cycles) as DDR4-1600 11-11-11-27
+
+---=== Timing Parameters ===---
+Minimum Cycle Time (tCKmin) 0.938 ns
+Maximum Cycle Time (tCKmax) 1.600 ns
+Minimum CAS Latency Time (tAA) 13.750 ns
+Minimum RAS to CAS Delay (tRCD) 13.750 ns
+Minimum Row Precharge Delay (tRP) 13.750 ns
+Minimum Active to Precharge Delay (tRAS) 33.000 ns
+Minimum Active to Auto-Refresh Delay (tRC) 46.750 ns
+Minimum Recovery Delay (tRFC1) 350.000 ns
+Minimum Recovery Delay (tRFC2) 260.000 ns
+Minimum Recovery Delay (tRFC4) 160.000 ns
+Minimum Four Activate Window Delay (tFAW) 21.000 ns
+Minimum Row Active to Row Active Delay (tRRD_S) 3.700 ns
+Minimum Row Active to Row Active Delay (tRRD_L) 5.300 ns
+Minimum CAS to CAS Delay (tCCD_L) 5.625 ns
+Minimum Write Recovery Time (tWR) 15.000 ns
+Minimum Write to Read Time (tWTR_S) 2.500 ns
+Minimum Write to Read Time (tWTR_L) 7.500 ns
+
+---=== Other Information ===---
+Package Type Monolithic
+Maximum Activate Count Unlimited
+Post Package Repair One row per bank group
+Soft PPR Supported
+Module Nominal Voltage 1.2 V
+Thermal Sensor No
+
+---=== Physical Characteristics ===---
+Module Height 32 mm
+Module Thickness 2 mm front, 2 mm back
+Module Reference Card A revision 1
+
+---=== Manufacturer Data ===---
+Module Manufacturer Undefined
+Part Number Undefined
+...</code></pre>
+</details>
+
+<p>Malheureusement, on n'obtient pas toutes les informations, comme par exemple
+le fabricant (<em>Module Manufacturer</em>).</p>
+<p>Il s'agit ici de barrettes de DDR4-SDRAM au format UDIMM, PC4-17000 de 8
+Go qui possède plusieurs fréquences de fonctionnement.</p>
+<h3 class="subsection">3.9.4 CPU-X</h3>
+
+<p>On dispose à présent d'un outil appelé <strong>CPU-X</strong> qui est l'équivalent de <strong>CPU-Z</strong>.
+Sur le site du logiciel on trouvera des packages pour Linux pour Debian, OpenSUSE
+et Ubuntu (voir Figure 3.15).</p>
+<p>Pour installer CPU-X, il suffit de télécharger l'archive correspondant à Ubuntu
+sur le site du logiciel, puis de lancer les commandes suivantes :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_018.sh" target="_blank">code/chapitre_3/code_018.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">mkdir</span> <span style="color: #c20cb9; font-weight: bold;">install</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #7a0874; font-weight: bold;">cd</span> <span style="color: #c20cb9; font-weight: bold;">install</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">mv</span> ~<span style="color: #000000; font-weight: bold;">/</span>Téléchargements<span style="color: #000000; font-weight: bold;">/</span>CPU-X_v4.0.1_Ubuntu.tar.gz .</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">tar</span> <span style="color: #660033;">-xzf</span> CPU-X_v4.0.1_Ubuntu.tar.gz</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #7a0874; font-weight: bold;">cd</span> xUbuntu_20.04</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> <span style="color: #c20cb9; font-weight: bold;">dpkg</span> <span style="color: #660033;">-i</span> libcpuid15_0.5.0_amd64.deb cpuidtool_0.5.0_amd64.deb cpu-x_4.0.1_amd64.deb</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cpu-x</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>On peut également obtenir l'information dans le terminal en utilisant l'option
+en ligne de commande <code>--ncurses</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_019.sh" target="_blank">code/chapitre_3/code_019.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">cpu-x <span style="color: #660033;">--ncurses</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Figure 3.15 – Interface de CPU-X</em></p>
+<h2 class="section">3.10 Benchmarks</h2>
+
+<h3 class="subsection">3.10.1 Phoronix Test Suite</h3>
+
+<p><strong>Phoronix</strong> est un logiciel qui permet d'installer et exécuter une série de <strong><em>benchmarks</em></strong>
+assez fournie.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_020.sh" target="_blank">code/chapitre_3/code_020.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> <span style="color: #c20cb9; font-weight: bold;">apt-get install</span> phoronix-test-suite</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">phoronix-test-suite list-available-tests</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La première commande installe le logiciel Phoronix et la seconde donne la liste
+des tests disponibles. Il en existe plus de 300. On peut ensuite
+installer les tests qui nous intéressent comme celui des <em>n-reines</em> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_021.sh" target="_blank">code/chapitre_3/code_021.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">phoronix-test-suite <span style="color: #c20cb9; font-weight: bold;">install</span> n-queens</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">phoronix-test-suite run n-queens</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Le programme demande un identifiant pour le test à réaliser qui pourra être
+utilisé par la suite pour afficher les résultats :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_022.sh" target="_blank">code/chapitre_3/code_022.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">phoronix-test-suite info n-queens-results</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">phoronix-test-suite result-file-to-csv n-queens-results</div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_023.txt" target="_blank">code/chapitre_3/code_023.txt</a></summary>
+<pre class="code-block"><code>...
+&quot;N-Queens - Elapsed Time&quot;,16.13</code></pre>
+</details>
+
+<h3 class="subsection">3.10.2 sysbench</h3>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_024.sh" target="_blank">code/chapitre_3/code_024.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">sudo</span> <span style="color: #c20cb9; font-weight: bold;">apt-get install</span> sysbench</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Pour tester le CPU, on exécute le test adéquat qui calcule des décimales de π :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_025.sh" target="_blank">code/chapitre_3/code_025.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sysbench cpu <span style="color: #660033;">--cpu-max-prime</span>=<span style="color: #000000;">20000</span> run</div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_026.txt" target="_blank">code/chapitre_3/code_026.txt</a></summary>
+<pre class="code-block"><code>sysbench 1.0.11 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 1
+...
+CPU speed:
+   events per second: 182.73
+
+General statistics:
+   total time: 10.0016s
+   total number of events: 1828
+
+Latency (ms):
+   min: 5.37   avg: 5.47   max: 10.31   95th: 5.99   sum: 9997.81
+
+Threads fairness:
+   events (avg/stddev): 1828.0000/0.00
+   execution time (avg/stddev): 9.9978/0.00</code></pre>
+</details>
+
+<p>Pour tester la mémoire :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_027.sh" target="_blank">code/chapitre_3/code_027.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sysbench memory <span style="color: #660033;">--memory-block-size</span>=256K run</div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_028.txt" target="_blank">code/chapitre_3/code_028.txt</a></summary>
+<pre class="code-block"><code>...
+Running memory speed test with the following options:
+  block size: 256KiB
+  total size: 102400MiB
+  operation: write
+  scope: global
+
+Initializing worker threads...
+Threads started!
+
+Total operations: 199824 (19977.75 per second)
+2149956.00 MiB transferred (4994.44 MiB/sec)
+
+General statistics:
+   total time:  10.0002s
+   total number of events: 199824
+
+Latency (ms):
+   min: 0.05   avg: 0.05   max: 5.53   95th: 0.05   sum: 9875.07
+
+Threads fairness:
+   events (avg/stddev): 199824.0000/0.00
+   execution time (avg/stddev): 9.8751/0.00</code></pre>
+</details>
+
+<h3 class="subsection">3.10.3 Geekbench</h3>
+
+<p><strong>Geekbench</strong> est une suite de test disponible pour Windows, Linux et macOS qui
+permet d'évaluer la puissance de calcul du microprocesseur en mono-core et
+multi-core. La version 4 se réfère à un Intel Core i7-6600U à 2,6 GHz et
+la version 5 à un Intel Core i3-8100.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Microprocesseur</th>
+<th>SC 32 bits</th>
+<th>MP 32 bits</th>
+<th>SC 64 bits</th>
+<th>MC 64 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel i5-7400</td>
+<td>4106</td>
+<td>11252</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Intel i7 8700</td>
+<td>5153</td>
+<td>22744</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>AMD Ryzen 7 1700X</td>
+<td>4029</td>
+<td>25046</td>
+<td>4507</td>
+<td>27207</td>
+</tr>
+<tr>
+<td>AMD Ryzen 5 5600g</td>
+<td>5627</td>
+<td>30348</td>
+<td>6677</td>
+<td>34098</td>
+</tr>
+<tr>
+<td>Intel i7 10850H</td>
+<td>5705</td>
+<td>26103</td>
+<td>6443</td>
+<td>28378</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.8 – Résultats GeekBench 4.x.x en 32 et 64 bits SC (mono core) et MC (multi core)</em></p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Microprocesseur</th>
+<th>SC 64 bits</th>
+<th>MC 64 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel i5-7400</td>
+<td>990</td>
+<td>3200</td>
+</tr>
+<tr>
+<td>Intel i3-6100</td>
+<td>1014</td>
+<td>2269</td>
+</tr>
+<tr>
+<td>Intel i7 8700</td>
+<td>1230</td>
+<td>6448</td>
+</tr>
+<tr>
+<td>AMD Ryzen 7 1700X</td>
+<td>967</td>
+<td>6261</td>
+</tr>
+<tr>
+<td>AMD Ryzen 5 3600</td>
+<td>1333</td>
+<td>7705</td>
+</tr>
+<tr>
+<td>AMD Ryzen 5 5600g</td>
+<td>1493</td>
+<td>8313</td>
+</tr>
+<tr>
+<td>Intel i7 10850H</td>
+<td>1367</td>
+<td>6923</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.9 – Résultats GeekBench 5 en 64 bits SC (mono core) et MC (multi core)</em></p>
+<p>Les tests sont liés au calcul sur les entiers, calculs sur les réels, la cryptographie
+et l'accès mémoire. Pour exécuter les tests il suffit de récupérer une archive sur le
+site Geekbench, de la décompresser et lancer les deux programmes de tests :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_3/code_029.sh" target="_blank">code/chapitre_3/code_029.sh</a></summary>
+
+<div class="code-container">
+<div class="bash" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #c20cb9; font-weight: bold;">tar</span> <span style="color: #660033;">-xvzf</span> ~<span style="color: #000000; font-weight: bold;">/</span>Downloads<span style="color: #000000; font-weight: bold;">/</span>Geekbench-4.3.4-Linux.tar.gz</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #7a0874; font-weight: bold;">cd</span> Geekbench-4.3.4-Linux</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">.<span style="color: #000000; font-weight: bold;">/</span>geekbench4_x86_32</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">.<span style="color: #000000; font-weight: bold;">/</span>geekbench4_x86_64</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Après exécution des tests un lien vers le web est fourni qui permet d'obtenir le
+détail des résultats.</p>
+<h2 class="section">3.11 Comparaison Core i5-7400 et Core i3-6100</h2>
+
+<p>A titre d'exercice, nous allons comparer deux microprocesseurs de la famille
+Intel. Le premier est un <strong>Core i3-6100</strong> et le second un <strong>Core i5-7400</strong>.</p>
+<p>Sur le papier, le Core i5 est plus performant que le Core i3 pour plusieurs raisons :</p>
+<ul>
+<li>C'est un Core i5 qui dispose de plus de mémoire cache et plus de coeurs qu'un Core i3</li>
+<li>Le Core i5 est de génération plus récente (7XXX) que le Core i3 (6XXX)</li>
+<li>Les trois derniers chiffres de 7400 sont un indicateur de fréquence, donc
+normalement le Core i5 devrait avoir une fréquence de fonctionnement supérieure</li>
+</ul>
+<p>En pratique, il faut aller sur le site <a href="https://ark.intel.com">ark.intel.com</a> pour
+obtenir les informations de ces deux microprocesseurs.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Processeur</th>
+<th>Core i5-7400</th>
+<th>Core i3-6100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Génération</td>
+<td>7 / Kaby Lake</td>
+<td>6 / Skylake</td>
+</tr>
+<tr>
+<td>Date de lancement</td>
+<td>Q1'2017</td>
+<td>Q3'2015</td>
+</tr>
+<tr>
+<td>Finesse de gravure (nm)</td>
+<td>14</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Prix (dollars)</td>
+<td>182</td>
+<td>117</td>
+</tr>
+<tr>
+<td>Coeurs/Threads</td>
+<td>4/4</td>
+<td>2/4</td>
+</tr>
+<tr>
+<td>Cache L3 (Mo)</td>
+<td>6</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Fréquence de base (GHz)</td>
+<td>3,00</td>
+<td>3,70</td>
+</tr>
+<tr>
+<td>Fréquence turbo (GHz)</td>
+<td>3,50</td>
+<td>3,70</td>
+</tr>
+<tr>
+<td>Technologie vectorielle</td>
+<td>AVX2</td>
+<td>AVX2</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.10 – Caractéristiques des Core i5-7400 et Core i3-6100</em></p>
+<p>Nous voyons donc que le Core i5 comprend quatre coeurs et 6 Mo de cache L3
+alors que le Core i3 comprend deux coeurs dotés de l'HyperThreading et moitié
+moins de cache L3.</p>
+<p>Cependant, un détail change beaucoup de choses : la fréquence de
+fonctionnement plafonne à 3,5 GHz pour le Core i5 alors que le Core i3 fonctionne
+avec 200 MHz de plus.</p>
+<p>Il en résulte que pour les programmes monothreads c'est le Core i3 qui sera
+généralement le plus performant, alors que le Core i5 prendra l'avantage sur les
+programmes multithreads ou pour lesquels l'accès à la mémoire cache est important.</p>
+<p><em>Figure 3.16 – Comparaison des architectures Intel Core i3 6100 et i5 7400</em></p>
+<p>Par exemple, pour les tests 3 à 7, la fréquence du CPU est un facteur déterminant,
+le Core i3 sera donc plus performant que le Core i5. Cependant, pour le test 4 le
+Core i5 sort grand gagnant car le traitement des instructions AVX a probablement
+été amélioré sur le Core i5.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Test N°</th>
+<th>Description</th>
+<th>Core i5-7400</th>
+<th>Core i3-6100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Produit de matrices 2048×2048</td>
+<td>50,35</td>
+<td>61,84</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Produit de matrices 2060×2060</td>
+<td>36,83</td>
+<td>34,40</td>
+</tr>
+<tr>
+<td>3</td>
+<td>SAXPY 524417 FPU</td>
+<td>45,20</td>
+<td>43,52</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SAXPY 524417 AVX</td>
+<td>10,00</td>
+<td>14,43</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Popcnt 512333 réf.</td>
+<td>8,05</td>
+<td>7,54</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Compte Voyelles 524288 (if)</td>
+<td>15,50</td>
+<td>14,47</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Compte Voyelles 524288 AVX</td>
+<td>0,85</td>
+<td>0,79</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 3.11 – Temps d'exécution en secondes de certaines études de cas pour Core i5-7400 et Core i3-6100</em></p>
+<h2 class="section">3.12 Bilan</h2>
+
+<p>Pour résumer ce que nous avons appris dans ce chapitre :</p>
+<ul>
+<li>La mémoire possède une influence non négligeable lors de certains traitements
+et notamment le fait que les données à traiter soient présentes ou absentes
+dans la mémoire cache</li>
+<li>L'<strong>alignement mémoire</strong>, c'est à dire le fait que les données soient positionnées
+en mémoire à des adresses multiples de 8, 16 ou 32 peut influer sur la durée
+de leur traitement</li>
+<li>Les améliorations liées aux microprocesseurs tentent de maximiser le nombre
+de traitements que l'on peut réaliser en parallèle que ce soit au niveau du
+décodage ou du traitement des instructions (<strong>pipeline</strong>, <strong>super-scalaire</strong>) ou au
+niveau des données (<strong>vectoriel</strong>) ou des threads (<strong>SMT</strong>)</li>
+<li>Les instructions si elles sont traitées dans l'ordre où elles arrivent depuis
+l'extérieur du microprocesseur sont en fait exécutées dans un mode dit dans
+le désordre (Out Of Order) au sein du microprocesseur, ceci afin d'augmenter
+l'efficacité de leur traitement</li>
+</ul>
+<h3 class="subsection">3.12.2 Objectifs</h3>
+
+<p>A l'issue de ce chapitre, vous devez :</p>
+<ul>
+<li>Être en mesure d'obtenir les informations concernant un microprocesseur
+(architecture, taille des mémoires cache, technologies disponibles)</li>
+<li>Être en mesure de comparer plusieurs microprocesseurs</li>
+</ul>
+<h2 class="section">3.13 Résumé</h2>
+
+<p>Ce chapitre a passé en revue le fonctionnement du microprocesseur moderne, depuis
+la mémoire jusqu'au pipeline d'instructions et aux techniques d'exécution parallèle.</p>
+<h2 class="section">3.14 Exercices</h2>
+
+<p><strong>Exercice 18</strong> – Quelle est la bande passante :</p>
+<ol>
+<li>…</li>
+<li>…</li>
+<li>…</li>
+</ol>
+<p><strong>Exercice 19</strong> – Quelle est la fréquence de fonctionnement :</p>
+<ol>
+<li>…</li>
+<li>…</li>
+<li>…</li>
+<li>…</li>
+</ol>
+<p><strong>Exercice 20</strong> – Comparer l'Intel i9-10900K avec l'Intel i9-10850K. En novembre
+2020, le 10850K peut être trouvé au prix de 506€, alors que le 10900K coûte
+environ 600€. En général le 10850K coûte entre 50 et 150€ de moins que le
+10900K.</p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

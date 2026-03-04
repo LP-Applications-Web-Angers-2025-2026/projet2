@@ -1,0 +1,1 @@
+f32 M2[rows * cols];

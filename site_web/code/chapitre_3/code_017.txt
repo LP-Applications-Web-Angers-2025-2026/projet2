@@ -1,0 +1,51 @@
+EEPROM CRC of bytes 128-253 OK (0xA01C)
+
+---=== Memory Characteristics ===---
+Maximum module speed 2132 MHz (PC4-17000)
+Size 8192 MB
+Banks x Rows x Columns x Bits 16 x 16 x 10 x 64
+SDRAM Device Width 8 bits
+Ranks 1
+AA-RCD-RP-RAS (cycles) 15-15-15-36
+Supported CAS Latencies 16T, 15T, 14T, 13T, 12T, 11T, 10T
+
+---=== Timings at Standard Speeds ===---
+AA-RCD-RP-RAS (cycles) as DDR4-1866 13-13-13-31
+AA-RCD-RP-RAS (cycles) as DDR4-1600 11-11-11-27
+
+---=== Timing Parameters ===---
+Minimum Cycle Time (tCKmin) 0.938 ns
+Maximum Cycle Time (tCKmax) 1.600 ns
+Minimum CAS Latency Time (tAA) 13.750 ns
+Minimum RAS to CAS Delay (tRCD) 13.750 ns
+Minimum Row Precharge Delay (tRP) 13.750 ns
+Minimum Active to Precharge Delay (tRAS) 33.000 ns
+Minimum Active to Auto-Refresh Delay (tRC) 46.750 ns
+Minimum Recovery Delay (tRFC1) 350.000 ns
+Minimum Recovery Delay (tRFC2) 260.000 ns
+Minimum Recovery Delay (tRFC4) 160.000 ns
+Minimum Four Activate Window Delay (tFAW) 21.000 ns
+Minimum Row Active to Row Active Delay (tRRD_S) 3.700 ns
+Minimum Row Active to Row Active Delay (tRRD_L) 5.300 ns
+Minimum CAS to CAS Delay (tCCD_L) 5.625 ns
+Minimum Write Recovery Time (tWR) 15.000 ns
+Minimum Write to Read Time (tWTR_S) 2.500 ns
+Minimum Write to Read Time (tWTR_L) 7.500 ns
+
+---=== Other Information ===---
+Package Type Monolithic
+Maximum Activate Count Unlimited
+Post Package Repair One row per bank group
+Soft PPR Supported
+Module Nominal Voltage 1.2 V
+Thermal Sensor No
+
+---=== Physical Characteristics ===---
+Module Height 32 mm
+Module Thickness 2 mm front, 2 mm back
+Module Reference Card A revision 1
+
+---=== Manufacturer Data ===---
+Module Manufacturer Undefined
+Part Number Undefined
+...
