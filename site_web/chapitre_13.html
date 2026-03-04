@@ -9,16 +9,16 @@
 <title>Site de Jean-Michel RICHER</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<link rel="icon" type="image/png" href="../../img/classroom.png" />
-<link rel="stylesheet" href="../../style.css">
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
 
-<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
-<script src="../../javascript/jquery-3.4.1.min.js"></script>
-<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
 <script>M.MathPlayer = false; M.trustHtml = true;</script>
 <style>
 .material-symbols-outlined {
@@ -45,13 +45,13 @@ math {
 <div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
 
 <nav id="main_menu_nav">
-  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
-  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
-  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
-  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
-  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
-  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
-  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
 </nav><main>
 <div class="row">
 
@@ -92,7 +92,7 @@ mètres qui sont les vecteurs <code>x</code> et <code>y</code>, la constante <co
 (<code>size</code>).</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_13/code_001.cpp" target="_blank">code/chapitre_13/code_001.cpp</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_13/code_001.cpp" target="_blank">code/chapitre_13/code_001.cpp</a></summary>
 
 <div class="code-container">
 <div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">f32 saxpy_ref<span style="color: #008000;">&#40;</span>f32<span style="color: #000040;">*</span> x, f32<span style="color: #000040;">*</span> y, f32 a, u32 size<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
@@ -179,7 +179,7 @@ initialise <code>sum</code> à <code>0</code> grâce à l'instruction <code>fldz
 sera en <code>st0</code>, puis décalé en <code>st1</code> lors du calcul $a \times x_i + y_i$.</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_13/code_002.asm" target="_blank">code/chapitre_13/code_002.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_13/code_002.asm" target="_blank">code/chapitre_13/code_002.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">saxpy_fpu<span style="color: #339933;">:</span></div></li>
@@ -284,7 +284,7 @@ un <strong>dépliage par 4</strong> du corps de la boucle.</p>
 <p>Pour le faire en NASM on peut s'appuyer sur le pré-processeur :</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_13/code_003.asm" target="_blank">code/chapitre_13/code_003.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_13/code_003.asm" target="_blank">code/chapitre_13/code_003.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">%macro</span> fpu_body <span style="color: #ff0000;">1</span></div></li>
@@ -302,7 +302,7 @@ un <strong>dépliage par 4</strong> du corps de la boucle.</p>
 <p>Puis dans le corps de la boucle, un <code>%rep</code> avec <code>%assign</code> :</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_13/code_004.asm" target="_blank">code/chapitre_13/code_004.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_13/code_004.asm" target="_blank">code/chapitre_13/code_004.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; [...]</span></div></li>
@@ -344,7 +344,7 @@ de la boucle.</p>
 <p>Le calcul est simple : multiplier <code>xmm1</code> par <code>xmm3</code> puis additionner à <code>xmm2</code>. On ajoute ensuite <code>xmm2</code> dans l'accumulateur <code>xmm0</code> avant d'enregistrer <code>xmm2</code> de retour dans la mémoire centrale. </p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_13/code_005.asm" target="_blank">code/chapitre_13/code_005.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_13/code_005.asm" target="_blank">code/chapitre_13/code_005.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">saxpy_sse<span style="color: #339933;">:</span></div></li>
@@ -406,7 +406,7 @@ référence. Le gain du C Intrinsics en AVX22 va même jusqu'à 4,93s.</p>
 d'arrondi matériel. Cela fusionne <code>fmul</code> et <code>fadd</code>. L'instruction est <code>vfmadd231ps</code> (ou les autres formes numériques).</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_13/code_006.asm" target="_blank">code/chapitre_13/code_006.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_13/code_006.asm" target="_blank">code/chapitre_13/code_006.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">saxpy_fma<span style="color: #339933;">:</span></div></li>

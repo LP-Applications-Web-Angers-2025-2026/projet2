@@ -5,7 +5,7 @@ require_once dirname(__DIR__, 2) . '/ez_web.php';
 require_once dirname(__DIR__, 2) . '/php-geshi/geshi.php';
 
 // Début du document HTML (Header, navigation, etc.)
-document_begin(root_path: "../../");
+document_begin(root_path: "");
 ?>
 
     <div class="row">

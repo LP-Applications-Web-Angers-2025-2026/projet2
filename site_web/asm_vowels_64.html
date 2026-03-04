@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Annexe : Compter les voyelles en assembleur 64 bits</h1>
+
+<h2 class="section">Introduction</h2>
+
+<p>Compter le nombre de voyelles dans une chaîne de caractères est un problème simple d'apparence, mais qui met en évidence l'importance de l'architecture du processeur et des choix d'implémentation (prédiction de branchement, vectorisation, etc.).</p>
+<p>L'architecture 64 bits (x86-64) nous offre un avantage de taille par rapport à l'architecture 32 bits : <strong>le nombre de registres généraux passe de 8 à 16</strong>. Cela permet de conserver de nombreuses variables directement dans les registres du microprocesseur sans avoir à faire d'incessants allers-retours avec la mémoire (la pile), ce qui est idéal pour optimiser les performances d'une boucle de comptage.</p>
+<hr />
+<h2 class="section">Les fonctions de référence en C</h2>
+
+<p>Pour bien comprendre l'enjeu au niveau de l'assembleur, on peut étudier trois approches classiques en langage C/C++ :</p>
+<h3 class="subsection">1. L'approche intuitive (avec des <code>if</code>)</h3>
+
+<p>La première fonction vérifie chaque lettre avec une cascade de conditions. Cette méthode est extrêmement vulnérable aux erreurs de prédiction de branchement du processeur.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_001.cpp" target="_blank">code/commun/code_001.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">void</span> cv_if<span style="color: #008000;">&#40;</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">char</span> <span style="color: #000040;">*</span>s, <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> size, <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">6</span><span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">for</span> <span style="color: #008000;">&#40;</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> i <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&lt;</span> size<span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'e'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'i'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">2</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'o'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">3</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'u'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">&#125;</span> <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> <span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">==</span> <span style="color: #FF0000;">'y'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">5</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">2. Le <code>switch</code></h3>
+
+<p>Le <code>switch</code> permet au compilateur de générer une table de sauts (Jump Table). Cependant, si les données sont imprédictibles, le processeur videra constamment son pipeline.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_002.cpp" target="_blank">code/commun/code_002.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">void</span> count_switch<span style="color: #008000;">&#40;</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">char</span> <span style="color: #000040;">*</span>s, <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> size, <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">6</span><span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">for</span> <span style="color: #008000;">&#40;</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> i <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&lt;</span> size<span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">switch</span><span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">case</span> <span style="color: #FF0000;">'a'</span><span style="color: #008080;">:</span> <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span> <span style="color: #0000ff;">break</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">case</span> <span style="color: #FF0000;">'e'</span><span style="color: #008080;">:</span> <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span> <span style="color: #0000ff;">break</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">case</span> <span style="color: #FF0000;">'i'</span><span style="color: #008080;">:</span> <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">2</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span> <span style="color: #0000ff;">break</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">case</span> <span style="color: #FF0000;">'o'</span><span style="color: #008080;">:</span> <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">3</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span> <span style="color: #0000ff;">break</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">case</span> <span style="color: #FF0000;">'u'</span><span style="color: #008080;">:</span> <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span> <span style="color: #0000ff;">break</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">case</span> <span style="color: #FF0000;">'y'</span><span style="color: #008080;">:</span> <span style="color: #000040;">++</span>v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">5</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span> <span style="color: #0000ff;">break</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">3. L'approche sans embranchement (avec un Tableau)</h3>
+
+<p>La technique la plus rapide en scalaire consiste à allouer un tableau de 26 compteurs et d'incrémenter systématiquement l'index correspondant à la lettre lue. <strong>On supprime ainsi totalement la prédiction de branchement !</strong></p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_003.cpp" target="_blank">code/commun/code_003.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">void</span> count_letters<span style="color: #008000;">&#40;</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">char</span> <span style="color: #000040;">*</span>s, <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> size, <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">6</span><span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> letters<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">26</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">for</span> <span style="color: #008000;">&#40;</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> i <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&lt;</span> <span style="color: #0000dd;">26</span><span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> letters<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">for</span> <span style="color: #008000;">&#40;</span><span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> i <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&lt;</span> size<span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #000040;">++</span>letters<span style="color: #008000;">&#91;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span> <span style="color: #666666;">// Pas de if, exécution fluide</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> letters<span style="color: #008000;">&#91;</span><span style="color: #FF0000;">'a'</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> letters<span style="color: #008000;">&#91;</span><span style="color: #FF0000;">'e'</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">2</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> letters<span style="color: #008000;">&#91;</span><span style="color: #FF0000;">'i'</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">3</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> letters<span style="color: #008000;">&#91;</span><span style="color: #FF0000;">'o'</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">4</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> letters<span style="color: #008000;">&#91;</span><span style="color: #FF0000;">'u'</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; v<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">5</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> letters<span style="color: #008000;">&#91;</span><span style="color: #FF0000;">'y'</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'a'</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<hr />
+<h2 class="section">Performances et Architectures</h2>
+
+<p>Vous pouvez observer ci-dessous le temps d'exécution requis pour analyser 256 000 caractères lors de 50 000 itérations (chaîne aléatoire avec environ 20% de voyelles). L'approche sans condition (<code>Tableau</code>) reste indéniablement la plus rapide dans une exécution purement scalaire. </p>
+<p>La traduction de ces méthodes, puis leur dépassement mathématique via les instructions vectorielles SSE2, AVX2 et AVX512 (traitant de 16 à 64 octets par cycle), est détaillée de façon exhaustive dans le <strong>Chapitre 15</strong>.</p>
+<p><br></p>
+<!-- Injection des graphiques Highcharts originaux du fichier asm_vowels_64 -->
+<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+<div id="graph_container" style="width: 100%; min-height: 600px;">
+    <div id="graph_ancien" style="border: 1px solid #ccc; margin-bottom: 30px;"></div>
+    <div id="graph_moderne" style="border: 1px solid #ccc; margin-bottom: 30px;"></div>
+    <div id="graph_recent" style="border: 1px solid #ccc;"></div>
+</div>
+<script type="module">
+    import { createPerformanceChart } from "./data/asm_vowels/graph.js";
+    import data_ancien from "./data/asm_vowels/ancien/data.json" with { type: "json" };
+    import data_moderne from "./data/asm_vowels/moderne/data.json" with { type: "json" };
+    import data_recent from "./data/asm_vowels/recent/data.json" with { type: "json" };
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_004.txt" target="_blank">code/commun/code_004.txt</a></summary>
+<pre class="code-block"><code>createPerformanceChart(&#039;#graph_ancien&#039;, data_ancien);
+createPerformanceChart(&#039;#graph_moderne&#039;, data_moderne);
+createPerformanceChart(&#039;#graph_recent&#039;, data_recent);</code></pre>
+</details>
+
+</script>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

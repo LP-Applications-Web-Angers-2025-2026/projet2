@@ -54,8 +54,8 @@ function injectChartAfterTable(string $htmlContent, int $chapNum): string
 
     // Chemin relatif depuis public/ vers data/
     // Les pages HTML sont dans public/, les données dans ../../data/
-    $dataBasePath = "../../data/chapitre_{$chapNum}";
-    $graphJsPath  = '../../data/graph.js';
+    $dataBasePath = "data/chapitre_{$chapNum}";
+    $graphJsPath  = 'data/graph.js';
 
     // Compteur global pour créer des IDs uniques par page
     static $chartCounter = 0;
@@ -140,8 +140,8 @@ function buildHtmlTableFromJson(string $jsonPath, string $legend): string {
     return $html;
 }
 
-$sourceDir  = __DIR__ . '/pages-md';
-$outputDir  = __DIR__ . '/public';
+$sourceDir  = dirname(__DIR__) . '/pages-md';
+$outputDir  = dirname(__DIR__);
 $template   = __DIR__ . '/templates/layout.php';
 
 if (!is_dir($outputDir)) mkdir($outputDir, 0777, true);
@@ -312,7 +312,7 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
         
         // Chemins
         $relDir = $chapNum > 0 ? "chapitre_{$chapNum}" : "commun";
-        $htmlRelPath = "../../code/{$relDir}/{$codeFileName}";
+        $htmlRelPath = "code/{$relDir}/{$codeFileName}";
         $displayPath = "code/{$relDir}/{$codeFileName}";
 
         $rendered = '';
@@ -383,8 +383,8 @@ HTML;
         $htmlContent = injectChartAfterTable($htmlContent, $chapNum);
         // Injecter Highcharts + graph.js une seule fois si des graphiques ont été injectés
         if (preg_match('/chart-ch\d+/', $htmlContent)) {
-            $scripts = '<script src="../../javascript/Highcharts-3.0.10/js/highcharts.js"></script>' . "\n"
-                     . '<script src="../../data/graph.js"></script>' . "\n";
+            $scripts = '<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>' . "\n"
+                     . '<script src="data/graph.js"></script>' . "\n";
             // Placer les scripts avant le premier div.chart-container
             $htmlContent = preg_replace(
                 '/(<div class="chart-container")/',
@@ -413,22 +413,5 @@ HTML;
     ];
 }
 
-// ---- Génération de l'index ----
-ob_start();
-echo "<h1 class=\"chapter\">Programmation Assembleur x86 — Index</h1>\n";
-echo "<ul class=\"chapter-list\">\n";
-foreach ($pages as $page) {
-    if (basename($page['file']) === 'index.html') continue;
-    echo "  <li><a href=\"{$page['file']}\">{$page['title']}</a></li>\n";
-}
-echo "</ul>\n";
-$indexContent = ob_get_clean();
 
-ob_start();
-$content = $indexContent;
-include $template;
-$finalIndexHtml = ob_get_clean();
-
-file_put_contents("$outputDir/index.html", $finalIndexHtml);
-echo "✔ Index généré : $outputDir/index.html\n";
 ?>

@@ -1,0 +1,3 @@
+createPerformanceChart('#graph_ancien', data_ancien);
+createPerformanceChart('#graph_moderne', data_moderne);
+createPerformanceChart('#graph_recent', data_recent);

@@ -9,16 +9,16 @@
 <title>Site de Jean-Michel RICHER</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<link rel="icon" type="image/png" href="../../img/classroom.png" />
-<link rel="stylesheet" href="../../style.css">
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
 
-<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
-<script src="../../javascript/jquery-3.4.1.min.js"></script>
-<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
 <script>M.MathPlayer = false; M.trustHtml = true;</script>
 <style>
 .material-symbols-outlined {
@@ -45,13 +45,13 @@ math {
 <div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
 
 <nav id="main_menu_nav">
-  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
-  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
-  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
-  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
-  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
-  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
-  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
 </nav><main>
 <div class="row">
 
@@ -163,7 +163,7 @@ en utilisant cette propriété, s'exécute en moins de 2 secondes.</p>
 <p>Dans cette première version, on utilise les fonctionnalités du C++ pour transformer le nombre $x$ en caractères et déterminer les $d_i$.</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_001.cpp" target="_blank">code/chapitre_17/code_001.cpp</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_001.cpp" target="_blank">code/chapitre_17/code_001.cpp</a></summary>
 
 <div class="code-container">
 <div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> u32<span style="color: #008080;">;</span></div></li>
@@ -212,7 +212,7 @@ utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre
 <p>Plutôt que de convertir $x$ en chaîne de caractères, nous allons le convertir directement en chiffres que l'on va stocker dans un tableau (d'entiers ou d'octets) appelé <code>digits</code> en faisant des divisions par 10 afin d'obtenir chaque chiffre. A chaque nouveau reste trouvé on incrémente le tableau <code>counts</code> en conséquence et on stocke le reste dans le tableau <code>digits</code>.</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_002.cpp" target="_blank">code/chapitre_17/code_002.cpp</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_002.cpp" target="_blank">code/chapitre_17/code_002.cpp</a></summary>
 
 <div class="code-container">
 <div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">bool</span> ad_div<span style="color: #008000;">&#40;</span>u32 x<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
@@ -344,7 +344,7 @@ C'est en fait cette version qui est la plus efficace lorsque traduite par le com
 <p><em>TABLE 17.2 – Association entre variables et registres pour les fonctions assembleur listant les nombres auto-descriptifs</em></p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_003.asm" target="_blank">code/chapitre_17/code_003.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_003.asm" target="_blank">code/chapitre_17/code_003.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">ad_asm_v1<span style="color: #339933;">:</span></div></li>
@@ -372,7 +372,7 @@ dans l'ordre décroissant du tableau <code>digits</code> en commençant à l'ind
 stocké dans <code>ecx</code>, puisque un entier non signé contient au maximum 10 chiffres.</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_004.asm" target="_blank">code/chapitre_17/code_004.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_004.asm" target="_blank">code/chapitre_17/code_004.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; constante 10 pour division par 10</span></div></li>
@@ -404,7 +404,7 @@ stocké dans <code>ecx</code>, puisque un entier non signé contient au maximum 
 <p>Pour la fin, s'il faut vérifier, on compare le bloc <code>counts</code> et le bloc <code>digits</code>.</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_005.asm" target="_blank">code/chapitre_17/code_005.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_005.asm" target="_blank">code/chapitre_17/code_005.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>next<span style="color: #339933;">:</span></div></li>
@@ -448,7 +448,7 @@ la division par une multiplication par invariant.</p>
 L'astuce permet d'aller plus vite que <code>div 10</code>. On utilise ensuite <code>lea eax, [edx+edx*4]</code> (donc $x \times 5$) et <code>shl eax, 1</code> pour retrouver la base 10 du modulo par soustraction ! </p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_006.asm" target="_blank">code/chapitre_17/code_006.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_006.asm" target="_blank">code/chapitre_17/code_006.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">ad_asm_v2<span style="color: #339933;">:</span></div></li>
@@ -484,7 +484,7 @@ Cette version assembleur demande plus d'opérations et s'exécute en <strong>5,6
 <p>Plutôt que de comparer les tableaux <code>digits</code> et <code>counts</code> élément par élément, on peut utiliser des registres 128/256 bits et une égalité AVX comme <code>vpcmpeqb</code>.</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_007.asm" target="_blank">code/chapitre_17/code_007.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_007.asm" target="_blank">code/chapitre_17/code_007.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; valeur de retour : false</span></div></li>
@@ -511,7 +511,7 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 <p>Le Binary Coded Decimal est un ancien système qui consiste à coder un nombre en plaçant deux chiffres décimaux par octet. Chaque quartet (nibble) représente un chiffre. En ASM x86, on possède <code>fbstp</code> :</p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_008.asm" target="_blank">code/chapitre_17/code_008.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_008.asm" target="_blank">code/chapitre_17/code_008.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">fild</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -715,7 +715,7 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 <p><strong>Solution SANS saut (cdq, neg, adc) :</strong></p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_009.asm" target="_blank">code/chapitre_17/code_009.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_009.asm" target="_blank">code/chapitre_17/code_009.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
@@ -730,7 +730,7 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 <p><strong>Solution avec 2 cmov :</strong></p>
 
 <details>
-<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_010.asm" target="_blank">code/chapitre_17/code_010.asm</a></summary>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_010.asm" target="_blank">code/chapitre_17/code_010.asm</a></summary>
 
 <div class="code-container">
 <div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span></div></li>
