@@ -1,0 +1,1 @@
+objdump -d -r -l -S -M intel example.exe

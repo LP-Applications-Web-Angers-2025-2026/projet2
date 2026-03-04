@@ -1,0 +1,1 @@
+lea eax, [eax+eax*4]

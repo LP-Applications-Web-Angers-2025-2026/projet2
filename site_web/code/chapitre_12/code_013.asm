@@ -1,0 +1,12 @@
+mov ,0x55555555
+movd ,eax
+vpshufd ,xmm4,0
+mov ,0x33333333
+movd ,eax
+vpshufd ,xmm5,0
+mov ,0x0f0f0f0f
+movd ,eax
+vpshufd ,xmm6,0
+mov ,0x00ff00ff
+movd ,eax
+vpshufd ,xmm7,0

@@ -1,0 +1,26 @@
+# dmidecode 3.2
+Getting SMBIOS data from sysfs.
+SMBIOS 2.8 present.
+
+Handle 0x0002, DMI type 2, 15 bytes
+Base Board Information
+   Manufacturer: Micro-Star International Co., Ltd.
+   Product Name: MPG X570 GAMING EDGE WIFI (MS-7C37)
+   Version: 1.0
+   Serial Number: J816453611
+   Asset Tag: To be filled by O.E.M.
+   Features:
+      Board is a hosting board
+      Board is replaceable
+   Location In Chassis: To be filled by O.E.M.
+   Chassis Handle: 0x0003
+   Type: Motherboard
+   Contained Object Handles: 0
+
+Handle 0x0039, DMI type 41, 11 bytes
+Onboard Device
+   Reference Designation: RTL8111EPV
+   Type: Ethernet
+   Status: Disabled
+   Type Instance: 1
+   Bus Address: 0000:03:00.0

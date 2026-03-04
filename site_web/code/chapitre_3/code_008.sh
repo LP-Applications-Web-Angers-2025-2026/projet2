@@ -1,0 +1,1 @@
+ls /sys/devices/system/cpu/cpu0/cache/index*

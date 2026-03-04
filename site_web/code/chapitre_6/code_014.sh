@@ -1,0 +1,1 @@
+gcc -no-pie -o mon_prog mon_prog.o

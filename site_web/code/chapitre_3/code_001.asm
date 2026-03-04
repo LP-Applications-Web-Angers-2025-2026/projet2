@@ -1,0 +1,1 @@
+add [ebx+ecx*4+8], eax

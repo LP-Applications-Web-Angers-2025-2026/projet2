@@ -1,0 +1,1 @@
+nasm [arguments] [-o fichier_objet.o] source.asm

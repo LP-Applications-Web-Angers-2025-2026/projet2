@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="../../img/classroom.png" />
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
+<script src="../../javascript/jquery-3.4.1.min.js"></script>
+<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 10 : Études de cas</h1>
+
+<h2 class="section">10.1 Introduction</h2>
+
+<p>Avant d'aborder les différentes études de cas dont le but est de traiter les
+points cruciaux que nous avons évoqués, nous allons détailler dans ce chapitre les
+caractéristiques communes à chacune de ces études de cas que nous qualifions
+également de projets car il s'agit en fait de projets de programmation.</p>
+<p>J'ai tenté d'établir une sorte de squelette de projet en utilisant la même organi-
+sation des répertoires ainsi que les mêmes scripts shell et PHP. Les diverses actions
+(compilation, exécution des tests de performance, ...) sont automatisées au moyen
+de l'utilitaire <code>make</code> ainsi que du <code>makefile</code> associé.</p>
+<p>Chaque projet est conçu autour d'un ensemble d'implantations, appelées méthodes, 
+d'un traitement informatique. L'une de ces méthodes est un sous-programme
+dit de référence qui nous permet de vérifier que les autres méthodes sont correctes
+et produisent le même résultat. Chaque nouvelle méthode tente d'apporter une
+amélioration par rapport à la méthode de référence en :</p>
+<ul>
+<li>Utilisant une réécriture du code C (dépliage, élimination des <code>if</code>, vectorisation
+par <em>intrinsics</em>)</li>
+<li>Ou en codant la fonction C en assembleur (dépliage, élimination des <code>if</code>,
+vectorisation)</li>
+</ul>
+<h2 class="section">10.2 Arborescence des projets</h2>
+
+<p>Les sous-répertoires de chaque projet sont les suivants :</p>
+<ul>
+<li>Le sous-répertoire <code>cfg</code> contient des fichiers de configuration utiles à la compilation</li>
+<li>Le sous-répertoire <code>src</code> contient le code source, c'est-à-dire les fichiers C/C++ et
+les fichiers assembleur</li>
+<li>Le sous-répertoire <code>build</code> contient les fichiers générés lors de la compilation :<ul>
+<li><code>build/obj</code> contient les fichiers objets (<code>.o</code>)</li>
+<li><code>build/bin</code> contient les exécutables (<code>.exe</code>)</li>
+</ul>
+</li>
+<li>Le sous-répertoire <code>results</code> contient les fichiers de données et graphiques
+générés lors de l'exécution des tests de validité et de performance. On trouve
+un répertoire par processeur (ex: <code>Intel-Celeron-CPU-N3050-1_60GHz</code>)</li>
+<li>Le sous-répertoire <code>output</code> contient les fichiers générés par le script <code>table.php</code>
+qui permet de générer des tableaux de données à partir des résultats obtenus</li>
+</ul>
+<p>L'arborescence est donc la suivante :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_10/code_001.txt" target="_blank">code/chapitre_10/code_001.txt</a></summary>
+<pre class="code-block"><code>.
+├── build
+│   ├── bin
+│   └── obj
+├── cfg
+├── output
+├── results
+│   └── Intel-Celeron-CPU-N3050-1_60GHz
+└── src</code></pre>
+</details>
+
+<p>Dans le répertoire principal on trouvera un fichier <code>README</code> ainsi qu'un fichier
+<code>INSTALL</code>. Le but du fichier <code>README</code> est de renseigner l'utilisateur sur l'objectif du
+projet ainsi que de lui donner un accès rapide aux fonctionnalités de base.
+Le fichier <code>INSTALL</code>, quant à lui, décrit comment installer le projet, en d'autres
+termes, comment le compiler et quels programmes annexes doivent être installés.</p>
+<p>Le choix a été fait de rédiger l'ensemble des sources en anglais ainsi que les
+fichiers <code>README</code> et <code>INSTALL</code> de manière à ce qu'ils puissent être utilisés, voire modifiés
+par un large public. L'ensemble des fichiers est sous Licence GNU.</p>
+<h3 class="subsection">10.2.1 Cibles Makefile</h3>
+
+<p>On considère que le lecteur possède des connaissances de base liées à la création
+d'un <code>makefile</code>. Les différentes cibles (<em>targets</em>) de <code>make</code> sont les suivantes :</p>
+<ul>
+<li><code>configure</code> : appelle le script <code>cpu_technos.sh</code></li>
+<li><code>build</code> : permet de générer les exécutables au format release, c'est-à-dire avec
+les options de compilations censées générer du code performant ; on obtient
+le même résultat en lançant <code>make</code> sans arguments</li>
+<li><code>debug</code> : génère les exécutables en incluant les informations nécessaires au
+débogage</li>
+<li><code>clean</code> : supprime les fichiers objets et les exécutables</li>
+<li><code>validity</code> : exécute les tests de validité afin de vérifier que les fonctions donnent
+le même résultat pour un test de base</li>
+<li><code>performance</code> : exécute les tests de performance ce qui permet de déterminer
+quelle fonction est la meilleure</li>
+<li><code>archive</code> : génère une archive de l'ensemble des fichiers du projet</li>
+</ul>
+<h3 class="subsection">10.2.2 Scripts disponibles</h3>
+
+<p>On dispose dans le répertoire du projet d'un ensemble de scripts :</p>
+<ul>
+<li><code>cpu_name.sh</code> : récupère le nom du microprocesseur en éliminant certains
+caractères inutiles et en remplaçant les espaces par le signe moins (<code>-</code>). Cet
+identifiant est ensuite utilisé pour créer un sous-répertoire dans <code>results</code>.</li>
+<li><code>cpu_technos.sh</code> : détermine quelles technologies (SSE2, SSE4.1, SSE4.2, AVX2,
+POPCNT, BMI, FMA) sont implantées au niveau du CPU. Il génère en conséquence
+<code>src/asm_config.inc</code>, <code>src/cpp_config.inc</code> ainsi que <code>cpu_technos.mak</code>.</li>
+<li><code>validity_test.php</code> : réalise un test de validité en vérifiant pour différents
+paramètres que les méthodes donnent le même résultat que la référence.</li>
+<li><code>performance_test.php</code> : réalise un test de performance afin de déterminer
+quelle est la méthode la plus efficace, puis appelle <code>performance_graph.php</code>
+afin de générer un graphique des données avec <strong>gnuplot</strong>.</li>
+<li><code>table.php</code> : permet de générer des tableaux de données au format CSV
+(<em>Comma Separated Values</em>), HTML ou LaTeX.</li>
+</ul>
+<p>Cette liste est non exhaustive, on trouvera également des scripts spécifiques.
+Par exemple, pour le produit de matrices, nous avons ajouté <code>samples_test.php</code> qui
+démontre la sensibilité de la méthode de référence à la dimension.</p>
+<h3 class="subsection">10.2.3 Le répertoire src et common.h</h3>
+
+<p>Dans le répertoire des fichiers sources, on trouve un fichier <code>common.h</code> qui contient
+les définitions de types, constantes et fonctions communes.</p>
+<p>On trouvera également les fichiers <code>cpp_config.h</code> et <code>asm_config.inc</code> (générés
+par <code>cpu_technos.sh</code>) qui définissent des macros liées aux technologies supportées.
+Par exemple, si le CPU supporte le SSE 4.2, la macro <code>CPU_SSE42_COMPLIANT</code> sera
+définie et pourra être utilisée en inclusion conditionnelle.</p>
+<p>J'utilise également <code>cpu_timer.h</code> et <code>cpu_timer.cpp</code> qui définissent la classe
+<code>CPUTimer</code>, un chronomètre basé sur l'instruction <code>rdtsc</code> (<em>ReaD TimeStamp
+Counter</em>) pour lire le nombre de cycles d'horloge du processeur.</p>
+<p>La classe <code>SignalHandler</code> a été implantée (dans <code>signal_handler.h</code>/<code>.cpp</code>) pour intercepter la
+plupart des exceptions comme <code>SIGFPE</code>. Il suffit de l'instancier dans le <code>main</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_10/code_002.cpp" target="_blank">code/chapitre_10/code_002.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">int</span> main<span style="color: #008000;">&#40;</span><span style="color: #0000ff;">int</span> argc, <span style="color: #0000ff;">char</span><span style="color: #000040;">*</span> argv<span style="color: #008000;">&#91;</span><span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; SignalHandler sh<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666;">// ...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Le fichier <code>src/main.cpp</code> se base sur <code>getopt</code> pour gérer les options en ligne de
+commande :</p>
+<ul>
+<li><code>-h</code> ou <code>--help</code> : obtenir l'aide du programme</li>
+<li><code>-l</code> ou <code>--list</code> : liste des méthodes</li>
+<li><code>-t</code> ou <code>--test</code> : réalise un test de validité de l'ensemble des méthodes</li>
+<li><code>-m</code> ou <code>--method</code> : choisir la méthode à tester via son identifiant (la référence vaut 1)</li>
+<li><code>-n</code> ou <code>--name</code> : sélectionner une méthode en précisant son nom</li>
+<li><code>-v</code> ou <code>--verbose</code> : active le mode verbeux (informations supplémentaires)</li>
+</ul>
+<h2 class="section">10.3 Redéfinition des types</h2>
+
+<p>Afin de simplifier l'écriture du code C/C++, les types ont été redéfinis dans
+<code>src/common.h</code>. Ainsi, <code>unsigned int</code>, <code>size_t</code> ou <code>uint32_t</code> deviennent plus courts.
+De même pour les flottants :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_10/code_003.cpp" target="_blank">code/chapitre_10/code_003.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> &nbsp; u32<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">short</span> u16<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">char</span> &nbsp;u8<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">int</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i32<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">float</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;f32<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">double</span> &nbsp; &nbsp; &nbsp; &nbsp; f64<span style="color: #008080;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">10.4 Plateformes de test et mesures</h2>
+
+<h3 class="subsection">10.4.1 Les matériels (Processeurs)</h3>
+
+<p>L'ensemble des méthodes sera testé sur différents matériels pour étudier l'influence de la technologie, taille de cache, etc. Nous séparons les matériels en trois catégories :</p>
+<ul>
+<li><strong>Architectures anciennes</strong> (avant 2015)</li>
+<li><strong>Architectures modernes</strong> (2015 à 2019)</li>
+<li><strong>Architectures récentes</strong> (2020 et après)</li>
+</ul>
+<h4 class="subsubsection">Matériels anciens (Avant 2015)</h4>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Marque</th>
+<th>Modèle</th>
+<th>Sous-modèle</th>
+<th>Année</th>
+<th>Architecture</th>
+<th>Litho (nm)</th>
+<th>Fréq. base/boost</th>
+<th>Cores/Threads</th>
+<th>Cache L1i/L1d (ko)</th>
+<th>Cache L2</th>
+<th>Cache L3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel</td>
+<td>Pentium D</td>
+<td>925</td>
+<td>2006</td>
+<td>Presler</td>
+<td>65</td>
+<td>3.0 / 3.0 GHz</td>
+<td>2 / 2</td>
+<td>12 / 16</td>
+<td>1024 ko</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Core 2 Quad</td>
+<td>Q9300</td>
+<td>2008</td>
+<td>Yorkfield</td>
+<td>45</td>
+<td>2.5 / 2.5 GHz</td>
+<td>4 / 4</td>
+<td>32 / 32</td>
+<td>3072 ko</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Core i7</td>
+<td>860</td>
+<td>2009</td>
+<td>Lynnfield</td>
+<td>45</td>
+<td>2.8 / 3.46 GHz</td>
+<td>4 / 8</td>
+<td>32 / 32</td>
+<td>256 ko</td>
+<td>8 Mo</td>
+</tr>
+<tr>
+<td>AMD</td>
+<td>Phenom II X6</td>
+<td>1090T</td>
+<td>2010</td>
+<td>Thuban</td>
+<td>45</td>
+<td>3.2 / 3.6 GHz</td>
+<td>6 / 6</td>
+<td>64 / 64</td>
+<td>512 ko</td>
+<td>6 Mo</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Core i5</td>
+<td>3570K</td>
+<td>2012</td>
+<td>Ivy Bridge</td>
+<td>22</td>
+<td>3.4 / 3.8 GHz</td>
+<td>4 / 4</td>
+<td>32 / 32</td>
+<td>256 ko</td>
+<td>6 Mo</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Core i7</td>
+<td>4790</td>
+<td>2014</td>
+<td>Haswell</td>
+<td>22</td>
+<td>3.6 / 4.0 GHz</td>
+<td>4 / 8</td>
+<td>32 / 32</td>
+<td>256 ko</td>
+<td>8 Mo</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 10.1 – Caractéristiques des matériels : architectures anciennes (avant 2015)</em></p>
+<h4 class="subsubsection">Matériels modernes (2015 à 2019)</h4>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Marque</th>
+<th>Modèle</th>
+<th>Sous-modèle</th>
+<th>Année</th>
+<th>Architecture</th>
+<th>Litho (nm)</th>
+<th>Fréq. base/boost</th>
+<th>Cores/Threads</th>
+<th>Cache L1i/L1d</th>
+<th>Cache L2</th>
+<th>Cache L3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel</td>
+<td>Core i3</td>
+<td>6100</td>
+<td>2015</td>
+<td>Skylake</td>
+<td>14</td>
+<td>3.7 / 3.7 GHz</td>
+<td>2 / 4</td>
+<td>32 / 32 ko</td>
+<td>256 ko</td>
+<td>3 Mo</td>
+</tr>
+<tr>
+<td>AMD</td>
+<td>Ryzen 7</td>
+<td>1700X</td>
+<td>2017</td>
+<td>Zen</td>
+<td>14</td>
+<td>3.4 / 3.8 GHz</td>
+<td>8 / 16</td>
+<td>64 / 32 ko</td>
+<td>512 ko</td>
+<td>8+8 Mo</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Core i5</td>
+<td>7400</td>
+<td>2017</td>
+<td>Kaby Lake</td>
+<td>14</td>
+<td>3.0 / 3.5 GHz</td>
+<td>4 / 4</td>
+<td>32 / 32 ko</td>
+<td>256 ko</td>
+<td>6 Mo</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Core i7</td>
+<td>8700</td>
+<td>2017</td>
+<td>Coffee Lake</td>
+<td>14</td>
+<td>3.2 / 4.6 GHz</td>
+<td>6 / 12</td>
+<td>32 / 32 ko</td>
+<td>256 ko</td>
+<td>12 Mo</td>
+</tr>
+<tr>
+<td>AMD</td>
+<td>Ryzen 5</td>
+<td>3600</td>
+<td>2019</td>
+<td>Zen 2</td>
+<td>7</td>
+<td>3.6 / 4.2 GHz</td>
+<td>6 / 12</td>
+<td>32 / 32 ko</td>
+<td>512 ko</td>
+<td>16+16 Mo</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Xeon</td>
+<td>Silver 4208</td>
+<td>2019</td>
+<td>Cascade Lake</td>
+<td>14</td>
+<td>2.1 / 3.2 GHz</td>
+<td>8 / 16</td>
+<td>32 / 32 ko</td>
+<td>1024 ko</td>
+<td>11 Mo</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 10.2 – Caractéristiques des matériels : architectures modernes (2015 à 2019)</em></p>
+<h4 class="subsubsection">Matériels récents (2020 et après)</h4>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Marque</th>
+<th>Modèle</th>
+<th>Sous-modèle</th>
+<th>Année</th>
+<th>Architecture</th>
+<th>Litho (nm)</th>
+<th>Fréq. base/boost</th>
+<th>Cores/Threads</th>
+<th>Cache L1i/L1d</th>
+<th>Cache L2</th>
+<th>Cache L3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel</td>
+<td>Core i7</td>
+<td>10850H</td>
+<td>2020</td>
+<td>Comet Lake</td>
+<td>14</td>
+<td>2.7 / 5.1 GHz</td>
+<td>6 / 12</td>
+<td>32 / 32 ko</td>
+<td>256 ko</td>
+<td>12 Mo</td>
+</tr>
+<tr>
+<td>AMD</td>
+<td>Ryzen 5</td>
+<td>5600G</td>
+<td>2021</td>
+<td>Zen 3</td>
+<td>7</td>
+<td>3.9 / 4.4 GHz</td>
+<td>6 / 12</td>
+<td>32 / 32 ko</td>
+<td>512 ko</td>
+<td>16 Mo</td>
+</tr>
+<tr>
+<td>Intel</td>
+<td>Core i5</td>
+<td>12400F</td>
+<td>2022</td>
+<td>Alder Lake</td>
+<td>Int. 7</td>
+<td>2.5 / 4.4 GHz</td>
+<td>6 / 12</td>
+<td>32 / 48 ko</td>
+<td>1280 ko</td>
+<td>18 Mo</td>
+</tr>
+<tr>
+<td>AMD</td>
+<td>Ryzen 5</td>
+<td>9600X</td>
+<td>2024</td>
+<td>Granite Ridge</td>
+<td>TS. N4</td>
+<td>3.9 / 5.4 GHz</td>
+<td>6 / 12</td>
+<td>32 / 48 ko</td>
+<td>1024 ko</td>
+<td>32 Mo</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 10.3 – Caractéristiques des matériels : architectures récentes (2020 et suivantes)</em>
+<em>L'AMD Ryzen 5 9600X dispose des technologies AVX512 et FMA3 et utilise
+également 32 Go de DDR5 Kingston (KF560C30-16) FURY Beast 6000 Mhz 30 CL.</em></p>
+<h3 class="subsection">10.4.2 Mesures et Protocole</h3>
+
+<p>Nous avons défini deux types de tests principaux :</p>
+<ul>
+<li><strong>Le test de validité</strong> : vérifie que l'ensemble des méthodes implantées produisent
+le même résultat.</li>
+<li><strong>Le test de performance</strong> : évalue le temps d'exécution en faisant varier certains
+paramètres.</li>
+</ul>
+<h4 class="subsubsection">10.4.2.1 Métriques reportées</h4>
+
+<p>Nous reportons deux mesures :</p>
+<ol>
+<li>Le temps d'exécution du programme (<code>user time</code> mesuré via la commande système <code>/usr/bin/time -f</code>)</li>
+<li>Le nombre de cycles de l'exécution (mesuré via <code>CPUTimer</code> / <code>rdtsc</code>) sans compter l'initialisation des données.</li>
+</ol>
+<h4 class="subsubsection">10.4.2.2 Fiabilité des mesures</h4>
+
+<p>Pour les méthodes qui s'exécutent en quelques millisecondes, les temps d'exécution
+peuvent varier (fréquences, processus concurrents). Il faut donc, lors des tests de performance :</p>
+<ul>
+<li>Ne pas utiliser souris et clavier.</li>
+<li>Éviter tout traitement en tâche de fond.</li>
+</ul>
+<p>La librairie PHP <em>ezlib.php</em> calcule la moyenne des temps d'exécution (<code>average_time()</code>)
+sur dix lancements.</p>
+<div class="cadre_warning"><strong>Attention</strong> : sur les dernières versions d'Ubuntu, la fréquence de fonctionnement peut s'avérer basse par défaut. On peut alors obliger l'OS à utiliser le *governor* performance :
+```bash
+sudo apt-get install cpufrequtils
+echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
+sudo systemctl disable ondemand
+```
+<h3 class="subsection">10.4.3 Premiers Tests (Chapitre 2) en 32 bits</h3>
+
+<p>Le chapitre 2 s'est penché sur l'instruction <code>bsr</code> (cf. section Bit Scan Reverse) et sur le crible d'Ératosthène (nombres premiers). Voici les mesures de performance :</p>
+<h4 class="subsubsection">Matériels anciens (Avant 2015) - Temps en ms/s</h4>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Test</th>
+<th>Pentium D 925</th>
+<th>Core 2 Q9300</th>
+<th>Core i7 860</th>
+<th>Phenom II X6</th>
+<th>Core i5 3570K</th>
+<th>Core i7 4790</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bsr</code> (fonction C)</td>
+<td>29.23</td>
+<td>25.70</td>
+<td>15.47</td>
+<td>17.90</td>
+<td>15.79</td>
+<td>13.48</td>
+</tr>
+<tr>
+<td><code>bsr</code> (<code>__builtin_clz</code>)</td>
+<td>3.39</td>
+<td>1.80</td>
+<td>1.52</td>
+<td>1.81</td>
+<td>1.20</td>
+<td>0.55</td>
+</tr>
+<tr>
+<td><code>bsr</code> (asm + bsr)</td>
+<td>1.78</td>
+<td>1.33</td>
+<td>0.67</td>
+<td>1.70</td>
+<td>0.60</td>
+<td>0.42</td>
+</tr>
+<tr>
+<td>Premier (v1)</td>
+<td>7154.93</td>
+<td>3003.00</td>
+<td>3513.00</td>
+<td>6214.00</td>
+<td>1327.00</td>
+<td>1163.00</td>
+</tr>
+<tr>
+<td>Premier (v2)</td>
+<td>0.64</td>
+<td>0.18</td>
+<td>0.28</td>
+<td>0.44</td>
+<td>0.13</td>
+<td>0.08</td>
+</tr>
+<tr>
+<td>Crible (v3)</td>
+<td>0.02</td>
+<td>0.01</td>
+<td>0.01</td>
+<td>0.02</td>
+<td>0.01</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 10.4 – Tests des matériels anciens (32 bits)</em></p>
+<h4 class="subsubsection">Matériels modernes (2015 à 2019) - Temps en ms/s</h4>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Test</th>
+<th>Core i3 6100</th>
+<th>Ryzen 7 1700X</th>
+<th>Core i5 7400</th>
+<th>Core i7 8700</th>
+<th>Ryzen 5 3600</th>
+<th>Xeon 4208</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bsr</code> (fonction C)</td>
+<td>13.56</td>
+<td>10.52</td>
+<td>14.42</td>
+<td>10.40</td>
+<td>9.44</td>
+<td>16.43</td>
+</tr>
+<tr>
+<td><code>bsr</code> (<code>__builtin_clz</code>)</td>
+<td>0.63</td>
+<td>0.49</td>
+<td>0.61</td>
+<td>0.46</td>
+<td>0.45</td>
+<td>0.21</td>
+</tr>
+<tr>
+<td><code>bsr</code> (asm + bsr)</td>
+<td>0.47</td>
+<td>1.04</td>
+<td>0.44</td>
+<td>0.33</td>
+<td>0.96</td>
+<td>0.51</td>
+</tr>
+<tr>
+<td>Premier (v1)</td>
+<td>1082.25</td>
+<td>1859.59</td>
+<td>1154.00</td>
+<td>895.17</td>
+<td>1726.93</td>
+<td>1263.00</td>
+</tr>
+<tr>
+<td>Premier (v2)</td>
+<td>0.11</td>
+<td>0.20</td>
+<td>0.12</td>
+<td>0.07</td>
+<td>0.18</td>
+<td>0.15</td>
+</tr>
+<tr>
+<td>Crible (v3)</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 10.5 – Test des matériels modernes en architecture 32 bits</em></p>
+<p>Sur un Xeon Silver 4208, le temps de calcul extrêmement faible de <code>__builtin_clz</code> (0,21s ou ~0,09s en 64 bits) est dû à l'optimisation extrême du compilateur (usage de <code>vplzcntd</code> via AVX512-VL / AVX512-CD). Sur CPU AMD modernes, l'instruction assembleur pure <code>bsr</code> seule ne semble par contre pas spécialement efficace face aux CPUs Intel comparables.</p>
+<h4 class="subsubsection">Matériels récents (2020 et après) - Temps en ms/s</h4>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Test</th>
+<th>Core i7 10850H</th>
+<th>Ryzen 5 5600G</th>
+<th>Core i5 12400F</th>
+<th>Ryzen 5 9600X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bsr</code> (fonction C)</td>
+<td>10.01</td>
+<td>7.65</td>
+<td>11.33</td>
+<td>8.37</td>
+</tr>
+<tr>
+<td><code>bsr</code> (<code>__builtin_clz</code>)</td>
+<td>0.44</td>
+<td>0.46</td>
+<td>0.33</td>
+<td>0.40</td>
+</tr>
+<tr>
+<td><code>bsr</code> (asm + bsr)</td>
+<td>0.31</td>
+<td>0.92</td>
+<td>0.25</td>
+<td>0.22</td>
+</tr>
+<tr>
+<td>Premier (v1)</td>
+<td>815.96</td>
+<td>676.94</td>
+<td>691.73</td>
+<td>554.30</td>
+</tr>
+<tr>
+<td>Premier (v2)</td>
+<td>0.08</td>
+<td>0.07</td>
+<td>0.08</td>
+<td>0.04</td>
+</tr>
+<tr>
+<td>Crible (v3)</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.02</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 10.6 – Test des matériels récents 2020 et après en architecture 32 bits</em></p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

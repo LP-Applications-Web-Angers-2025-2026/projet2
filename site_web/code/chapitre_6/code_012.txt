@@ -1,0 +1,2 @@
+format=0x555555558023 <msg_scanf> "%d", argptr=argptr@entry=0x7fffffffd748,
+mode_flags=mode_flags@entry=0) at vfscanf-internal.c:339

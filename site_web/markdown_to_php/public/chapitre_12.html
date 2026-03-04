@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="../../img/classroom.png" />
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
+<script src="../../javascript/jquery-3.4.1.min.js"></script>
+<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 12 : Étude de cas (POPCNT)</h1>
+
+<h2 class="section">12.1 Introduction</h2>
+
+<p>Compter le nombre de bits à 1 dans un registre est une opération que l'on
+rencontre dans de nombreux traitements. Par exemple, imaginons que l'on dispose
+d'un tableau de booléens qui indique si un élément d'un tableau d'enregistrements
+doit être traité ou non. La question se posera probablement de savoir combien
+d'enregistrements doivent être traités afin d'allouer l'espace juste nécessaire avant
+de manipuler les données. Si on utilise un tableau de booléens, on aura la définition
+de données suivante :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_001.c" target="_blank">code/chapitre_12/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">#include &lt;stdbool.h&gt;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">typedef</span> <span style="color: #993333;">unsigned</span> <span style="color: #993333;">int</span> u32<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">typedef</span> <span style="color: #993333;">unsigned</span> <span style="color: #993333;">char</span> u8<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// nombre d'enregistrements</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">const</span> u32 MAX_RECORDS <span style="color: #339933;">=</span> <span style="color: #0000dd;">100000</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// Enregistrement</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">typedef</span> <span style="color: #993333;">struct</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// ...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span> Record<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// tableau d'enregistrements</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">Record tab_records<span style="color: #009900;">&#91;</span>MAX_RECORDS<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// tableau qui indique les enregistrements à traiter</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">bool tab_process<span style="color: #009900;">&#91;</span>MAX_RECORDS<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La variable <code>tab_records</code> est un tableau d'enregistrements et <code>tab_process</code> un
+tableau de booléens. Si la variable <code>tab_process[i]</code> est à <code>true</code> cela signifie que
+l'enregistrement correspondant devra être pris en compte dans un traitement
+ultérieur.</p>
+<p>On pourra donc définir plusieurs méthodes liées au traitement du tableau
+<code>tab_process</code> :</p>
+<ul>
+<li><code>void set(u32 n)</code> : qui met à jour le tableau <code>tab_process</code> afin d'indiquer que
+l'enregistrement <code>n</code> doit être traité</li>
+<li><code>void unset(u32 n)</code> : qui met à jour le tableau <code>tab_process</code> afin d'indiquer que
+l'enregistrement <code>n</code> ne doit pas être traité</li>
+<li><code>bool use(u32 n)</code> : qui retourne <code>true</code> si on doit traiter l'enregistrement <code>n</code></li>
+<li><code>u32 count()</code> : qui retourne le nombre d'enregistrements qui doivent être traités</li>
+</ul>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_002.c" target="_blank">code/chapitre_12/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> set<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; tab_process<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">true</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> unset<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; tab_process<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">false</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">bool use<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> tab_process<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 count<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 total <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>u32 i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> MAX_RECORDS<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; total <span style="color: #339933;">+=</span> <span style="color: #009900;">&#40;</span>u32<span style="color: #009900;">&#41;</span>tab_process<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> total<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La variable <code>tab_process</code> étant un tableau de booléens, elle occupe en mé-
+moire 100 000 octets (car un booléen possède une taille d'un octet en C standard). On utilise
+donc 100 000 / 1024 ≃ 98 ko. Cependant sur ces 100 000 octets, seuls 100 000 bits
+sont vraiment utiles car la constante <code>true</code> est en fait égale à 1 et <code>false</code> vaut 0. En
+d'autres termes, 7 bits sur 8, soit 87,5% sont inutiles car non utilisés, seul le bit de
+poids faible code pour <code>true</code> ou <code>false</code>.</p>
+<p>Il est donc plus intéressant de ne pas perdre de mémoire et de coder chaque
+valeur booléenne non pas par un octet mais par un bit. On parle alors de <strong>com-
+pactage des données</strong>. Dans ce cas le tableau <code>tab_process</code> que nous renommons
+alors <code>tab_process_bits</code> aura une taille de <code>(100 000 + 7)/8 ≃ 12 500 ≃ 12,2 ko</code>.
+L'expression <code>100 000 + 7</code> permet d'arrondir la taille à l'octet supérieur.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_003.c" target="_blank">code/chapitre_12/code_003.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 MAX_RECORDS_IN_BYTES <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>MAX_RECORDS <span style="color: #339933;">+</span> <span style="color: #0000dd;">7</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">/</span> <span style="color: #0000dd;">8</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u8 tab_process_bits<span style="color: #009900;">&#91;</span>MAX_RECORDS_IN_BYTES<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Les méthodes que nous avons définies précédemment doivent être réécrites afin
+de prendre en compte les spécificités du nouveau tableau <code>tab_process_bits</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_004.c" target="_blank">code/chapitre_12/code_004.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> set<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; tab_process_bits<span style="color: #009900;">&#91;</span>n<span style="color: #339933;">/</span><span style="color: #0000dd;">8</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">|=</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">1</span> <span style="color: #339933;">&lt;&lt;</span> <span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span><span style="color:#800080;">8</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> unset<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; tab_process_bits<span style="color: #009900;">&#91;</span>n<span style="color: #339933;">/</span><span style="color: #0000dd;">8</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">&amp;=</span> ~<span style="color: #009900;">&#40;</span><span style="color: #0000dd;">1</span> <span style="color: #339933;">&lt;&lt;</span> <span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span><span style="color:#800080;">8</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">bool use<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> <span style="color: #009900;">&#40;</span>tab_process_bits<span style="color: #009900;">&#91;</span>n<span style="color: #339933;">/</span><span style="color: #0000dd;">8</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">&amp;</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">1</span> <span style="color: #339933;">&lt;&lt;</span> <span style="color: #009900;">&#40;</span>n<span style="color: #339933;">%</span><span style="color:#800080;">8</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 count<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 total <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>u32 i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> MAX_RECORDS_IN_BYTES<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; total <span style="color: #339933;">+=</span> pop_count_8<span style="color: #009900;">&#40;</span>tab_process_bits<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> total<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Par exemple pour la méthode <code>set</code>, l'élément <code>n</code> se trouve à l'indice <code>n / 8</code> du
+tableau <code>tab_process_bits</code> et occupe le bit à la position <code>n % 8</code>. La traduction de ce
+sous-programme en assembleur x86 32 bits est la suivante :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_005.asm" target="_blank">code/chapitre_12/code_005.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">set<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; edx = n</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ecx = n</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">shr</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; edx = n / 8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">and</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">7</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ecx = n % 8</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax = 1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">shl</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">cl</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; eax = 1 &lt;&lt; (n % 8)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">or</span> <span style="color: #009900; font-weight: bold;">&#91;</span>tab_process_bits <span style="color: #339933;">+</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">al</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La fonction <code>count</code> doit être réécrite en utilisant la fonction <code>pop_count_8</code> qui
+compte le nombre de bits à 1 dans un octet. Une version simple de cette fonction
+qui nous servira de fonction de référence, est par exemple :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_006.c" target="_blank">code/chapitre_12/code_006.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 pop_count_8<span style="color: #009900;">&#40;</span>u8 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 count_bits <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&amp;</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> count_bits<span style="color: #339933;">++;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; n <span style="color: #339933;">=</span> n <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> count_bits<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>L'efficacité de la fonction est biaisée par le <code>if</code> qui n'est pas prédictible. On peut
+cependant l'éliminer en écrivant la fonction comme suit :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_007.c" target="_blank">code/chapitre_12/code_007.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 pop_count_8_noif<span style="color: #009900;">&#40;</span>u8 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 count_bits <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; count_bits <span style="color: #339933;">+=</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&amp;</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; n <span style="color: #339933;">=</span> n <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> count_bits<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Version de référence, élimination du if</strong>
+La version de référence améliorée en supprimant le <code>if</code> s'exécute en 48,78
+secondes contre 54,96 s ce qui constitue une faible mais notable amélioration.</p>
+<h2 class="section">12.2 Améliorations de pop_count</h2>
+
+<p>Malheureusement la fonction de référence n'est pas très efficace et on peut
+l'améliorer en utilisant trois techniques :</p>
+<ul>
+<li>en utilisant une table de conversion,</li>
+<li>en comptant les bits par paires, quartets, octets,</li>
+<li>en utilisant l'instruction assembleur <code>popcnt</code>.</li>
+</ul>
+<h3 class="subsection">12.2.1 Table de conversion</h3>
+
+<p>On peut utiliser une table de 256 octets, chaque octet contenant le nombre de
+bits de la valeur correspondant à l'indice du tableau. Ainsi, la valeur pour l'indice
+du tableau égal à 189 est 6 car <code>189 = 1011_1101</code> (binaire), soit 6 bits à 1 :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_008.c" target="_blank">code/chapitre_12/code_008.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u8 bits_table<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">256</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">3</span><span style="color: #339933;">,</span> <span style="color: #808080; font-style: italic;">/* ... jusqu'à 255 */</span><span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 pop_count_8<span style="color: #009900;">&#40;</span>u8 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> bits_table<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Amélioration table de conversion</strong>
+En utilisant une table de conversion, on
+ne met plus que 2,76 secondes, on va donc environ 20 fois plus vite. (à condition qu'elle tienne en L1).</p>
+<h3 class="subsection">12.2.2 Comptage arithmétique (Population Count sans l'instruction)</h3>
+
+<p>On désire redéfinir une fonction <code>pop_count_8</code> mathématiquement. La première étape consiste à compter le nombre de bits à 1 dans une paire de bits. On a quatre cas possibles :</p>
+<ul>
+<li><code>11</code> : 2 bits</li>
+<li><code>10</code> : 1 bit</li>
+<li><code>01</code> : 1 bit</li>
+<li><code>00</code> : 0 bit</li>
+</ul>
+<p>Pour cela on utilise des masques :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_009.c" target="_blank">code/chapitre_12/code_009.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">b0 <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>a <span style="color: #339933;">&amp;</span> <span style="color: #208080;">0x55</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">b1 <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>a <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&amp;</span> <span style="color: #208080;">0x55</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">c &nbsp;<span style="color: #339933;">=</span> b0 <span style="color: #339933;">+</span> b1<span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>En fait la valeur <code>55</code> hexa représente un masque de sélection : <code>01010101</code> binaire.
+On réitère ensuite le processus pour s'intéresser aux quartets, octets puis aux
+mots. Le masque évolue comme présenté Table 12.1.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Unité</th>
+<th>Décalage</th>
+<th>Masque Binaire</th>
+<th>Masque Hexa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>paire</td>
+<td>1</td>
+<td><code>0101_0101_0101_0101</code></td>
+<td><code>0x5555</code></td>
+</tr>
+<tr>
+<td>quartet</td>
+<td>2</td>
+<td><code>0011_0011_0011_0011</code></td>
+<td><code>0x3333</code></td>
+</tr>
+<tr>
+<td>octet</td>
+<td>4</td>
+<td><code>0000_1111_0000_1111</code></td>
+<td><code>0x0F0F</code></td>
+</tr>
+<tr>
+<td>mot</td>
+<td>8</td>
+<td><code>0000_0000_1111_1111</code></td>
+<td><code>0x00FF</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 12.1 – Masques en fonction du nombre de bits</em></p>
+<p>Le code complet est alors :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_010.c" target="_blank">code/chapitre_12/code_010.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">const</span> u32 m1 <span style="color: #339933;">=</span> <span style="color: #208080;">0x55555555</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">const</span> u32 m2 <span style="color: #339933;">=</span> <span style="color: #208080;">0x33333333</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">const</span> u32 m4 <span style="color: #339933;">=</span> <span style="color: #208080;">0x0f0f0f0f</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 popcnt_shift<span style="color: #009900;">&#40;</span>u8 x<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&amp;</span> m1<span style="color: #009900;">&#41;</span> <span style="color: #339933;">+</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&amp;</span> m1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&amp;</span> m2<span style="color: #009900;">&#41;</span> <span style="color: #339933;">+</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&amp;</span> m2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&amp;</span> m4<span style="color: #009900;">&#41;</span> <span style="color: #339933;">+</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">4</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&amp;</span> m4<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> x<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Amélioration en comptant les bits par paires, quartets, etc</strong>
+En utilisant des décalages et additions, le temps d'exécution est de 2,83
+secondes, on va donc environ 19 fois plus vite.</p>
+<p>Il existe une ruse (<em>version 2</em>) qui permet de gagner une instruction en remplaçant la première ligne par : <code>x = x - ((x &gt;&gt; 1) &amp; m1);</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_011.asm" target="_blank">code/chapitre_12/code_011.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">; x = x - ((x &gt;&gt; 1) &amp; m1);</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>x<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">shr</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">and</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1431655765</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; 0x55555555</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">12.2.3 L'instruction <code>popcnt</code></h3>
+
+<p>L'instruction <code>popcnt</code> a été introduite en 2008 avec les processeurs Intel Nehalem et le jeu
+d'instruction SSE4.2.
+Elle prend la forme : <code>popcnt r(16/32/64), r/m(16,32,64)</code></p>
+<p>En l'insérant (souvent via un <em>intrinsic</em> C ou dans le bloc assembleur), le processeur gère tout en matériel.
+En utilisant l'instruction <code>popcnt</code> combinée au dépliage de boucle, le temps
+d'exécution est de 3,09 secondes sur un 8 bits. Cela n'est pas le plus efficace avant de passer au traitement étendu.</p>
+<h2 class="section">12.3 Traitement par 32 bits (Dépliage par 4 natif)</h2>
+
+<p>Plutôt que de traiter le tableau octet par octet, on peut le
+traiter en considérant qu'il s'agit d'un tableau d'entiers non signés de 32 bits.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_012.c" target="_blank">code/chapitre_12/code_012.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 popcnt_table_opt<span style="color: #009900;">&#40;</span>u8<span style="color: #339933;">*</span> x<span style="color: #339933;">,</span> u32 size<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 count <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">,</span> i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32<span style="color: #339933;">*</span> y <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>u32<span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>x<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #009900;">&#40;</span>size <span style="color: #339933;">&amp;</span> ~<span style="color: #0000dd;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> i <span style="color: #339933;">+=</span> <span style="color: #0000dd;">4</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; count <span style="color: #339933;">+=</span> popcnt_table_u32<span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>y<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// ... reliquat</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_013.c" target="_blank">code/chapitre_12/code_013.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// Version inefficace de popcnt sur 32 bits par table</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 popcnt_table_32_loop<span style="color: #009900;">&#40;</span>u32 x<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 total <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">do</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; total <span style="color: #339933;">+=</span> popcnt_table<span style="color: #009900;">&#91;</span>x <span style="color: #339933;">&amp;</span> <span style="color: #208080;">0xFF</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&gt;&gt;=</span> <span style="color: #0000dd;">8</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> total<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// Version efficace (Dépliée) de popcnt sur 32 bits par table</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 popcnt_table_32_unroll<span style="color: #009900;">&#40;</span>u32 x<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 total <span style="color: #339933;">=</span> popcnt_table<span style="color: #009900;">&#91;</span>x <span style="color: #339933;">&amp;</span> <span style="color: #208080;">0xFF</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x <span style="color: #339933;">&gt;&gt;=</span> <span style="color: #0000dd;">8</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; total <span style="color: #339933;">+=</span> popcnt_table<span style="color: #009900;">&#91;</span>x <span style="color: #339933;">&amp;</span> <span style="color: #208080;">0xFF</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x <span style="color: #339933;">&gt;&gt;=</span> <span style="color: #0000dd;">8</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; total <span style="color: #339933;">+=</span> popcnt_table<span style="color: #009900;">&#91;</span>x <span style="color: #339933;">&amp;</span> <span style="color: #208080;">0xFF</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x <span style="color: #339933;">&gt;&gt;=</span> <span style="color: #0000dd;">8</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; total <span style="color: #339933;">+=</span> popcnt_table<span style="color: #009900;">&#91;</span>x <span style="color: #339933;">&amp;</span> <span style="color: #208080;">0xFF</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> total<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Amélioration traitement global par 32 bits</strong> (avec tableau de 262_207 octets) :</p>
+<ul>
+<li>référence : <code>36.07 s</code></li>
+<li>référence sans <code>if</code> : <code>23.34 s</code></li>
+<li>table (boucle) : <code>4.69 s</code></li>
+<li>table (dépliée 32 bit) : <code>2.25 s</code></li>
+<li>native <code>popcnt</code> 32 bits : <code>0.62 s</code></li>
+<li><code>popcnt</code> matérielle dépliée x 4 : <strong>0.47 s</strong></li>
+</ul>
+<p>On note que la version qui utilise l'instruction assembleur <code>popcnt</code> prend le dessus quand on la nourrit en blocs de 32 bits : on passe de 3,09s avec un traitement par 8 bits à <strong>0,62s en traitant 32 bits</strong>.</p>
+<h2 class="section">12.4 Vectorisation SIMD</h2>
+
+<p>La vectorisation avec SSE permet de traiter les données par groupe de 16 octets.
+Malheureusement, il n'existe pas d'instruction vectorielle qui s'applique sur un
+registre SSE et qui réalise le décompte des bits de manière native. La seule solution qui s'offre à nous, a priori, est de charger les données par groupe de 16 octets puis d'extraire chaque
+double mot, et enfin d'en compter le nombre de bits avec un classique scalaire <code>popcnt</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_12/code_014.asm" target="_blank">code/chapitre_12/code_014.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">for_u16<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pshufd</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x01</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; extrait le 2nd mot dans xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pshufd</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x02</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; extrait le 3ième mot dans xmm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">pshufd</span> <span style="color: #46aa03; font-weight: bold;">xmm3</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0x03</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; extrait le 4ième mot dans xmm3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movd</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; compte les bits dans eax/edi/ebx...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">popcnt</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edi</span> </div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; etc...</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>La seconde version consiste à utiliser la mathématique évoquée Section 12.2.2 en appliquant massivement les bit-shifts (<code>vpsrlw</code>) sur les registres XMM et en masquant (<code>vpand</code>) avec <code>0x5555</code>, <code>0x3333</code>, <code>0x0F0F</code> chargés respectivement dans <code>xmm4</code> à <code>xmm7</code>. </p>
+<p>On accumulera avec <code>vpsadbw</code> (<em>Compute Sum of Absolute Differences</em>) qui ramènera les sommes consolidées de tout le registre vectoriel.</p>
+<h2 class="section">12.5 Benchmark</h2>
+
+<p>Nous avons testé 30_000 appels sur le même vecteur de 262_207 octets.
+L'étude est poussée sur 15 implémentations (référence C, optimisation manuelle, Shift arithmétique, POPCNT ASM natif, vectorisation SSE, et Intrinsics compilateur).</p>
+<h3 class="subsection">12.6.1 Architectures Anciennes (Avant 2015)</h3>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Pentium D 925</th>
+<th>Core 2 Q9300</th>
+<th>Core i7 860</th>
+<th>AMD Phenom X6</th>
+<th>Core i5 3570K</th>
+<th>Core i7 4790</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 u8_reference</td>
+<td>150.22</td>
+<td>170.20</td>
+<td>110.19</td>
+<td>80.21</td>
+<td>72.58</td>
+<td>54.99</td>
+</tr>
+<tr>
+<td>2 u8_reference_opt</td>
+<td>111.73</td>
+<td>161.63</td>
+<td>102.39</td>
+<td>64.68</td>
+<td>65.12</td>
+<td>47.38</td>
+</tr>
+<tr>
+<td>3 u32_reference</td>
+<td>126.41</td>
+<td>105.45</td>
+<td>60.91</td>
+<td>43.46</td>
+<td>53.34</td>
+<td>39.42</td>
+</tr>
+<tr>
+<td>4 u32_reference_opt</td>
+<td>73.51</td>
+<td>88.36</td>
+<td>60.81</td>
+<td>43.31</td>
+<td>48.68</td>
+<td>33.40</td>
+</tr>
+<tr>
+<td>8 u32_shift_v2</td>
+<td>7.76</td>
+<td>3.13</td>
+<td>1.82</td>
+<td>1.86</td>
+<td>1.06</td>
+<td>0.49</td>
+</tr>
+<tr>
+<td>10 u32_asm</td>
+<td>-</td>
+<td>-</td>
+<td>1.27</td>
+<td>1.65</td>
+<td>1.16</td>
+<td>0.71</td>
+</tr>
+<tr>
+<td>11 u32_asm_ur4</td>
+<td>-</td>
+<td>-</td>
+<td>0.89</td>
+<td>0.88</td>
+<td>0.49</td>
+<td>-</td>
+</tr>
+<tr>
+<td>15 u8_intrinsics</td>
+<td>4.55</td>
+<td>0.92</td>
+<td>1.35</td>
+<td>0.76</td>
+<td>0.61</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Ratio d'Amélioration Max</td>
+<td><strong>× 33</strong></td>
+<td><strong>× 75</strong></td>
+<td><strong>× 123</strong></td>
+<td><strong>× 95</strong></td>
+<td><strong>× 95</strong></td>
+<td><strong>× 112</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 12.2 – Architectures anciennes : temps d'exécution (30_000 itérations, 262 Ko)</em></p>
+<p>Sur les processeurs ne disposant pas de l'instruction <code>popcnt</code> (Pentium D), l'amélioration maximale est en combinant l'Intrinsics et GCC qui déroule le code.</p>
+<h3 class="subsection">12.6.2 Architectures Modernes (2015 à 2019)</h3>
+
+<p>Traiter les données sous format 32 bits est donc bénéfique. La méthode 8 avec décalage de bits est très souvent la plus performante, talonnée par la méthode 11 (<code>popcnt</code> + <em>loop unroll 4</em>). Le passage de 32 bits à 64 bits de registre CPU natif avec l'AMD Ryzen 3600 a ramené le temps d'exécution global de 0,31 s à 0,15 s.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Core i3 6100</th>
+<th>Ryzen 7 1700X</th>
+<th>Core i5 7400</th>
+<th>Core i7 8700</th>
+<th>Ryzen 5 3600</th>
+<th>Xeon 4208</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 u8_reference</td>
+<td>57.99</td>
+<td>59.13</td>
+<td>64.81</td>
+<td>47.28</td>
+<td>54.96</td>
+<td>71.73</td>
+</tr>
+<tr>
+<td>4 u32_reference_opt</td>
+<td>32.65</td>
+<td>28.77</td>
+<td>35.83</td>
+<td>26.47</td>
+<td>23.67</td>
+<td>46.18</td>
+</tr>
+<tr>
+<td>8 u32_shift_v2</td>
+<td>0.50</td>
+<td>0.80</td>
+<td>0.54</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>9 u8_asm</td>
+<td>6.39</td>
+<td>3.24</td>
+<td>6.83</td>
+<td>5.20</td>
+<td>3.06</td>
+<td>7.53</td>
+</tr>
+<tr>
+<td>10 u32_asm</td>
+<td>1.07</td>
+<td>0.68</td>
+<td>1.14</td>
+<td>0.86</td>
+<td>0.62</td>
+<td>0.91</td>
+</tr>
+<tr>
+<td>11 u32_asm_ur4</td>
+<td>0.54</td>
+<td>0.51</td>
+<td>0.59</td>
+<td>0.45</td>
+<td>0.47</td>
+<td>0.74</td>
+</tr>
+<tr>
+<td>15 u8_intrinsics</td>
+<td>0.64</td>
+<td>0.64</td>
+<td>0.68</td>
+<td>0.52</td>
+<td>0.56</td>
+<td>0.76</td>
+</tr>
+<tr>
+<td>Ratio 1 / 11</td>
+<td><strong>× 107</strong></td>
+<td><strong>× 115</strong></td>
+<td><strong>× 109</strong></td>
+<td><strong>N/A</strong></td>
+<td><strong>× 116</strong></td>
+<td><strong>× 96</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 12.3 – Architectures modernes : temps d'exécution (30_000 itérations, 262 Ko)</em></p>
+<h3 class="subsection">12.6.3 Architectures Récentes (2020 et après)</h3>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Core i7 10850H</th>
+<th>Ryzen 5 5600G</th>
+<th>Core i5 12400F</th>
+<th>Ryzen 5 9600X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 u8_reference</td>
+<td>43.82</td>
+<td>46.19</td>
+<td>51.75</td>
+<td>21.68</td>
+</tr>
+<tr>
+<td>4 u32_reference_opt</td>
+<td>24.50</td>
+<td>21.25</td>
+<td>28.58</td>
+<td>17.80</td>
+</tr>
+<tr>
+<td>7 u32_shift_v1</td>
+<td>0.48</td>
+<td>0.37</td>
+<td>0.31</td>
+<td>0.15</td>
+</tr>
+<tr>
+<td>11 u32_asm_ur4</td>
+<td>0.41</td>
+<td>0.44</td>
+<td>0.44</td>
+<td>0.36</td>
+</tr>
+<tr>
+<td>14 u32_avx2_v1</td>
+<td>0.65</td>
+<td>0.73</td>
+<td>0.69</td>
+<td>0.36</td>
+</tr>
+<tr>
+<td>15 u8_intrinsics</td>
+<td>0.49</td>
+<td>0.47</td>
+<td>0.44</td>
+<td>0.32</td>
+</tr>
+<tr>
+<td>Ratio Max Gain</td>
+<td><strong>× 106</strong></td>
+<td><strong>× 104</strong></td>
+<td><strong>× 117</strong></td>
+<td><strong>× 144</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 12.4 – Architectures actuelles : temps d'exécution (30_000 itérations, 262 Ko)</em></p>
+<h2 class="section">12.7 Bilan</h2>
+
+<p>Ce problème révèle deux choses importantes. La première est que le traitement
+des données par groupe de 32 bits (voire de 64 bits) au lieu de 8 bits permet de
+gagner en efficacité : cela semble normal puisqu'on traite les données en une seule
+fois plutôt qu'en 4 fois (ou 8 fois).</p>
+<p>La seconde leçon que l'on peut tirer montre que la vectorisation pure (AVX native) va se révéler complexe car on ne dispose historiquement pas d'instruction vectorielle qui réaliserait ce que fait l'instruction <code>popcnt</code> scalaire sur les registres généraux. 
+Cependant, faire le décompte avec des masques (décalages magiques <code>0x5555</code>) mis à l'échelle SSE ou utiliser les <em>intrinsics</em> optimisés par GCC (<code>pop_count_8_intrinsics</code> traduit en unroll <code>vpopcnt</code> sur les architecture très récentes comme Zen 4 / Granite Ridge) donne la victoire finale sur un algorithme simple de prime abord.</p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

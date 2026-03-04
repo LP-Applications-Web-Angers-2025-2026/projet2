@@ -1,0 +1,2 @@
+floats, ce que l’on note :
+1z[0:3] x[0:3] y[0:3]

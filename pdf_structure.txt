@@ -1,0 +1,321 @@
+Nombre de pages: 479
+
+--- Page 1 ---
+  |PROGRAMMATION|
+  |32 et 64 bits sous Linux Ubuntu|
+  |ASSEMBLEUR x86|
+  |Jean-Michel RICHER|
+
+--- Page 2 ---
+
+--- Page 3 ---
+  |Programmation Assembleur x86|
+  |32 et 64 bits sous|
+  |Linux Ubuntu|
+  |Jean-Michel RICHER|
+  |5ème Edition|
+  |version 2025.09|
+  |Destinée au cours à partir de|
+  |la rentrée de Septembre 2025|
+
+--- Page 4 ---
+  |© Copyright 2020-2025 par Jean-Michel RICHER|
+  |Avertissements|
+  |Cet ouvrage peut être reproduit et utilisé uniquement à des fins|
+  |non commerciales, notamment dans le cadre de l’enseignement|
+  |de l’assembleur. Il ne peut, en aucune manière, être modifié ou|
+  |commercialisé sans l’accord de son auteur.|
+  |Toute demande de modification, de rectification ou de|
+  |correction peut être adressée par courrier électronique à|
+  |l’auteur.|
+  |L'ensemble du code des études de cas et des différents|
+
+--- Page 5 ---
+  |Ce livre est dédié à ceux qui ont contribué à sa réalisation|
+  |en premier lieu à mes parents|
+  |pour m’avoir donné la vie|
+  |pour m’avoir éduqué|
+  |et avoir financé mes études|
+  |ensuite, aux enseignants qui m’ont donné l’envie|
+  |d’apprendre et de transmettre mon savoir|
+  |Juillet 2020, Avrillé|
+  |Eduquer c'est chercher à concilier deux mouvements contraires :|
+  |celui qui porte à aider chaque enfant à trouver sa propre voie|
+
+--- Page 6 ---
+
+--- Page 7 ---
+  |Codessources|
+  |1.1.1 Fonction bsr, version 1|
+  |1.1.2 Fonction bsr, version 3|
+  |1.3.1 Fonction nombre premier, version inefficace|
+  |1.3.2 Fonction nombre premier, version améliorée|
+  |1.3.3 Fonction nombre premier, version optimisée|
+  |1.3.4 Nombre premier avec crible|
+  |1.3.5 Tri à bulles en ordre croissant|
+  |1.3.6 Recherche de doublons, version simpliste|
+  |2.4.1 Précision et nombres flottants|
+
+--- Page 8 ---
+  |2	CODES SOURCES|
+  |6.2.2 Appelé en 32 bits|
+  |6.3.1 Traduction en 64 bits de la fonction sum|
+  |6.3.2 Traduction en 64 bits de la fonction sum - version améliorée|
+  |11.3.1 Produit de matrice, fonction de référence|
+  |11.6.1 Produit de matrice, Inversion de boucles j et k|
+  |11.8.1 Produit de matrice - Tuilage 4x4|
+  |11.8.2 Produit de matrice - Tuilage|
+  |13.2.1 SAXPY modifiée - fonction de référence|
+  |13.3.1 SAXPY modifiée - implantation FPU|
+
+--- Page 9 ---
+  |CODES SOURCES	3|
+  |16.7.2 Fibonacci - fonction itérative avec while en assembleur|
+  |16.7.3|
+  |Fibonacci - fonction itérative avec while et amélioration du dépliage404|
+  |16.8.1 Fibonacci - fonction itérative vectorielle|
+  |16.8.2 Fibonacci - fonction vectorielle SSE|
+  |16.8.3 Fibonacci - fonction vectorielle AVX|
+  |16.9.1 Fibonacci - fonction la plus performante|
+  |17.2.1 Nombre auto-descriptif, fonction de référence|
+  |17.4.1 Nombre auto-descriptif, fonction de conversion en chiffres|
+
+--- Page 10 ---
+  |4	CODES SOURCES|
+
+--- Page 11 ---
+  |Tabledesmatières|
+  |1|
+  |1.1|
+  |1.1.1|
+  |1.2|
+  |1.2.1|
+  |1.2.2|
+  |1.2.3|
+  |1.2.4|
+  |1.3|
+
+--- Page 12 ---
+  |6	TABLE DES MATIÈRES|
+  |2.2.4.3|
+  |2.2.4.4|
+  |2.2.4.5|
+  |2.2.5|
+  |2.2.5.1|
+  |2.3|
+  |2.3.1|
+  |2.3.2|
+  |2.3.3|
+
+--- Page 13 ---
+  |TABLE DES MATIÈRES	7|
+  |3.2.2|
+  |3.2.2.1|
+  |3.2.3|
+  |3.2.4|
+  |3.2.5|
+  |3.2.6|
+  |3.2.6.1|
+  |3.2.6.2|
+  |3.3|
+
+--- Page 14 ---
+  |8	TABLE DES MATIÈRES|
+  |3.9.3|
+  |3.9.4|
+  |3.10|
+  |3.10.1|
+  |3.10.2|
+  |3.10.3|
+  |3.11|
+  |3.12|
+  |3.12.1|
+
+--- Page 15 ---
+  |TABLE DES MATIÈRES	9|
+  |5|
+  |5.1|
+  |5.2|
+  |5.2.1|
+  |5.2.2|
+  |5.2.3|
+  |5.2.4|
+  |5.3|
+  |5.3.1 mov: chargement et stockage|
+
+--- Page 16 ---
+  |10	TABLE DES MATIÈRES|
+  |5.3.7|
+  |5.3.7.1|
+  |5.3.7.2|
+  |5.3.7.3|
+  |5.3.7.4|
+  |5.3.7.5|
+  |5.4|
+  |5.4.1|
+  |5.4.2|
+
+--- Page 17 ---
+  |TABLE DES MATIÈRES	11|
+  |6.2.1.2|
+  |6.2.1.3|
+  |6.2.2|
+  |6.2.3|
+  |6.2.4|
+  |6.2.5|
+  |6.2.5.1|
+  |6.2.5.2|
+  |6.2.5.3|
+
+--- Page 18 ---
+  |12	TABLE DES MATIÈRES|
+  |7.4|
+  |7.4.1|
+  |7.4.2|
+  |7.4.3|
+  |7.5|
+  |7.6|
+  |7.6.1|
+  |7.6.2|
+  |7.7|
+
+--- Page 19 ---
+  |TABLE DES MATIÈRES	13|
+  |8.5|
+  |8.5.1|
+  |8.5.2|
+  |8.5.2.1|
+  |8.5.2.2|
+  |8.5.3|
+  |8.5.4|
+  |8.6|
+  |8.6.1|
+
+--- Page 20 ---
+  |14	TABLE DES MATIÈRES|
+  |9.5|
+  |9.5.1|
+  |9.6|
+  |9.6.1|
+  |9.6.2|
+  |9.6.3|
+  |9.7|
+  |9.8|
+  |9.8.1|
+
+--- Page 21 ---
+  |TABLE DES MATIÈRES	15|
+  |11|
+  |produit de matrices|
+  |11.1|
+  |11.2|
+  |11.3|
+  |11.4|
+  |11.5|
+  |11.6|
+  |11.7|
+
+--- Page 22 ---
+  |16	TABLE DES MATIÈRES|
+  |12.7|
+  |13|
+  |13.1|
+  |13.2|
+  |13.3|
+  |13.4|
+  |13.5|
+  |13.6|
+  |13.7|
+
+--- Page 23 ---
+  |TABLE DES MATIÈRES	17|
+  |14.12|
+  |14.12.1|
+  |14.12.2|
+  |14.12.3|
+  |14.13|
+  |14.14|
+  |15|
+  |Compter les voyelles|
+  |15.1|
+
+--- Page 24 ---
+  |18	TABLE DES MATIÈRES|
+  |16.2|
+  |16.3|
+  |16.4|
+  |16.5|
+  |16.6|
+  |16.7|
+  |16.7.1|
+  |16.7.2|
+  |16.7.3|
+
+--- Page 25 ---
+  |TABLE DES MATIÈRES	19|
+  |17.5.6|
+  |17.5.6.1|
+  |17.5.6.2|
+  |17.5.7|
+  |17.6|
+  |A|
+  |B|
+  |B.1|
+  |B.2|
+
+--- Page 26 ---
+  |20	TABLE DES MATIÈRES|
+  |D.4.2|
+  |D.4.3|
+  |D.5|
+  |E|
+  |Glossaire des Instructions|
+
+--- Page 27 ---
+  |Avantpropos|
+  |Cet ouvrage s’adresse aux étudiants en informatique, automatique et électro-|
+  |nique qui désirent s’initier à la programmation en assembleur x86 que ce soit en|
+  |architecture 32 ou 64 bits ou qui désirent parfaire leurs connaissances dans ce|
+  |domaine. Si j’ai voulu écrire ce livre c’est afin de partager l’expérience que j’ai|
+  |pu acquérir au cours des vingts années passées à enseigner ce sujet à l’université.|
+  |J’ai pu constater que les étudiants en informatique sont généralement rebutés|
+  |par l’architecture des ordinateurs qui est pourtant un sujet fondamental dans leur|
+  |cursus. La programmation assembleur qui en découle apparaît comme un sujet peu|
+  |attrayant, difficile à maîtriser, et ce, généralement en raison de lacunes concernant|
+
+--- Page 28 ---
+  |22	TABLE DES MATIÈRES|
+  |esprit épris de curiosité qui a forgé notre engouement pour le matériel (hardware)|
+  |et bien évidemment le logiciel qui permet de faire fonctionner le matériel.|
+  |J’ai très tôt été confronté à l’assembleur. D’une part mon premier ordinateur|
+  |fut un Commodore 64 [25], ordinateur à succès, vendu à plus de 17 millions|
+  |d’exemplaires à travers le monde. Cemonstre de puissanceétait affublé d’un micro-|
+  |processeur MOS Technology 6510 tournant à la vitesse de 1 Mhz et était doté de|
+  |64 ko de RAM, dont 48 ko utilisables pour stocker les programmes. A l’époque cela|
+  |était suffisant. Le langage BASIC (Beginner’s All-purpose Symbolic Instruction Code)|
+  |du C64 était sobre. Notamment, il ne disposait pas d’instruction de typeclrscr|
+
+--- Page 29 ---
+  |TABLE DES MATIÈRES	23|
+  |FIGURE1 – Le Livre du C64|
+  |aborde succintement des notions liées au Génie Logiciel et au travail de l’informati-|
+  |cien.|
+  |Lechapitre concerne le codage de l’information notamment des nombres|
+  |entiers, des réels que l’on qualifie de nombres à virgule flottante et des chaînes de|
+  |caractères.|
+  |Lechapitre aborde les notions liées à la mémoire (comme l’alignement,|
+  |l’adressage mémoire et ledual channel) et les notions relatives au fonctionnement|
+  |du microprocesseur (chargement des instructions, décodage et exécution, pipeline,|
+
+--- Page 30 ---
+  |24	TABLE DES MATIÈRES|
+  |Lechapitre aborde le traitement desnombres à virgule flottanteparle coproces-|
+  |seur(FPU). On montre comment traduire simplement une expression arithmétique|
+  |en utilisant les mnémoniques de la FPU.|
+  |Lechapitre traite des unités vectorielles et des instructions liées à ces unités|
+  |que sont leSSE, l’AVXet l’AVX512. On introduit également lesintrinsicsqui sont des|
+  |fonctions du C qui seront remplacées lors de leur traduction par des instructions|
+  |vectorielles. Ces fameuses fonctions intrinsèques permettent d’écrire du code vecto-|
+  |riel qui sera optimisé par le compilateur C tout en restant au niveau du langage|
+  |C.|
+

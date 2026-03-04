@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="../../img/classroom.png" />
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="../../javascript/mathscribe/jqmath-0.4.3.css">
+<script src="../../javascript/jquery-3.4.1.min.js"></script>
+<script src="../../javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="../../index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="../../ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="../../rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="../../conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="../../dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="../../div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="../../contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 17 : Étude de cas (Nombres auto-descriptifs)</h1>
+
+<h2 class="section">17.1 Introduction</h2>
+
+<p>Un nombre auto-descriptif se définit comme un entier naturel ayant pour propriété
+que chacun de ses chiffres, repéré par son rang, indique combien de fois ce rang
+apparaît en tant que chiffre dans l'écriture de ce nombre. On parle aussi de nombre
+autobiographique ou de nombre qui se décrit lui-même. Le premier nombre
+auto-descriptif est 1210. En effet :</p>
+<ul>
+<li>il contient 1 chiffre zéro</li>
+<li>il contient 2 chiffres un</li>
+<li>il contient 1 chiffre deux</li>
+<li>il contient 0 chiffre trois</li>
+</ul>
+<p>Il en va de même pour 2020, 21200. Ces nombres sont très rares, on en compte 7 dont la liste figure <em>Table 17.1</em>.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>$n$</th>
+<th>$a(n)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1_210</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2_020</td>
+</tr>
+<tr>
+<td>3</td>
+<td>21_200</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3_211_000</td>
+</tr>
+<tr>
+<td>5</td>
+<td>42_101_000</td>
+</tr>
+<tr>
+<td>6</td>
+<td>521_001_000</td>
+</tr>
+<tr>
+<td>7</td>
+<td>6_210_001_000</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 17.1 – Nombres auto-descriptifs</em></p>
+<p>Formalisons tout cela. On considère $x$ un nombre entier positif de $k$ chiffres de la forme :
+$$x = d<em>0 \times 10^{k-1} + \dots + d</em>{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$</p>
+<p>On définit pour ce nombre une suite de valeurs $c<em>0$ à $c</em>{k-1}$ où chaque $c_i$ représente le nombre d'occurrences du chiffre $i$ dans $x$ :
+$$c_i = \text{Card}({d_j \text{ tel que } d_j = i, \forall j \in [0, k-1]})$$</p>
+<p>On doit alors vérifier la contrainte suivante qui définit un nombre auto-descriptif :
+$$\forall i \in [0, k-1], c_i = d_i$$
+où $[0, k-1]$ représente l'intervalle de valeurs entre 0 et $k-1$. De ces définitions découlent les propriétés suivantes :</p>
+<ul>
+<li><strong>propriété 1</strong> : un nombre auto-descriptif ne peut pas commencer par 0</li>
+<li><strong>propriété 2</strong> : un nombre auto-descriptif contient au moins un 0</li>
+<li><strong>propriété 3</strong> : la somme des $c_i$ est égale à $k$, et donc, la somme des $d_i$ est égale à $k$</li>
+<li><strong>propriété 4</strong> : un nombre auto-descriptif contient au moins un 0 en position $k-1$</li>
+<li><strong>propriété 5</strong> : un nombre auto-descriptif de $k$ chiffres ne peut pas avoir un chiffre supérieur à $k$</li>
+</ul>
+<p><strong>Théorème 17.1.1.</strong> Un nombre auto-descriptif ne peut pas commencer par 0.
+<em>Démonstration.</em> En effet, si $d_0 = 0$ alors le nombre commence par 0 et par définition n'est pas valide.</p>
+<p><strong>Théorème 17.1.2.</strong> Un nombre auto-descriptif contient au moins un 0.
+<em>Démonstration.</em> En effet, si $c_0 = 0$ alors $d_0 = 0$ et le nombre commence par 0 et par définition n'est pas valide d'après le théorème précédent.</p>
+<p><strong>Théorème 17.1.3.</strong> $\sum_{i=0}^{k-1} c<em>i = \sum</em>{i=0}^{k-1} d_i = k$
+<em>Démonstration.</em> Si par définition les $c_i$ représentent le nombre d'occurrences de chaque chiffre, leur somme doit donc être égale à $k$. Étant donné que par définition $c_i = d_i$, on en déduit également que la somme des $d_i$ est égale à $k$.</p>
+<p><strong>Théorème 17.1.4.</strong> Un nombre auto-descriptif se termine par un 0.
+<em>Démonstration.</em> Appelons $S(k) = \sum_{i=0}^{k-1} d<em>i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d</em>{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d<em>{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d</em>{k-1} &gt; 0$, et on en déduit que $S(k-1) &lt; k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d<em>1$ à $d</em>{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d<em>{k-1}$, on a donc $S(k) - S(k-1) = d</em>{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.</p>
+<p><strong>Théorème 17.1.5.</strong> Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i &lt; k, \forall i \in [0, k-1]$
+<em>Démonstration.</em> Si $x$ possède $k$ chiffres alors $d<em>0$ à $d</em>{k-1}$ sont définis. Si $d_i \geq k$ cela implique que $c_i \geq k$ ce qui est en contradiction avec la définition du nombre.</p>
+<h2 class="section">17.2 Fonction de référence (<code>std::string</code>)</h2>
+
+<p>La fonction de référence à implanter est donnée <em>Listing 17.2.1</em>. Elle comporte un
+paramètre qui est le nombre entier non signé $x$ pour lequel on veut déterminer s'il
+est auto-descriptif ou non. Nous n'allons pas utiliser certaines propriétés énoncées
+préalablement afin de garder un temps de calcul qui nous permettra de comparer
+les différentes améliorations proposées. En effet, si on utilise le fait qu'un nombre
+auto-descriptif se termine par 0, il suffit de calculer le premier reste de la division
+par 10 pour trouver le premier chiffre et la recherche des nombres auto-descriptifs,
+en utilisant cette propriété, s'exécute en moins de 2 secondes.</p>
+<p>Nous allons donc nous focaliser sur les trois points suivants :</p>
+<ul>
+<li>conversion du paramètre $x$ en base 10 (détermination des $d_i$)</li>
+<li>détermination du nombre d'occurrences de chaque chiffre (les $c_i$)</li>
+<li>comparaison du nombre d'occurrences avec le $i$-ème chiffre (comparaison des $d_i$ avec les $c_i$)</li>
+</ul>
+<p>Dans cette première version, on utilise les fonctionnalités du C++ pour transformer le nombre $x$ en caractères et déterminer les $d_i$.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_001.cpp" target="_blank">code/chapitre_17/code_001.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">int</span> u32<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">unsigned</span> <span style="color: #0000ff;">char</span> u8<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">int</span> i32<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">bool</span> ad_ref<span style="color: #008000;">&#40;</span>u32 x<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666;">// nombre d'occurrences de chaque chiffre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 counts<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">10</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> <span style="color: #008000;">&#123;</span><span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span><span style="color: #008000;">&#125;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666;">// convertir le nombre en chaîne de caractères</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; string s <span style="color: #000080;">=</span> std<span style="color: #008080;">::</span><span style="color: #007788;">to_string</span><span style="color: #008000;">&#40;</span>x<span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666;">// compter les occurrences de chaque chiffre</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">for</span><span style="color: #008000;">&#40;</span>u32 i<span style="color: #000080;">=</span><span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&lt;</span> s.<span style="color: #007788;">length</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>counts<span style="color: #008000;">&#91;</span> <span style="color: #008000;">&#40;</span>u32<span style="color: #008000;">&#41;</span><span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000040;">-</span> <span style="color: #FF0000;">'0'</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666;">// comparer les occurrences aux chiffres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">for</span><span style="color: #008000;">&#40;</span>u32 i<span style="color: #000080;">=</span><span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&lt;</span> s.<span style="color: #007788;">length</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008080;">;</span> <span style="color: #000040;">++</span>i<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">if</span><span style="color: #008000;">&#40;</span><span style="color: #0000ff;">static_cast</span><span style="color: #000080;">&lt;</span>u32<span style="color: #000080;">&gt;</span><span style="color: #008000;">&#40;</span>s<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000040;">-</span> <span style="color: #0000dd;">48</span><span style="color: #008000;">&#41;</span> <span style="color: #000040;">!</span><span style="color: #000080;">=</span> counts<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 17.2.1 – Nombre auto-descriptif, fonction de référence</em></p>
+<p><strong>Fonction de référence</strong>
+Le temps d'exécution sur AMD Ryzen 5 5600g est de <strong>7,34 secondes</strong>.</p>
+</div>
+*Attention* : le compilateur `gcc` dans sa version 10 générait une fonction dont le temps d'exécution est d'environ 18 secondes alors que le même compilateur, dans sa version 12, génère du code qui ne s'exécute plus qu'en 7,6 secondes, soit près de deux fois plus rapide. La différence d'exécution tient à la conversion de $x$ en chaîne. Nous utilisons donc par la suite la version 12 de `gcc` quand cela est possible.
+<h2 class="section">17.3 Amélioration de la taille mémoire (8 bits)</h2>
+
+<p>Plutôt que d'utiliser un tableau d'entiers 32-bits pour compter les occurrences des 
+chiffres, on utilise un tableau d'octets. En effet, diminuer la taille des données 
+utilisées peut parfois apporter une amélioration.</p>
+<p><strong>Fonction de référence avec 8 bits</strong>
+Le temps d'exécution sur AMD Ryzen 5 5600g est de <strong>7,20 secondes</strong> en
+utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre.</p>
+<p>On en déduit donc qu'il vaut mieux travailler sur un tableau d'octets que sur un tableau d'entiers en général même si l'amélioration est faible.</p>
+<h2 class="section">17.4 Conversion directe (<code>x % 10</code>)</h2>
+
+<p>Plutôt que de convertir $x$ en chaîne de caractères, nous allons le convertir directement en chiffres que l'on va stocker dans un tableau (d'entiers ou d'octets) appelé <code>digits</code> en faisant des divisions par 10 afin d'obtenir chaque chiffre. A chaque nouveau reste trouvé on incrémente le tableau <code>counts</code> en conséquence et on stocke le reste dans le tableau <code>digits</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_002.cpp" target="_blank">code/chapitre_17/code_002.cpp</a></summary>
+
+<div class="code-container">
+<div class="cpp" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">bool</span> ad_div<span style="color: #008000;">&#40;</span>u32 x<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u8 counts<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">10</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> <span style="color: #008000;">&#123;</span><span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span><span style="color: #008000;">&#125;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u8 digits<span style="color: #008000;">&#91;</span><span style="color: #0000dd;">10</span><span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666;">// convertir x et compter les occurrences</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; i32 i <span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">while</span><span style="color: #008000;">&#40;</span>x <span style="color: #000040;">!</span><span style="color: #000080;">=</span> <span style="color: #0000dd;">0</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 u <span style="color: #000080;">=</span> x <span style="color: #000040;">%</span> <span style="color: #0000dd;">10</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; digits<span style="color: #008000;">&#91;</span>i<span style="color: #000040;">++</span><span style="color: #008000;">&#93;</span> <span style="color: #000080;">=</span> u<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000040;">++</span>counts<span style="color: #008000;">&#91;</span>u<span style="color: #008000;">&#93;</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; x <span style="color: #000080;">=</span> x <span style="color: #000040;">/</span> <span style="color: #0000dd;">10</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666;">// comparer le nombre d'occurrences avec les chiffres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #000040;">--</span>i<span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">for</span><span style="color: #008000;">&#40;</span>i32 j<span style="color: #000080;">=</span><span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> i <span style="color: #000080;">&gt;=</span> <span style="color: #0000dd;">0</span><span style="color: #008080;">;</span> <span style="color: #000040;">--</span>i, <span style="color: #000040;">++</span>j<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">if</span><span style="color: #008000;">&#40;</span>digits<span style="color: #008000;">&#91;</span>i<span style="color: #008000;">&#93;</span> <span style="color: #000040;">!</span><span style="color: #000080;">=</span> counts<span style="color: #008000;">&#91;</span>j<span style="color: #008000;">&#93;</span><span style="color: #008000;">&#41;</span> <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #008000;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #008080;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #008000;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 17.4.1 – Nombre auto-descriptif, fonction de conversion en chiffres modulo 10</em></p>
+<p>Au final on obtient le remplissage des tableaux suivants (pour $x=21200$) :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Indice</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>...</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>counts</code></td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>digits</code></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fonction avec conversion 8 bits</strong>
+C'est en fait cette version qui est la plus efficace lorsque traduite par le compilateur car elle ne prend que <strong>4,22 secondes</strong> pour s'exécuter et c'est elle qu'il va falloir tenter de battre. La version utilisant des entiers prend quant à elle 5,83 secondes.</p>
+<p>La raison de l'efficacité est assez simple : la conversion est rapide car elle est optimisée et la division par 10 est remplacée par une multiplication par un invariant, puis le calcul du reste de la division est effectué par multiplication du dividende et soustraction. En outre, la boucle de conversion est dépliée.</p>
+<h2 class="section">17.5 Approche Assembleur</h2>
+
+<p>Étant données les différentes versions précédentes, on peut se demander si la traduction assembleur ne serait pas plus performante.</p>
+<h3 class="subsection">17.5.1 L'assembleur simple (division par 10)</h3>
+
+<p>Dans cette première version, on se contente de traduire la version C de l'algorithme.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Param / Var</th>
+<th>Type</th>
+<th>Registre / Emplacement</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td><code>u32</code></td>
+<td><code>[ebp+8]</code> (<code>eax</code>)</td>
+<td>Nombre $x$</td>
+</tr>
+<tr>
+<td><code>counts</code></td>
+<td><code>u8[]</code></td>
+<td>Pile <code>esp</code></td>
+<td>Occurrences</td>
+</tr>
+<tr>
+<td><code>digits</code></td>
+<td><code>u8[]</code></td>
+<td>Pile <code>esp</code></td>
+<td>Conversion</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><code>u32</code></td>
+<td><code>ecx</code></td>
+<td>Indice</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 17.2 – Association entre variables et registres pour les fonctions assembleur listant les nombres auto-descriptifs</em></p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_003.asm" target="_blank">code/chapitre_17/code_003.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">ad_asm_v1<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">44</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; on réserve l'espace pour stocker</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">and</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #339933;">-</span><span style="color: #ff0000;">32</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; counts, digits et les registres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ebx, esi, edi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">36</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">40</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpxor</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; on met counts et digits à 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovdqa</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 17.5.1 – Fonction assembleur - version 1 - initialisation</em></p>
+<p>Pour réaliser la conversion de $x$ en base 10, on réalise des 
+divisions successives par 10. En utilisant l'instruction <code>div</code>, on obtient le quotient 
+dans <code>eax</code> et le reste dans <code>edx</code>. On va stocker les chiffres (restes de la division) 
+dans l'ordre décroissant du tableau <code>digits</code> en commençant à l'indice 9 qui sera 
+stocké dans <code>ecx</code>, puisque un entier non signé contient au maximum 10 chiffres.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_004.asm" target="_blank">code/chapitre_17/code_004.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; constante 10 pour division par 10</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">9</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; i = 9, indice pour tableau digits</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si x &lt; 10 alors aller en .x_lt_10</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jl</span> <span style="color: #339933;">.</span>x_lt_10</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while_x_ge_10<span style="color: #339933;">:</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; tantque x &gt;= 10 faire</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">div</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; u, x = x % 10, x / 10</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">inc</span> <span style="color: #0000ff; font-weight: bold;">byte</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ++counts[u]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; digits[ --i ] = u</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">dl</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jge</span> <span style="color: #339933;">.</span>while_x_ge_10 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; fin tantque</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>x_lt_10<span style="color: #339933;">:</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si x &lt; 10, pas de division</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; si x == 0 alors aller en .next</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jz</span> <span style="color: #339933;">.</span>next</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">inc</span> <span style="color: #0000ff; font-weight: bold;">byte</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; digits[ --i ] = x</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">al</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 17.5.2 – Fonction assembleur - version 1 - conversion par boucle <code>div</code></em></p>
+<p>Pour la fin, s'il faut vérifier, on compare le bloc <code>counts</code> et le bloc <code>digits</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_005.asm" target="_blank">code/chapitre_17/code_005.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>next<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; valeur de retour = faux</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">9</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; longueur = nombre de chiffres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ecx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; i = 0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while_eq<span style="color: #339933;">:</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; faire</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">movzx</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #0000ff; font-weight: bold;">byte</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">dl</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jne</span> <span style="color: #339933;">.</span>end</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">inc</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ++i</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jnz</span> <span style="color: #339933;">.</span>while_eq &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; tantque i &lt; longueur</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">inc</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; valeur de retour = vrai</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>end<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">36</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">40</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 17.5.3 – Fonction assembleur - version 1 - comparaison et sortie</em></p>
+<p><strong>Assembleur version 1 avec conversion 8 bits</strong>
+Cette version assembleur s'exécute en <strong>5,59 secondes</strong>.</p>
+<h3 class="subsection">17.5.2 Remplacer la division par une multiplication (L'astuce de l'invariant)</h3>
+
+<p>Une première amélioration consiste à remplacer la division par une multiplication. 
+On le sait, la division est très pénalisante par rapport à la multiplication. 
+Cela est possible ici car on divise par une constante (10), on peut donc remplacer 
+la division par une multiplication par invariant.</p>
+<p>La constante <code>0xCCCCCCCD</code> correspond à <code>(2^35) / 10</code>. En l'utilisant et en faisant un décalage, <code>ebx</code> stocke l'invariant.
+L'astuce permet d'aller plus vite que <code>div 10</code>. On utilise ensuite <code>lea eax, [edx+edx*4]</code> (donc $x \times 5$) et <code>shl eax, 1</code> pour retrouver la base 10 du modulo par soustraction ! </p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_006.asm" target="_blank">code/chapitre_17/code_006.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">ad_asm_v2<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ... (identique à ad_asm_v1)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0xCCCCCCCD</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Inv. 0.1 dans ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">9</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jl</span> <span style="color: #339933;">.</span>x_lt_10</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while_x_ge_10<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; sauvegarde de x dans edi</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mul</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; edx:eax &lt;- x * Inv</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">shr</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; edx &lt;- edx / 8 (éq. x/10)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">*</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">shl</span> <span style="color: #46aa03; font-weight: bold;">esi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; esi = 2*5*(x/10) = 10 * (x/10)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esi</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; calcul du reste u de la division</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; --i</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">inc</span> <span style="color: #0000ff; font-weight: bold;">byte</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edi</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ++counts[u]</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">dil</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; digits[ i ] = u</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax &lt;- x/10</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">10</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jge</span> <span style="color: #339933;">.</span>while_x_ge_10</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 17.5.4 – Fonction assembleur - version 2 - remplacement de la division</em></p>
+<p><strong>Assembleur version 2 : multiplication au lieu d'une division</strong>
+Cette version assembleur demande plus d'opérations et s'exécute en <strong>5,69 secondes</strong>, soit une très légère dégradation théorique par rapport au <code>div</code> mais profitable sur les vieux CPU. En ajoutant un <em>Unroll</em> (dépliage) manuel par la suite, le temps tombe à <strong>4,32 secondes</strong>.</p>
+<h3 class="subsection">17.5.4 Comparaison finale Vectorielle SIMD (AVX/SSE)</h3>
+
+<p>Plutôt que de comparer les tableaux <code>digits</code> et <code>counts</code> élément par élément, on peut utiliser des registres 128/256 bits et une égalité AVX comme <code>vpcmpeqb</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_007.asm" target="_blank">code/chapitre_17/code_007.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">xor</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; valeur de retour : false</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovdqa</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; counts</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovdqu</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; digits (shifté)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpcmpeqb</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm2</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; comparer octet par octet</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpmovmskb</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; récupérer le masque issu de la comparaison</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0xFFFF</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; s'il est égal à 0xFFFF alors OK</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sete</span> <span style="color: #46aa03; font-weight: bold;">al</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; dans ce cas mettre eax à true</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 17.5.4.b - L'égalité finale vectorisée.</em></p>
+<p><strong>Assembleur version 4 : (Vectorielle SIMD)</strong>
+Avec l'Unroll mathématique et la fin SIMD, on descend à <strong>4,31 secondes</strong>.</p>
+<h3 class="subsection">17.5.5 L'invariant de Base 100 (<code>% 100</code>)</h3>
+
+<p>Au lieu de faire <code>% 10</code>, on peut faire <code>% 100</code> (soit 2 fois moins de divisions) grâce au magique <code>0x51EB851F</code> (<code>0.01</code> inverse). On utilise alors une table de correspondance pour décomposer <code>85</code> en <code>8</code> et <code>5</code>.
+Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Assembleur).</p>
+<h3 class="subsection">17.5.6 Tentative au Décimal Codé en Binaire (BCD)</h3>
+
+<p>Le Binary Coded Decimal est un ancien système qui consiste à coder un nombre en plaçant deux chiffres décimaux par octet. Chaque quartet (nibble) représente un chiffre. En ASM x86, on possède <code>fbstp</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_008.asm" target="_blank">code/chapitre_17/code_008.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">fild</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fbstp</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">32</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Par exemple, <code>1234567890</code> devient <code>0x00...1234567890</code>. Malheureusement, le circuit FPU mathématique met un temps monstrueux au XXIe siècle (plus de <strong>23 secondes</strong> à s'exécuter, jusqu'à 108 sec sur de vieux Intel !), rendant l'astuce archaïque inopérante.</p>
+<h2 class="section">17.6 Benchmark Final Multi-Architecture</h2>
+
+<p>Voici le résumé des performances des différentes architectures :</p>
+<ul>
+<li><strong>1</strong> : version C++ standard</li>
+<li><strong>4</strong> : version C++ avec conversion manuelle et divisions / tableau 8-bit.</li>
+<li><strong>8</strong> : Assembleur sans division (<code>mul inv</code>) avec <em>Unroll</em></li>
+<li><strong>12</strong> : Assembleur sans division + <em>Unroll</em> + fin vectorielle SIMD AVX</li>
+<li><strong>14</strong> : Assembleur division par 100 (<code>mul inv</code>)</li>
+<li><strong>16</strong> : ASM archaïque BCD <code>fbstp</code></li>
+<li><strong>23</strong> : Assembleur division par 10_000</li>
+</ul>
+<table class="data-table">
+<thead>
+<tr>
+<th>N°</th>
+<th>Méthode</th>
+<th>Intel Core i5 7400</th>
+<th>Intel Core i7 4790</th>
+<th>Intel Core i7 8700</th>
+<th>Intel Core i5 12400F</th>
+<th>AMD Ryzen 5 5600g</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>cpp std::to_string</code></td>
+<td>15.91</td>
+<td>16.83</td>
+<td>13.35</td>
+<td>6.25</td>
+<td>12.34</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>cpp divs (8bits)</code></td>
+<td>7.08</td>
+<td>7.53</td>
+<td>5.78</td>
+<td>3.88</td>
+<td>5.09</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>asm (unroll)</code></td>
+<td>6.87</td>
+<td>7.28</td>
+<td>5.73</td>
+<td>3.51</td>
+<td>4.44</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>asm SIMD (AVX)</code></td>
+<td>8.41</td>
+<td>9.22</td>
+<td>6.87</td>
+<td>5.17</td>
+<td>5.48</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>asm div_100</code></td>
+<td>6.02</td>
+<td>6.38</td>
+<td>4.86</td>
+<td>2.87</td>
+<td>3.66</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>asm BCD (fbstp)</code></td>
+<td>~ 100 s</td>
+<td>108.34</td>
+<td>36.89</td>
+<td>?</td>
+<td>35.83</td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>asm div_10000</code></td>
+<td>-</td>
+<td>20.56</td>
+<td>4.00</td>
+<td>-</td>
+<td>8.77</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 17.3-17.5 – Résultats comparatifs agglomérés (en secondes).</em></p>
+<p>La méthode <code>cpp divs</code> (version 4) bat la méthode naïve C++ de loin, et les astuces assembleurs à macro-base de modulo avec invariance (<code>div_10000</code> / <code>div_100</code>) finissent par emporter la médaille d'or toutes configurations confondues.</p>
+<hr />
+<h1 class="chapter">ANNEXES</h1>
+
+<h2 class="section">Annexe A : Conventions d'appel Linux (x86 / x64)</h2>
+
+<table class="data-table">
+<thead>
+<tr>
+<th></th>
+<th>Linux 32 bits</th>
+<th>Linux 64 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Registres modifiables par l'appelé</strong></td>
+<td>EAX, ECX, EDX, ST0-ST7, XMM0-XMM7</td>
+<td>RAX, RCX, RDX, RSI, RDI, R8-R11, ST0-ST7, XMM0-XMM15</td>
+</tr>
+<tr>
+<td><strong>Registres à préserver (sauvegarder)</strong></td>
+<td>EBX, EBP, ESI, EDI</td>
+<td>RBX, RBP, R12-R15</td>
+</tr>
+<tr>
+<td><strong>Paramètres entiers</strong></td>
+<td><code>[ebp+8]</code>, <code>[ebp+12]</code>, ... <em>(pile)</em></td>
+<td>RDI, RSI, RDX, RCX, R8, R9</td>
+</tr>
+<tr>
+<td><strong>Valeur de retour (entier)</strong></td>
+<td>EAX, EDX:EAX</td>
+<td>RAX, RDX:RAX</td>
+</tr>
+<tr>
+<td><strong>Valeur de retour (flottant)</strong></td>
+<td>ST0</td>
+<td>XMM0</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE A.1 – Conventions d'appel Linux.</em></p>
+<h2 class="section">Annexe B : Le Débogueur GDB</h2>
+
+<h3 class="subsection">B.1 Commandes principales du GDB</h3>
+
+<ul>
+<li><code>gdb ./program</code> : lancer l'analyseur</li>
+<li><code>run</code> : démarrer le logiciel process</li>
+<li><code>bt</code> (<em>backtrace</em>): retracer la pile des appels lors d'un crash (ex. Segfault)</li>
+<li><code>frame X</code> : inspecter le registre au moment de la ligne <em>X</em></li>
+<li><code>x/20d array</code> : afficher les 20 entiers de la zone mémoire pointée.</li>
+<li><code>print variable</code> : valeur interne</li>
+</ul>
+<p>L'outil <strong>Electric Fence</strong> (<code>libefence.so</code>) peut être <em>pre-loaded</em> afin de traquer l'indice précis d'un <em>Out of Bounds</em> de pointeurs de tableaux.
+<em>Erreur courante traitée</em> : une boucle récursive qui s'étouffe génère une <code>bt -1</code> dépassant 52.000 <code>frames</code> d'appels accumulés en RAM menant à l'écrasement de la stack.</p>
+<h2 class="section">Annexe C : Analyse de <code>bsr</code> vs <code>lzcnt</code></h2>
+
+<p>L'instruction <code>bsr</code> (Bit Scan Reverse) recherche le bit le plus significatif, tandis que <code>lzcnt</code> compte le nombre de 0 significatifs. Le processeur résout <code>31 - lzcnt(X) = bsr(X)</code>.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Méthode</th>
+<th>AMD Ryzen 5</th>
+<th>Intel Core i5 7400</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C builtin <code>__builtin_clz</code></td>
+<td>1.19 s</td>
+<td>1.15 s</td>
+</tr>
+<tr>
+<td>C <code>bsr</code> inline</td>
+<td>0.95 s</td>
+<td>0.31 s</td>
+</tr>
+<tr>
+<td>ASM <code>bsr</code></td>
+<td>0.95 s</td>
+<td>0.60 s</td>
+</tr>
+<tr>
+<td>ASM <code>lzcnt</code></td>
+<td>0.44 s</td>
+<td>0.62 s</td>
+</tr>
+<tr>
+<td>ASM AVX512 <code>vplzcntd</code></td>
+<td>N/A</td>
+<td>~0.00 s</td>
+</tr>
+</tbody>
+</table>
+<h2 class="section">Annexe D : Implantation optimisée de la fonction Signe</h2>
+
+<p>Pour la fonction signe ($&lt;0 \rightarrow -1$, $&gt;0 \rightarrow 1$, $=0 \rightarrow 0$) :</p>
+<p><strong>Solution SANS saut (cdq, neg, adc) :</strong></p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_009.asm" target="_blank">code/chapitre_17/code_009.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cdq</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si x &lt; 0, edx=-1. si x&gt;=0, edx=0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">neg</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; si eax!=0 alors CarryFlag=1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">adc</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax = CF + edx</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Solution avec 2 cmov :</strong></p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="../../code/chapitre_17/code_010.asm" target="_blank">code/chapitre_17/code_010.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #339933;">-</span><span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmovg</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; x &gt; 0 ==&gt; 1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmovl</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; x &lt; 0 ==&gt; -1</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">Annexe E : Code ASCII 0 à 127</h2>
+
+<ul>
+<li><strong>0 - 31</strong> : Signaux de contrôle (CR, LF, TAB, ESC).</li>
+<li><strong>32 (<code>0x20</code>)</strong> : Espace.</li>
+<li><strong>48 (<code>0x30</code>) à 57 (<code>0x39</code>)</strong> : Chiffres de '0' à '9'.</li>
+<li><strong>65 (<code>0x41</code>) à 90 (<code>0x5A</code>)</strong> : Lettres majuscules de 'A' à 'Z'.</li>
+<li><strong>97 (<code>0x61</code>) à 122 (<code>0x7A</code>)</strong> : Lettres minuscules de 'a' à 'z'.</li>
+</ul>
+<p><strong>Glossaire des Instructions ASM :</strong>
+<code>add</code> (Addition), <code>cmov</code> (Conditional Move), <code>cdq</code> (Sign Extension), <code>div</code> (Division), <code>je/jnz/jg</code> (Sauts), <code>lea</code> (Load Effective Address mathématique sans appel mémoire), <code>sar</code> (Shift Right Arithmétique).</p>
+<hr />
+<h2 class="section">Bibliographie (Extraits de l'original)</h2>
+
+<ol>
+<li>AGNER, Fog : Calling conventions for compilers (2018).</li>
+<li>AGNER, Fog : The microarchitecture of Intel, AMD and VIA CPUs (2018).</li>
+<li>CORMEN et al. : Introduction to Algorithms (MIT Press, 2009).</li>
+<li>INTEL : Software developer's manual vol. 1-4 (January 2019).</li>
+<li>STALLINGS, W. : Organisation et architecture de l'ordinateur (2003).</li>
+</ol>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>
