@@ -1,28 +1,12 @@
-switch_values_table: ,3,22
-switch_jumps_table: ,..@case_3,..@case_22
-5section
-6main:
-...
-xor ,ecx
-mov ,3
-10.for:
-cmp ,edx
-jge
-cmp [switch_values_table+ecx*4],eax
-jne
-jmp [switch_jumps_table+ecx*4]
-16.endif:
-inc
-jmp
-20..@case_1:
-...
-jmp
-23..@case_3:
-...
-jmp
-26..@case_22:
-...
-jmp
-29.default:
-...
-31.endswitch:
+; Listing 5.4.2 – Si Alors avec conjonction de conditions
+; eax = x, ebx = y, ecx = z
+.if:
+    cmp eax, 3    ; C1
+    jge .endif    ; si non(x < 3) alors aller en finsi
+    cmp ebx, 6    ; C2
+    jl  .endif    ; si non(y >= 6) alors aller en finsi
+    cmp eax, ecx  ; C3
+    jne .endif    ; si non (x == z) alors aller en finsi
+.then:
+    mov eax, ebx
+.endif:

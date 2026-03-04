@@ -1,6 +1,6 @@
-mov [x],1 ; bloc alors
-jmp ; pour ne pas exécuter le code du .else
-9.else:
-mov [x],2 ; bloc sinon
-11.endif:
-5.4.8
+mov edi, msg  ; adresse de la chaîne
+mov esi, edi  ; sauvegarde de l'adresse
+mov ecx, 10000 ; longueur maximale
+mov al, 0     ; fin de chaîne
+repnz scasb   ; tant que ...
+sub edi, esi  ; longueur dans edi

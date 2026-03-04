@@ -1,11 +1,14 @@
-mov ,1 ; initialisation : i = 1
-mov ,N
-4.pre_for:
-cmp ,edx ; test condition
-jg ; ne pas executer la boucle si i >= n
-8.for:
-add ,ecx ; corps : sum += i
-inc ; incrémentation : ++i
-cmp ,edx ; test de la condition
-jle ; retour au début de la boucle si vraie
-14.endfor:
+fonction_1:         ; définition de fonction_1
+    push ebp
+    mov  ebp, esp
+.if:                ; utilisation du label local .if
+    mov  esp, ebp
+    pop  ebp
+    ret
+
+fonction_2:         ; définition d'une autre fonction
+    push ebp
+    mov  ebp, esp
+    call fonction_1
+.if:                ; réutilisation du label local .if
+    ret

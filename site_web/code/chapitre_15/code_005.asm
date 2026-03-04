@@ -1,4 +1,6 @@
-mov [rbx+i],rax
-%assign i i + 8
-%endrep
-15.3.1.2
+xor rax, rax
+  %assign i 0
+  %rep 13
+      mov [rbx+i], rax
+      %assign i i + 8
+  %endrep

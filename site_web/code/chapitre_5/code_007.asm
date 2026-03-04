@@ -1,5 +1,4 @@
-mov ,1024
-xor ,edx ; mise à zéro de edx pour rester
-; en 32 bits
-mov ,3
-div
+mov ax, 0xFFFF
+mov dx, 0x2    ; dx:ax = 0x2FFFF
+mov bx, 0x0001
+mov cx, 0x4    ; cx:bx = 0x40001

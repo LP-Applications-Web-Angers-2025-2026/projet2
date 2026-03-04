@@ -1,1 +1,2 @@
-mov [esp],eax
+sub esp, 4
+mov [esp], eax

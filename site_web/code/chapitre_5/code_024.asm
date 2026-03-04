@@ -1,2 +1,4 @@
-mov ,ebx
-11.endif:
+.begin:
+    ...
+    dec ecx
+    jnz .begin  ; remplace : loop .begin

@@ -1,35 +1,42 @@
-push ; entrée dans la fonction
-mov ,esp
-mov ,ebp+20]
-test ,eax
-jz
-push ; sauvegarde des registres
-push ; qui seront modifiés mais
-push ; doivent être préservés
-; chargement des paramètres
-mov ,ebp+8]
-mov ,ebp+12]
-mov ,ebp+16]
-xor ,eax ; mutations = 0
-xor ,ecx ; i = 0
-19.for:
-cmp ,ebp+20]
-jge
-mov ,esi+ecx]
-and ,edi+ecx]
-jnz ; si dl != 0 alors aller en .endif
-mov ,esi+ecx]
-or ,edi+ecx]
-inc ; ++mutations
-28.endif:
-mov [ebx+ecx],dl ; z[i] = dl
-inc ; ++i
-jmp
-32.endfor:
-pop ; restauration des registres
-pop
-pop
-37.end:
-mov ,ebp ; sortie de fonction
-pop
-ret
+fitch_asm:
+    push ebp                        ; entrée dans la fonction
+    mov ebp, esp
+    mov eax, [ebp+20]
+    test eax, eax                   ; si size == 0
+    jz .end
+
+    push ebx                        ; sauvegarde des registres
+    push esi
+    push edi
+
+    ; chargement des paramètres
+    mov esi, [ebp+8]
+    mov edi, [ebp+12]
+    mov ebx, [ebp+16]
+    xor eax, eax                    ; mutations = 0
+    xor ecx, ecx                    ; i = 0
+
+.for:
+    cmp ecx, [ebp+20]
+    jge .endfor
+
+    mov dl, [esi+ecx]               ; dl = x[i]
+    and dl, [edi+ecx]               ; dl = x[i] & y[i]
+    jnz .endif                      ; si dl != 0 alors pas de mutation
+
+    mov dl, [esi+ecx]
+    or dl, [edi+ecx]                ; dl = x[i] | y[i]
+    inc eax                         ; ++mutations
+.endif:
+    mov [ebx+ecx], dl               ; z[i] = dl
+    inc ecx                         ; ++i
+    jmp .for
+
+.endfor:
+    pop edi                         ; restauration des registres
+    pop esi
+    pop ebx
+.end:
+    mov esp, ebp                    ; sortie de fonction
+    pop ebp
+    ret

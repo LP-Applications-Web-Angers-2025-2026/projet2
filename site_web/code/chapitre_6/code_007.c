@@ -1,2 +1,2 @@
-int (int ,int )__attribute__((fastcall));
-7}
+// en C
+extern int ma_fonction(int a, int b) __attribute__((fastcall));

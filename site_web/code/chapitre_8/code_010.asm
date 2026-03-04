@@ -1,11 +1,4 @@
-movss ,esp+36]
-movss ,esp+44]
-insertps ,esp+32],0x10; xmm1 = [ -, -, a, b]
-insertps ,esp+40],0x10; xmm0 = [ -, -, c, d]
-movlhps ,xmm1 ; xmm0 = [ a, b, c, d]
-haddps ,xmm0
-haddps ,xmm0
-movss [esp+12],xmm0
-fld [esp+12]
-add ,28
-ret
+vhaddps ymm0, ymm0, ymm0        ; 1ère addition horizontale (intra lanes)
+vhaddps ymm0, ymm0, ymm0        ; 2ème addition horizontale (intra lanes)
+vextractf128 xmm1, ymm0, 1      ; extrait les 128 bits du haut dans xmm1
+vaddps xmm0, xmm1, xmm0         ; additionne le haut et le bas

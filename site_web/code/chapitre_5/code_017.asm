@@ -1,6 +1,2 @@
-cmp ,0qui prend plus de place en mémoire puisqu’on code l’opérande 0.
-test ,eax ; si eax == 0 alors aller en .end
-jz ;
-test ,1 ; si le bit de poids faible n'est pas
-jz ; à 1, alors il s'agit d'un nombre pair
-5.3.6
+and eax, 0x07       ; sélectionne les 3 bits de poids faible
+or  eax, 0x80000000 ; fixe le bit de poids fort à 1

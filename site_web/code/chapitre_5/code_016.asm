@@ -1,1 +1,1 @@
-cmp eax, ebxCFSFZF
+lea eax, [eax+eax*4]

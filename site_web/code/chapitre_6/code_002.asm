@@ -1,3 +1,2 @@
-mov ,esp]
-add ,4
-6.2.1.3
+mov eax, [esp]
+add esp, 4

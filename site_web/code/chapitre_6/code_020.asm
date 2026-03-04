@@ -1,0 +1,1 @@
+defsp main, rdi, rsi, 100, rbx

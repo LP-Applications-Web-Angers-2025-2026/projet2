@@ -1,4 +1,1 @@
-mov ,0xFFFF
-mov ,0x2 ; dx:ax = 0x2FFFF
-mov ,0x0001
-mov ,0x4 ; cx:bx = 0x40001
+movzx eax, byte [edi]

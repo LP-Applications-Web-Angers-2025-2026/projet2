@@ -1,13 +1,15 @@
-; dernières itérations
-; ecx = (size / 4) * 4
-; recharger edx avec size
-mov ,ebp+20]
-20.for:
-cmp ,edx
-jge
-fpu_body
-inc
-jmp
-26.endfor:
-...
-ret
+; [...]
+.for_u4:
+    cmp ecx, edx
+    jge .endfor_u4
+
+    %assign k 0
+    %rep 4
+        fpu_body k
+        %assign k k+1
+    %endrep
+
+    add ecx, 4
+    jmp .for_u4
+.endfor_u4:
+    ; [...]

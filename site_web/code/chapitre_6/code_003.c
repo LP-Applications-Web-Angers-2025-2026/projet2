@@ -1,7 +1,9 @@
-int ;
-r=a+b;
-return ;
-5}
-7int ()
-sum(4,5);
-9}
+int sum(int a, int b) {
+    int r;
+    r = a + b;
+    return r;
+}
+
+int main() {
+    sum(4, 5);
+}

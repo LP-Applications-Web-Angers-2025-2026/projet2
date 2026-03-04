@@ -1,0 +1,2 @@
+fstsw ax
+sahf

@@ -1,6 +1,2 @@
-mov ,esi]
-mov [edi],eax
-add ,4
-add ,4
-dec
-jnz
+xor al, al   ; mise à zéro de al
+xor ecx, ecx ; mise à zéro de ecx

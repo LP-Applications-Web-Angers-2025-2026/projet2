@@ -1,16 +1,17 @@
-for(u32 =0;i<size;i)
-if(s[i] 'a')
-++v[0];
-}else (s[i] 'e')
-++v[1];
-}else (s[i] 'i')
-++v[2];
-}else (s[i] 'o')
-++v[3];
-}else (s[i] 'u')
-++v[4];
-}else (s[i] 'y')
-++v[5];
+void count_vowels_if(u8* s, u32 size, u32 v[6]) {
+    for (u32 i = 0; i < size; i++) {
+        if (s[i] == 'a') {
+            ++v[0];
+        } else if (s[i] == 'e') {
+            ++v[1];
+        } else if (s[i] == 'i') {
+            ++v[2];
+        } else if (s[i] == 'o') {
+            ++v[3];
+        } else if (s[i] == 'u') {
+            ++v[4];
+        } else if (s[i] == 'y') {
+            ++v[5];
+        }
+    }
 }
-}
-17}
