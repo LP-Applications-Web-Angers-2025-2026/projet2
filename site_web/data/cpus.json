@@ -1,0 +1,402 @@
+[
+    {
+        "name": "Intel-Pentium-D-3_00GHz",
+        "brand": "Intel",
+        "model": "Pentium-D",
+        "submodel": "925",
+        "year": 2006,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core2-Quad-Q6600-2_40GHz",
+        "brand": "Intel",
+        "model": "Core2",
+        "submodel": "Q6600",
+        "year": 2007,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core2-Duo-P9500-2_53GHz",
+        "brand": "Intel",
+        "model": "Core2-Duo",
+        "submodel": "P9500",
+        "year": 2008,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core2-Quad-Q9300-2_50GHz",
+        "brand": "Intel",
+        "model": "Core2",
+        "submodel": "Q9300",
+        "year": 2008,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Pentium-Dual-Core-E5300-2_60GHz",
+        "brand": "Intel",
+        "model": "Pentium",
+        "submodel": "E5300",
+        "year": 2008,
+        "short_name": "E5300",
+        "sources": [
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64"
+        ]
+    },
+    {
+        "name": "Intel-Core-i7-860-2_80GHz",
+        "brand": "Intel",
+        "model": "i7",
+        "submodel": "860",
+        "year": 2009,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "AMD-Phenom-II-X6-1090T-Processor",
+        "brand": "AMD",
+        "model": "X6",
+        "submodel": "1090T",
+        "year": 2010,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i5-3570K-3_40GHz",
+        "brand": "Intel",
+        "model": "i5",
+        "submodel": "3570K",
+        "year": 2012,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i7-3630QM-2_40GHz",
+        "brand": "Intel",
+        "model": "i7",
+        "submodel": "3630QM",
+        "year": 2012,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i3-2375M-1_50GHz",
+        "brand": "Intel",
+        "model": "i3",
+        "submodel": "2375M",
+        "year": 2013,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i7-4900MQ-2_80GHz",
+        "brand": "Intel",
+        "model": "i7",
+        "submodel": "4900MQ",
+        "year": 2013,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i7-4790-3_60GHz",
+        "brand": "Intel",
+        "model": "i7",
+        "submodel": "4790",
+        "year": 2014,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Celeron-N3050-1_60GHz",
+        "brand": "Intel",
+        "model": "Celeron",
+        "submodel": "N3050",
+        "year": 2015,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i3-6100-3_70GHz",
+        "brand": "Intel",
+        "model": "i3",
+        "submodel": "6100",
+        "year": 2015,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Celeron-N3060-1_60GHz",
+        "brand": "Intel",
+        "model": "Celeron",
+        "submodel": "N3060",
+        "year": 2016,
+        "short_name": "N3060",
+        "sources": [
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64"
+        ]
+    },
+    {
+        "name": "AMD-Ryzen-7-1700X-Eight-Core-Processor",
+        "brand": "AMD",
+        "model": "Ryzen",
+        "submodel": "1700X",
+        "year": 2017,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i5-7400-3_00GHz",
+        "brand": "Intel",
+        "model": "i5",
+        "submodel": "7400",
+        "year": 2017,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i5-7500-3_40GHz",
+        "brand": "Intel",
+        "model": "i5",
+        "submodel": "7500",
+        "year": 2017,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Core-i7-8700-3_20GHz",
+        "brand": "Intel",
+        "model": "i7",
+        "submodel": "8700",
+        "year": 2017,
+        "short_name": null,
+        "sources": [
+            "asm_cmpack32",
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "asm_popcnt_32",
+            "asm_popcnt_64",
+            "asm_replcar_64",
+            "asm_saxpy_32",
+            "asm_vecms32",
+            "resources"
+        ]
+    },
+    {
+        "name": "AMD-Athlon-200GE-with-Radeon-Vega-Graphics",
+        "brand": "AMD",
+        "model": "Ahtlon",
+        "submodel": "200GE",
+        "year": 2018,
+        "short_name": "Ahtlon 200GE",
+        "sources": [
+            "asm_matprod_32",
+            "asm_maxpars_32"
+        ]
+    },
+    {
+        "name": "AMD-Ryzen-5-3600-6-Core-Processor",
+        "brand": "AMD",
+        "model": "Ryzen",
+        "submodel": "3600",
+        "year": 2019,
+        "short_name": "Ryzen 3600",
+        "sources": [
+            "asm_matprod_32",
+            "asm_maxpars_32",
+            "asm_maxpars_64",
+            "resources"
+        ]
+    },
+    {
+        "name": "Intel-Xeon-Silver-4208-2_10GHz",
+        "brand": "Intel",
+        "model": "Xeon",
+        "submodel": "4208",
+        "year": 2019,
+        "short_name": null,
+        "sources": [
+            "resources"
+        ]
+    }
+]
