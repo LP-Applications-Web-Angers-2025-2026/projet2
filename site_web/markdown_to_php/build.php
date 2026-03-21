@@ -64,7 +64,9 @@ function injectChartAfterTable(string $htmlContent, int $chapNum): string
     // On repère le </table></div> qui correspond à notre tableau
     foreach ($map as $tableNum => $category) {
         $pattern = sprintf(
-            '/(<caption>TABLE%d\.%d\s*[–—\-][^<]*?<\/caption>\s*<\/table>\s*<\/div>)/us',
+            '/(<caption>TABLE\s*%d\.%d\s*[–—\-][^<]*?<\/caption>\s*<\/table>\s*<\/div>|<p><em>TABLE\s*%d\.%d\s*[–—\-][^<]*?<\/em><\/p>)/uis',
+            $chapNum,
+            $tableNum,
             $chapNum,
             $tableNum
         );
@@ -87,16 +89,20 @@ function injectChartAfterTable(string $htmlContent, int $chapNum): string
 <script>
   (function(){
     var id = '{$chartId}';
-    var data = {$jsonData};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
-        window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
+    function loadAndDraw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        fetch('data/api_benchmark.php?chapter={$chapNum}&arch={$category}')
+            .then(res => res.json())
+            .then(data => {
+                window.createPerformanceChart(id, data);
+            })
+            .catch(err => console.error("Erreur Highcharts SQLite:", err));
     }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
+    else { loadAndDraw(); }
   })();
 </script>
 HTML;

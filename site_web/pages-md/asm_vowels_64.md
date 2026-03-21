@@ -97,12 +97,14 @@ La traduction de ces méthodes, puis leur dépassement mathématique via les ins
 </div>
 
 <script type="module">
-    import { createPerformanceChart } from "./data/asm_vowels/graph.js";
-    import data_ancien from "./data/asm_vowels/ancien/data.json" with { type: "json" };
-    import data_moderne from "./data/asm_vowels/moderne/data.json" with { type: "json" };
-    import data_recent from "./data/asm_vowels/recent/data.json" with { type: "json" };
-
-    createPerformanceChart('#graph_ancien', data_ancien);
-    createPerformanceChart('#graph_moderne', data_moderne);
-    createPerformanceChart('#graph_recent', data_recent);
+import { createPerformanceChart } from "./data/asm_vowels/graph.js";
+Promise.all([
+fetch('data/api_benchmark.php?bench=asm_vowels_64&arch=ancien').then(res => res.json()),
+fetch('data/api_benchmark.php?bench=asm_vowels_64&arch=moderne').then(res => res.json()),
+fetch('data/api_benchmark.php?bench=asm_vowels_64&arch=recent').then(res => res.json())
+]).then(([data_ancien, data_moderne, data_recent]) => {
+createPerformanceChart('graph_ancien', data_ancien);
+createPerformanceChart('graph_moderne', data_moderne);
+createPerformanceChart('graph_recent', data_recent);
+}).catch(err => console.error("Erreur de récupération SQLite:", err));
 </script>

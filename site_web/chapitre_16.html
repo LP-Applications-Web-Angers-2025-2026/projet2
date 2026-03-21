@@ -745,6 +745,28 @@ comporte 34 implantations différentes.</p>
 </tbody>
 </table>
 <p><em>TABLE 16.5 – Résultats comparatifs (Architectures &lt; 2019) (500 M itérations).</em></p>
+<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+<script src="data/graph.js"></script>
+<div class="chart-container" id="chart-ch16-moderne-14" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-ch16-moderne-14';
+    function loadAndDraw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        fetch('data/api_benchmark.php?chapter=16&arch=moderne')
+            .then(res => res.json())
+            .then(data => {
+                window.createPerformanceChart(id, data);
+            })
+            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
+    else { loadAndDraw(); }
+  })();
+</script>
 <p>L'AMD Ryzen 1700X s'étouffe sur l'ASM basique (11.47 sec) mais reprend la couronne avec un unroll (5.14 sec). La puissance totale s'obtient avec l'ASM AVX.</p>
 <table class="data-table">
 <thead>
@@ -795,6 +817,26 @@ comporte 34 implantations différentes.</p>
 </tbody>
 </table>
 <p><em>TABLE 16.6 – Résultats comparatifs (Architectures &gt; 2020) (500 M itérations).</em></p>
+<div class="chart-container" id="chart-ch16-recent-15" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-ch16-recent-15';
+    function loadAndDraw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        fetch('data/api_benchmark.php?chapter=16&arch=recent')
+            .then(res => res.json())
+            .then(data => {
+                window.createPerformanceChart(id, data);
+            })
+            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
+    else { loadAndDraw(); }
+  })();
+</script>
 <p>La méthode <code>gcc</code> (1) exécute 45 milliards d'instructions. L'ASM d'origine (6) exécute 352 milliards d'instructions (<code>call/ret</code> infernal). C'est pourquoi la méthode 6 coule. La méthode <code>AVX</code> natif (33) ne met que <strong>34 milliards d'instructions</strong> !</p>
 <h3 class="subsection">16.9.3 Stabilité Matérielle (Bruit Quantique)</h3>
 

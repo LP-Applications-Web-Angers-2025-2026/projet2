@@ -542,6 +542,28 @@ d'arrondi matériel. Cela fusionne <code>fmul</code> et <code>fadd</code>. L'ins
 </tbody>
 </table>
 <p><em>TABLE 13.3 – Architectures anciennes (50 000 itérations de SAXPY sur 524 287)</em></p>
+<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+<script src="data/graph.js"></script>
+<div class="chart-container" id="chart-ch13-ancien-7" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-ch13-ancien-7';
+    function loadAndDraw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        fetch('data/api_benchmark.php?chapter=13&arch=ancien')
+            .then(res => res.json())
+            .then(data => {
+                window.createPerformanceChart(id, data);
+            })
+            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
+    else { loadAndDraw(); }
+  })();
+</script>
 <p>Sur ces mêmes processeurs (Intel i5 3570k
 et i7 4790) passer à l'AVX ou au FMA n'apporte que très peu de choses sur des matrices aussi denses par rapport au SSE intrinsics. Le gain SSE est flagrant.</p>
 <h3 class="subsection">13.8.3 Architectures Modernes (2015 à 2019)</h3>
@@ -653,6 +675,26 @@ et i7 4790) passer à l'AVX ou au FMA n'apporte que très peu de choses sur des 
 </tbody>
 </table>
 <p><em>TABLE 13.4 – Architectures modernes : temps d'exécution (50 000 itérations de SAXPY)</em></p>
+<div class="chart-container" id="chart-ch13-moderne-8" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-ch13-moderne-8';
+    function loadAndDraw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        fetch('data/api_benchmark.php?chapter=13&arch=moderne')
+            .then(res => res.json())
+            .then(data => {
+                window.createPerformanceChart(id, data);
+            })
+            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
+    else { loadAndDraw(); }
+  })();
+</script>
 <p>Pour les architectures modernes, l'utilisation de l'AVX par
 rapport au SSE apporte un gain très substantiel. L'utilisation des instructions FMA
 n'apporte toujours que peu de choses mais l'AVX se prouve extrêmement efficace.
@@ -722,6 +764,26 @@ On note que les processeurs AMD ont une FPU non vectorielle archaïque peu perfo
 </tbody>
 </table>
 <p><em>TABLE 13.5 – Architectures récentes : temps d'exécution (SAXPY sur Ryzen série 9 / Intel Gen 12+)</em></p>
+<div class="chart-container" id="chart-ch13-recent-9" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-ch13-recent-9';
+    function loadAndDraw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        fetch('data/api_benchmark.php?chapter=13&arch=recent')
+            .then(res => res.json())
+            .then(data => {
+                window.createPerformanceChart(id, data);
+            })
+            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
+    else { loadAndDraw(); }
+  })();
+</script>
 <p>Pour les architectures récentes (Table 13.5), la version FMA3 est la plus
 efficace sans contestation mais elle gagne très peu contre de l'AVX2 intrinsics bien instancié. L'AMD Ryzen 5 9600X exécute les 50 000 appels ultra-massifs en moins d'1.54 secondes en AVX2, un temps astronomique.</p>
 <p><em>Note sur l'AMD Ryzen 5 9600X</em> : Sans le flag de compilation <code>-ffast-math</code>, il tombe à 97 secondes à cause du respect strict de la norme flottante IEEE754 lors des arrrondissement GCC.  Le compilateur va casser le FMA pour obéir à <code>-std=c++11</code>.</p>
