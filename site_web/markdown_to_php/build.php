@@ -182,36 +182,6 @@ HTML;
     return $html;
 }
 
-/**
- * Lit le JSON et génère un tableau HTML propre
- */
-function buildHtmlTableFromJson(string $jsonPath, string $legend): string {
-    if (!file_exists($jsonPath)) return "<p><em>Données du tableau introuvables.</em></p> {$legend}";
-    $data = json_decode(file_get_contents($jsonPath), true);
-    if (!isset($data['CPUs']) || !isset($data['Methods'])) return "<p><em>Format JSON invalide.</em></p> {$legend}";
-
-    $html = "<div class=\"center\">\n<table class=\"data-table\">\n";
-    $html .= "  <thead>\n    <tr>\n      <th>Méthode</th>\n";
-    foreach ($data['CPUs'] as $idx => $cpu) {
-        $year = isset($data['Years'][$idx]) ? "<br><small>{$data['Years'][$idx]}</small>" : "";
-        $html .= "      <th>{$cpu}{$year}</th>\n";
-    }
-    $html .= "    </tr>\n  </thead>\n  <tbody>\n";
-
-    foreach ($data['Methods'] as $m) {
-        $html .= "    <tr>\n      <td><strong>{$m['name']}</strong></td>\n";
-        foreach ($m['values'] as $val) {
-            $display = ($val === null) ? "-" : number_format((float)$val, 2, '.', '');
-            $html .= "      <td>{$display}</td>\n";
-        }
-        $html .= "    </tr>\n";
-    }
-    $html .= "  </tbody>\n";
-    // On ajoute la légende issue du Markdown comme caption
-    $html .= "  <caption>{$legend}</caption>\n";
-    $html .= "</table>\n</div>\n";
-    return $html;
-}
 
 $sourceDir  = dirname(__DIR__) . '/pages-md';
 $outputDir  = dirname(__DIR__);

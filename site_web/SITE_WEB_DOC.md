@@ -1,131 +1,91 @@
-# Documentation du Framework Web PHP (`ez_web.php`)
+# Documentation du Site Web et du Framework PHP
 
-Ce document décrit comment utiliser les outils fournis dans `ez_web.php` pour générer les pages du site web de ce projet. Ce "micro-framework" facilite la création de pages au design cohérent avec support pour l'affichage de code et de formules mathématiques.
+Ce document explique le fonctionnement technique du site, la logique de génération des pages à partir de fichiers Markdown, et l'utilisation du framework `ez_web.php`.
 
-## 1. Structure de Base d'une Page
+## 1. Vue d'ensemble de la Génération
 
-Chaque page PHP doit suivre ce squelette de base :
+Le site est conçu pour être géré via des fichiers **Markdown** (`.md`) qui sont ensuite convertis en pages **HTML/PHP** via un script de build.
 
+- **Source** : Les fichiers de contenu se trouvent dans `site_web/pages-md/`.
+- **Build** : Le script `site_web/markdown_to_php/build.php` parcourt ces fichiers, transforme le Markdown en HTML (via Parsedown), injecte les composants dynamiques, et applique un layout commun.
+- **Sortie** : Les pages générées sont placées à la racine du dossier `site_web/`.
+
+---
+
+## 2. Le Système de Benchmark (Nouvelle Logique)
+
+La nouvelle logique de benchmark automatise l'affichage des résultats de performance. Elle remplace les tableaux manuels et les scripts JavaScript complexes par un simple balisage.
+
+### 2.1 Le Balisage `[BENCHMARK:nom]`
+Pour insérer un benchmark, il suffit d'ajouter la balise suivante dans un fichier Markdown :
+```markdown
+[BENCHMARK:nom_du_benchmark]
+```
+Exemple : `[BENCHMARK:asm_vowels_64]`
+
+### 2.2 Fonctionnement Interne
+Lors du build, la balise est détectée et traitée par la fonction `generateBenchmarkComponent` :
+
+1.  **Source de Vérité (SQLite)** : Les données sont extraites de `site_web/data/benchmarks.db`. La vue `v_resultats` est utilisée pour filtrer les données par chapitre (le "nom" dans la balise).
+2.  **Catégorisation par Architecture** : Le système sépare automatiquement les résultats en trois catégories basées sur l'année du CPU :
+    -   **Ancien** : < 2015
+    -   **Moderne** : 2015 - 2019
+    -   **Récent** : >= 2020
+3.  **Génération HTML** : Pour chaque catégorie trouvée, le système génère :
+    -   Un **Tableau HTML** (`.data-table`) avec les moyennes de temps/performance par méthode et par CPU.
+    -   Un **Graphique Highcharts** interactif inséré juste après le tableau.
+4.  **Injection de Scripts** : Si (et seulement si) un benchmark est présent sur la page, `build.php` injecte automatiquement les bibliothèques `highcharts.js` et `graph.js`.
+
+---
+
+## 3. Utilisation du Framework `ez_web.php`
+
+Bien que le build Markdown soit privilégié, le site repose sur `ez_web.php` qui fournit les fonctions de structure et de mise en forme.
+
+### 3.1 Structure d'une Page
+Toute page générée suit cette structure :
 ```php
 <?php
-// Inclusion des librairies nécessaires
 require_once('ez_web.php');
-// Inclusion de GeSHi pour la coloration syntaxique (optionnel si pas de code à afficher)
-require_once('php-geshi/geshi.php');
-
-// Début du document HTML (Header, navigation, etc.)
-document_begin();
+document_begin(); // <head>, <nav>, début <body>
 ?>
-
 <div class="row">
-    <!-- Votre contenu HTML/PHP commence ici -->
     <section class="cours">
-        
-        <?php chapter("Titre du Chapitre", 1); ?>
-        
-        <p>Votre texte ici...</p>
-
+        <!-- Contenu -->
     </section>
 </div>
-
-<?php
-// Fin du document HTML (Footer, fermeture des balises)
-document_end();
-?>
+<?php document_end(); // Pied de page, scripts, fin <body> ?>
 ```
 
-### Fonctions Globales
-*   **`document_begin($class="", $includes="")`** : Génère le début du HTML (`<head>`, `<nav>`, ouverture de `<body>` et `<main>`).
-    *   `$class` : Classe CSS optionnelle à ajouter à la balise `<main>`.
-    *   `$includes` : Code HTML/JS/CSS supplémentaire à ajouter dans le `<head>`.
-*   **`document_end($code="")`** : Génère le pied de page et ferme le document.
-    *   `$code` : Code HTML/JS supplémentaire à placer juste avant la fermeture de `</body>`.
+### 3.2 Fonctions de Contenu
+- **`chapter($titre, $num)`** : Définit un titre H1 de chapitre.
+- **`section($titre)`** : Définit une section numérotée (ex: 1.1).
+- **`subsection($titre)`** : Définit une sous-section (ex: 1.1.1).
+- **`chapter_aim($obj, $keyw, $pre, $know)`** : Affiche le bloc d'objectifs en début de chapitre.
+- **`begin_exercise()` / `end_exercise()`** : Encadre une zone d'exercice.
+- **`do_math("formule")`** : Affiche une formule via jqMath.
 
 ---
 
-## 2. Hiérarchie et Titres
+## 4. Affichage du Code (GeSHi)
 
-Le framework gère automatiquement la numérotation des chapitres et sections.
+Le framework utilise **GeSHi** pour la coloration syntaxique. Dans le Markdown, utilisez les blocs de code standards :
 
-*   **`chapter($title, $num=1)`** : Titre de niveau 1 (H1). Réinitialise les compteurs de section.
-    *   Si `$num` vaut 0, le numéro de chapitre n'est pas affiché (ex: pour l'intro).
-*   **`chapter_aim($obj, $keyw, $pre, $know, $links=null)`** : Affiche un bloc structuré décrivant les objectifs du chapitre.
-    *   `$obj` : Objectifs.
-    *   `$keyw` : Mots-clés.
-    *   `$pre` : Prérequis.
-    *   `$know` : Connaissances visées (Finalité).
-    *   `$links` : Tableau associatif `["Titre" => "URL"]` pour des liens externes.
-*   **`section($title, $num=true)`** : Titre de niveau 1 (H1) mais hiérarchiquement sous le chapitre (ex: 1.1).
-*   **`empty_section($title)`** : Section sans numérotation.
-*   **`subsection($title)`** : Sous-section (H2), numérotée (ex: 1.1.2).
-*   **`subsubsection($title)`** : Sous-sous-section (H3), numérotée avec des lettres (ex: 1.1.2.a).
-*   **`subsubsubsection($title)`** : Niveau 4 (H4), numérotée avec des lettres grecques ($\alpha, \beta...$).
-
----
-
-## 3. Mise en Forme et Contenu
-
-### Blocs d'Exercice
-Pour encadrer des exercices :
-
-```php
-<?php begin_exercise(); ?>
-    <p>Énoncé de l'exercice...</p>
-<?php end_exercise(); ?>
-```
-Vous pouvez passer un ID spécifique à `begin_exercise("monId")`.
-
-### Définitions
-```php
-<?php contents_def_begin("Nom du concept"); ?>
-    Texte de la définition...
-<?php contents_def_end(); ?>
-```
-
-### Tableaux
-Deux fonctions facilitent la création de tableaux structurés à partir de chaînes de caractères brutes.
-
-1.  **`simple_table_column_header($title, $data, $alignment)`**
-    *   `$data` : Chaîne où les lignes sont séparées par `$` et les cellules par `|`. La première ligne est l'en-tête.
-    *   `$alignment` : (Non utilisé dans l'implémentation actuelle, par défaut centré).
-
-2.  **`simple_table_row_header($title, $data, $alignment, $attributes=null)`**
-    *   Tableau plus complexe avec gestion des styles de lignes (pair/impair ou spécifique).
-    *   `$alignment` : Chaîne indiquant l'alignement par colonne (ex: "LCR" pour Left, Center, Right).
-
-### Mathématiques
-Affiche une formule mathématique formatée (utilise jqMath).
-
-```php
-<?php do_math("a^2 + b^2 = c^2"); ?>
-```
-
----
-
-## 4. Affichage de Code (GeSHi)
-
-Le framework intègre GeSHi pour la coloration syntaxique.
-
-### À partir d'un fichier
-```php
-<?php do_geshi("chemin/vers/fichier.cpp", "cpp", "10-15"); ?>
-```
-*   `$highlight` (3ème arg) : Lignes à surligner (tableau ou chaîne "10-15").
-
-### Code "Inline" (dans le fichier PHP)
-```php
-<?php
-$monCode = <<<CODE
+````markdown
+```cpp
 #include <iostream>
 int main() { return 0; }
-CODE;
-
-do_geshi_inline($monCode, "cpp"); 
-?>
 ```
+````
+
+Le build exporte automatiquement chaque bloc de code dans un fichier physique (ex: `site_web/code/chapitre_15/code_001.cpp`) et crée un bloc dépliable (`<details>`) avec un lien de téléchargement.
 
 ---
 
-## 5. UtILitaires
+## 5. Maintenance et Ajout de Données
 
-*   **`newlines($nbr)`** : Affiche `$nbr` balises `<br />`.
+Pour ajouter un nouveau benchmark :
+1.  Insérez les résultats dans la base `benchmarks.db` (tables `test_results`, `cpus`, `benchmarks`).
+2.  Assurez-vous que le champ `nom_benchmark` (ou chapitre dans la vue) correspond bien à l'identifiant que vous utiliserez.
+3.  Ajoutez `[BENCHMARK:votre_nom]` dans le fichier Markdown correspondant.
+4.  Lancez le build : `php site_web/markdown_to_php/build.php`.
