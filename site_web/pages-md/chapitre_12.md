@@ -336,54 +336,7 @@ On accumulera avec `vpsadbw` (*Compute Sum of Absolute Differences*) qui ramène
 Nous avons testé 30_000 appels sur le même vecteur de 262_207 octets.
 L'étude est poussée sur 15 implémentations (référence C, optimisation manuelle, Shift arithmétique, POPCNT ASM natif, vectorisation SSE, et Intrinsics compilateur).
 
-### 12.6.1 Architectures Anciennes (Avant 2015)
-
-| Méthode | Pentium D 925 | Core 2 Q9300 | Core i7 860 | AMD Phenom X6 | Core i5 3570K | Core i7 4790 |
-|---|---|---|---|---|---|---|
-| 1 u8_reference | 150.22 | 170.20 | 110.19 | 80.21 | 72.58 | 54.99 |
-| 2 u8_reference_opt | 111.73 | 161.63 | 102.39 | 64.68 | 65.12 | 47.38 |
-| 3 u32_reference | 126.41 | 105.45 | 60.91 | 43.46 | 53.34 | 39.42 |
-| 4 u32_reference_opt | 73.51 | 88.36 | 60.81 | 43.31 | 48.68 | 33.40 |
-| 8 u32_shift_v2 | 7.76 | 3.13 | 1.82 | 1.86 | 1.06 | 0.49 |
-| 10 u32_asm | - | - | 1.27 | 1.65 | 1.16 | 0.71 |
-| 11 u32_asm_ur4 | - | - | 0.89 | 0.88 | 0.49 | - |
-| 15 u8_intrinsics | 4.55 | 0.92 | 1.35 | 0.76 | 0.61 | - |
-| Ratio d'Amélioration Max | **× 33** | **× 75** | **× 123** | **× 95** | **× 95** | **× 112** |
-
-*TABLE 12.2 – Architectures anciennes : temps d'exécution (30_000 itérations, 262 Ko)*
-
-Sur les processeurs ne disposant pas de l'instruction `popcnt` (Pentium D), l'amélioration maximale est en combinant l'Intrinsics et GCC qui déroule le code.
-
-### 12.6.2 Architectures Modernes (2015 à 2019)
-
-Traiter les données sous format 32 bits est donc bénéfique. La méthode 8 avec décalage de bits est très souvent la plus performante, talonnée par la méthode 11 (`popcnt` + _loop unroll 4_). Le passage de 32 bits à 64 bits de registre CPU natif avec l'AMD Ryzen 3600 a ramené le temps d'exécution global de 0,31 s à 0,15 s.
-
-| Méthode | Core i3 6100 | Ryzen 7 1700X | Core i5 7400 | Core i7 8700 | Ryzen 5 3600 | Xeon 4208 |
-|---|---|---|---|---|---|---|
-| 1 u8_reference | 57.99 | 59.13 | 64.81 | 47.28 | 54.96 | 71.73 |
-| 4 u32_reference_opt | 32.65 | 28.77 | 35.83 | 26.47 | 23.67 | 46.18 |
-| 8 u32_shift_v2 | 0.50 | 0.80 | 0.54 | - | - | - |
-| 9 u8_asm | 6.39 | 3.24 | 6.83 | 5.20 | 3.06 | 7.53 |
-| 10 u32_asm | 1.07 | 0.68 | 1.14 | 0.86 | 0.62 | 0.91 |
-| 11 u32_asm_ur4 | 0.54 | 0.51 | 0.59 | 0.45 | 0.47 | 0.74 |
-| 15 u8_intrinsics | 0.64 | 0.64 | 0.68 | 0.52 | 0.56 | 0.76 |
-| Ratio 1 / 11 | **× 107** | **× 115** | **× 109** | **N/A** | **× 116** | **× 96** |
-
-*TABLE 12.3 – Architectures modernes : temps d'exécution (30_000 itérations, 262 Ko)*
-
-### 12.6.3 Architectures Récentes (2020 et après)
-
-| Méthode | Core i7 10850H | Ryzen 5 5600G | Core i5 12400F | Ryzen 5 9600X |
-|---|---|---|---|---|
-| 1 u8_reference | 43.82 | 46.19 | 51.75 | 21.68 |
-| 4 u32_reference_opt | 24.50 | 21.25 | 28.58 | 17.80 |
-| 7 u32_shift_v1 | 0.48 | 0.37 | 0.31 | 0.15 |
-| 11 u32_asm_ur4 | 0.41 | 0.44 | 0.44 | 0.36 |
-| 14 u32_avx2_v1 | 0.65 | 0.73 | 0.69 | 0.36 |
-| 15 u8_intrinsics | 0.49 | 0.47 | 0.44 | 0.32 |
-| Ratio Max Gain | **× 106** | **× 104** | **× 117** | **× 144** |
-
-*TABLE 12.4 – Architectures actuelles : temps d'exécution (30_000 itérations, 262 Ko)*
+[BENCHMARK:asm_popcnt_64]
 
 ## 12.7 Bilan
 

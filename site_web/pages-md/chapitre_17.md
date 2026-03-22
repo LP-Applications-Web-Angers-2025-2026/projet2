@@ -51,9 +51,9 @@ où $[0, k-1]$ représente l'intervalle de valeurs entre 0 et $k-1$. De ces déf
 > *Démonstration.* Si par définition les $c_i$ représentent le nombre d'occurrences de chaque chiffre, leur somme doit donc être égale à $k$. Étant donné que par définition $c_i = d_i$, on en déduit également que la somme des $d_i$ est égale à $k$.
 
 > **Théorème 17.1.4.** Un nombre auto-descriptif se termine par un 0.
-> *Démonstration.* Appelons $S(k) = \sum_{i=0}^{k-1} d_i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d_{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d_{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d_{k-1} > 0$, et on en déduit que $S(k-1) \lt k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d_1$ à $d_{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d_{k-1}$, on a donc $S(k) - S(k-1) = d_{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.
+> *Démonstration.* Appelons $S(k) = \sum_{i=0}^{k-1} d_i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d_{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d_{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d_{k-1} > 0$, et on en déduit que $S(k-1) < k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d_1$ à $d_{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d_{k-1}$, on a donc $S(k) - S(k-1) = d_{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.
 
-> **Théorème 17.1.5.** Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i \lt k, \forall i \in [0, k-1]$
+> **Théorème 17.1.5.** Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i < k, \forall i \in [0, k-1]$
 > *Démonstration.* Si $x$ possède $k$ chiffres alors $d_0$ à $d_{k-1}$ sont définis. Si $d_i \geq k$ cela implique que $c_i \geq k$ ce qui est en contradiction avec la définition du nombre.
 
 ## 17.2 Fonction de référence (`std::string`)
@@ -98,11 +98,11 @@ bool ad_ref(u32 x) {
     return true;
 }
 ```
+
 > *Listing 17.2.1 – Nombre auto-descriptif, fonction de référence*
 
 > **Fonction de référence**
 > Le temps d'exécution sur AMD Ryzen 5 5600g est de **7,34 secondes**.
-> 
 > *Attention* : le compilateur `gcc` dans sa version 10 générait une fonction dont le temps d'exécution est d'environ 18 secondes alors que le même compilateur, dans sa version 12, génère du code qui ne s'exécute plus qu'en 7,6 secondes, soit près de deux fois plus rapide. La différence d'exécution tient à la conversion de $x$ en chaîne. Nous utilisons donc par la suite la version 12 de `gcc` quand cela est possible.
 
 ## 17.3 Amélioration de la taille mémoire (8 bits)
@@ -218,6 +218,7 @@ stocké dans `ecx`, puisque un entier non signé contient au maximum 10 chiffres
     dec ecx                          ; digits[ --i ] = x
     mov [esp+ecx+16], al
 ```
+
 > *Listing 17.5.2 – Fonction assembleur - version 1 - conversion par boucle `div`*
 
 Pour la fin, s'il faut vérifier, on compare le bloc `counts` et le bloc `digits`.
@@ -284,6 +285,7 @@ ad_asm_v2:
     cmp eax, 10
     jge .while_x_ge_10
 ```
+
 > *Listing 17.5.4 – Fonction assembleur - version 2 - remplacement de la division*
 
 > **Assembleur version 2 : multiplication au lieu d'une division**
@@ -319,6 +321,7 @@ Le Binary Coded Decimal est un ancien système qui consiste à coder un nombre e
     fild dword [ebp+8]
     fbstp [esp+32]
 ```
+
 Par exemple, `1234567890` devient `0x00...1234567890`. Malheureusement, le circuit FPU mathématique met un temps monstrueux au XXIe siècle (plus de **23 secondes** à s'exécuter, jusqu'à 108 sec sur de vieux Intel !), rendant l'astuce archaïque inopérante.
 
 ## 17.6 Benchmark Final Multi-Architecture

@@ -342,46 +342,7 @@ Afin de tester les différentes versions que nous avons écrites, nous allons ex
 ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en fonction du processeur.
 (Méthode : `ref_v1_O3` (pur C avec -O3 GCC), `no_if_asm` (Assembleur optimisé sans saut), `sse41` et `avx2` natifs).
 
-### 14.12.1 Architectures Anciennes (Avant 2015)
-
-| Méthode | Pentium D 925 | Core 2 Q9300 | Core i7 860 | AMD Phenom X6 | Core i5 3570K | Core i7 4790 |
-|---|---|---|---|---|---|---|
-| `ref_v1_O2` | 224.64 | 170.22 | 131.86 | 110.89 | 140.27 | 103.54 |
-| `ref_v1_O3` | 29.86 | 11.80 | 5.47 | - | - | 2.56 |
-| `no_if_asm` | 133.48 | 98.36 | 67.72 | 52.67 | 48.67 | 41.62 |
-| `sse2_v1` | 27.64 | 9.37 | 5.84 | 11.75 | 4.49 | 3.66 |
-| `sse41` | - | 9.25 | 5.72 | - | 4.42 | 3.73 |
-| `avx2` / `intrin.`| - | - | - | - | - | 1.86 / 1.89 |
-| **Gain SSE max** | **~ 8.1x** | **~ 18.2x** | **~ 22.6x**| **~ 9.4x** | **~ 31.2x** | **~ 55.7x**|
-
-*TABLE 14.3 – Architectures anciennes : temps d'exécution en secondes.*
-
-### 14.12.2 Architectures Modernes (2015 à 2019)
-
-| Méthode | Core i3 6100 | Ryzen 7 1700X | Core i5 7400 | Core i7 8700 | Ryzen 5 3600 | Xeon 4208 |
-|---|---|---|---|---|---|---|
-| `ref_v1_O2` | 139.36 | 111.55 | 148.59 | 96.72 | 103.41 | 118.36 |
-| `ref_v1_O3` | 2.20 | 2.50 | 2.45 | 1.85 | 2.02 | 3.61 |
-| `no_if_asm` | 42.58 | 53.86 | 45.42 | 34.68 | 47.03 | 42.45 |
-| `sse2_v1` | 3.58 | 3.59 | 3.52 | 2.70 | 3.16 | 4.30 |
-| `sse41` | 3.58 | 3.61 | 3.46 | 2.60 | 3.19 | 4.28 |
-| `avx2` / `intrin.`| 1.54 / 1.81| 1.14 / 1.39| 1.76 / 1.82| 1.35 / 1.39| **0.79** / 1.09 | 2.87 / 3.03 |
-
-*TABLE 14.4 – Architectures modernes : temps d'exécution en secondes.*
-*(Le Ryzen 5 3600 boucle le traitement en **0,79 secondes**, un record avec AVX2 natif).*
-
-### 14.12.3 Architectures Récentes (2020+)
-
-| Méthode | Core i7 10850H | Core i5 12400F | AMD Ryzen 5 5600G | AMD Ryzen 5 9600X |
-|---|---|---|---|---|
-| `ref_v1_O2` | 83.50 | 104.50 | 91.38 | 76.97 |
-| `ref_v1_O3` | 1.85 | 1.69 | 1.98 | 0.64 |
-| `no_if_asm` | 27.44 | 44.54 | 29.31 | 13.06 |
-| `sse2_v1` | 2.56 | 1.82 | 1.74 | 1.07 |
-| `avx2` | 1.36 | 0.96 | 0.93 | **0.50** |
-
-*TABLE 14.5 – Architectures récentes : temps d'exécution en secondes.*
-*(Avec le jeu d'instructions natif **AVX512** le Ryzen 9600X compile et exécute en moins de **0.50s**).*
+[BENCHMARK:asm_maxpars_64]
 
 ## 14.13 Bilan
 

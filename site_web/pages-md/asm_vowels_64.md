@@ -87,22 +87,4 @@ La traduction de ces méthodes, puis leur dépassement mathématique via les ins
 
 <br>
 
-<!-- Injection des graphiques Highcharts originaux du fichier asm_vowels_64 -->
-<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
-
-<div id="graph_container" style="width: 100%; min-height: 600px;">
-    <div id="graph_ancien" style="border: 1px solid #ccc; margin-bottom: 30px;"></div>
-    <div id="graph_moderne" style="border: 1px solid #ccc; margin-bottom: 30px;"></div>
-    <div id="graph_recent" style="border: 1px solid #ccc;"></div>
-</div>
-
-<script type="module">
-    import { createPerformanceChart } from "./data/asm_vowels/graph.js";
-    import data_ancien from "./data/asm_vowels/ancien/data.json" with { type: "json" };
-    import data_moderne from "./data/asm_vowels/moderne/data.json" with { type: "json" };
-    import data_recent from "./data/asm_vowels/recent/data.json" with { type: "json" };
-
-    createPerformanceChart('#graph_ancien', data_ancien);
-    createPerformanceChart('#graph_moderne', data_moderne);
-    createPerformanceChart('#graph_recent', data_recent);
-</script>
+[BENCHMARK:asm_vowels_64]
