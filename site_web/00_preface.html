@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Programmation Assembleur x86 : 32 et 64 bits sous Linux Ubuntu</h1>
+
+<p><strong>Auteur :</strong> Jean-Michel RICHER<br />
+<strong>Édition :</strong> 5ème Édition (version 2025.09)<br />
+<strong>Destinée au cours à partir de la rentrée de Septembre 2025</strong><br />
+<strong>© Copyright 2020-2025 par Jean-Michel RICHER</strong><br />
+<strong>ISBN-13 :</strong> 978-2-9573160-0-7<br />
+<strong>Contact :</strong> jean-michel.richer@univ-angers.fr  </p>
+<p><strong>Adresse :</strong><br />
+Faculté des Sciences<br />
+Université d’Angers<br />
+2 Boulevard Lavoisier<br />
+49045 ANGERS Cedex 01<br />
+France  </p>
+<h2 class="section">Avertissements</h2>
+
+<p>Cet ouvrage peut être reproduit et utilisé uniquement à des fins non commerciales, notamment dans le cadre de l’enseignement de l’assembleur. Il ne peut, en aucune manière, être modifié ou commercialisé sans l’accord de son auteur.</p>
+<p>Toute demande de modification, de rectification ou de correction peut être adressée par courrier électronique à l’auteur.</p>
+<p>L'ensemble du code des études de cas et des différents chapitres est disponible sur le site web de l’auteur à l'adresse suivante :<br />
+<a href="https://leria-info.univ-angers.fr/~jeanmichel.richer/assembleur.php">https://leria-info.univ-angers.fr/~jeanmichel.richer/assembleur.php</a></p>
+<h2 class="section">Dédicace</h2>
+
+<p><em>Ce livre est dédié à ceux qui ont contribué à sa réalisation</em><br />
+<em>en premier lieu à mes parents</em><br />
+<em>pour m’avoir donné la vie</em><br />
+<em>pour m’avoir éduqué</em><br />
+<em>et avoir financé mes études</em><br />
+<em>ensuite, aux enseignants qui m’ont donné l’envie</em><br />
+<em>d’apprendre et de transmettre mon savoir</em>  </p>
+<p><strong>Juillet 2020, Avrillé</strong></p>
+<p><strong>Citation</strong> : <em>Eduquer c'est chercher à concilier deux mouvements contraires : celui qui porte à aider chaque enfant à trouver sa propre voie et celui qui pousse à lui inculquer ce que soi-même on croit juste, beau et vrai.</em><br />
+— Nicolas Sarkozy, Lettre aux Educateurs (4 septembre 2007)</p>
+<p><strong>Citation</strong> : <em>Bien écrire, c'est déjà presque bien penser et il n'y a pas loin de la jusqu'à bien agir.</em><br />
+— Thomas Mann</p>
+<h2 class="section">Remerciements</h2>
+
+<p>J’adresse mes remerciements à l’équipe technique du Département Informatique de l’Université d’Angers dont notamment Eric Girardeau, Jean-Mathieu Chantrein, Benjamin Jeanneau et Frantz de Germain pour m’avoir facilité l’accès à certains matériels afin de réaliser de nombreux tests de performance.</p>
+<h2 class="section">Avant-propos</h2>
+
+<p>Cet ouvrage s’adresse aux étudiants en informatique, automatique et électronique qui désirent s’initier à la programmation en assembleur x86 que ce soit en architecture 32 ou 64 bits ou qui désirent parfaire leurs connaissances dans ce domaine. Si j’ai voulu écrire ce livre c’est afin de partager l’expérience que j’ai pu acquérir au cours des vingt années passées à enseigner ce sujet à l’université.</p>
+<p>J’ai pu constater que les étudiants en informatique sont généralement rebutés par l’architecture des ordinateurs qui est pourtant un sujet fondamental dans leur cursus. La programmation assembleur qui en découle apparaît comme un sujet peu attrayant, difficile à maîtriser, et ce, généralement en raison de lacunes concernant des notions de base en informatique. On pensera bien évidemment aux notions relatives au codage de l’information, aux opérations de manipulation des bits (<code>and</code>, <code>or</code>, <code>not</code>), mais également aux pointeurs qui font partie des notions élémentaires fondamentales et utilisées de manière intensive en assembleur. Revenir aux sources de la programmation, c’est-à-dire à l’assembleur, permet de comprendre ce qui se passe réellement lorsque l’on code dans des langages structurés tels C, Pascal, Fortran ou des langages objet comme C++. Les notions liées à l’assembleur permettent également de comprendre comment rendre son code plus performant en ayant à l’esprit quelques règles élémentaires.</p>
+<p>Ma génération, celle de la fin des années 60 et du début des années 70, fut la première à découvrir et utiliser les micro-ordinateurs. La révolution micro-informatique a consisté à mettre dans les mains de chacun un ordinateur de petite taille à un prix abordable alors que la plupart des ordinateurs de l’époque étaient des systèmes volumineux qui occupaient une pièce entière et dont le coût était prohibitif : de l’ordre de la centaine de milliers ou du million de Francs. Pour donner un ordre d’idée, au début des années 80, un IBM PC coûtait en fonction de sa configuration entre 30 000 et 50 000 Francs ce qui représentait une somme énorme pour la plupart des ménages, alors qu’un Commodore 64 ne coûtait que 6 000 Francs.</p>
+<p>Bien que les premiers micro-informaticiens furent considérés comme des non scientifiques, des bidouilleurs, des personnes qui cherchaient mais sans véritable but si ce n'est celui de se faire plaisir en triturant des machines électroniques, c'est qu'à l'époque beaucoup de choses restaient à créer, imaginer, développer et il était nécessaire de tester, d'essayer, d'expérimenter afin de comprendre ce que ce nouvel appareil qui débarquait dans notre quotidien avait dans ses entrailles. C’est cet esprit épris de curiosité qui a forgé notre engouement pour le matériel (<em>hardware</em>) et bien évidemment le logiciel qui permet de faire fonctionner le matériel.</p>
+<p>J’ai très tôt été confronté à l’assembleur. D’une part, mon premier ordinateur fut un Commodore 64, ordinateur à succès, vendu à plus de 17 millions d’exemplaires à travers le monde. Ce monstre de puissance était affublé d’un microprocesseur MOS Technology 6510 tournant à la vitesse de 1 MHz et était doté de 64 ko de RAM, dont 48 ko utilisables pour stocker les programmes. À l’époque, cela était suffisant. Le langage BASIC (<em>Beginner’s All-purpose Symbolic Instruction Code</em>) du C64 était sobre. Notamment, il ne disposait pas d’instruction de type <code>clrscr</code> ou <code>clearscreen</code> chargée d’effacer l’écran. Il fallait utiliser l’instruction <code>PRINT</code> avec un symbole particulier en forme de cœur afin de vider l’écran. Il était également nécessaire pour réaliser bon nombre d'opérations graphiques, d’exécuter des instructions <code>PEEK</code> ou <code>POKE</code> qui consistent respectivement en une lecture et une écriture de donnée en mémoire. C’est typiquement une action de bas niveau liée au matériel et donc proche de l’assembleur.</p>
+<p>Je suis également redevable de mon engouement pour l’assembleur à Benoît Michel dont le "Livre du 64" fut le livre de chevet de mon adolescence. On découvrait dans cet ouvrage, qui traite des arcanes du C64, que le BASIC n’était qu’une surcouche qui était orchestrée et exécutée par l’assembleur ou plutôt le langage machine du microprocesseur. Grâce au désassembleur dont le code était donné dans le livre, j’ai désassemblé la ROM et j’ai pu comprendre comment fonctionnait l’interpréteur BASIC et comment on pouvait le modifier de manière à intégrer de nouvelles instructions.</p>
+<p>J’ai toujours trouvé plaisant de pouvoir programmer au plus bas niveau car on est au plus près de la machine et les problèmes à solutionner demandent une certaine ingéniosité. Il est également nécessaire de faire preuve de rigueur car on ne dispose pas de structures de contrôle. On utilise adresses et pointeurs à outrance et, dans le cas de l’architecture 32 bits de machines de type x86, la limitation imposée par le nombre de registres disponibles pour stocker données et adresses est handicapante. Il faut donc faire preuve d’inventivité.</p>
+<p>L’ensemble de cet ouvrage se base sur la programmation dans un environnement Linux de type Ubuntu/Debian et utilise de nombreux logiciels inhérents à ce système d’exploitation comme <code>make</code> pour la compilation automatique, <code>g++</code> pour le compilateur C++ et <code>nasm</code> en ce qui concerne la partie assembleur. Linux, de par ses caractéristiques, offre au développeur un large panel d’outils puissants qui permettent de traiter tous les aspects du processus de développement logiciel en passant par le profilage et les tests. On pourra bien entendu transposer ce qui a été vu à d’autres environnements comme MacOS ou Windows.</p>
+<p>J’ai conçu cet ouvrage comme un cours académique, c’est-à-dire que les premiers chapitres introduisent les notions fondamentales et les suivants se révèlent plus pratiques.</p>
+<ul>
+<li>Le <strong>chapitre 1</strong> traite de notions générales et fondamentales en informatique et aborde succinctement des notions liées au Génie Logiciel et au travail de l’informaticien.</li>
+<li>Le <strong>chapitre 2</strong> concerne le codage de l’information notamment des nombres entiers, des réels que l’on qualifie de nombres à virgule flottante et des chaînes de caractères.</li>
+<li>Le <strong>chapitre 3</strong> aborde les notions liées à la mémoire (comme l’alignement, l’adressage mémoire et le <em>dual channel</em>) et les notions relatives au fonctionnement du microprocesseur (chargement des instructions, décodage et exécution, pipeline, etc).</li>
+<li>Le <strong>chapitre 4</strong> traite des logiciels utilisés dans le cadre de cet ouvrage c’est-à-dire les éditeurs, l’assembleur, le compilateur et le débogueur.</li>
+<li>Le <strong>chapitre 5</strong> reprend les notions vues sur les registres dans le chapitre 3 et introduit les instructions assembleur de base qui travaillent sur les entiers. On montre par la suite comment traduire les structures de contrôle du langage C comme le <code>if</code>, le <code>while</code>, le <code>for</code> et le <code>switch</code> en assembleur x86.</li>
+<li>Le <strong>chapitre 6</strong> apprend comment passer des paramètres à un sous-programme et comment récupérer ces paramètres dans le sous-programme appelé, que ce soit en architecture 32 bits ou en architecture 64 bits.</li>
+<li>Le <strong>chapitre 7</strong> aborde le traitement des nombres à virgule flottante par le coprocesseur (FPU). On montre comment traduire simplement une expression arithmétique en utilisant les mnémoniques de la FPU.</li>
+<li>Le <strong>chapitre 8</strong> traite des unités vectorielles et des instructions liées à ces unités que sont le SSE, l’AVX et l’AVX512. On introduit également les <em>intrinsics</em> qui sont des fonctions du C qui seront remplacées lors de leur traduction par des instructions vectorielles. Ces fameuses fonctions intrinsèques permettent d’écrire du code vectoriel qui sera optimisé par le compilateur C tout en restant au niveau du langage C.</li>
+<li>Le <strong>chapitre 9</strong> (dernier chapitre académique) traite de l’algèbre de Boole. Même s’il n’est pas vraiment lié à l’assembleur, il permet de comprendre le rôle central que joue l’algèbre de Boole en informatique, allant du codage des circuits jusqu’à la logique. Ce chapitre quelque peu digressif peut néanmoins faire partie de ce livre et permet une ouverture à la logique.</li>
+</ul>
+<p>Plusieurs études de cas (chapitres 10 à 17) permettent de mettre en œuvre les connaissances vues lors des premiers chapitres et j’explique comment traduire en assembleur des fonctions écrites en langage C afin d’obtenir le code le plus performant possible. Ce code est ensuite testé sur différents matériels et l’analyse des résultats permet de démontrer au lecteur que le matériel (processeur, carte mère et mémoire) peut avoir une influence sur un choix particulier de traduction en assembleur.</p>
+<ul>
+<li>Le <strong>chapitre 11</strong> aborde l’optimisation du produit de deux matrices carrées d’entiers. On montre en particulier l’importance de l’accès mémoire et de la mémoire cache.</li>
+<li>Le <strong>chapitre 12</strong> se focalise sur l’implantation de l’instruction <code>popcnt</code> qui compte le nombre de bits positionnés à 1 dans un registre. On montre au travers de différentes implantations comment cette instruction peut être améliorée si on doit la coder en C lorsqu’elle n’est pas disponible nativement sur un microprocesseur.</li>
+<li>Le <strong>chapitre 13</strong> traite de l’implantation de la fonction SAXPY et permet d’introduire plusieurs instructions assembleur liées au coprocesseur arithmétique et au calcul vectoriel avec unités SSE sur les flottants.</li>
+<li>Le <strong>chapitre 14</strong> aborde des notions liées à la bioinformatique (Fonction de Fitch). On montre comment améliorer très fortement l’implantation d’une fonction en utilisant les instructions vectorielles sur les entiers et notamment en traitant les données par groupe de 16 ou 32 octets en utilisant respectivement les registres SSE et AVX.</li>
+<li>Le <strong>chapitre 15</strong> (Comptage des voyelles) se focalise sur la programmation en architecture 64 bits et montre comment le fait de pouvoir disposer du double de registres par rapport à l’architecture 32 bits permet de simplifier et implanter efficacement une fonction qui compte des voyelles dans une chaîne de caractères.</li>
+<li>Le <strong>chapitre 16</strong> s'intéresse à l’implantation d’une fonction qui calcule le n-ème terme de la suite de Fibonacci. Plusieurs versions sont proposées allant du dépliage de boucle à la vectorisation en passant par la formule de calcul directe basée sur le nombre d’or.</li>
+<li>Le <strong>chapitre 17</strong> (le dernier chapitre des études de cas) indique si un nombre entier est un nombre auto-descriptif ou non. On montre ici l’intérêt de remplacer la division par un invariant par une multiplication.</li>
+</ul>
+<p>Se sont ajoutées au cours du temps quelques annexes, en fin d’ouvrage :</p>
+<ul>
+<li>Un rappel des conventions d’appel Linux en 32 et 64 bits (Annexe A).</li>
+<li>Une démonstration de l’utilisation du débogueur GDB (Annexe B).</li>
+<li>Une mini étude de cas concernant l’utilisation de l’instruction assembleur <code>bsr</code> face à <code>lzcnt</code> (Annexe C).</li>
+<li>Une mini étude de cas liée à l’implantation de la fonction signe qui donne le signe de son opérande (Annexe D).</li>
+<li>Une table ASCII descriptive pour les codes de 0 à 127 (Annexe E).</li>
+<li>Un glossaire des instructions assembleur.</li>
+</ul>
+<p>J’espère, au travers de cet ouvrage, donner au lecteur une meilleure compréhension du fonctionnement du microprocesseur et réconcilier les développeurs avec l’assembleur en montrant comment les traitements de haut niveau peuvent être traduits de manière efficace dans un langage très limité. Il est certain que les compilateurs ont fait de gros progrès et sont capables de traduire efficacement bon nombre d’algorithmes, mais certains traitements, en raison de leur complexité, peuvent encore être améliorés en les codant à la main. Passer à l’assembleur permet par exemple de paralléliser le code en utilisant les instructions vectorielles et gagner ainsi un facteur important en terme de performance.</p>
+<p><strong>Que la force de l’assembleur soit avec vous!</strong></p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

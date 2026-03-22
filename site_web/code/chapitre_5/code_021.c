@@ -1,0 +1,1 @@
+int eax constante 1

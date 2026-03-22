@@ -1,0 +1,1 @@
+movzx eax, byte [edi]

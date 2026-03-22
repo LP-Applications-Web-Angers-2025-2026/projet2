@@ -1,0 +1,11 @@
+Chemin ...          Classe   Description
+=====================================================================
+/0/0               memory   64KiB BIOS
+/0/f               memory   32GiB Mémoire Système
+/0/f/0             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/f/1             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/f/2             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/f/3             memory   8GiB DIMM DDR4 Synchrone Unbuffered (Unregistered)
+/0/12              memory   384KiB L1 cache
+/0/13              memory   3MiB L2 cache
+/0/14              memory   32MiB L3 cache

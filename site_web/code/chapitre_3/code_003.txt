@@ -1,0 +1,30 @@
+Location: System Board Or Motherboard
+Use: System Memory
+Error Correction Type: None
+Maximum Capacity: 128 GB
+Error Information Handle: 0x000E
+Number Of Devices: 4
+15Handle 0x0017, DMI type 17, 40 bytes
+16Memory Device
+Array Handle: 0x000F
+Error Information Handle: 0x0016
+Total Width: 64 bits
+Data Width: 64 bits
+Size: 8192 MB
+Form Factor: DIMM
+Set: None
+Locator: DIMM 0
+Bank Locator: P0 CHANNEL A
+Type: DDR4
+Type Detail: Synchronous Unbuffered (Unregistered)
+Speed: 3200 MT/s
+Manufacturer: Unknown
+Serial Number: 00000000
+Asset Tag: Not Specified
+Part Number: F4-3200C16-8GVKB
+Rank: 1
+Configured Memory Speed: 3200 MT/s
+Minimum Voltage: 1.2 V
+Maximum Voltage: 1.2 V
+Configured Voltage: 1.2 V
+38...

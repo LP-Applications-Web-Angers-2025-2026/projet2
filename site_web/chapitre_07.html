@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 7 : Coprocesseur arithmétique</h1>
+
+<h2 class="section">7.1 Introduction</h2>
+
+<p>Dans ce chapitre nous allons voir comment utiliser le coprocesseur arithmétique
+afin de réaliser des calculs avec des nombres à virgule flottante. L'ensemble des
+instructions du coprocesseur commencent par la lettre <code>f</code> pour <em>Floating point value</em>.</p>
+<p>Le coprocesseur était absent sur les premiers microprocesseurs de la famille x86
+mais on pouvait ajouter un circuit externe chargé de faire les calculs des nombres
+en virgule flottante. Ce circuit a donc été nommé <strong>coprocesseur</strong>. Le premier
+coprocesseur pour l'Intel 8086 fut l'Intel 8087. D'autres furent produits pour les
+microprocesseurs suivants : 80287, 80387, 80487, jusqu'à l'intégration du coprocesseur
+au sein du microprocesseur à partir des Intel 80486DX. On ne parle donc plus à
+présent de coprocesseur mais plutôt de <strong>FPU</strong> (<em>Floating Point Unit</em>).</p>
+<h2 class="section">7.2 Architecture de la FPU</h2>
+
+<p>La FPU est composée des éléments suivants :</p>
+<ul>
+<li>Une pile de 8 registres (<em>Registers Stack</em>)</li>
+<li>Le registre <code>opcode</code> qui contient le code de la dernière instruction exécutée</li>
+<li>Le registre de <strong>statut</strong> qui contient le sommet de pile, les exceptions et les flags</li>
+<li>Le registre de <strong>contrôle</strong> qui contrôle la précision et l'arrondi des méthodes de calcul</li>
+<li>Le registre d'<strong>étiquette</strong> (<em>Tag Register</em>) indique le contenu (valid, 0, NaN, infini) de chaque registre</li>
+<li>Le <strong>Last Instruction Pointer</strong> qui pointe sur la dernière instruction exécutée</li>
+<li>Le <strong>Last Data Pointer</strong> qui pointe vers l'opérande de la dernière instruction</li>
+</ul>
+<p><em>FIGURE 7.1 – Registres du coprocesseur</em></p>
+<h2 class="section">7.3 La pile du coprocesseur</h2>
+
+<p>Le coprocesseur comporte 8 registres notés R0 à R7 mais qui ne sont pas manipulables
+directement. On y accède au travers d'une pile dotée de 8 registres appelés <code>st0</code>
+à <code>st7</code> que ce soit en architecture 32 ou 64 bits.</p>
+<p>Dès que l'on charge une nouvelle donnée dans <code>st0</code>, les données déjà stockées dans
+<code>st0</code> à <code>st6</code> sont <strong>déplacées</strong> vers <code>st1</code> à <code>st7</code>.</p>
+<p>Les registres <code>st0</code> à <code>st7</code> occupent chacun <strong>80 bits</strong> ce qui permet de disposer d'une
+grande précision. L'exposant occupe alors 15 bits et la mantisse 64 bits.</p>
+<div class="cadre_warning"><strong>Attention</strong> : si on charge plus de huit valeurs dans la pile du coprocesseur, on
+génère une exception. Il faut prendre l'habitude de ne laisser qu'une valeur dans
+`st0` et de la supprimer lorsqu'on n'en a plus besoin.
+<h3 class="subsection">7.3.1 Chargement (fld, fild)</h3>
+
+<p>Le chargement des données se fait grâce à l'instruction <code>fld</code> (<em>Floating point LoaD</em>) :</p>
+<ul>
+<li><code>dword</code> pour un flottant en simple précision</li>
+<li><code>qword</code> pour un flottant en double précision</li>
+</ul>
+<p>Il existe également <code>fild</code> (<em>Floating point Integer LoaD</em>) qui permet de charger une
+valeur entière qui sera convertie en nombre flottant.</p>
+<div class="cadre_warning"><strong>Attention</strong> : on ne peut pas charger une donnée depuis un registre général,
+uniquement depuis la mémoire ou à partir d'un autre registre du coprocesseur.
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_001.asm" target="_blank">code/chapitre_7/code_001.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; a<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">1.25</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; float a = 1.25</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; b<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dq</span> <span style="color: #ff0000;">3.752567871</span> &nbsp; <span style="color: #666666; font-style: italic;">; double b = 3.752567871</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; c<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">31</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; int c = 31</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; d<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dq</span> <span style="color: #ff0000;">123</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; long int d = 123</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>a<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>b<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; empile le sommet (copie)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">st1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fild</span> <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>c<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fild</span> <span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>d<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>L'état de la pile du coprocesseur après chaque instruction :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Instruction</th>
+<th>st0</th>
+<th>st1</th>
+<th>st2</th>
+<th>st3</th>
+<th>st4</th>
+<th>st5</th>
+<th>st6</th>
+<th>st7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fld dword [a]</code></td>
+<td>1.25</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td><code>fld qword [b]</code></td>
+<td>3.75</td>
+<td>1.25</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td><code>fld st0</code></td>
+<td>1.25</td>
+<td>3.75</td>
+<td>1.25</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td><code>fld st1</code></td>
+<td>1.25</td>
+<td>1.25</td>
+<td>3.75</td>
+<td>1.25</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td><code>fild dword [c]</code></td>
+<td>31</td>
+<td>1.25</td>
+<td>1.25</td>
+<td>3.75</td>
+<td>1.25</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td><code>fild qword [d]</code></td>
+<td>123</td>
+<td>31</td>
+<td>1.25</td>
+<td>1.25</td>
+<td>3.75</td>
+<td>1.25</td>
+<td>?</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 7.1 – Effets du chargement de valeurs dans le coprocesseur</em></p>
+<p>Un certain nombre de constantes sont prédéfinies :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Instruction</th>
+<th>Constante</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fldz</code></td>
+<td>0.0</td>
+</tr>
+<tr>
+<td><code>fld1</code></td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><code>fldpi</code></td>
+<td>π</td>
+</tr>
+<tr>
+<td><code>fldl2e</code></td>
+<td>log₂(e) = 1.442695</td>
+</tr>
+<tr>
+<td><code>fldl2t</code></td>
+<td>log₂(10) = 3.312928</td>
+</tr>
+<tr>
+<td><code>fldlg2</code></td>
+<td>log₁₀(2) = 0.310299</td>
+</tr>
+<tr>
+<td><code>fldln2</code></td>
+<td>logₑ(2) = 0.693147</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 7.2 – Constantes prédéfinies du coprocesseur (valeurs approchées)</em></p>
+<h3 class="subsection">7.3.2 Stockage (fst, fstp)</h3>
+
+<p>Le stockage fonctionne comme le chargement, on indique l'emplacement mémoire
+au format <code>dword</code> ou <code>qword</code> vers lequel on désire stocker la valeur en sommet.</p>
+<div class="cadre_note"><strong>Note</strong> : la plupart des instructions disposent d'un suffixe `p` (ex. `fstp`).
+Ajouter le suffixe `p` signifie qu'on **dépile** (*pop*) le résultat après le stockage.
+<p>Exemple :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_002.asm" target="_blank">code/chapitre_7/code_002.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; a<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">0.0</span> &nbsp; <span style="color: #666666; font-style: italic;">; float</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; b<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dq</span> <span style="color: #ff0000;">0.0</span> &nbsp; <span style="color: #666666; font-style: italic;">; double</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; st0 = 1.0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fst</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>a<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp;<span style="color: #666666; font-style: italic;">; stocke 1.0 dans a (float), st0 reste = 1.0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fstp</span> <span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>b<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp;<span style="color: #666666; font-style: italic;">; stocke 1.0 dans b (double), puis dépile st0</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">7.4 Instructions de la FPU</h2>
+
+<p>Nous donnons à présent une liste non exhaustive des opérations que l'on peut
+utiliser avec la FPU.</p>
+<h3 class="subsection">7.4.1 Opérations arithmétiques</h3>
+
+<ul>
+<li><code>fadd</code>, <code>faddp</code> — addition : <code>st0 = st0 + src</code></li>
+<li><code>fsub</code> — soustraction : <code>st0 = st0 - src</code></li>
+<li><code>fsubr</code> — soustraction inverse : <code>st0 = src - st0</code></li>
+<li><code>fmul</code>, <code>fmulp</code> — multiplication</li>
+<li><code>fdiv</code>, <code>fdivp</code> — division : <code>st0 = st0 / src</code></li>
+<li><code>fdivr</code> — division inverse : <code>st0 = src / st0</code></li>
+<li><code>fprem</code> — reste de la division</li>
+</ul>
+<p>Les différentes formes de <code>fadd</code> :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Instruction</th>
+<th>Interprétation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fadd [mem]</code></td>
+<td><code>st0 += mem</code></td>
+</tr>
+<tr>
+<td><code>fadd sti, st0</code></td>
+<td><code>sti += st0</code></td>
+</tr>
+<tr>
+<td><code>fadd st0, sti</code></td>
+<td><code>st0 += sti</code></td>
+</tr>
+<tr>
+<td><code>faddp sti, st0</code></td>
+<td><code>sti += st0</code>, puis <code>st0</code> dépilé</td>
+</tr>
+<tr>
+<td><code>fiadd [mem]</code></td>
+<td><code>st0 += mem</code> (entier)</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 7.3 – Description de l'instruction fadd</em></p>
+<div class="cadre_warning"><strong>Attention</strong> : `fadd` et `faddp` ont un comportement différent :
+- `fadd` : `st0 += sti`
+- `faddp` : `sti += st0`, puis `st0` est dépilé
+<p>On dispose également d'opérations complémentaires :</p>
+<ul>
+<li><code>fabs</code> — valeur absolue</li>
+<li><code>fchs</code> — changement de signe</li>
+<li><code>fsqrt</code> — racine carrée</li>
+<li><code>fscale</code> — <code>st0 = st0 × 2^st1</code></li>
+<li><code>f2xm1</code> — <code>st0 = 2^st0 - 1</code></li>
+<li><code>fyl2x</code> — <code>st0 = st1 × log₂(st0)</code></li>
+<li><code>fyl2xp1</code> — <code>st0 = st1 × log₂(st0 + 1)</code></li>
+<li><code>fxtract</code> — extrait l'exposant du nombre stocké dans <code>st0</code></li>
+</ul>
+<h3 class="subsection">7.4.2 Opérations trigonométriques</h3>
+
+<p>Elles s'appliquent uniquement sur <code>st0</code> qui représente un angle exprimé en <strong>radians</strong> :</p>
+<ul>
+<li><code>fsin</code> — sinus : <code>st0 = sin(st0)</code></li>
+<li><code>fcos</code> — cosinus : <code>st0 = cos(st0)</code></li>
+<li><code>fsincos</code> — <code>st0 = cos(st0)</code>, <code>st1 = sin(st0)</code> (ancienne valeur de <code>st0</code>)</li>
+<li><code>fptan</code> — tangente partielle</li>
+<li><code>fpatan</code> — arctangente partielle</li>
+</ul>
+<p>Exemple : convertir 60° en radians puis calculer sinus et cosinus :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_003.asm" target="_blank">code/chapitre_7/code_003.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; angle<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">60</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; degrés</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; cqv<span style="color: #339933;">:</span> &nbsp; <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">180</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; dénominateur</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; calcul de pi * 60 / 180 pour avoir la mesure en radians</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fild</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>angle<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; st0 = 60</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fild</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>cqv<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; st0 = 180, st1 = 60</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fdivp</span> <span style="color: #46aa03; font-weight: bold;">st1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp;<span style="color: #666666; font-style: italic;">; st0 = 60.0 / 180.0 = 0.3333..., puis pop</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fldpi</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; st0 = pi, st1 = 0.3333...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fmulp</span> <span style="color: #46aa03; font-weight: bold;">st1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp;<span style="color: #666666; font-style: italic;">; st0 = pi * 0.3333...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fsincos</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; st0 = cos(pi/3) = 0.5, st1 = sin(pi/3) = 0.86</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">7.4.3 Contrôle de la FPU</h3>
+
+<p>La FPU n'a pas directement accès au flux d'instructions du microprocesseur.
+Pendant que la FPU exécute ses instructions, le microprocesseur peut continuer
+à exécuter d'autres instructions sur des entiers.</p>
+<p>Instructions de contrôle et de synchronisation :</p>
+<ul>
+<li><code>fwait</code> — synchronisation des exceptions avant la prochaine instruction</li>
+<li><code>finit</code> — initialise ou réinitialise le coprocesseur</li>
+<li><code>fclex</code> / <code>fnclex</code> — supprime les exceptions levées</li>
+<li><code>fsave</code> / <code>fnsave</code> — sauve l'état et les registres du coprocesseur (108 octets)</li>
+<li><code>frstor</code> — restaure l'état et les registres du coprocesseur</li>
+<li><code>ffree</code> — libère un registre</li>
+</ul>
+<h2 class="section">7.5 Gestion des erreurs</h2>
+
+<p>Deux types d'erreurs peuvent se produire lors de calculs avec les nombres flottants :</p>
+<ul>
+<li>Les erreurs de calcul : racine carrée négative, débordement, division par zéro</li>
+<li>Les erreurs liées à la gestion de la pile de la FPU : pile pleine, pile vide</li>
+</ul>
+<p>La FPU utilise un <strong>registre de statut</strong> pour gérer les erreurs :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Identifiant</th>
+<th>Description</th>
+<th>Exception</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>FPU_IE</code></td>
+<td>Opération Invalide</td>
+<td>oui</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>FPU_DE</code></td>
+<td>Opérande dénormalisée</td>
+<td>oui</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>FPU_ZE</code></td>
+<td>Division par Zéro</td>
+<td>oui</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>FPU_OE</code></td>
+<td>Débordement (<em>Overflow</em>)</td>
+<td>oui</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>FPU_UE</code></td>
+<td>Débordement (<em>Underflow</em>)</td>
+<td>oui</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>FPU_PE</code></td>
+<td>Précision</td>
+<td>oui</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>FPU_SF</code></td>
+<td>Erreur Pile (<em>Stack Fault</em>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>FPU_ES</code></td>
+<td>Résumé Erreur</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>FPU_C0</code></td>
+<td>C0 (Retenue)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>FPU_C1</code></td>
+<td>C1 (Débordement)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>FPU_C2</code></td>
+<td>C2 (Parité)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>11–13</td>
+<td>—</td>
+<td>Sommet de pile (3 bits)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>FPU_C3</code></td>
+<td>C3 (Zéro)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>FPU_B</code></td>
+<td>FPU Busy</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 7.4 – Description du registre de statut de la FPU</em></p>
+<p>Les bits 0 à 5 correspondent à des exceptions interceptables avec <code>SIGFPE</code>
+(<em>Signal Floating Point Exception</em>) sous Linux.</p>
+<p>Les bits 11 à 13 codent sur 3 bits le sommet de pile (initialement à 7). Si on
+place plus de 8 valeurs dans la pile, on génère un <code>FPU_SF</code> et les prochaines valeurs
+chargées seront remplacées par <code>−NaN</code> (<em>Not a Number</em>).</p>
+<p>Les bits <code>C0</code>–<code>C3</code> sont des bits de condition calqués sur les bits du registre <code>flags</code>.
+Pour les copier dans le registre <code>flags</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_004.asm" target="_blank">code/chapitre_7/code_004.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff;">fstsw</span> <span style="color: #46aa03; font-weight: bold;">ax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">sahf</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h2 class="section">7.6 Comparaisons de valeurs flottantes</h2>
+
+<p>Il existe différentes instructions pour la comparaison : <code>ftst</code>, <code>fcom</code>, <code>fcomp</code>, <code>fcompp</code>,
+<code>fucom</code>, <code>fucomp</code>, <code>fucompp</code>.</p>
+<p>Les instructions les plus intéressantes sont <code>fcomi</code>, <code>fcomip</code>, <code>fucomi</code>, <code>fucomip</code> car
+elles réalisent la comparaison de deux valeurs et mettent directement à jour le
+registre <code>flags</code> à partir des bits de condition de la FPU.</p>
+<h3 class="subsection">7.6.1 Exemple de comparaison en 32 bits</h3>
+
+<p>Pour comparer deux valeurs flottantes :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_005.c" target="_blank">code/chapitre_7/code_005.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">int</span> compare<span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> x<span style="color: #339933;">,</span> <span style="color: #993333;">float</span> y<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&gt;</span> y<span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">else</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> <span style="color: #0000dd;">3</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>En 32 bits, on charge <code>y</code> puis <code>x</code>. On compare <code>x</code> à <code>y</code> via <code>fcomip</code> qui dépile <code>x</code>.
+On utilise <code>jbe</code> (<em>Jump Below or Equal</em>) pour le <code>.else</code> lorsque <code>x ≤ y</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_006.asm" target="_blank">code/chapitre_7/code_006.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">compare_32bits<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp; <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp;<span style="color: #666666; font-style: italic;">; charge y dans st0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp; <span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; <span style="color: #666666; font-style: italic;">; charge x dans st0, y → st1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fcomip</span> <span style="color: #46aa03; font-weight: bold;">st0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st1</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; compare x (st0) à y (st1), dépile x</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fstp</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; supprime y</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jbe</span> &nbsp; <span style="color: #339933;">.</span>else</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jmp</span> &nbsp; <span style="color: #339933;">.</span>endif</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>else<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>endif<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Instructions de saut pour les flottants</strong> : pour des raisons historiques, les
+instructions de comparaison sur les flottants ne mettent pas à jour les mêmes bits
+que <code>cmp</code>. On utilise donc <code>jb</code> (au lieu de <code>jl</code>), <code>ja</code> (au lieu de <code>jg</code>), <code>jbe</code> et <code>jae</code>.</p>
+<h3 class="subsection">7.6.2 Comparaison en 64 bits avec les registres SSE</h3>
+
+<p>En 64 bits, ce sont les registres SSE qui sont utilisés pour les calculs flottants.
+Voici comment le compilateur C traduit :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_007.c" target="_blank">code/chapitre_7/code_007.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> equal_64bits<span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> x<span style="color: #339933;">,</span> <span style="color: #993333;">float</span> y<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><a href="http://www.opengroup.org/onlinepubs/009695399/functions/fabs.html"><span style="color: #000066;">fabs</span></a><span style="color: #009900;">&#40;</span>x <span style="color: #339933;">-</span> y<span style="color: #009900;">&#41;</span> <span style="color: #339933;">&lt;</span> <span style="color:#800080;">1e-6</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// code du then</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// code du else</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><code>x</code> et <code>y</code> sont respectivement placées dans <code>xmm0</code> et <code>xmm1</code> :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_008.asm" target="_blank">code/chapitre_7/code_008.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">equal_64bits<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">subss</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; x - y</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">andps</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #339933;">.</span>LC0<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; fabs : masque 0x7FFFFFFF (élimine le bit de signe)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">cvtss2sd</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; conversion simple → double précision</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movsd</span> &nbsp; <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #339933;">.</span>LC1<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; charge 1e-6 en double précision</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">comisd</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; compare 1e-6 et |x-y|</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jb</span> &nbsp; &nbsp; &nbsp;<span style="color: #339933;">.</span>then &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; si 1e-6 &gt; |x-y|</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>then<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #339933;">...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jmp</span> <span style="color: #339933;">.</span>endif</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>else<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #339933;">...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>endif<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>LC0<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">0x7FFFFFFF</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span> &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; masque pour fabs (32 bits)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>LC1<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dq</span> <span style="color: #ff0000;">0x3EB0C6F7A0B5ED8D</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; 1e-6 en IEEE 754 double</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Il existe également l'instruction <code>cmpss xmm1, xmm2, imm8</code> pour comparer deux
+valeurs flottantes 32 bits. La constante <code>imm8</code> indique le type de comparaison :</p>
+<table class="data-table">
+<thead>
+<tr>
+<th><code>imm8</code></th>
+<th>Type de comparaison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>xmm1.ps[0] == xmm2.ps[0]</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>xmm1.ps[0] &lt; xmm2.ps[0]</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>xmm1.ps[0] &lt;= xmm2.ps[0]</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><em>unordered</em> (au moins un NaN)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>xmm1.ps[0] != xmm2.ps[0]</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>xmm1.ps[0] &gt;= xmm2.ps[0]</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>xmm1.ps[0] &gt; xmm2.ps[0]</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><em>ordered</em> (aucun NaN)</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 7.5 – Comparaison avec cmpss/cmpsd</em></p>
+<p>Le résultat est stocké dans <code>xmm1.ps[0]</code> : <code>0xFFFFFFFF</code> si vrai, <code>0x00000000</code> si faux.</p>
+<div class="cadre_note"><strong>Note</strong> : `cmpsd` peut signifier *Compare Scalar Double-Precision Floating-Point*
+(registres vectoriels) ou *Compare String Operands* (pas d'opérande). Ne pas les confondre.
+<h2 class="section">7.7 Traduction d'expressions en assembleur FPU</h2>
+
+<p>Pour traduire une expression en utilisant les instructions du coprocesseur :</p>
+<ol>
+<li>Modéliser l'expression sous forme d'un <strong>arbre binaire</strong></li>
+<li>Réaliser un <strong>parcours postfixe</strong> de l'arbre pour obtenir la notation polonaise inverse (RPN)</li>
+<li>Traduire la version RPN en instructions FPU</li>
+</ol>
+<p><strong>Notation Polonaise Inverse (RPN)</strong> : notation post-fixée qui permet d'écrire
+de façon non ambiguë les formules arithmétiques sans utiliser de parenthèses.</p>
+<p><strong>Règles de traduction RPN → assembleur FPU</strong> :</p>
+<ul>
+<li>Si constante ou variable → <code>fld [variable]</code></li>
+<li>Si opérateur unaire → appliquer sur <code>st0</code> (ex. <code>fsqrt</code>)</li>
+<li>Si opérateur binaire → <code>f&lt;Oper&gt;p st1, st0</code> (avec <code>Oper</code> = <code>add</code>, <code>sub</code>, <code>mul</code>, <code>div</code>)</li>
+</ul>
+<p><strong>Exemple</strong> : traduire l'expression <code>(x + 1) × (x − 1) / (3 − √x)</code></p>
+<p>L'expression en RPN (parcours postfixe de l'arbre) :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_015.txt" target="_blank">code/chapitre_7/code_015.txt</a></summary>
+<pre class="code-block"><code>x  1.0  +  x  1.0  -  *  3.0  x  sqrt  -  /</code></pre>
+</details>
+
+<p><em>FIGURE 7.2 – Représentation arborescente de (x+1)×(x−1) / (3−√x)</em></p>
+<p>Traduction en assembleur :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_009.asm" target="_blank">code/chapitre_7/code_009.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; trois<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">3.0</span> &nbsp; <span style="color: #666666; font-style: italic;">; constante non prédéfinie → stockée en mémoire</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; x + 1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>x<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">faddp</span> <span style="color: #46aa03; font-weight: bold;">st1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; st0 = x + 1.0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; x - 1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>x<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fsubp</span> <span style="color: #46aa03; font-weight: bold;">st1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; st0 = x - 1.0, st1 = x + 1.0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; (x+1)*(x-1)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fmulp</span> <span style="color: #46aa03; font-weight: bold;">st1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; st0 = (x+1)*(x-1)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; 3 - sqrt(x)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>trois<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>x<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fsqrt</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; st0 = sqrt(x), st1 = 3.0, st2 = (x+1)*(x-1)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fsubp</span> <span style="color: #46aa03; font-weight: bold;">st1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; st0 = 3.0 - sqrt(x)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; (x+1)*(x-1) / (3 - sqrt(x))</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fdivp</span> <span style="color: #46aa03; font-weight: bold;">st1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">st0</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; st0 = résultat final</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<div class="cadre_note"><strong>Note</strong> : dans le cas des constantes, si la constante n'est pas prédéfinie dans le
+coprocesseur, il est nécessaire de la stocker en mémoire avant de la charger.
+<h2 class="section">7.8 Affichage de valeurs flottantes avec printf</h2>
+
+<h3 class="subsection">7.8.1 Affichage en 32 bits</h3>
+
+<p>En 32 bits, on utilise <code>printf</code> en suivant la convention d'appel du langage C.
+<strong>Une valeur <code>float</code> (simple précision) doit être convertie en <code>double</code> avant l'affichage.</strong></p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_010.c" target="_blank">code/chapitre_7/code_010.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> x <span style="color: #339933;">=</span> <span style="color:#800080;">3.14</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><a href="http://www.opengroup.org/onlinepubs/009695399/functions/printf.html"><span style="color: #000066;">printf</span></a><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%f&quot;</span><span style="color: #339933;">,</span> x<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Traduit en assembleur 32 bits :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_011.asm" target="_blank">code/chapitre_7/code_011.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">extern</span> printf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x<span style="color: #339933;">:</span> &nbsp; <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">3.14</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; msg<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">db</span> <span style="color: #7f007f;">&quot;%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fld</span> &nbsp;<span style="color: #0000ff; font-weight: bold;">dword</span> <span style="color: #009900; font-weight: bold;">&#91;</span>x<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; charge x</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8</span> &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; réservation de 64 bits pour la double précision</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff;">fstp</span> <span style="color: #0000ff; font-weight: bold;">qword</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; stocke en double précision dans la pile</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> msg &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; adresse du format</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> printf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">12</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; supprime les paramètres (8 + 4 octets)</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">7.8.2 Affichage en 64 bits</h3>
+
+<p>Pour une architecture 64 bits, d'après la convention System V AMD64 ABI :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_012.asm" target="_blank">code/chapitre_7/code_012.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">extern</span> printf</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #adadad; font-style: italic;">defa</span>ult <span style="color: #0000ff; font-weight: bold;">rel</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; x<span style="color: #339933;">:</span> &nbsp; <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">3.14</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; msg<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">db</span> <span style="color: #7f007f;">&quot;%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">affiche<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rbp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rsp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movss</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>x<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; charge x (float 32 bits)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">cvtss2sd</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; conversion au format double précision</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rdi</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>msg<span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; adresse du format</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; indique qu'il y a une valeur flottante</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> printf <span style="color: #0000ff; font-weight: bold;">WRT</span><span style="color: #339933;">..</span>plt</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rsp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> &nbsp;<span style="color: #46aa03; font-weight: bold;">rbp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Le registre <code>rdi</code> contient l'adresse de la chaîne de format. La valeur flottante est
+placée dans <code>xmm0</code> convertie en double précision. Le registre <code>eax</code> doit contenir le
+nombre de valeurs flottantes à traiter avant l'appel à <code>printf</code>.</p>
+<h2 class="section">7.9 Bilan</h2>
+
+<h3 class="subsection">7.9.1 Résumé</h3>
+
+<ul>
+<li>Le coprocesseur arithmétique permet de réaliser les calculs des nombres à virgule flottante</li>
+<li>Initialement absent, puis positionné sur la carte mère, il est aujourd'hui intégré
+au microprocesseur et qualifié de <strong>FPU</strong> (<em>Floating Point Unit</em>)</li>
+<li>La FPU fonctionne comme une pile dotée de huit registres <code>st0</code> à <code>st7</code></li>
+<li>Les instructions assembleur liées à la FPU commencent par la lettre <code>f</code></li>
+<li>Toute donnée empilée dans la FPU doit être dépilée</li>
+</ul>
+<h3 class="subsection">7.9.2 Objectifs</h3>
+
+<p>Après lecture et travail sur ce chapitre, on doit être capable de :</p>
+<ul>
+<li>Traduire un calcul avec des nombres à virgule flottante sous forme d'une série
+d'instructions assembleur (modéliser l'expression en arbre binaire puis appliquer
+les règles RPN → assembleur)</li>
+<li>Comparer deux nombres flottants</li>
+</ul>
+<h2 class="section">7.10 Exercices</h2>
+
+<p><strong>Exercice 29</strong> – Montrer comment, en utilisant les registres généraux et les instructions
+associées, on peut réaliser les opérations de la FPU comme <code>fabs</code> (valeur absolue) ou
+<code>fchs</code> (changement de signe) d'une valeur flottante sur 32 bits.
+On chargera la valeur flottante dans <code>eax</code> par exemple avant de réaliser l'opération.</p>
+<p><strong>Exercice 30</strong> – Implanter la fonction <code>iota</code> en architecture 32 bits en utilisant la FPU :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_013.c" target="_blank">code/chapitre_7/code_013.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> iota<span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> <span style="color: #339933;">*</span>t<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; t<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span>i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Exercice 31</strong> – Implanter l'expression suivante en architecture 32 bits en utilisant la FPU :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_016.txt" target="_blank">code/chapitre_7/code_016.txt</a></summary>
+<pre class="code-block"><code>(x − 5) × (x + 6)
+─────────────────────────
+cos(x − 5) × sin(x + 6)</code></pre>
+</details>
+
+<ol>
+<li>Modéliser sous forme d'arbre binaire</li>
+<li>Identifier les sous-expressions répétées comme <code>x − 5</code> et <code>x + 6</code></li>
+<li>Traduire en assembleur FPU</li>
+<li>Donner une version optimisée en ne recalculant pas les sous-expressions répétées</li>
+</ol>
+<p><strong>Exercice 32</strong> – Implanter la fonction <code>puissance</code> en architecture 32 bits en utilisant la FPU :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_014.c" target="_blank">code/chapitre_7/code_014.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">float</span> puissance<span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> x<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #993333;">float</span> result <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; result <span style="color: #339933;">*=</span> x<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> result<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Faire de même en 64 bits.</p>
+<p><strong>Exercice 33</strong> – Écrire un programme assembleur qui calcule l'expression suivante sous
+forme d'un développement limité :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_017.txt" target="_blank">code/chapitre_7/code_017.txt</a></summary>
+<pre class="code-block"><code>1/(1−x) = 1 + x + x² + x³ + ... + xⁿ</code></pre>
+</details>
+
+<p>Cette formule fonctionne lorsque <code>x</code> est proche de 0. Essayer avec <code>x = 0.2</code> et
+déterminer à partir de quelle valeur de <code>n</code> le calcul ne gagne plus en précision.</p>
+<p><strong>Exercice 34</strong> – Écrire un programme assembleur qui permet de trouver les solutions
+réelles d'une équation du second degré <code>ax² + bx + c = 0</code>.
+On utilisera la FPU pour réaliser les calculs. Rappel :</p>
+<ul>
+<li>Calculer le discriminant Δ = b² − 4ac</li>
+<li>Si Δ ≥ 0, les solutions réelles sont :<ul>
+<li><code>x₁ = (−b + √Δ) / (2a)</code></li>
+<li><code>x₂ = (−b − √Δ) / (2a)</code></li>
+</ul>
+</li>
+</ul>
+<p>On utilisera l'instruction <code>fcomip st0, st1</code> pour comparer Δ à 0.</p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

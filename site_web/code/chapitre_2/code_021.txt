@@ -1,0 +1,5 @@
+Retenue(s) en sortie 1
+  0 1 0 1
+- 1 0 1 0
+Retenue(s) en entrée 1
+= 1 0 1 1

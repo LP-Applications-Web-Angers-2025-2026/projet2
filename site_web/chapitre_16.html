@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Chapitre 16 : Étude de cas (Suite de Fibonacci)</h1>
+
+<h2 class="section">16.1 Introduction</h2>
+
+<p>Ce chapitre traite de l'implantation de fonctions qui permettent de calculer
+les termes de la suite de Fibonacci. Léonardo Fibonacci était un mathématicien
+italien (1175 - 1250) qui a contribué notamment à démocratiser la numérotation
+indo-arabe. Il semblerait que la suite ait été découverte par des mathématiciens
+indiens (Gopala 1133, Hemachandra 1150, Fibonacci 1202) et qu'elle fut ensuite
+attribuée à Fibonacci dans le monde occidental. La suite qui prend donc son nom
+est une suite d'entiers naturels construite en calculant la somme des deux termes
+précédents et est définie de manière récursive comme suit :</p>
+<ul>
+<li>$F_0 = 0$</li>
+<li>$F_1 = 1$</li>
+<li>$F<em>n = F</em>{n-1} + F_{n-2}$</li>
+</ul>
+<p>Les premiers termes de la suite sont donc : 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
+144, 233, 377, 610, 987, 1597, 2584, 4181.</p>
+<p>La suite de Fibonacci possède de nombreuses propriétés mathématiques singu-
+lières ainsi que des ramifications dans le domaine du vivant (choux romanesco,
+pomme de pin), ou de la dynamique des populations. La suite de Fibonacci est éga-
+lement liée au nombre d'or $\phi$ qui s'exprime par $(1 + \sqrt{5})/2 \simeq 1,618033$. Le nombre
+d'or est qualifié de <em>divine proportion</em> car nombre de choses dans la nature sont liées
+à cette valeur. A mesure que l'on calcule les termes de la suite de Fibonacci, le ratio
+$F_{n+1}/F_n$ tend vers $\phi$.</p>
+<h3 class="subsection">16.1.1 Modèle Diachronique</h3>
+
+<p>On considère des couples de lapins qui sont à maturité sexuelle, que l'on notera
+<code>S</code>, et qui peuvent se reproduire pour générer un nouveau couple de lapins qui, lui,
+n'est pas à maturité sexuelle et que l'on notera <code>N</code>. Les couples qui ne sont pas à
+maturité sexuelle doivent attendre avant de parvenir à maturité et pourront alors
+se reproduire. L'évolution d'une population est donc la suivante :</p>
+<ul>
+<li>au temps $t = 0$, il n'y a aucun couple</li>
+<li>au temps $t = 1$, on a un couple qui n'est pas à maturité sexuelle</li>
+<li>au temps $t = 2$, on a un couple parvenu à maturité sexuelle</li>
+<li>au temps $t = 3$, on a deux couples : un couple à maturité sexuelle, un couple
+issu de la reproduction du couple à maturité et qui n'est donc pas à maturité sexuelle</li>
+<li>au temps $t = 4$, on a trois couples : deux couples à maturité sexuelle et un
+couple non mature</li>
+<li>etc.</li>
+</ul>
+<p>On a reproduit l'évolution de la population <em>Table 16.1</em>.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Temps</th>
+<th>Couples</th>
+<th>Nbr. Couples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$t = 0$</td>
+<td>$\emptyset$</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$t = 1$</td>
+<td><code>N</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>$t = 2$</td>
+<td><code>S</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>$t = 3$</td>
+<td><code>SN</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>$t = 4$</td>
+<td><code>SNS</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td>$t = 5$</td>
+<td><code>SNSSN</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td>$t = 6$</td>
+<td><code>SNSSNSNS</code></td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 16.1 – Evolution d'une population de lapins selon Fibonacci</em></p>
+<p>Du point de vue de l'informatique, on peut voir cette évolution comme un
+système de réécriture :</p>
+<ul>
+<li><code>N</code> $\rightarrow$ <code>S</code></li>
+<li><code>S</code> $\rightarrow$ <code>SN</code></li>
+</ul>
+<p>Du point de vue de la biologie, la suite de Fibonacci est en rapport avec la
+phyllotaxie des plantes, c'est à dire, l'organisation en spirale des organes autour
+d'une tige. On remarque que pour un nombre important de plantes, estimé à 90%,
+le nombre d'organes dans une spirale suit très souvent une progression proche
+des rapports de la séquence de Fibonacci. Il en résulte que ces organes émergent
+souvent à des angles de 137,5 degrés ce qui permet à chaque organe de recevoir
+une quantité optimale de lumière du soleil en évitant les chevauchements ce qui
+conduit à favoriser la photosynthèse.</p>
+<p>Nous n'entrerons pas dans de plus amples considérations puisque ce qui nous
+intéresse est l'implantation de cette fonction sous une forme particulière. Pour
+terminer, nous dirons que la suite de Fibonacci fait partie de l'encyclopédie en ligne
+des suites de nombres entiers OEIS (<em>On-Line Encyclopedia of Integer Sequences</em>).
+Elle est présente sous l'identifiant <em>A000045</em>. En informatique, la suite de Fibonacci
+possède des applications liées à la génération des nombres aléatoires, aux arbres
+AVL (qui sont des arbres de recherche dits automatiquement équilibrés) ou aux
+structures de données du même nom (<em>Fibonacci Heap</em>).</p>
+<h2 class="section">16.2 Variantes C/C++</h2>
+
+<p>Le code de la fonction de Fibonacci récursive est donné <em>Listing 16.2.1</em>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_001.c" target="_blank">code/chapitre_16/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 fib_rec<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&lt;=</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> n<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> fib_rec<span style="color: #009900;">&#40;</span>n<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">+</span> fib_rec<span style="color: #009900;">&#40;</span>n<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 16.2.1 – Fibonacci - fonction récursive</em></p>
+<p>Si on réalise quelques tests de performance, on s'aperçoit rapidement que le
+nombre d'appels récursifs devient prohibitif (voir <em>Table 16.2</em>, ci-après) et la fonction
+devient de moins en moins efficace. Par exemple sur un AMD Ryzen 5 5600g dont
+la fréquence de fonctionnement en mode boost est de 4440 MHz, $F<em>{44}$, $F</em>{45}$ et $F_{46}$
+s'exécutent respectivement en 1.685, 2.559 et 4.365 secondes.
+Comme on peut s'en rendre compte, le nombre d'appels récursifs est proportionnel à $\phi$, le nombre d'or. Il tend vers $1,447214 \times \phi^n$ à
+mesure que n tend vers $\infty$. Notons que $1,447214 \simeq 1 + 1 / \sqrt{5}$.</p>
+<p>Il existe cependant une autre implantation récursive mais qui se base sur les
+propriétés suivantes. Elle permet de casser la complexité initiale du problème. Le
+code correspondant est donné <em>Listing 16.2.2</em> :</p>
+<ul>
+<li>Si $n$ est pair, $k = n/2$, $F<em>n = (2 \times F</em>{k-1} + F_k) \times F_k$</li>
+<li>Si $n$ est impair, $k = (n+1)/2$, $F<em>n = F</em>{k-1}^2 + F_k^2$</li>
+</ul>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_002.c" target="_blank">code/chapitre_16/code_002.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 fib_rec_improved<span style="color: #009900;">&#40;</span>u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&lt;=</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #b1b100;">return</span> n<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">%</span> <span style="color: #0000dd;">2</span> <span style="color: #339933;">==</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 k <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">+</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 f1 <span style="color: #339933;">=</span> fib_rec_improved<span style="color: #009900;">&#40;</span>k <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 f2 <span style="color: #339933;">=</span> fib_rec_improved<span style="color: #009900;">&#40;</span>k<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> <span style="color: #009900;">&#40;</span>f1 <span style="color: #339933;">*</span> f1 <span style="color: #339933;">+</span> f2 <span style="color: #339933;">*</span> f2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 k <span style="color: #339933;">=</span> n <span style="color: #339933;">&gt;&gt;</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 f1 <span style="color: #339933;">=</span> fib_rec_improved<span style="color: #009900;">&#40;</span>k <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 f2 <span style="color: #339933;">=</span> fib_rec_improved<span style="color: #009900;">&#40;</span>k<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">2</span> <span style="color: #339933;">*</span> f1 <span style="color: #339933;">+</span> f2<span style="color: #009900;">&#41;</span> <span style="color: #339933;">*</span> f2<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 16.2.2 – Fibonacci - fonction récursive améliorée</em></p>
+<table class="data-table">
+<thead>
+<tr>
+<th>$F_i$</th>
+<th><code>fib_rec</code></th>
+<th><code>fib_rec_improved</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$F_{10}$</td>
+<td>177</td>
+<td>15</td>
+</tr>
+<tr>
+<td>$F_{20}$</td>
+<td>21 891</td>
+<td>31</td>
+</tr>
+<tr>
+<td>$F_{25}$</td>
+<td>242 785</td>
+<td>41</td>
+</tr>
+<tr>
+<td>$F_{30}$</td>
+<td>2 692 537</td>
+<td>45</td>
+</tr>
+<tr>
+<td>$F_{35}$</td>
+<td>29 860 703</td>
+<td>55</td>
+</tr>
+<tr>
+<td>$F_{40}$</td>
+<td>331 160 281</td>
+<td>63</td>
+</tr>
+<tr>
+<td>$F_{45}$</td>
+<td>3 672 623 805</td>
+<td>75</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 16.2 – Nombre d'appels des fonctions récursives de Fibonacci</em></p>
+<p>Pour la version récursive améliorée, le nombre d'appels récursifs est nettement
+plus petit et d'une complexité en $\mathcal{O}(n)$ comme on peut le constater.</p>
+<h2 class="section">16.3 Approximation Mathématique</h2>
+
+<p>On peut calculer $F_n$ en utilisant l'arrondi de l'expression suivante :
+$$F_n \simeq \frac{\phi^n}{\sqrt{5}}$$</p>
+<p>Le temps de calcul du test que nous réaliserons et qui est décrit ci-après est
+de l'ordre de 22,58 secondes via <code>math.h</code>. Nous ne nous intéresserons donc pas aux temps de
+calculs obtenus grâce à cette formule même s'ils sont parfois inférieurs à d'autres
+implantations (notamment la traduction directe non-optimisée de la référence récursive pure qui s'exécute en plus de 50 secondes !).</p>
+<h2 class="section">16.4 Fonction de Référence (Récursivité Linéaire)</h2>
+
+<p>La version de référence à laquelle nous allons nous intéresser (<em>Listing 16.4.1</em>),
+est une variante de la version récursive. Elle est à la fois récursive puisqu'elle s'ap-
+pelle, mais également linéaire puisque seulement $n$ appels seront réalisés.
+Elle prend en paramètres la valeur du nombre à calculer $n$ ainsi que $F_0$ et $F_1$
+représentés respectivement par <code>f0</code> et <code>f1</code>. L'appel est réalisé en prenant <code>f0 = 0</code> et
+<code>f1 = 1</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_003.c" target="_blank">code/chapitre_16/code_003.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 fib_ref<span style="color: #009900;">&#40;</span>u32 f0<span style="color: #339933;">,</span> u32 f1<span style="color: #339933;">,</span> u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">==</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> f0<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">return</span> fib_ref<span style="color: #009900;">&#40;</span>f1<span style="color: #339933;">,</span> f0 <span style="color: #339933;">+</span> f1<span style="color: #339933;">,</span> n <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// Appel initial :</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #666666; font-style: italic;">// u32 fn = fib_ref(0, 1, n);</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 16.4.1 – Fibonacci - fonction de référence linéaire</em></p>
+<p>Cette fonction de référence est traduite par le compilateur <code>g++</code> en utilisant les
+options de compilation suivantes : <code>-O3</code> (Optimisation niveau 3) et <code>-funroll-loops</code> (dépliage de boucle).
+Le compilateur parvient à éliminer la récursivité et produit une version très performante. Il transforme la récursivité en une boucle <code>while</code> avec un dépliage
+par 8. De plus, il utilise <code>esp</code> plutôt que <code>ebp</code> pour récupérer les paramètres de la
+fonction.</p>
+<p><strong>Temps de référence</strong>
+Le test de référence consiste à réaliser <code>500_000_000</code> fois le calcul de $F_{43}$. Les
+tests sont réalisés sur un AMD Ryzen 5 5600g. Pour l'implantation par le
+compilateur <code>g++</code>, l'exécution dure environ <strong>2,853 secondes</strong>, ce qui représente
+un temps d'exécution très performant qui va se révéler difficile à battre, mais
+à cœur vaillant, rien d'impossible.</p>
+<h2 class="section">16.5 Fonction Récursive (Assembleur natif)</h2>
+
+<p>La traduction de la fonction de référence en assembleur est facile à réaliser. Un
+rapide examen permet de déterminer qu'il est intéressant de charger <code>f0</code> dans <code>eax</code>
+puisque c'est la valeur qui sera retournée dans le cas où la variable $n$ est égale à 0.
+On utilise également <code>edx</code> pour stocker <code>f1</code> et <code>ecx</code> pour $n$.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_004.asm" target="_blank">code/chapitre_16/code_004.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">fib_v1<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax = f0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; edx = f1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ecx = n</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">test</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; n == 0 ?</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jz</span> <span style="color: #339933;">.</span>endif</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; n - 1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; arg 3: n - 1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax &lt;- f0 + f1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; arg 2: f0 + f1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; arg 1: f1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">call</span> fib_v1</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">12</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; libération des paramètres</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>endif<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 16.5.1 – Fibonacci - fonction de référence en assembleur</em></p>
+<p><strong>Echec en assembleur natif (Call Hell)</strong>
+La version de référence implantée en assembleur (traduction
+directe) s'exécute en <strong>50,630 secondes</strong>, ce qui est énorme par rapport à la
+version optimisée par le compilateur (2,853s). Les accès mémoires de la pile <code>call/ret</code> sont la cause du ralentissement.</p>
+<h2 class="section">16.6 Approche algorithmique (Tableau dynamique vs statique)</h2>
+
+<p>Pour calculer les nombres de la suite de Fibonacci, on peut utiliser un tableau
+de $n+1$ entiers et on commence par remplir les deux premiers éléments par les
+valeurs 0 et 1 qui correspondent à $F_0$ et $F_1$. Chaque élément d'indice $i$ du tableau
+correspond à la valeur de $F_i$. On applique ensuite la formule de récurrence sur les
+éléments du tableau.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_005.c" target="_blank">code/chapitre_16/code_005.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 fib_arr<span style="color: #009900;">&#40;</span>u32 f0<span style="color: #339933;">,</span> u32 f1<span style="color: #339933;">,</span> u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&lt;=</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #b1b100;">return</span> n<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 data<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">48</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">// Ou un malloc global</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; data<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">0</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> f0<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; data<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> f1<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; u32 i <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">&lt;=</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; data<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> data<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">+</span> data<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #339933;">++</span>i<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> data<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 16.6.1 – Fibonacci - fonction itérative avec tableau</em></p>
+<p><strong>Version Tableau Dynamique vs Statique</strong>
+La version basée sur un tableau dynamique (<code>malloc</code>) alloué à chaque appel de la
+fonction prend <strong>13,790 secondes</strong> pour s'exécuter. Alors que si on utilise un
+tableau statique (<code>u32 data[48]</code>) le temps d'exécution passe à <strong>6,380 secondes</strong>.</p>
+<h2 class="section">16.7 Approche Itérative (<code>while</code> direct)</h2>
+
+<p>Nous allons à présent nous concentrer sur des versions itératives et remplacer
+l'appel récursif par une boucle <code>while</code> mais nous allons nous passer de l'utilisation
+d'un tableau pour stocker les calculs intermédiaires. Ces calculs seront réalisés
+dans les registres <code>eax</code> et <code>edx</code> principalement.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_006.c" target="_blank">code/chapitre_16/code_006.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">u32 fib_iter<span style="color: #009900;">&#40;</span>u32 f0<span style="color: #339933;">,</span> u32 f1<span style="color: #339933;">,</span> u32 n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">!=</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; u32 tmp <span style="color: #339933;">=</span> f1<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; f1 <span style="color: #339933;">+=</span> f0<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; f0 <span style="color: #339933;">=</span> tmp<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #339933;">--</span>n<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">return</span> f0<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 16.7.1 – Fibonacci - fonction itérative avec boucle while</em></p>
+<p>Si $n$ est égal à 0, on retourne <code>f0</code> (donc 0). Sinon on calcule $F_1$, puis $F_2$, jusqu'à
+$F_n$. La variable <code>f0</code> devient <code>f1</code> et <code>f1</code> devient <code>f1+f0</code> ($F_2$). Pour faire ce
+transfert de valeurs il est nécessaire d'utiliser une variable temporaire <code>tmp</code>.</p>
+<p>On peut traduire ce code directement en assembleur en
+utilisant le registre <code>ebx</code> pour stocker temporairement la valeur de <code>f1</code>. On se doit
+alors de sauvegarder <code>ebx</code> dans la pile, puis de le restaurer par la suite.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_007.asm" target="_blank">code/chapitre_16/code_007.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">fib_v3<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">esp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">push</span> <span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">8</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax = f0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">12</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; edx = f1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">16</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ecx = n</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">test</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ecx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jz</span> <span style="color: #339933;">.</span>end</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; tmp = f1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; f1 = f0 + f1 =&gt; f2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; f0 = tmp =&gt; f1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">ecx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; --n</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jnz</span> <span style="color: #339933;">.</span>while</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>end<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">ebx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">pop</span> <span style="color: #46aa03; font-weight: bold;">ebp</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ret</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><em>Listing 16.7.2 – Fibonacci - fonction itérative avec while en assembleur</em></p>
+<p><strong>Version itérative avec while</strong>
+La version itérative ne prend alors plus que <strong>6,30 secondes</strong> pour s'exécuter.
+Avec <code>unroll 2</code> : 5,26s.
+Avec <code>unroll 4</code> : 3,54s.
+Avec <code>unroll 8</code> : <strong>3,47s</strong>.</p>
+<h3 class="subsection">16.7.1 Amélioration d'assignement (XCHG)</h3>
+
+<p>On peut s'apercevoir que le corps de la boucle <code>while</code> peut être optimisé. Au lieu
+de coder une transition via registre tampon :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_008.asm" target="_blank">code/chapitre_16/code_008.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax = f0 + f1 (F2), edx = f1 (F1)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">xchg</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; échange : eax=F1, edx=F2</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>L'astuce permet de se passer du tampon <code>ebx</code>. Mais, mal implémentée, la dépendance d'<code>XCHG</code> sur les états mémoires de <code>eax</code> ne rapporte pas d'avantage que cela (3,60s).</p>
+<h3 class="subsection">16.7.2 Amélioration Parallèle au dépliage</h3>
+
+<p>Une amélioration consistante en <em>Unroll</em> consiste à faire les sauts 2 par 2 sans <code>XCHG</code> de retour :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_009.asm" target="_blank">code/chapitre_16/code_009.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">edx</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; eax = F0 + F1 = F2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">eax</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; edx = F1 + F2 = F3 (directement le coup suivant !)</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Instruction</th>
+<th>Registre <code>eax</code></th>
+<th>Registre <code>edx</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Initialement</em></td>
+<td>$F_i$</td>
+<td>$F_{i+1}$</td>
+</tr>
+<tr>
+<td><code>add eax, edx</code></td>
+<td>$F_{i+2}$</td>
+<td>$F_{i+1}$</td>
+</tr>
+<tr>
+<td><code>add edx, eax</code></td>
+<td>$F_{i+2}$</td>
+<td>$F_{i+3}$</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 16.3 – Astuce dépliage par 2</em></p>
+<p>Avec cette technique pour sauter deux éléments sans rien échanger :</p>
+<ul>
+<li>Dépliage par 2 : 3,755s</li>
+<li>Dépliage par 4 : 3,544s</li>
+<li><strong>Dépliage par 8 : 2,453s</strong></li>
+</ul>
+<h3 class="subsection">16.7.5 Amélioration via calcul d'adresse (<code>lea</code>)</h3>
+
+<p>Lors du dépliage par 8, les enchainements d'instructions <code>add</code> génèrent des pénalités de dépendance (<em>Read-After-Write Pipeline Hazard</em>). On peut supprimer des
+dépendances en utilisant l'instruction de calcul d'adresse matérielle <code>lea</code>.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_010.asm" target="_blank">code/chapitre_16/code_010.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while_ur8<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">lea</span> <span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">ebx</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">edx</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">loop</span> <span style="color: #339933;">.</span>while_ur8</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p>Le code exécute 500 millions d'appels en <strong>2,229 secondes</strong> grâce au processeur traitant <code>lea</code> sur une ALU complètement asynchrone par rapport au résolveur arithmétique.</p>
+<h2 class="section">16.8 Amélioration Vectorielle via SIMD (SSE / AVX2 / AVX512)</h2>
+
+<h3 class="subsection">16.8.1 Vectorisation SSE</h3>
+
+<p>On peut reprendre le même principe que la boucle <code>while</code> en utilisant les registres
+vectoriels. On commence par charger dans le registre SSE <code>xmm0</code> les 4 premières valeurs
+de la suite de Fibonacci et on fait de même avec <code>xmm1</code> avec un décalage d'un élèment.</p>
+<p>Il s'agit des tableaux <code>sse_vect0</code> et <code>sse_vect1</code>. On alignera ces tableaux sur de la lecture mémoire par 16 octets (<code>align 16</code>).</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Instruction</th>
+<th><code>xmm0</code></th>
+<th><code>xmm1</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Initialement</em></td>
+<td>$F_3,F_2,F_1,F_0$</td>
+<td>$F_4,F_3,F_2,F_1$</td>
+</tr>
+<tr>
+<td><code>paddd xmm0, xmm1</code></td>
+<td>$F_7,F_5,F_3,F_1$</td>
+<td>$F_4,F_3,F_2,F_1$</td>
+</tr>
+<tr>
+<td><code>paddd xmm1, xmm0</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 16.4 – Evolution vectorielle pure : (Les vecteurs s'additionnent localement en déphasé).</em></p>
+<p><em>(Note : le mécanisme vectoriel s'appuie sur un système spécifique. En SSE, l'addition entre XMM entraîne un saut de multiples suites d'un trait, ce qui se résout par <code>[0,1,1,2] + [1,1,2,3] = [1,2,3,5]</code> (le terme $n+4$). On va pouvoir faire des sauts par 4 sans déplier en dur).</em></p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_011.asm" target="_blank">code/chapitre_16/code_011.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">align</span> <span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sse_vect0<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">2</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; F0, F1, F2, F3</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">sse_vect1<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">2</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; F1, F2, F3, F4</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">fib_sse<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ... Chargements xmm0 et xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">shr</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">2</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; n / 4 car de saut de 4 par boucle matérielle !</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while_ur4<span style="color: #339933;">:</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; On avance de 4 pas vectoriellement</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">paddd</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">paddd</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">paddd</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">paddd</span> <span style="color: #46aa03; font-weight: bold;">xmm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">eax</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jnz</span> <span style="color: #339933;">.</span>while_ur4</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Extraire l'élément du reste</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">*</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">16.8.2 Vectorisation AVX</h3>
+
+<p>La version AVX consiste à faire un saut de 8 à la fois sur la boucle puisque les <code>ymm</code> traitent 8 éléments de 32-bits par cycle !</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_012.asm" target="_blank">code/chapitre_16/code_012.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">align</span> <span style="color: #ff0000;">32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">avx_vect0<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">2</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">5</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">13</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">avx_vect1<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">1</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">2</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">5</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">8</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">13</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">21</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">34</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">fib_avx<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ...</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">shr</span> <span style="color: #46aa03; font-weight: bold;">ecx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; n / 8 !</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>while_ur8<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpaddd</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ymm1 = ymm1 + ymm0</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpaddd</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; ymm0 = ymm0 + ymm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; ... (x8)</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">dec</span> <span style="color: #46aa03; font-weight: bold;">ecx</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jnz</span> <span style="color: #339933;">.</span>while_ur8</div></li>
+</ol></div>
+</div>
+
+</details>
+
+<p><strong>Amélioration Vectorielle SSE / AVX</strong>
+Les temps d'exécution tombent à :</p>
+<ul>
+<li>Version SSE Assembleur (unroll 8) : <strong>1,961 sec</strong>.</li>
+<li>Version AVX Assembleur (unroll 16) : <strong>1,973 sec</strong>.
+Les versions intrinsics (<code>C</code>) tournent autour de 2.47 sec. C'est l'assembleur pur qui surpasse grandement la version compilo (2.85s).</li>
+</ul>
+<h2 class="section">16.9 Benchmark Final Multi-Architecture</h2>
+
+<p>Le code qui correspond à l'ensemble des résultats produits dans cette section
+comporte 34 implantations différentes.</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i3 6100<br><small>2015</small></th>
+      <th>Core i5 7400<br><small>2017</small></th>
+      <th>Core i7 8700<br><small>2017</small></th>
+      <th>Ryzen 7 1700X<br><small>2017</small></th>
+      <th>Core i5 8365U<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>AVX intrin v2</strong></td>
+      <td>4.200</td>
+      <td>4.380</td>
+      <td>3.210</td>
+      <td>5.730</td>
+      <td>3.930</td>
+    </tr>
+    <tr>
+      <td><strong>SSE intrin</strong></td>
+      <td>4.110</td>
+      <td>4.360</td>
+      <td>3.170</td>
+      <td>4.270</td>
+      <td>3.660</td>
+    </tr>
+    <tr>
+      <td><strong>dyna. array</strong></td>
+      <td>18.570</td>
+      <td>21.670</td>
+      <td>15.790</td>
+      <td>21.160</td>
+      <td>18.090</td>
+    </tr>
+    <tr>
+      <td><strong>gcc</strong></td>
+      <td>4.110</td>
+      <td>4.240</td>
+      <td>3.230</td>
+      <td>4.390</td>
+      <td>3.610</td>
+    </tr>
+    <tr>
+      <td><strong>icc</strong></td>
+      <td>7.970</td>
+      <td>8.560</td>
+      <td>6.490</td>
+      <td>11.310</td>
+      <td>7.390</td>
+    </tr>
+    <tr>
+      <td><strong>n recursive</strong></td>
+      <td>63.390</td>
+      <td>67.710</td>
+      <td>51.530</td>
+      <td>82.480</td>
+      <td>112.240</td>
+    </tr>
+    <tr>
+      <td><strong>stat. array</strong></td>
+      <td>8.990</td>
+      <td>9.120</td>
+      <td>7.370</td>
+      <td>8.840</td>
+      <td>8.300</td>
+    </tr>
+    <tr>
+      <td><strong>while v1</strong></td>
+      <td>7.520</td>
+      <td>8.990</td>
+      <td>5.780</td>
+      <td>11.470</td>
+      <td>7.440</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur2</strong></td>
+      <td>18.450</td>
+      <td>22.260</td>
+      <td>15.010</td>
+      <td>5.480</td>
+      <td>18.880</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur4</strong></td>
+      <td>12.560</td>
+      <td>16.070</td>
+      <td>10.210</td>
+      <td>5.250</td>
+      <td>12.790</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur8</strong></td>
+      <td>9.650</td>
+      <td>11.850</td>
+      <td>7.860</td>
+      <td>5.140</td>
+      <td>9.950</td>
+    </tr>
+    <tr>
+      <td><strong>while v3 ur8</strong></td>
+      <td>5.370</td>
+      <td>5.740</td>
+      <td>4.450</td>
+      <td>4.390</td>
+      <td>4.960</td>
+    </tr>
+    <tr>
+      <td><strong>while v6 ur8</strong></td>
+      <td>4.350</td>
+      <td>4.660</td>
+      <td>3.600</td>
+      <td>4.510</td>
+      <td>3.950</td>
+    </tr>
+    <tr>
+      <td><strong>AVX asm ur8</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>5.600</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm fibonacci</caption>
+</table>
+</div>
+<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+<script src="data/graph.js"></script>
+<div class="chart-container" id="chart-auto-asm_fibonacci-moderne-19" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_fibonacci-moderne-19';
+    var data = {"CPUs":["Core i3 6100","Core i5 7400","Core i7 8700","Ryzen 7 1700X","Core i5 8365U"],"Years":[2015,2017,2017,2017,2019],"Methods":[{"name":"AVX intrin v2","values":[4.2,4.38,3.21,5.73,3.93]},{"name":"SSE intrin","values":[4.11,4.36,3.17,4.27,3.66]},{"name":"dyna. array","values":[18.57,21.67,15.79,21.16,18.09]},{"name":"gcc","values":[4.11,4.24,3.23,4.39,3.61]},{"name":"icc","values":[7.97,8.56,6.49,11.31,7.39]},{"name":"n recursive","values":[63.39,67.71,51.53,82.48,112.24]},{"name":"stat. array","values":[8.99,9.12,7.37,8.84,8.3]},{"name":"while v1","values":[7.52,8.99,5.78,11.47,7.44]},{"name":"while v1 ur2","values":[18.45,22.26,15.01,5.48,18.88]},{"name":"while v1 ur4","values":[12.56,16.07,10.21,5.25,12.79]},{"name":"while v1 ur8","values":[9.65,11.85,7.86,5.14,9.95]},{"name":"while v3 ur8","values":[5.37,5.74,4.45,4.39,4.96]},{"name":"while v6 ur8","values":[4.35,4.66,3.6,4.51,3.95]},{"name":"AVX asm ur8","values":[null,null,null,5.6,null]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i5 10400<br><small>2020</small></th>
+      <th>Core i7 10850H<br><small>2020</small></th>
+      <th>Core i7 1165G7<br><small>2020</small></th>
+      <th>Ryzen 5 5600g<br><small>2021</small></th>
+      <th>Core i5 12400F<br><small>2022</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>AVX intrin v2</strong></td>
+      <td>3.837</td>
+      <td>3.235</td>
+      <td>3.710</td>
+      <td>2.471</td>
+      <td>2.566</td>
+    </tr>
+    <tr>
+      <td><strong>SSE intrin</strong></td>
+      <td>3.584</td>
+      <td>3.076</td>
+      <td>3.470</td>
+      <td>2.393</td>
+      <td>2.480</td>
+    </tr>
+    <tr>
+      <td><strong>SSE v4 ur8</strong></td>
+      <td>2.153</td>
+      <td>2.442</td>
+      <td>2.700</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>dyna. array</strong></td>
+      <td>16.660</td>
+      <td>14.470</td>
+      <td>14.840</td>
+      <td>13.790</td>
+      <td>9.441</td>
+    </tr>
+    <tr>
+      <td><strong>gcc</strong></td>
+      <td>3.516</td>
+      <td>3.007</td>
+      <td>3.070</td>
+      <td>2.853</td>
+      <td>2.035</td>
+    </tr>
+    <tr>
+      <td><strong>icc</strong></td>
+      <td>5.610</td>
+      <td>5.365</td>
+      <td>5.810</td>
+      <td>3.990</td>
+      <td>4.489</td>
+    </tr>
+    <tr>
+      <td><strong>n recursive</strong></td>
+      <td>108.570</td>
+      <td>93.390</td>
+      <td>59.530</td>
+      <td>50.630</td>
+      <td>55.870</td>
+    </tr>
+    <tr>
+      <td><strong>stat. array</strong></td>
+      <td>7.478</td>
+      <td>6.446</td>
+      <td>5.960</td>
+      <td>6.380</td>
+      <td>4.871</td>
+    </tr>
+    <tr>
+      <td><strong>while v1</strong></td>
+      <td>7.322</td>
+      <td>6.038</td>
+      <td>11.940</td>
+      <td>6.304</td>
+      <td>5.570</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur2</strong></td>
+      <td>18.210</td>
+      <td>13.860</td>
+      <td>16.090</td>
+      <td>3.608</td>
+      <td>14.930</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur4</strong></td>
+      <td>13.140</td>
+      <td>9.510</td>
+      <td>11.070</td>
+      <td>3.500</td>
+      <td>11.250</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur8</strong></td>
+      <td>9.583</td>
+      <td>7.254</td>
+      <td>8.690</td>
+      <td>3.497</td>
+      <td>8.197</td>
+    </tr>
+    <tr>
+      <td><strong>while v3 ur8</strong></td>
+      <td>4.823</td>
+      <td>4.121</td>
+      <td>5.020</td>
+      <td>2.229</td>
+      <td>4.795</td>
+    </tr>
+    <tr>
+      <td><strong>while v6 ur8</strong></td>
+      <td>3.832</td>
+      <td>3.286</td>
+      <td>3.410</td>
+      <td>2.271</td>
+      <td>2.807</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Recent – Benchmark asm fibonacci</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_fibonacci-recent-20" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_fibonacci-recent-20';
+    var data = {"CPUs":["Core i5 10400","Core i7 10850H","Core i7 1165G7","Ryzen 5 5600g","Core i5 12400F"],"Years":[2020,2020,2020,2021,2022],"Methods":[{"name":"AVX intrin v2","values":[3.837,3.235,3.71,2.471,2.566]},{"name":"SSE intrin","values":[3.584,3.076,3.47,2.393,2.48]},{"name":"SSE v4 ur8","values":[2.153,2.442,2.7,null,null]},{"name":"dyna. array","values":[16.66,14.47,14.84,13.79,9.441]},{"name":"gcc","values":[3.516,3.007,3.07,2.853,2.035]},{"name":"icc","values":[5.61,5.365,5.81,3.99,4.489]},{"name":"n recursive","values":[108.57,93.39,59.53,50.63,55.87]},{"name":"stat. array","values":[7.478,6.446,5.96,6.38,4.871]},{"name":"while v1","values":[7.322,6.038,11.94,6.304,5.57]},{"name":"while v1 ur2","values":[18.21,13.86,16.09,3.608,14.93]},{"name":"while v1 ur4","values":[13.14,9.51,11.07,3.5,11.25]},{"name":"while v1 ur8","values":[9.583,7.254,8.69,3.497,8.197]},{"name":"while v3 ur8","values":[4.823,4.121,5.02,2.229,4.795]},{"name":"while v6 ur8","values":[3.832,3.286,3.41,2.271,2.807]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>
+<h3 class="subsection">16.9.3 Stabilité Matérielle (Bruit Quantique)</h3>
+
+<p>La méthode <code>gcc</code> (1) exécute 45 milliards d'instructions. L'ASM d'origine (6) exécute 352 milliards d'instructions (<code>call/ret</code> infernal). C'est pourquoi la méthode 6 coule. La méthode <code>AVX</code> natif (33) ne met que <strong>34 milliards d'instructions</strong> !</p>
+<h3 class="subsection">16.9.3 Stabilité Matérielle (Bruit Quantique)</h3>
+
+<p>Lors de tests poussés sur les performances à la miliseconde près, et lors de micro-batching récurrent (500 millions de <code>while AVX</code>) pour tester les limites du CPU, des variances de Turbo Boost s'observent sur Intel.</p>
+<table class="data-table">
+<thead>
+<tr>
+<th></th>
+<th>Intel Core i7 10850H</th>
+<th>Intel Core i5 7400</th>
+<th>AMD Ryzen 5 5600g</th>
+<th>AMD Ryzen 7 1700X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fréquence moyenne</strong></td>
+<td>4973,97 MHz</td>
+<td>3475,01 MHz</td>
+<td>4441,90 MHz</td>
+<td>3492,71 MHz</td>
+</tr>
+<tr>
+<td><strong>Ecart type</strong></td>
+<td>24,20</td>
+<td>13,84</td>
+<td><strong>0,00</strong></td>
+<td>0,12</td>
+</tr>
+<tr>
+<td><strong>Minimum</strong></td>
+<td>4945,02 MHz</td>
+<td>3450,57 MHz</td>
+<td>4441,90 MHz</td>
+<td>3492,07 MHz</td>
+</tr>
+<tr>
+<td><strong>Maximum</strong></td>
+<td>5012,62 MHz</td>
+<td>3499,39 MHz</td>
+<td>4441,91 MHz</td>
+<td>3493,04 MHz</td>
+</tr>
+</tbody>
+</table>
+<p><em>TABLE 16.7 – Variation de la fréquence du microprocesseur lors des tests</em></p>
+<p>On note que pour les processeurs AMD, la fréquence de traitement vectoriel en AVX reste parfaitement verrouillée à sa clock de boost (zéro bruit mathématique), alors que les processeurs Intel modulent le voltage générant une tolérance d'erreur du tick de ±24MHz.</p>
+<h2 class="section">16.10 Remerciements</h2>
+
+<p>Merci à Mohamed Sylla et Matéo Grimaud, étudiants à l'Université d'Angers,
+pour les tests effectués respectivement sur Intel Core i7 1165G7 et Core i5 8365U.</p>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

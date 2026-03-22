@@ -1,0 +1,1 @@
+sysbench memory --memory-block-size=256K run

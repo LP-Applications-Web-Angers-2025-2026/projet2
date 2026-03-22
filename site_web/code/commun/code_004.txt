@@ -1,0 +1,9 @@
+Promise.all([
+    fetch('data/api_benchmark.php?chapter=15&arch=ancien').then(res => res.json()),
+    fetch('data/api_benchmark.php?chapter=15&arch=moderne').then(res => res.json()),
+    fetch('data/api_benchmark.php?chapter=15&arch=recent').then(res => res.json())
+]).then(([data_ancien, data_moderne, data_recent]) => {
+    createPerformanceChart('graph_ancien', data_ancien);
+    createPerformanceChart('graph_moderne', data_moderne);
+    createPerformanceChart('graph_recent', data_recent);
+}).catch(err => console.error("Erreur de récupération SQLite:", err));

@@ -1,0 +1,1 @@
+nasm -f elf64 -g -F dwarf source.asm

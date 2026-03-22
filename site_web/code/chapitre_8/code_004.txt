@@ -1,0 +1,3 @@
+movups ,a]
+movups ,b]
+insertps ,xmm2,10_11_0011b
