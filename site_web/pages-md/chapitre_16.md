@@ -430,30 +430,9 @@ fib_avx:
 Le code qui correspond à l'ensemble des résultats produits dans cette section
 comporte 34 implantations différentes.
 
-| N° | Méthode | Intel Core i3 6100 | AMD Ryzen 7 1700X | Intel Core i7 8700 | Intel Core i5 8365U |
-|---|---|---|---|---|---|
-| 1 | `gcc` (Référence -O3) | 4,11 | 4,39 | 3,23 | 3,61 |
-| 5 | `dyna. array` (malloc) | 18,57 | 21,16 | 15,79 | 18,09 |
-| 6 | `n recursive` (ASM natif)| 63,39 | 82,48 | 51,53 | 112,24 |
-| 8 | `while_v1` (ASM basique)| 7,52 | 11,47 | 5,78 | 7,44 | 
-| 11 | `while_v1_ur8` | 9,65 | 5,14 | 7,86 | 9,95 |
-| 21 | `while_v3_ur8` (`lea`) | 5,37 | 4,39 | 4,45 | 4,96 |
-| 30 | `SSE_v4_ur8` | - | 4,20 | 3,17 | 3,66 |
-| 33 | `AVX_asm_ur8` | - | **3,34** | **2,46** | **2,90** |
+[BENCHMARK:asm_fibonacci]
 
-*TABLE 16.5 – Résultats comparatifs (Architectures < 2019) (500 M itérations).*
-
-L'AMD Ryzen 1700X s'étouffe sur l'ASM basique (11.47 sec) mais reprend la couronne avec un unroll (5.14 sec). La puissance totale s'obtient avec l'ASM AVX.
-
-| N° | Méthode | Intel Core i7 10850H | AMD Ryzen 5 5600g | Intel Core i5 12400F |
-|---|---|---|---|---|
-| 1 | `gcc` (Référence -O3) | 3,007 | 2,853 | 2,035 |
-| 8 | `while_v1` (ASM basique)| 6,038 | 6,304 | 5,570 |
-| 21 | `while_v3_ur8` (`lea`) | 4,121 | 2,229 | 4,795 |
-| 30 | `SSE_v4_ur8` | **2,442** | 2,153 | **1,980** |
-| 33 | `AVX_asm_ur8` | - | **1,982** | - |
-
-*TABLE 16.6 – Résultats comparatifs (Architectures > 2020) (500 M itérations).*
+### 16.9.3 Stabilité Matérielle (Bruit Quantique)
 
 La méthode `gcc` (1) exécute 45 milliards d'instructions. L'ASM d'origine (6) exécute 352 milliards d'instructions (`call/ret` infernal). C'est pourquoi la méthode 6 coule. La méthode `AVX` natif (33) ne met que **34 milliards d'instructions** !
 

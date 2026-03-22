@@ -509,322 +509,1301 @@ double mot, et enfin d'en compter le nombre de bits avec un classique scalaire <
 
 <p>Nous avons testé 30_000 appels sur le même vecteur de 262_207 octets.
 L'étude est poussée sur 15 implémentations (référence C, optimisation manuelle, Shift arithmétique, POPCNT ASM natif, vectorisation SSE, et Intrinsics compilateur).</p>
-<h3 class="subsection">12.6.1 Architectures Anciennes (Avant 2015)</h3>
-
+<div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>Méthode</th>
-<th>Pentium D 925</th>
-<th>Core 2 Q9300</th>
-<th>Core i7 860</th>
-<th>AMD Phenom X6</th>
-<th>Core i5 3570K</th>
-<th>Core i7 4790</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1 u8_reference</td>
-<td>150.22</td>
-<td>170.20</td>
-<td>110.19</td>
-<td>80.21</td>
-<td>72.58</td>
-<td>54.99</td>
-</tr>
-<tr>
-<td>2 u8_reference_opt</td>
-<td>111.73</td>
-<td>161.63</td>
-<td>102.39</td>
-<td>64.68</td>
-<td>65.12</td>
-<td>47.38</td>
-</tr>
-<tr>
-<td>3 u32_reference</td>
-<td>126.41</td>
-<td>105.45</td>
-<td>60.91</td>
-<td>43.46</td>
-<td>53.34</td>
-<td>39.42</td>
-</tr>
-<tr>
-<td>4 u32_reference_opt</td>
-<td>73.51</td>
-<td>88.36</td>
-<td>60.81</td>
-<td>43.31</td>
-<td>48.68</td>
-<td>33.40</td>
-</tr>
-<tr>
-<td>8 u32_shift_v2</td>
-<td>7.76</td>
-<td>3.13</td>
-<td>1.82</td>
-<td>1.86</td>
-<td>1.06</td>
-<td>0.49</td>
-</tr>
-<tr>
-<td>10 u32_asm</td>
-<td>-</td>
-<td>-</td>
-<td>1.27</td>
-<td>1.65</td>
-<td>1.16</td>
-<td>0.71</td>
-</tr>
-<tr>
-<td>11 u32_asm_ur4</td>
-<td>-</td>
-<td>-</td>
-<td>0.89</td>
-<td>0.88</td>
-<td>0.49</td>
-<td>-</td>
-</tr>
-<tr>
-<td>15 u8_intrinsics</td>
-<td>4.55</td>
-<td>0.92</td>
-<td>1.35</td>
-<td>0.76</td>
-<td>0.61</td>
-<td>-</td>
-</tr>
-<tr>
-<td>Ratio d'Amélioration Max</td>
-<td><strong>× 33</strong></td>
-<td><strong>× 75</strong></td>
-<td><strong>× 123</strong></td>
-<td><strong>× 95</strong></td>
-<td><strong>× 95</strong></td>
-<td><strong>× 112</strong></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Pentium D 925<br><small>2006</small></th>
+      <th>Core 2 Q9300<br><small>2008</small></th>
+      <th>Intel Core2 Quad Q9300 2.50GHz<br><small>2008</small></th>
+      <th>Pentium Dual Core E5300 2.60GHz<br><small>2008</small></th>
+      <th>Core i7 860<br><small>2009</small></th>
+      <th>Intel Core i7 860 2.80GHz<br><small>2009</small></th>
+      <th>AMD X6 1090T<br><small>2010</small></th>
+      <th>AMD Phenom II X6 1090T<br><small>2010</small></th>
+      <th>Core i5 3570K<br><small>2012</small></th>
+      <th>Intel Core i5 3570K 3.40GHz<br><small>2012</small></th>
+      <th>Core i7 4790<br><small>2014</small></th>
+      <th>Intel Core i7 4790 3.60GHz<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>u32_reference</strong></td>
+      <td>126.410</td>
+      <td>105.450</td>
+      <td>-</td>
+      <td>-</td>
+      <td>60.910</td>
+      <td>-</td>
+      <td>43.460</td>
+      <td>-</td>
+      <td>53.340</td>
+      <td>-</td>
+      <td>39.420</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_reference_opt</strong></td>
+      <td>73.510</td>
+      <td>88.360</td>
+      <td>-</td>
+      <td>-</td>
+      <td>60.810</td>
+      <td>-</td>
+      <td>43.310</td>
+      <td>-</td>
+      <td>48.680</td>
+      <td>-</td>
+      <td>33.400</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v1</strong></td>
+      <td>8.010</td>
+      <td>4.250</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.050</td>
+      <td>-</td>
+      <td>2.500</td>
+      <td>-</td>
+      <td>1.290</td>
+      <td>-</td>
+      <td>0.560</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v2</strong></td>
+      <td>7.760</td>
+      <td>3.130</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.820</td>
+      <td>-</td>
+      <td>1.860</td>
+      <td>-</td>
+      <td>1.060</td>
+      <td>-</td>
+      <td>0.490</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_intrinsics</strong></td>
+      <td>4.550</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.920</td>
+      <td>-</td>
+      <td>1.350</td>
+      <td>-</td>
+      <td>0.760</td>
+      <td>-</td>
+      <td>0.610</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_reference</strong></td>
+      <td>150.220</td>
+      <td>170.200</td>
+      <td>-</td>
+      <td>-</td>
+      <td>110.190</td>
+      <td>-</td>
+      <td>80.210</td>
+      <td>-</td>
+      <td>72.580</td>
+      <td>-</td>
+      <td>54.990</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_reference_opt</strong></td>
+      <td>111.730</td>
+      <td>161.630</td>
+      <td>-</td>
+      <td>-</td>
+      <td>102.390</td>
+      <td>-</td>
+      <td>64.680</td>
+      <td>-</td>
+      <td>65.120</td>
+      <td>-</td>
+      <td>47.380</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v1</strong></td>
+      <td>16.500</td>
+      <td>7.770</td>
+      <td>-</td>
+      <td>-</td>
+      <td>4.520</td>
+      <td>-</td>
+      <td>4.310</td>
+      <td>-</td>
+      <td>3.230</td>
+      <td>-</td>
+      <td>1.980</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v2</strong></td>
+      <td>16.450</td>
+      <td>7.660</td>
+      <td>-</td>
+      <td>-</td>
+      <td>4.760</td>
+      <td>-</td>
+      <td>4.620</td>
+      <td>-</td>
+      <td>3.200</td>
+      <td>-</td>
+      <td>2.020</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_shift_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>217440402.400</td>
+      <td>176352295.600</td>
+      <td>-</td>
+      <td>260701938.233</td>
+      <td>-</td>
+      <td>180724815.200</td>
+      <td>-</td>
+      <td>103939919.833</td>
+      <td>-</td>
+      <td>48050576.750</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_shift_v2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>168996325.067</td>
+      <td>154376521.217</td>
+      <td>-</td>
+      <td>247201095.000</td>
+      <td>-</td>
+      <td>126878201.550</td>
+      <td>-</td>
+      <td>86314044.533</td>
+      <td>-</td>
+      <td>42486938.317</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_table_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>565951333.200</td>
+      <td>477750777.833</td>
+      <td>-</td>
+      <td>1094132504.683</td>
+      <td>-</td>
+      <td>460701635.000</td>
+      <td>-</td>
+      <td>320221486.067</td>
+      <td>-</td>
+      <td>280957109.567</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_table_v2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>322535775.733</td>
+      <td>279215583.833</td>
+      <td>-</td>
+      <td>532890310.217</td>
+      <td>-</td>
+      <td>300843304.850</td>
+      <td>-</td>
+      <td>209298880.100</td>
+      <td>-</td>
+      <td>181401009.850</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_wegner</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>2805289900.567</td>
+      <td>2390680745.917</td>
+      <td>-</td>
+      <td>5104977751.083</td>
+      <td>-</td>
+      <td>133486759.050</td>
+      <td>-</td>
+      <td>133954845.050</td>
+      <td>-</td>
+      <td>117205667.367</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_intrinsics</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>99261342.217</td>
+      <td>93129364.900</td>
+      <td>-</td>
+      <td>166677526.067</td>
+      <td>-</td>
+      <td>84331233.450</td>
+      <td>-</td>
+      <td>58599451.600</td>
+      <td>-</td>
+      <td>47349477.167</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_reference</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>7922992619.767</td>
+      <td>7503202067.617</td>
+      <td>-</td>
+      <td>15207584341.950</td>
+      <td>-</td>
+      <td>5643741115.900</td>
+      <td>-</td>
+      <td>5405477346.933</td>
+      <td>-</td>
+      <td>4561624179.617</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_shift_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>375211573.633</td>
+      <td>327891273.667</td>
+      <td>-</td>
+      <td>622516433.417</td>
+      <td>-</td>
+      <td>269486923.233</td>
+      <td>-</td>
+      <td>252324371.617</td>
+      <td>-</td>
+      <td>161029957.100</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_shift_v2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>395123980.267</td>
+      <td>330862127.700</td>
+      <td>-</td>
+      <td>597129972.533</td>
+      <td>-</td>
+      <td>275182361.717</td>
+      <td>-</td>
+      <td>249539851.350</td>
+      <td>-</td>
+      <td>163504065.050</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_wegner</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>6728793854.650</td>
+      <td>5917124901.350</td>
+      <td>-</td>
+      <td>11755074725.033</td>
+      <td>-</td>
+      <td>4498721961.883</td>
+      <td>-</td>
+      <td>4536096866.167</td>
+      <td>-</td>
+      <td>4120116149.417</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.270</td>
+      <td>-</td>
+      <td>1.650</td>
+      <td>-</td>
+      <td>1.160</td>
+      <td>-</td>
+      <td>0.710</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.960</td>
+      <td>-</td>
+      <td>1.520</td>
+      <td>-</td>
+      <td>0.920</td>
+      <td>-</td>
+      <td>0.740</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_asm</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>6.880</td>
+      <td>-</td>
+      <td>10.940</td>
+      <td>-</td>
+      <td>4.650</td>
+      <td>-</td>
+      <td>2.960</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_popcnt</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>173512847.083</td>
+      <td>-</td>
+      <td>126548832.600</td>
+      <td>-</td>
+      <td>97539682.567</td>
+      <td>-</td>
+      <td>62268972.200</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_popcnt_ur2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>122869996.817</td>
+      <td>-</td>
+      <td>89132300.900</td>
+      <td>-</td>
+      <td>80039061.817</td>
+      <td>-</td>
+      <td>47466320.550</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_popcnt_ur4</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>140487780.700</td>
+      <td>-</td>
+      <td>68239334.533</td>
+      <td>-</td>
+      <td>75806509.967</td>
+      <td>-</td>
+      <td>43852216.250</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_popcnt</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>97852617.933</td>
+      <td>-</td>
+      <td>77502971.183</td>
+      <td>-</td>
+      <td>74619962.067</td>
+      <td>-</td>
+      <td>62657976.467</td>
+    </tr>
+    <tr>
+      <td><strong>u64_asm_popcnt</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>91101414.933</td>
+      <td>-</td>
+      <td>69950525.033</td>
+      <td>-</td>
+      <td>50375999.000</td>
+      <td>-</td>
+      <td>33583915.267</td>
+    </tr>
+    <tr>
+      <td><strong>u64_asm_popcnt_ur2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>67967256.133</td>
+      <td>-</td>
+      <td>49726696.800</td>
+      <td>-</td>
+      <td>42338028.800</td>
+      <td>-</td>
+      <td>33181473.467</td>
+    </tr>
+    <tr>
+      <td><strong>u64_asm_popcnt_ur4</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>72712631.183</td>
+      <td>-</td>
+      <td>41628540.017</td>
+      <td>-</td>
+      <td>42094223.650</td>
+      <td>-</td>
+      <td>34671139.200</td>
+    </tr>
+    <tr>
+      <td><strong>u8_asm_popcnt</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>985352447.700</td>
+      <td>-</td>
+      <td>628320459.033</td>
+      <td>-</td>
+      <td>357508336.483</td>
+      <td>-</td>
+      <td>241981917.017</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_ur4</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.890</td>
+      <td>-</td>
+      <td>0.880</td>
+      <td>-</td>
+      <td>0.490</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.060</td>
+      <td>-</td>
+      <td>0.810</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.710</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_popcnt_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>61636099.800</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_popcnt_v2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1501175693.100</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_popcnt_v3</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1496379811.500</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Ancien – Benchmark asm popcnt 64</caption>
 </table>
-<p><em>TABLE 12.2 – Architectures anciennes : temps d'exécution (30_000 itérations, 262 Ko)</em></p>
+</div>
 <script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="data/graph.js"></script>
-<div class="chart-container" id="chart-ch12-ancien-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_popcnt_64-ancien-7" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-ch12-ancien-4';
-    function loadAndDraw() {
+    var id = 'chart-auto-asm_popcnt_64-ancien-7';
+    var data = {"CPUs":["Pentium D 925","Core 2 Q9300","Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Core i7 860","Intel Core i7 860 2.80GHz","AMD X6 1090T","AMD Phenom II X6 1090T","Core i5 3570K","Intel Core i5 3570K 3.40GHz","Core i7 4790","Intel Core i7 4790 3.60GHz"],"Years":[2006,2008,2008,2008,2009,2009,2010,2010,2012,2012,2014,2014],"Methods":[{"name":"u32_reference","values":[126.41,105.45,null,null,60.91,null,43.46,null,53.34,null,39.42,null]},{"name":"u32_reference_opt","values":[73.51,88.36,null,null,60.81,null,43.31,null,48.68,null,33.4,null]},{"name":"u32_shift_v1","values":[8.01,4.25,null,null,2.05,null,2.5,null,1.29,null,0.56,null]},{"name":"u32_shift_v2","values":[7.76,3.13,null,null,1.82,null,1.86,null,1.06,null,0.49,null]},{"name":"u8_intrinsics","values":[4.55,null,null,null,0.92,null,1.35,null,0.76,null,0.61,null]},{"name":"u8_reference","values":[150.22,170.2,null,null,110.19,null,80.21,null,72.58,null,54.99,null]},{"name":"u8_reference_opt","values":[111.73,161.63,null,null,102.39,null,64.68,null,65.12,null,47.38,null]},{"name":"u8_shift_v1","values":[16.5,7.77,null,null,4.52,null,4.31,null,3.23,null,1.98,null]},{"name":"u8_shift_v2","values":[16.45,7.66,null,null,4.76,null,4.62,null,3.2,null,2.02,null]},{"name":"u32_popcnt_shift_v1","values":[null,null,217440402.4,176352295.6,null,260701938.233,null,180724815.2,null,103939919.833,null,48050576.75]},{"name":"u32_popcnt_shift_v2","values":[null,null,168996325.067,154376521.217,null,247201095,null,126878201.55,null,86314044.533,null,42486938.317]},{"name":"u32_popcnt_table_v1","values":[null,null,565951333.2,477750777.833,null,1094132504.683,null,460701635,null,320221486.067,null,280957109.567]},{"name":"u32_popcnt_table_v2","values":[null,null,322535775.733,279215583.833,null,532890310.217,null,300843304.85,null,209298880.1,null,181401009.85]},{"name":"u32_popcnt_wegner","values":[null,null,2805289900.567,2390680745.917,null,5104977751.083,null,133486759.05,null,133954845.05,null,117205667.367]},{"name":"u8_popcnt_intrinsics","values":[null,null,99261342.217,93129364.9,null,166677526.067,null,84331233.45,null,58599451.6,null,47349477.167]},{"name":"u8_popcnt_reference","values":[null,null,7922992619.767,7503202067.617,null,15207584341.95,null,5643741115.9,null,5405477346.933,null,4561624179.617]},{"name":"u8_popcnt_shift_v1","values":[null,null,375211573.633,327891273.667,null,622516433.417,null,269486923.233,null,252324371.617,null,161029957.1]},{"name":"u8_popcnt_shift_v2","values":[null,null,395123980.267,330862127.7,null,597129972.533,null,275182361.717,null,249539851.35,null,163504065.05]},{"name":"u8_popcnt_wegner","values":[null,null,6728793854.65,5917124901.35,null,11755074725.033,null,4498721961.883,null,4536096866.167,null,4120116149.417]},{"name":"u32_asm","values":[null,null,null,null,1.27,null,1.65,null,1.16,null,0.71,null]},{"name":"u32_sse_v1","values":[null,null,null,null,0.96,null,1.52,null,0.92,null,0.74,null]},{"name":"u8_asm","values":[null,null,null,null,6.88,null,10.94,null,4.65,null,2.96,null]},{"name":"u32_asm_popcnt","values":[null,null,null,null,null,173512847.083,null,126548832.6,null,97539682.567,null,62268972.2]},{"name":"u32_asm_popcnt_ur2","values":[null,null,null,null,null,122869996.817,null,89132300.9,null,80039061.817,null,47466320.55]},{"name":"u32_asm_popcnt_ur4","values":[null,null,null,null,null,140487780.7,null,68239334.533,null,75806509.967,null,43852216.25]},{"name":"u32_sse_popcnt","values":[null,null,null,null,null,97852617.933,null,77502971.183,null,74619962.067,null,62657976.467]},{"name":"u64_asm_popcnt","values":[null,null,null,null,null,91101414.933,null,69950525.033,null,50375999,null,33583915.267]},{"name":"u64_asm_popcnt_ur2","values":[null,null,null,null,null,67967256.133,null,49726696.8,null,42338028.8,null,33181473.467]},{"name":"u64_asm_popcnt_ur4","values":[null,null,null,null,null,72712631.183,null,41628540.017,null,42094223.65,null,34671139.2]},{"name":"u8_asm_popcnt","values":[null,null,null,null,null,985352447.7,null,628320459.033,null,357508336.483,null,241981917.017]},{"name":"u32_asm_ur4","values":[null,null,null,null,null,null,0.89,null,0.88,null,0.49,null]},{"name":"u32_sse_v2","values":[null,null,null,null,null,null,null,null,1.06,null,0.81,null]},{"name":"u32_avx2_v1","values":[null,null,null,null,null,null,null,null,null,null,0.71,null]},{"name":"u32_avx2_popcnt_v1","values":[null,null,null,null,null,null,null,null,null,null,null,61636099.8]},{"name":"u32_avx2_popcnt_v2","values":[null,null,null,null,null,null,null,null,null,null,null,1501175693.1]},{"name":"u32_avx2_popcnt_v3","values":[null,null,null,null,null,null,null,null,null,null,null,1496379811.5]}]};
+    function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");
             return;
         }
-        fetch('data/api_benchmark.php?chapter=12&arch=ancien')
-            .then(res => res.json())
-            .then(data => {
-                window.createPerformanceChart(id, data);
-            })
-            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+        window.createPerformanceChart(id, data);
     }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
-    else { loadAndDraw(); }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
   })();
-</script>
-<p>Sur les processeurs ne disposant pas de l'instruction <code>popcnt</code> (Pentium D), l'amélioration maximale est en combinant l'Intrinsics et GCC qui déroule le code.</p>
-<h3 class="subsection">12.6.2 Architectures Modernes (2015 à 2019)</h3>
-
-<p>Traiter les données sous format 32 bits est donc bénéfique. La méthode 8 avec décalage de bits est très souvent la plus performante, talonnée par la méthode 11 (<code>popcnt</code> + <em>loop unroll 4</em>). Le passage de 32 bits à 64 bits de registre CPU natif avec l'AMD Ryzen 3600 a ramené le temps d'exécution global de 0,31 s à 0,15 s.</p>
+</script><div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>Méthode</th>
-<th>Core i3 6100</th>
-<th>Ryzen 7 1700X</th>
-<th>Core i5 7400</th>
-<th>Core i7 8700</th>
-<th>Ryzen 5 3600</th>
-<th>Xeon 4208</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1 u8_reference</td>
-<td>57.99</td>
-<td>59.13</td>
-<td>64.81</td>
-<td>47.28</td>
-<td>54.96</td>
-<td>71.73</td>
-</tr>
-<tr>
-<td>4 u32_reference_opt</td>
-<td>32.65</td>
-<td>28.77</td>
-<td>35.83</td>
-<td>26.47</td>
-<td>23.67</td>
-<td>46.18</td>
-</tr>
-<tr>
-<td>8 u32_shift_v2</td>
-<td>0.50</td>
-<td>0.80</td>
-<td>0.54</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>9 u8_asm</td>
-<td>6.39</td>
-<td>3.24</td>
-<td>6.83</td>
-<td>5.20</td>
-<td>3.06</td>
-<td>7.53</td>
-</tr>
-<tr>
-<td>10 u32_asm</td>
-<td>1.07</td>
-<td>0.68</td>
-<td>1.14</td>
-<td>0.86</td>
-<td>0.62</td>
-<td>0.91</td>
-</tr>
-<tr>
-<td>11 u32_asm_ur4</td>
-<td>0.54</td>
-<td>0.51</td>
-<td>0.59</td>
-<td>0.45</td>
-<td>0.47</td>
-<td>0.74</td>
-</tr>
-<tr>
-<td>15 u8_intrinsics</td>
-<td>0.64</td>
-<td>0.64</td>
-<td>0.68</td>
-<td>0.52</td>
-<td>0.56</td>
-<td>0.76</td>
-</tr>
-<tr>
-<td>Ratio 1 / 11</td>
-<td><strong>× 107</strong></td>
-<td><strong>× 115</strong></td>
-<td><strong>× 109</strong></td>
-<td><strong>N/A</strong></td>
-<td><strong>× 116</strong></td>
-<td><strong>× 96</strong></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i3 6100<br><small>2015</small></th>
+      <th>Intel Core i3 6100 3.70GHz<br><small>2015</small></th>
+      <th>AMD Ryzen 7 1700X Eight Core<br><small>2017</small></th>
+      <th>Core i5 7400<br><small>2017</small></th>
+      <th>Core i7 8700<br><small>2017</small></th>
+      <th>Intel Core i5 7400 3.00GHz<br><small>2017</small></th>
+      <th>Intel Core i7 8700 3.20GHz<br><small>2017</small></th>
+      <th>Ryzen 7 1700X<br><small>2017</small></th>
+      <th>AMD Athlon 200GE<br><small>2018</small></th>
+      <th>AMD Ryzen 5 3600 6 Core<br><small>2019</small></th>
+      <th>Ryzen 5 3600<br><small>2019</small></th>
+      <th>Xeon Silver 4208<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>u32_asm</strong></td>
+      <td>1.070</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.140</td>
+      <td>0.860</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.680</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.620</td>
+      <td>0.910</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_ur4</strong></td>
+      <td>0.540</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.590</td>
+      <td>0.450</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.510</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.470</td>
+      <td>0.740</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_v1</strong></td>
+      <td>0.870</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.950</td>
+      <td>0.700</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.830</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.690</td>
+      <td>1.020</td>
+    </tr>
+    <tr>
+      <td><strong>u32_reference</strong></td>
+      <td>36.390</td>
+      <td>-</td>
+      <td>-</td>
+      <td>39.890</td>
+      <td>29.530</td>
+      <td>-</td>
+      <td>-</td>
+      <td>44.720</td>
+      <td>-</td>
+      <td>-</td>
+      <td>35.360</td>
+      <td>54.490</td>
+    </tr>
+    <tr>
+      <td><strong>u32_reference_opt</strong></td>
+      <td>32.650</td>
+      <td>-</td>
+      <td>-</td>
+      <td>35.830</td>
+      <td>26.470</td>
+      <td>-</td>
+      <td>-</td>
+      <td>28.770</td>
+      <td>-</td>
+      <td>-</td>
+      <td>23.670</td>
+      <td>46.180</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v1</strong></td>
+      <td>0.610</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.640</td>
+      <td>0.490</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.000</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.440</td>
+      <td>0.720</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v2</strong></td>
+      <td>0.500</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.800</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.540</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v1</strong></td>
+      <td>0.900</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.960</td>
+      <td>0.720</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.900</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.830</td>
+      <td>1.050</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v2</strong></td>
+      <td>0.870</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.920</td>
+      <td>0.700</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.740</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.640</td>
+      <td>1.050</td>
+    </tr>
+    <tr>
+      <td><strong>u8_asm</strong></td>
+      <td>6.390</td>
+      <td>-</td>
+      <td>-</td>
+      <td>6.830</td>
+      <td>5.200</td>
+      <td>-</td>
+      <td>-</td>
+      <td>3.240</td>
+      <td>-</td>
+      <td>-</td>
+      <td>3.060</td>
+      <td>7.530</td>
+    </tr>
+    <tr>
+      <td><strong>u8_intrinsics</strong></td>
+      <td>0.640</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.680</td>
+      <td>0.520</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.640</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0.560</td>
+      <td>0.760</td>
+    </tr>
+    <tr>
+      <td><strong>u8_reference</strong></td>
+      <td>57.990</td>
+      <td>-</td>
+      <td>-</td>
+      <td>64.810</td>
+      <td>47.280</td>
+      <td>-</td>
+      <td>-</td>
+      <td>59.130</td>
+      <td>-</td>
+      <td>-</td>
+      <td>54.960</td>
+      <td>71.730</td>
+    </tr>
+    <tr>
+      <td><strong>u8_reference_opt</strong></td>
+      <td>53.140</td>
+      <td>-</td>
+      <td>-</td>
+      <td>58.580</td>
+      <td>43.030</td>
+      <td>-</td>
+      <td>-</td>
+      <td>54.110</td>
+      <td>-</td>
+      <td>-</td>
+      <td>48.780</td>
+      <td>74.700</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v1</strong></td>
+      <td>2.170</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.320</td>
+      <td>1.750</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.510</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.830</td>
+      <td>2.490</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v2</strong></td>
+      <td>2.110</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.230</td>
+      <td>1.700</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.510</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.840</td>
+      <td>2.500</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_popcnt</strong></td>
+      <td>-</td>
+      <td>63073539.533</td>
+      <td>67148747.100</td>
+      <td>-</td>
+      <td>-</td>
+      <td>76990025.017</td>
+      <td>62126334.933</td>
+      <td>-</td>
+      <td>67610903.467</td>
+      <td>38032602.249</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_popcnt_ur2</strong></td>
+      <td>-</td>
+      <td>45551165.767</td>
+      <td>55333150.400</td>
+      <td>-</td>
+      <td>-</td>
+      <td>41121424.733</td>
+      <td>34217108.850</td>
+      <td>-</td>
+      <td>54758323.733</td>
+      <td>32434036.667</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_popcnt_ur4</strong></td>
+      <td>-</td>
+      <td>44941610.367</td>
+      <td>51183139.300</td>
+      <td>-</td>
+      <td>-</td>
+      <td>41839000.167</td>
+      <td>35672070.267</td>
+      <td>-</td>
+      <td>49447531.200</td>
+      <td>29680377.935</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_popcnt_v1</strong></td>
+      <td>-</td>
+      <td>70752653.667</td>
+      <td>76322087.633</td>
+      <td>-</td>
+      <td>-</td>
+      <td>63158545.200</td>
+      <td>52416535.433</td>
+      <td>-</td>
+      <td>77443653.867</td>
+      <td>41528020.457</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_popcnt_v2</strong></td>
+      <td>-</td>
+      <td>64713505.933</td>
+      <td>48460105.367</td>
+      <td>-</td>
+      <td>-</td>
+      <td>57593693.050</td>
+      <td>47210718.583</td>
+      <td>-</td>
+      <td>46219654.400</td>
+      <td>1491387753.745</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_popcnt_v3</strong></td>
+      <td>-</td>
+      <td>34494438.933</td>
+      <td>48702792.833</td>
+      <td>-</td>
+      <td>-</td>
+      <td>31204970.467</td>
+      <td>26048291.133</td>
+      <td>-</td>
+      <td>46544763.733</td>
+      <td>1522578436.855</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_shift_v1</strong></td>
+      <td>-</td>
+      <td>46656870.400</td>
+      <td>88279517.033</td>
+      <td>-</td>
+      <td>-</td>
+      <td>41199826.600</td>
+      <td>34468687.267</td>
+      <td>-</td>
+      <td>90195126.400</td>
+      <td>26341555.764</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_shift_v2</strong></td>
+      <td>-</td>
+      <td>40459874.500</td>
+      <td>74247174.733</td>
+      <td>-</td>
+      <td>-</td>
+      <td>35666611.917</td>
+      <td>30384985.200</td>
+      <td>-</td>
+      <td>74244492.267</td>
+      <td>22658733.432</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_table_v1</strong></td>
+      <td>-</td>
+      <td>335299245.033</td>
+      <td>332677869.933</td>
+      <td>-</td>
+      <td>-</td>
+      <td>265577510.783</td>
+      <td>209199640.183</td>
+      <td>-</td>
+      <td>360472335.467</td>
+      <td>173890951.220</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_table_v2</strong></td>
+      <td>-</td>
+      <td>178135056.533</td>
+      <td>206020672.133</td>
+      <td>-</td>
+      <td>-</td>
+      <td>164296456.317</td>
+      <td>127033949.033</td>
+      <td>-</td>
+      <td>215811464.000</td>
+      <td>107552637.055</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_popcnt_wegner</strong></td>
+      <td>-</td>
+      <td>95936037.133</td>
+      <td>91988267.633</td>
+      <td>-</td>
+      <td>-</td>
+      <td>83755009.967</td>
+      <td>68588275.500</td>
+      <td>-</td>
+      <td>94175006.933</td>
+      <td>52227778.866</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_popcnt</strong></td>
+      <td>-</td>
+      <td>64712647.333</td>
+      <td>50518864.867</td>
+      <td>-</td>
+      <td>-</td>
+      <td>57657010.217</td>
+      <td>46881178.450</td>
+      <td>-</td>
+      <td>49360383.467</td>
+      <td>28472894.370</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u64_asm_popcnt</strong></td>
+      <td>-</td>
+      <td>64813070.000</td>
+      <td>37366745.167</td>
+      <td>-</td>
+      <td>-</td>
+      <td>57887564.433</td>
+      <td>47639896.250</td>
+      <td>-</td>
+      <td>35201057.600</td>
+      <td>21300676.985</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u64_asm_popcnt_ur2</strong></td>
+      <td>-</td>
+      <td>32477002.533</td>
+      <td>30021928.600</td>
+      <td>-</td>
+      <td>-</td>
+      <td>29194959.400</td>
+      <td>24975271.150</td>
+      <td>-</td>
+      <td>29654787.200</td>
+      <td>17779663.131</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u64_asm_popcnt_ur4</strong></td>
+      <td>-</td>
+      <td>32471519.833</td>
+      <td>28328930.333</td>
+      <td>-</td>
+      <td>-</td>
+      <td>29103102.167</td>
+      <td>23570878.117</td>
+      <td>-</td>
+      <td>27053350.400</td>
+      <td>16675132.005</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_asm_popcnt</strong></td>
+      <td>-</td>
+      <td>344967910.067</td>
+      <td>264686118.333</td>
+      <td>-</td>
+      <td>-</td>
+      <td>308551140.850</td>
+      <td>244455978.500</td>
+      <td>-</td>
+      <td>285264992.000</td>
+      <td>190854149.078</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_intrinsics</strong></td>
+      <td>-</td>
+      <td>46006668.233</td>
+      <td>51611818.667</td>
+      <td>-</td>
+      <td>-</td>
+      <td>41642710.833</td>
+      <td>35472589.500</td>
+      <td>-</td>
+      <td>49676600.000</td>
+      <td>27981480.327</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_reference</strong></td>
+      <td>-</td>
+      <td>4831083444.100</td>
+      <td>4458468871.600</td>
+      <td>-</td>
+      <td>-</td>
+      <td>4517083166.850</td>
+      <td>3533457143.300</td>
+      <td>-</td>
+      <td>5073437459.733</td>
+      <td>2595296810.323</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_shift_v1</strong></td>
+      <td>-</td>
+      <td>167750105.233</td>
+      <td>208631372.333</td>
+      <td>-</td>
+      <td>-</td>
+      <td>149182748.350</td>
+      <td>119521855.067</td>
+      <td>-</td>
+      <td>221434535.467</td>
+      <td>138384625.499</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_shift_v2</strong></td>
+      <td>-</td>
+      <td>171391030.933</td>
+      <td>207956899.600</td>
+      <td>-</td>
+      <td>-</td>
+      <td>150612429.817</td>
+      <td>122954902.667</td>
+      <td>-</td>
+      <td>220867740.800</td>
+      <td>143905316.969</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u8_popcnt_wegner</strong></td>
+      <td>-</td>
+      <td>5312155458.567</td>
+      <td>4207290301.600</td>
+      <td>-</td>
+      <td>-</td>
+      <td>4753157757.683</td>
+      <td>3740496978.583</td>
+      <td>-</td>
+      <td>4792616714.133</td>
+      <td>2483045395.957</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm popcnt 64</caption>
 </table>
-<p><em>TABLE 12.3 – Architectures modernes : temps d'exécution (30_000 itérations, 262 Ko)</em></p>
-<div class="chart-container" id="chart-ch12-moderne-5" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+</div>
+<div class="chart-container" id="chart-auto-asm_popcnt_64-moderne-8" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-ch12-moderne-5';
-    function loadAndDraw() {
+    var id = 'chart-auto-asm_popcnt_64-moderne-8';
+    var data = {"CPUs":["Core i3 6100","Intel Core i3 6100 3.70GHz","AMD Ryzen 7 1700X Eight Core","Core i5 7400","Core i7 8700","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","Ryzen 7 1700X","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core","Ryzen 5 3600","Xeon Silver 4208"],"Years":[2015,2015,2017,2017,2017,2017,2017,2017,2018,2019,2019,2019],"Methods":[{"name":"u32_asm","values":[1.07,null,null,1.14,0.86,null,null,0.68,null,null,0.62,0.91]},{"name":"u32_asm_ur4","values":[0.54,null,null,0.59,0.45,null,null,0.51,null,null,0.47,0.74]},{"name":"u32_avx2_v1","values":[0.87,null,null,0.95,0.7,null,null,0.83,null,null,0.69,1.02]},{"name":"u32_reference","values":[36.39,null,null,39.89,29.53,null,null,44.72,null,null,35.36,54.49]},{"name":"u32_reference_opt","values":[32.65,null,null,35.83,26.47,null,null,28.77,null,null,23.67,46.18]},{"name":"u32_shift_v1","values":[0.61,null,null,0.64,0.49,null,null,1,null,null,0.44,0.72]},{"name":"u32_shift_v2","values":[0.5,null,null,null,0.8,null,null,null,null,null,0.54,null]},{"name":"u32_sse_v1","values":[0.9,null,null,0.96,0.72,null,null,0.9,null,null,0.83,1.05]},{"name":"u32_sse_v2","values":[0.87,null,null,0.92,0.7,null,null,0.74,null,null,0.64,1.05]},{"name":"u8_asm","values":[6.39,null,null,6.83,5.2,null,null,3.24,null,null,3.06,7.53]},{"name":"u8_intrinsics","values":[0.64,null,null,0.68,0.52,null,null,0.64,null,null,0.56,0.76]},{"name":"u8_reference","values":[57.99,null,null,64.81,47.28,null,null,59.13,null,null,54.96,71.73]},{"name":"u8_reference_opt","values":[53.14,null,null,58.58,43.03,null,null,54.11,null,null,48.78,74.7]},{"name":"u8_shift_v1","values":[2.17,null,null,2.32,1.75,null,null,2.51,null,null,2.83,2.49]},{"name":"u8_shift_v2","values":[2.11,null,null,2.23,1.7,null,null,2.51,null,null,2.84,2.5]},{"name":"u32_asm_popcnt","values":[null,63073539.533,67148747.1,null,null,76990025.017,62126334.933,null,67610903.467,38032602.249,null,null]},{"name":"u32_asm_popcnt_ur2","values":[null,45551165.767,55333150.4,null,null,41121424.733,34217108.85,null,54758323.733,32434036.667,null,null]},{"name":"u32_asm_popcnt_ur4","values":[null,44941610.367,51183139.3,null,null,41839000.167,35672070.267,null,49447531.2,29680377.935,null,null]},{"name":"u32_avx2_popcnt_v1","values":[null,70752653.667,76322087.633,null,null,63158545.2,52416535.433,null,77443653.867,41528020.457,null,null]},{"name":"u32_avx2_popcnt_v2","values":[null,64713505.933,48460105.367,null,null,57593693.05,47210718.583,null,46219654.4,1491387753.745,null,null]},{"name":"u32_avx2_popcnt_v3","values":[null,34494438.933,48702792.833,null,null,31204970.467,26048291.133,null,46544763.733,1522578436.855,null,null]},{"name":"u32_popcnt_shift_v1","values":[null,46656870.4,88279517.033,null,null,41199826.6,34468687.267,null,90195126.4,26341555.764,null,null]},{"name":"u32_popcnt_shift_v2","values":[null,40459874.5,74247174.733,null,null,35666611.917,30384985.2,null,74244492.267,22658733.432,null,null]},{"name":"u32_popcnt_table_v1","values":[null,335299245.033,332677869.933,null,null,265577510.783,209199640.183,null,360472335.467,173890951.22,null,null]},{"name":"u32_popcnt_table_v2","values":[null,178135056.533,206020672.133,null,null,164296456.317,127033949.033,null,215811464,107552637.055,null,null]},{"name":"u32_popcnt_wegner","values":[null,95936037.133,91988267.633,null,null,83755009.967,68588275.5,null,94175006.933,52227778.866,null,null]},{"name":"u32_sse_popcnt","values":[null,64712647.333,50518864.867,null,null,57657010.217,46881178.45,null,49360383.467,28472894.37,null,null]},{"name":"u64_asm_popcnt","values":[null,64813070,37366745.167,null,null,57887564.433,47639896.25,null,35201057.6,21300676.985,null,null]},{"name":"u64_asm_popcnt_ur2","values":[null,32477002.533,30021928.6,null,null,29194959.4,24975271.15,null,29654787.2,17779663.131,null,null]},{"name":"u64_asm_popcnt_ur4","values":[null,32471519.833,28328930.333,null,null,29103102.167,23570878.117,null,27053350.4,16675132.005,null,null]},{"name":"u8_asm_popcnt","values":[null,344967910.067,264686118.333,null,null,308551140.85,244455978.5,null,285264992,190854149.078,null,null]},{"name":"u8_popcnt_intrinsics","values":[null,46006668.233,51611818.667,null,null,41642710.833,35472589.5,null,49676600,27981480.327,null,null]},{"name":"u8_popcnt_reference","values":[null,4831083444.1,4458468871.6,null,null,4517083166.85,3533457143.3,null,5073437459.733,2595296810.323,null,null]},{"name":"u8_popcnt_shift_v1","values":[null,167750105.233,208631372.333,null,null,149182748.35,119521855.067,null,221434535.467,138384625.499,null,null]},{"name":"u8_popcnt_shift_v2","values":[null,171391030.933,207956899.6,null,null,150612429.817,122954902.667,null,220867740.8,143905316.969,null,null]},{"name":"u8_popcnt_wegner","values":[null,5312155458.567,4207290301.6,null,null,4753157757.683,3740496978.583,null,4792616714.133,2483045395.957,null,null]}]};
+    function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");
             return;
         }
-        fetch('data/api_benchmark.php?chapter=12&arch=moderne')
-            .then(res => res.json())
-            .then(data => {
-                window.createPerformanceChart(id, data);
-            })
-            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+        window.createPerformanceChart(id, data);
     }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
-    else { loadAndDraw(); }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
   })();
-</script>
-<h3 class="subsection">12.6.3 Architectures Récentes (2020 et après)</h3>
-
+</script><div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>Méthode</th>
-<th>Core i7 10850H</th>
-<th>Ryzen 5 5600G</th>
-<th>Core i5 12400F</th>
-<th>Ryzen 5 9600X</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1 u8_reference</td>
-<td>43.82</td>
-<td>46.19</td>
-<td>51.75</td>
-<td>21.68</td>
-</tr>
-<tr>
-<td>4 u32_reference_opt</td>
-<td>24.50</td>
-<td>21.25</td>
-<td>28.58</td>
-<td>17.80</td>
-</tr>
-<tr>
-<td>7 u32_shift_v1</td>
-<td>0.48</td>
-<td>0.37</td>
-<td>0.31</td>
-<td>0.15</td>
-</tr>
-<tr>
-<td>11 u32_asm_ur4</td>
-<td>0.41</td>
-<td>0.44</td>
-<td>0.44</td>
-<td>0.36</td>
-</tr>
-<tr>
-<td>14 u32_avx2_v1</td>
-<td>0.65</td>
-<td>0.73</td>
-<td>0.69</td>
-<td>0.36</td>
-</tr>
-<tr>
-<td>15 u8_intrinsics</td>
-<td>0.49</td>
-<td>0.47</td>
-<td>0.44</td>
-<td>0.32</td>
-</tr>
-<tr>
-<td>Ratio Max Gain</td>
-<td><strong>× 106</strong></td>
-<td><strong>× 104</strong></td>
-<td><strong>× 117</strong></td>
-<td><strong>× 144</strong></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i7 10850H<br><small>2020</small></th>
+      <th>Ryzen 5 5600g<br><small>2021</small></th>
+      <th>Core i5 12400F<br><small>2022</small></th>
+      <th>Ryzen 5 9600X<br><small>2024</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>u32_asm</strong></td>
+      <td>0.800</td>
+      <td>0.450</td>
+      <td>0.500</td>
+      <td>0.360</td>
+    </tr>
+    <tr>
+      <td><strong>u32_asm_ur4</strong></td>
+      <td>0.410</td>
+      <td>0.440</td>
+      <td>0.440</td>
+      <td>0.360</td>
+    </tr>
+    <tr>
+      <td><strong>u32_avx2_v1</strong></td>
+      <td>0.650</td>
+      <td>0.730</td>
+      <td>0.690</td>
+      <td>0.360</td>
+    </tr>
+    <tr>
+      <td><strong>u32_reference</strong></td>
+      <td>27.420</td>
+      <td>25.910</td>
+      <td>35.640</td>
+      <td>18.390</td>
+    </tr>
+    <tr>
+      <td><strong>u32_reference_opt</strong></td>
+      <td>24.500</td>
+      <td>21.250</td>
+      <td>28.580</td>
+      <td>17.800</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v1</strong></td>
+      <td>0.480</td>
+      <td>0.370</td>
+      <td>0.310</td>
+      <td>0.150</td>
+    </tr>
+    <tr>
+      <td><strong>u32_shift_v2</strong></td>
+      <td>0.390</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v1</strong></td>
+      <td>0.670</td>
+      <td>0.790</td>
+      <td>0.650</td>
+      <td>0.360</td>
+    </tr>
+    <tr>
+      <td><strong>u32_sse_v2</strong></td>
+      <td>0.660</td>
+      <td>0.530</td>
+      <td>0.630</td>
+      <td>0.470</td>
+    </tr>
+    <tr>
+      <td><strong>u8_asm</strong></td>
+      <td>2.450</td>
+      <td>3.600</td>
+      <td>1.790</td>
+      <td>1.460</td>
+    </tr>
+    <tr>
+      <td><strong>u8_intrinsics</strong></td>
+      <td>0.490</td>
+      <td>0.470</td>
+      <td>0.440</td>
+      <td>0.320</td>
+    </tr>
+    <tr>
+      <td><strong>u8_reference</strong></td>
+      <td>43.820</td>
+      <td>46.190</td>
+      <td>51.750</td>
+      <td>21.680</td>
+    </tr>
+    <tr>
+      <td><strong>u8_reference_opt</strong></td>
+      <td>40.060</td>
+      <td>42.720</td>
+      <td>49.100</td>
+      <td>20.690</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v1</strong></td>
+      <td>1.650</td>
+      <td>2.280</td>
+      <td>0.730</td>
+      <td>0.200</td>
+    </tr>
+    <tr>
+      <td><strong>u8_shift_v2</strong></td>
+      <td>1.610</td>
+      <td>2.290</td>
+      <td>0.730</td>
+      <td>0.190</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Recent – Benchmark asm popcnt 64</caption>
 </table>
-<p><em>TABLE 12.4 – Architectures actuelles : temps d'exécution (30_000 itérations, 262 Ko)</em></p>
-<div class="chart-container" id="chart-ch12-recent-6" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+</div>
+<div class="chart-container" id="chart-auto-asm_popcnt_64-recent-9" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-ch12-recent-6';
-    function loadAndDraw() {
+    var id = 'chart-auto-asm_popcnt_64-recent-9';
+    var data = {"CPUs":["Core i7 10850H","Ryzen 5 5600g","Core i5 12400F","Ryzen 5 9600X"],"Years":[2020,2021,2022,2024],"Methods":[{"name":"u32_asm","values":[0.8,0.45,0.5,0.36]},{"name":"u32_asm_ur4","values":[0.41,0.44,0.44,0.36]},{"name":"u32_avx2_v1","values":[0.65,0.73,0.69,0.36]},{"name":"u32_reference","values":[27.42,25.91,35.64,18.39]},{"name":"u32_reference_opt","values":[24.5,21.25,28.58,17.8]},{"name":"u32_shift_v1","values":[0.48,0.37,0.31,0.15]},{"name":"u32_shift_v2","values":[0.39,null,null,null]},{"name":"u32_sse_v1","values":[0.67,0.79,0.65,0.36]},{"name":"u32_sse_v2","values":[0.66,0.53,0.63,0.47]},{"name":"u8_asm","values":[2.45,3.6,1.79,1.46]},{"name":"u8_intrinsics","values":[0.49,0.47,0.44,0.32]},{"name":"u8_reference","values":[43.82,46.19,51.75,21.68]},{"name":"u8_reference_opt","values":[40.06,42.72,49.1,20.69]},{"name":"u8_shift_v1","values":[1.65,2.28,0.73,0.2]},{"name":"u8_shift_v2","values":[1.61,2.29,0.73,0.19]}]};
+    function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");
             return;
         }
-        fetch('data/api_benchmark.php?chapter=12&arch=recent')
-            .then(res => res.json())
-            .then(data => {
-                window.createPerformanceChart(id, data);
-            })
-            .catch(err => console.error("Erreur Highcharts SQLite:", err));
+        window.createPerformanceChart(id, data);
     }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', loadAndDraw); }
-    else { loadAndDraw(); }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
   })();
 </script>
 <h2 class="section">12.7 Bilan</h2>

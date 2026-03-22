@@ -274,61 +274,7 @@ saxpy_fma:
 
 Afin de simplifier et observer, voici les temps réalisés sur 50 000 passages. L'intêrét se porte sur les différentes implémentations Intrinsics du C par rapport au NASM pur.
 
-### 13.8.2 Architectures Anciennes (Avant 2015)
-
-| N° | Méthode | Pentium D 925 | Core 2 Q9300 | Core i7 860 | AMD Phenom X6 | Core i5 3570K | Core i7 4790 |
-|---|---|---|---|---|---|---|---|
-| 1 | `C Reference` | 97.29 | 75.68 | 23.35 | 32.31 | 23.58 | 19.70 |
-| 2 | `asm fpu` | 101.91 | 62.52 | 24.69 | 30.75 | 23.74 | 19.70 |
-| 3 | `asm fpu ur4` | 91.77 | 58.92 | 25.36 | 30.47 | 23.64 | 19.68 |
-| 4 | `asm sse` | 86.84 | 52.38 | 11.16 | 24.74 | 8.70 | 6.00 |
-| 5 | `C sse intrin.` | 84.11 | - | 8.33 | - | 5.64 | 5.42 |
-| 6 | `asm avx` | - | - | - | - | 8.21 | 5.42 |
-| 11| `asm fma` | - | - | - | - | - | 5.43 |
-| - | **Ratio 1 / 5** | **1.15**| - | **2.80** | - | **4.18** | **3.63** |
-
-*TABLE 13.3 – Architectures anciennes (50 000 itérations de SAXPY sur 524 287)*
-
-Sur ces mêmes processeurs (Intel i5 3570k
-et i7 4790) passer à l'AVX ou au FMA n'apporte que très peu de choses sur des matrices aussi denses par rapport au SSE intrinsics. Le gain SSE est flagrant.
-
-### 13.8.3 Architectures Modernes (2015 à 2019)
-
-| N° | Méthode | Core i3 6100 | Ryzen 7 1700X | Core i5 7400 | Core i7 8700 | Ryzen 5 3600 | Xeon 4208 |
-|---|---|---|---|---|---|---|---|
-| 1 | `C Reference` | 22.35 | 33.89 | 22.95 | 17.30 | 31.36 | 25.98 |
-| 3 | `asm fpu ur4` | 22.96 | 33.84 | 22.97 | 17.28 | 31.33 | 25.93 |
-| 4 | `asm sse` | 9.41 | 5.16 | 7.93 | 5.79 | 4.90 | 9.90 |
-| 5 | `C sse intrin.` | 9.02 | 5.38 | 7.79 | 5.74 | 5.04 | 9.40 |
-| 6 | `asm avx` | 7.56 | 3.53 | 5.26 | 3.75 | 2.62 | 9.83 |
-| 9 | `C avx2 intrin.`| 7.17 | 3.29 | 4.93 | 3.67 | 2.61 | 9.88 |
-| 11| `asm fma` | 7.27 | 3.37 | 5.03 | 3.68 | 2.67 | 9.75 |
-| - | **Ratio 1 / 5** | **2.47** | **6.29** | **2.94** | **3.01** | **6.22** | **2.76** |
-| - | **Ratio 1 / 11**| **3.07** | **10.05**| **4.56** | **4.70** | **11.74**| **2.66** |
-
-*TABLE 13.4 – Architectures modernes : temps d'exécution (50 000 itérations de SAXPY)*
-
-Pour les architectures modernes, l'utilisation de l'AVX par
-rapport au SSE apporte un gain très substantiel. L'utilisation des instructions FMA
-n'apporte toujours que peu de choses mais l'AVX se prouve extrêmement efficace.
-On note que les processeurs AMD ont une FPU non vectorielle archaïque peu performante, mais leurs unités AVX rattrapent la danse.
-
-### 13.8.4 Architectures Récentes (2020+)
-
-| Méthode | Core i7 10850H | Ryzen 5 5600G | Core i5 12400F | Ryzen 5 9600X |
-|---|---|---|---|---|
-| 1 `C Reference` | 16.05 | 38.86 | 18.50 | 29.19 |
-| 3 `asm fpu ur4` | 16.14 | 39.95 | 18.62 | 29.09 |
-| 5 `C sse intrin.` | 5.35 | 5.31 | 4.60 | 2.54 |
-| 6 `asm avx` | 3.79 | 3.75 | 4.41 | 1.60 |
-| 9 `C avx2 intrin.` | 3.62 | 3.26 | 4.79 | 1.54 |
-| 11 `asm fma` | 3.66 | 3.30 | 4.40 | 1.58 |
-| **Gain vs AVX Intrin.**| **~ 4.4x** | **~ 12.0x** | **~ 3.9x** | **~ 19.0x** |
-
-*TABLE 13.5 – Architectures récentes : temps d'exécution (SAXPY sur Ryzen série 9 / Intel Gen 12+)*
-
-Pour les architectures récentes (Table 13.5), la version FMA3 est la plus
-efficace sans contestation mais elle gagne très peu contre de l'AVX2 intrinsics bien instancié. L'AMD Ryzen 5 9600X exécute les 50 000 appels ultra-massifs en moins d'1.54 secondes en AVX2, un temps astronomique.
+[BENCHMARK:asm_saxpy_32]
 
 > *Note sur l'AMD Ryzen 5 9600X* : Sans le flag de compilation `-ffast-math`, il tombe à 97 secondes à cause du respect strict de la norme flottante IEEE754 lors des arrrondissement GCC.  Le compilateur va casser le FMA pour obéir à `-std=c++11`.
 

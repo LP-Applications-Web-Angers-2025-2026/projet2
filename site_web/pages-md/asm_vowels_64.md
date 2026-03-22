@@ -87,24 +87,4 @@ La traduction de ces méthodes, puis leur dépassement mathématique via les ins
 
 <br>
 
-<!-- Injection des graphiques Highcharts originaux du fichier asm_vowels_64 -->
-<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
-
-<div id="graph_container" style="width: 100%; min-height: 600px;">
-    <div id="graph_ancien" style="border: 1px solid #ccc; margin-bottom: 30px;"></div>
-    <div id="graph_moderne" style="border: 1px solid #ccc; margin-bottom: 30px;"></div>
-    <div id="graph_recent" style="border: 1px solid #ccc;"></div>
-</div>
-
-<script type="module">
-import { createPerformanceChart } from "./data/asm_vowels/graph.js";
-Promise.all([
-fetch('data/api_benchmark.php?bench=asm_vowels_64&arch=ancien').then(res => res.json()),
-fetch('data/api_benchmark.php?bench=asm_vowels_64&arch=moderne').then(res => res.json()),
-fetch('data/api_benchmark.php?bench=asm_vowels_64&arch=recent').then(res => res.json())
-]).then(([data_ancien, data_moderne, data_recent]) => {
-createPerformanceChart('graph_ancien', data_ancien);
-createPerformanceChart('graph_moderne', data_moderne);
-createPerformanceChart('graph_recent', data_recent);
-}).catch(err => console.error("Erreur de récupération SQLite:", err));
-</script>
+[BENCHMARK:asm_vowels_64]

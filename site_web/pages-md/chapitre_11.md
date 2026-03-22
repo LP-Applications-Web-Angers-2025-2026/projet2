@@ -345,44 +345,7 @@ Nous allons examiner les résultats obtenus (*Matrice 2048x2048 en 32 bits*) pou
 7. `mp_tile_4x4`
 8. `mp_tile_bxb_v1 → v4` avec `b=64`.
 
-### 11.9.1 Architectures Anciennes (Avant 2015)
-
-| Méthode | Pentium D 925 | Core 2 Q9300 | Core i7 860 | Phenom II 1090T | Core i5 3570K | Core i7 4790 |
-|---|---|---|---|---|---|---|
-| 1. *Reference* | 363.91 | 257.74 | 90.53 | 172.35 | 78.62 | 64.46 |
-| 2. ASM FPU | 380.06 | 190.83 | 74.86 | 180.55 | 78.33 | 63.05 |
-| 4. Inv JK (O2) | 23.07 | 14.94 | 8.25 | 10.35 | 6.27 | 5.00 |
-| 5. Inv JK (O3)| 8.51 | 8.09 | 2.63 | 4.79 | 2.16 | 2.07 |
-| 6. Inv SSE | 85.23 | 32.28 | 4.36 | 17.06 | 4.32 | 4.96 |
-| 7. Inv AVX | - | - | - | - | 2.33 | 1.93 |
-| 12. Tile BxB v4 | 14.11 | 7.70 | 3.74 | 6.36 | 2.82 | 1.55 |
-
-*TABLE 11.4 – Architectures anciennes : temps d'exécution (2048×2048)*
-
-### 11.9.2 Architectures Modernes (2015 à 2019)
-
-| Méthode | Core i3 6100 | Ryzen 7 1700X | Core i5 7400 | Core i7 8700 | Ryzen 5 3600 | Xeon 4208 |
-|---|---|---|---|---|---|---|
-| 1. *Reference* | 60.08 | 57.66 | 49.10 | 50.13 | 43.62 | 53.63 |
-| 4. Inv JK (O2)| 10.22 | 6.84 | 10.32 | 8.01 | 6.16 | 11.28 |
-| 5. Inv JK (O3)| 2.11 | 1.53 | 1.56 | 0.92 | 1.03 | 2.22 |
-| 6. Inv SSE | 5.84 | 5.53 | 5.81 | 4.53 | 4.39 | 4.33 |
-| 7. Inv AVX | 2.18 | 1.76 | 1.63 | 1.40 | 1.03 | 2.51 |
-| 12. Tile BxB v4| 1.48 | 1.72 | 2.48 | 0.81 | 0.82 | 1.51 |
-
-*TABLE 11.5 – Architectures modernes : temps d'exécution (2048×2048)*
-
-### 11.9.3 Architectures Récentes (2020+)
-
-| Méthode | Core i7 10850H | Ryzen 5 5600G | Ryzen 5 9600X |
-|---|---|---|---|
-| 1. *Reference* | 39.18 | 46.48 | 36.25 |
-| 4. Inv JK (O2)| 7.71 | 4.19 | 3.22 |
-| 5. Inv JK (O3)| 1.26 | 0.80 | 0.29 |
-| 7. Inv AVX | 1.33 | 0.90 | 0.34 |
-| 12. Tile BxB v4| 1.23 | 0.97 | 0.28 |
-
-*TABLE 11.6 – Architectures récentes : temps d'exécution (2048×2048)*
+[BENCHMARK:asm_matprod_32]
 
 *(Note: la compilation `-std=c++11` modifie fortement les optimisations en virgule flottante. L'emploi du flag `-ffast-math` libère GCC de ces restrictions FPU).*
 
