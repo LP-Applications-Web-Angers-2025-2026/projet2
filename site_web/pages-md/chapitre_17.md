@@ -327,25 +327,15 @@ Par exemple, `1234567890` devient `0x00...1234567890`. Malheureusement, le circu
 ## 17.6 Benchmark Final Multi-Architecture
 
 Voici le résumé des performances des différentes architectures :
-- **1** : version C++ standard
-- **4** : version C++ avec conversion manuelle et divisions / tableau 8-bit.
-- **8** : Assembleur sans division (`mul inv`) avec *Unroll*
-- **12** : Assembleur sans division + *Unroll* + fin vectorielle SIMD AVX
-- **14** : Assembleur division par 100 (`mul inv`)
-- **16** : ASM archaïque BCD `fbstp`
-- **23** : Assembleur division par 10_000
+- **1** : version C++ standard (`cpp_std_to_string`)
+- **4** : version C++ avec conversion manuelle et divisions / tableau 8-bit (`cpp_divs_8bits`)
+- **8** : Assembleur sans division (`mul inv`) avec *Unroll* (`asm_unroll`)
+- **12** : Assembleur sans division + *Unroll* + fin vectorielle SIMD AVX (`asm_simd_avx`)
+- **14** : Assembleur division par 100 (`mul inv`) (`asm_div_100`)
+- **16** : ASM archaïque BCD `fbstp` (`asm_bcd_fbstp`)
+- **23** : Assembleur division par 10_000 (`asm_div_10000`)
 
-| N° | Méthode | Intel Core i5 7400 | Intel Core i7 4790 | Intel Core i7 8700 | Intel Core i5 12400F | AMD Ryzen 5 5600g |
-|---|---|---|---|---|---|---|
-| 1 | `cpp std::to_string` | 15.91 | 16.83 | 13.35 | 6.25 | 12.34 |
-| 4 | `cpp divs (8bits)` | 7.08 | 7.53 | 5.78 | 3.88 | 5.09 |
-| 8 | `asm (unroll)` | 6.87 | 7.28 | 5.73 | 3.51 | 4.44 |
-| 12 | `asm SIMD (AVX)` | 8.41 | 9.22 | 6.87 | 5.17 | 5.48 |
-| 14 | `asm div_100` | 6.02 | 6.38 | 4.86 | 2.87 | 3.66 |
-| 16 | `asm BCD (fbstp)` | ~ 100 s | 108.34 | 36.89 | ? | 35.83 |
-| 23 | `asm div_10000` | - | 20.56 | 4.00 | - | 8.77 |
-
-*TABLE 17.3-17.5 – Résultats comparatifs agglomérés (en secondes).*
+[BENCHMARK:asm_selfdesc]
 
 La méthode `cpp divs` (version 4) bat la méthode naïve C++ de loin, et les astuces assembleurs à macro-base de modulo avec invariance (`div_10000` / `div_100`) finissent par emporter la médaille d'or toutes configurations confondues.
 

@@ -50,3 +50,7 @@ Ou directement en assembleur `nasm` :
 mov eax, [valeur]
 popcnt eax, eax   ; eax contient maintenant le nombre de bits à 1
 ```
+
+## Benchmark
+
+[BENCHMARK:asm_popcnt_32]
