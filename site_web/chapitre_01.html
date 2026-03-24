@@ -127,9 +127,7 @@ les instructions du langage.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 1.1.1 – Fonction bsr, version 1</em></p>
-</blockquote>
 <p>Pour rentrer abruptement dans le vif du sujet, regardons quel gain on peut
 obtenir en implantant la fonction <code>function_bsr</code> en C ou en utilisant directement
 l'instruction assembleur. Le but de ce test est d'évaluer l'efficacité de chaque méthode.
@@ -171,9 +169,7 @@ pour le moment.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 1.1.2 – Fonction bsr, version 3</em></p>
-</blockquote>
 <p>On notera cependant qu'en langage C, ces instructions (<code>bsr</code>, <code>bsf</code>, ...) ont été
 ajoutées sous forme de fonctions <em>built-in</em>, c'est à dire des extensions qui permettent
 au programmeur d'utiliser la syntaxe d'un appel de fonction pour faire appel à
@@ -344,10 +340,8 @@ qui prend beaucoup moins de temps.</li>
 
 <h3 class="subsection">1.2.1 Définition : Ordinateur</h3>
 
-<blockquote>
 <p>Un ordinateur est une machine électronique conçue pour effectuer des calculs
 et traiter des informations de manière automatique.</p>
-</blockquote>
 <p>Le terme ordinateur fut inventé par Jacques Perret, professeur de philologie
 latine à la Sorbonne, à la demande d'IBM France en 1955. IBM cherchait en effet à
 cette époque un nom pour commercialiser son nouveau calculateur qui fut alors
@@ -366,7 +360,6 @@ du boîtier.</li>
 </ul>
 <h3 class="subsection">1.2.2 Définition : Informatique</h3>
 
-<blockquote>
 <p>Science du traitement de l'information effectué par un ordinateur. Elle comprend
 l'ensemble des activités consistant à collecter, organiser et traiter de manière
 automatique les données par un ordinateur.
@@ -394,7 +387,6 @@ En 1980 [17] lors d'une table ronde sur le sujet de <em>l'enseignement français
 l'informatique</em>, Jacques Tebeka[^tebeka] pose la question suivante : <em>Faudrait-il enseigner
 l'informatique comme une discipline indépendante, au même titre que les mathématiques ?
 Ou la considérer seulement comme une aide à l'enseignement dans les différentes disciplines ?</em></p>
-</blockquote>
 <p>En fait ces propos soulignent le dilemme auquel fait face l'informatique depuis
 plusieurs décennies : faut-il l'enseigner comme une science au même titre que
 les mathématiques ou comme outil technique ? Car finalement, savoir utiliser un
@@ -403,12 +395,10 @@ de compétences techniques. Savoir programmer un ordinateur (cf. ci-après) rel�
 de la science informatique.</p>
 <p>Le même intervenant, Jacques Tebeka, fit également part lors de cette conférence
 de son désir que l'informatique soit enseignée comme discipline :</p>
-<blockquote>
 <p><em>Je viens de faire un petit calcul. À la vitesse actuelle, on pourra généraliser l'enseignement
 de l'informatique dans 430 ans... En tant qu'industriel je demande qu'on ne s'étende pas sur
 le problème philosophique de savoir s'il faut enseigner l'informatique ou l'informatique à
 travers les disciplines. Je demande qu'on aille vite, beaucoup plus vite...</em></p>
-</blockquote>
 <p>[^tebeka]: Responsable du centre informatique de la société ESSO en France et aux États-Unis, conseiller informatique du groupe BSN Gervais Danone, directeur général du groupe Datsun.
 L’informatique, depuis des années, n’est enseignée au collège et lycée dans le
 système éducatif français que comme outil et non comme discipline. C’est seulement
@@ -433,7 +423,6 @@ fut proposé au lycée à tous les élèves de seconde générale et technologiq
 (4h puis 6h par semaine).</p>
 <h3 class="subsection">1.2.3 Définition : Informaticien</h3>
 
-<blockquote>
 <p>Un informaticien est un scientifique qui met en place des procédures de
 traitement automatique de l'information grâce à un ordinateur tout en concevant
 des algorithmes efficaces et en exploitant au mieux les capacités de la machine.
@@ -465,17 +454,14 @@ ne solutionnera le problème qu’en partie. Si un autre informaticien est capab
 proposer un algorithme plus efficace ou de détecter dans votre algorithme ou votre
 codage un verrou, vous risquez de passer pour une personne peu compétente qu’il
 est préférable de remplacer.</p>
-</blockquote>
 <h3 class="subsection">1.2.4 Le travail de l'informaticien</h3>
 
 <p>Le travail de l'informaticien consiste, partant d'énoncés en langage naturel</p>
 <p>(français, anglais, etc) à traduire ces énoncés en une série d’opérations clairement
 définies que l’on appelle algorithme. Ces algorithmes sont ensuite traduits en
 instructions directement compréhensibles par le microprocesseur de la machine.</p>
-<blockquote>
 <p><strong>Définition : Algorithme</strong>
 Un algorithme est une succession finie d'actions clairement identifiées exécutées dans un ordre précis.</p>
-</blockquote>
 <p>Le mot algorithme est dérivé du nom du mathématicien persan Al Khwarizmi
 (vers l'an 820), qui introduisit en Occident la numération décimale (rapportée
 d'Inde) et enseigna les règles élémentaires des calculs qui en découlaient.
@@ -558,12 +544,10 @@ définition d'un nombre premier mais est incapable de donner le code d'une fonct
 efficace capable de déterminer si un nombre est premier ou de penser à une
 méthode plus ingénieuse (cf. ci-après le crible).</p>
 <p>Rappelons la définition d'un nombre premier que l'on apprend au collège et lycée :</p>
-<blockquote>
 <p><strong>Définition 1.3.1 (Nombre premier).</strong> Un nombre <em>n</em> ∈ ℕ est dit premier si il admet
 uniquement deux diviseurs : un et lui-même. On oublie généralement de préciser
 que ces deux diviseurs doivent être différents, en conséquence 1 n'est pas premier,
 le premier nombre premier est donc 2.</p>
-</blockquote>
 <p>Cette définition d'un nombre premier suppose de connaître la notion de divisibilité.
 Un nombre entier <em>n</em> est divisible par <em>p</em> signifie que <em>n = p × q</em>. Mais la notion la
 plus intéressante est celle du reste lié à la division entière. Si <em>n</em> n'est pas divisible
@@ -588,9 +572,7 @@ langages par le mot clé <code>mod</code> ou <code>modulo</code>.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 1.3.1 – Fonction nombre premier, version inefficace</em></p>
-</blockquote>
 <p>Une première version de la fonction <code>est_premier</code> qui détermine si un nombre <code>n</code>
 est premier ou non, est celle du Listing. Je l’ai souvent obtenue en réponse
 à ce problème de la part des étudiants lorsque je leur proposais de le résoudre.
@@ -726,9 +708,7 @@ entendu totalement inefficace pour plusieurs raisons :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 1.3.2 – Fonction nombre premier, version améliorée</em></p>
-</blockquote>
 <p>On peut améliorer cette version et en donner une version optimisée (Listing 1.3.3)
 en se basant sur l’élimination des multiples de 2 et 3, puis sur la
 recherche de diviseurs impairs. Dès lors, on testera beaucoup moins de diviseurs.
@@ -759,9 +739,7 @@ inefficace. La version améliorée de la fonction <code>est_premier</code> est t
 
 </details>
 
-<blockquote>
 <p><em>Listing 1.3.3 – Fonction nombre premier, version optimisée</em></p>
-</blockquote>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_1/code_006.c" target="_blank">code/chapitre_1/code_006.c</a></summary>
@@ -789,9 +767,7 @@ inefficace. La version améliorée de la fonction <code>est_premier</code> est t
 
 </details>
 
-<blockquote>
 <p><em>Listing 1.3.4 – Nombre premier avec crible</em></p>
-</blockquote>
 <p>Le crible représente la méthode la plus efficace. Les temps d'exécution pour cette
 méthode sont égaux à 0 car de l'ordre de la milliseconde. Elle peut encore être
 améliorée en ne se focalisant que sur les nombres impairs par exemple.
@@ -883,9 +859,7 @@ opérations qui influent sur la complexité du tri :</p>
 
 </li>
 </ul>
-<blockquote>
 <p><em>Listing 1.3.5 – Tri à bulles en ordre croissant</em></p>
-</blockquote>
 <ul>
 <li>La <strong>permutation</strong> des valeurs <code>swap(t[j], t[j+1])</code></li>
 </ul>
@@ -1060,9 +1034,7 @@ ou non à l'enregistrement <code>i</code>.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 1.3.6 – Recherche de doublons, version simpliste</em></p>
-</blockquote>
 <p>Cependant cette méthode possède une complexité en <em>O(N²/2)</em> et le nombre d'enregistrements <em>N</em> sur lequel
 on travaille est de l'ordre de 7 millions. Le calcul de la complexité est assez simple :</p>
 <ul>
@@ -1089,13 +1061,11 @@ identiques afin de les comparer par la suite. Dans ce but, on peut envisager :</
 qui résulte d'un calcul qui prend en compte tout ou partie des champs d'une structure
 de données et qui a pour but d'identifier de manière unique l'enregistrement.
 On peut la voir comme une <em>signature</em> des données qu'elle représente.</p>
-<blockquote>
 <p>Cependant, si cette valeur de hachage permet de distinguer un grand
 nombre d'enregistrements alors elle peut se révéler utile. Lorsque deux structures
 de données différentes possèdent la même valeur de hachage on parle de <em>collision</em>.
 Dans certains cas, la collision est problématique si on désire distinguer de manière
 unique chaque donnée.</p>
-</blockquote>
 <p>Il semble que les fonctions de hachage de type FNV soient très intéressantes
 car elles permettent une bonne séparation ou distinction des données.</p>
 <p>En utilisant la méthode que nous venons de décrire la complexité diminue et se
@@ -1161,9 +1131,8 @@ le choix d'un logiciel. L'informaticien se trouve donc souvent dans cette positi
 confortable, tiraillé entre deux choix contradictoires : utiliser un algorithme simple
 pour augmenter sa productivité mais ralentir les traitements, ou alors, produire du
 code efficace (donc complexe) pour diminuer le temps d’exécution des traitements
-mais ralentir sa productivité.</p>
-<blockquote>
-<p><strong>Définition : Génie Logiciel</strong>
+mais ralentir sa productivité.
+<strong>Définition : Génie Logiciel</strong>
 En Informatique, le <strong>Génie Logiciel</strong> est une discipline qui a pour but d'apprendre
 les méthodes qui permettent de mener à terme la réalisation d'un logiciel,
 en partant de l'expression du besoin d'un client et en passant par la conception,
@@ -1174,7 +1143,6 @@ fois, ces méthodes fonctionnaient sur le modèle suivant : on allait voir le cl
 et on comprenait (plus ou moins bien) son besoin, puis on concevait le logiciel
 pendant quelques mois et on présentait le résultat final au client. Le problème est
 que le résultat pouvait ne pas convenir au client :</p>
-</blockquote>
 <ul>
 <li>Soit parce que pendant la phase de développement la vision du client ou son besoin évoluait,</li>
 <li>Soit parce que le logiciel final n'était pas ergonomique,</li>

@@ -1,2 +1,4 @@
-mov eax, [valeur]
-popcnt eax, eax   ; eax contient maintenant le nombre de bits à 1
+.case:
+    cmp eax, MAX_CASE
+    ja .default
+    jmp [jump_table + eax*4]

@@ -96,13 +96,7 @@ function extractPdfText($pdfPath, $page = null, $range = null) {
     return shell_exec($cmd);
 }
 
-/**
- * Compte le nombre de pages d'un PDF
- */
-function getPdfPageCount($pdfPath) {
-    $cmd = "pdfinfo " . escapeshellarg($pdfPath) . " 2>/dev/null | grep 'Pages:' | awk '{print $2}'";
-    return (int)trim(shell_exec($cmd));
-}
+
 
 /**
  * Analyse le texte pour trouver les tableaux de benchmark

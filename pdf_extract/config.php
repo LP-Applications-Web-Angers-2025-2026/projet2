@@ -74,7 +74,7 @@ define('DB_PATH', isset($envVars['DB_PATH'])
     : $defaultDb);
 
 // Répertoire de sortie markdown
-$defaultOutput = realpath($baseDir . '/../site_web/pages-md');
+$defaultOutput = realpath($baseDir . '/../site_web/pages_md');
 define('OUTPUT_DIR', isset($envVars['OUTPUT_DIR'])
     ? realpath($baseDir . '/' . $envVars['OUTPUT_DIR']) ?: $baseDir . '/' . $envVars['OUTPUT_DIR']
     : $defaultOutput);

@@ -74,7 +74,7 @@ résolution du problème de la recherche du Maximum de Parcimonie en Bioinfor-
 matique. Il permet d'introduire plusieurs instructions assembleur liées au calcul
 vectoriel avec unités SSE sur les entiers.</p>
 <p>Le problème de recherche du Maximum de Parcimonie consiste étant donné un
-ensemble de  $n$  séquences d'ADN de même longueur  $k$  à trouver un arbre binaire
+ensemble de $n$ séquences d'ADN de même longueur $k$ à trouver un arbre binaire
 dont le coût est minimum étant donné un critère d'optimisation.
 Pour calculer ce coût qui correspond au nombre de mutations entre séquences,
 chaque feuille de l'arbre contient une des séquences initiale du problème et les
@@ -87,33 +87,33 @@ puis on remonte vers la racine en calculant les séquences hypothétiques tout e
 sommant leurs coûts.</p>
 <p>Prenons un exemple avec les quatre séquences d'ADN suivantes :</p>
 <ul>
-<li>$S1$  = AAAAA</li>
-<li>$S2$  = AAAAC</li>
-<li>$S3$  = CCCTT</li>
-<li>$S4$  = CCCAT</li>
+<li>$S1$ = AAAAA</li>
+<li>$S2$ = AAAAC</li>
+<li>$S3$ = CCCTT</li>
+<li>$S4$ = CCCAT</li>
 </ul>
 <p>On rappelle que les acides nucléiques qui composent les séquences d'ADN sont
-l'adénine (A), la cytosine (C), la guanine (G) et la thymine (T). La séquence  $S1$  est
-donc composée de 5 adénines,  $S2$  de quatre adénines suivies d'une cytosine, etc.</p>
-<p>Le premier arbre, qui dans la notation Newick est  $T1 = ((S1,S3),(S2,S4))$ ,
-possède un coût total de  $4 + 5 + 0 = 9$ . En effet, lorsque l'on calcule la séquence
-hypothétique qui résulte de  $k$0 , on a cinq mutations : trois modifications où A
+l'adénine (A), la cytosine (C), la guanine (G) et la thymine (T). La séquence $S1$ est
+donc composée de 5 adénines, $S2$ de quatre adénines suivies d'une cytosine, etc.</p>
+<p>Le premier arbre, qui dans la notation Newick est $T1 = ((S1,S3),(S2,S4))$,
+possède un coût total de $4 + 5 + 0 = 9$. En effet, lorsque l'on calcule la séquence
+hypothétique qui résulte de $(S1,S3)$, on a cinq mutations : trois modifications où A
 est muté en C et deux où A subit une mutation en T. Sur la branche de droite qui
-correspond à séquence hypothétique qui résulte de  $k$1 , on a quatre mutations :
+correspond à séquence hypothétique qui résulte de $(S2,S4)$, on a quatre mutations :
 trois modifications où A est muté en C, puis A en regard de A, donc aucune mutation,
 et enfin, une mutation de C en T. Au niveau de la racine, on n'aura aucune mutation
 car on a à chaque fois des sous-ensembles de caractères communs. On trouve trois
 fois le sous-ensemble <code>{A,C}</code> en regard de lui-même, puis <code>{A,T}</code> en regard de <code>{A}</code>
 dont l'intersection est <code>{A}</code> et enfin <code>{A,T}</code> en regard de <code>{C,T}</code> dont l'intersection
 est <code>{T}</code>.</p>
-<p>Le second arbre  $k$2  possède un coût inférieur à  $k$3 , égal à
-$k$4 . C'est donc  $k$5  qui est le plus <em>parcimonieux</em>, c'est à dire qui possède le
+<p>Le second arbre $T2 = ((S1,S2),(S3,S4))$ possède un coût inférieur à $T1$, égal à
+$4 + 1 + 1 = 6$. C'est donc $T2$ qui est le plus <em>parcimonieux</em>, c'est à dire qui possède le
 moins de mutations et qui doit être gardé comme solution au problème.</p>
 <p>Le problème de recherche de l'arbre de parcimonie maximum est un problème
 d'optimisation combinatoire et est <strong>NP-Complet</strong> ce qui signifie, en simplifiant à
 outrance, qu'il n'existe pas d'algorithme qui nous permette de trouver la solution
 autre qu'une recherche exhaustive. Malheureusement, le nombre d'arbres binaires à examiner est exponentiel, par
-exemple pour 50 séquences, il y a  $k$6  arbres possibles. On ne peut donc
+exemple pour 50 séquences, il y a $2,8 \times 10^{74}$ arbres possibles. On ne peut donc
 envisager une recherche exhaustive et il faut faire appel à des métaheuristiques qui
 sont des techniques de recherche liées à la résolution de ce genre de problème.</p>
 <h2 class="section">14.2 Fonction à implanter (Référence en C)</h2>
@@ -143,20 +143,18 @@ donne le nombre de mutations trouvées.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 14.2.1 – Maximum de Parcimonie fonction de référence en C</em></p>
-</blockquote>
 <p>Les séquences sont modélisées sous forme de tableaux d'octets et pour coder
 efficacement la possibilité d'avoir des combinaisons d'acides nucléiques comme 'A
 ou C', 'A ou C ou T', on utilise des puissances de 2 :</p>
 <ul>
-<li>A =  $k$7 </li>
-<li>C =  $k$8 </li>
-<li>G =  $k$9 </li>
-<li>T =  $S1$0 </li>
+<li>A = $2^0 = 1$</li>
+<li>C = $2^1 = 2$</li>
+<li>G = $2^2 = 4$</li>
+<li>T = $2^3 = 8$</li>
 </ul>
-<p>Ainsi 'A ou C' qui en notation ensembliste se note  $S1$1  (ou encore  $S1$2 )
-est codé par  $S1$3 . La fonction de Fitch vérifie que pour chacun des
+<p>Ainsi 'A ou C' qui en notation ensembliste se note ${A} \cup {C}$ (ou encore ${A,C}$)
+est codé par $2^0 + 2^1 = 1 + 2 = 3$. La fonction de Fitch vérifie que pour chacun des
 sous-ensembles de caractères en regard des deux séquences en entrée, il existe
 un caractère ou un sous-ensemble commun en réalisant une <strong>intersection</strong> des sous-
 ensembles de caractères de <code>x[i]</code> avec <code>y[i]</code>. Si cet ensemble est vide (égal à <code>0</code>) c'est qu'il
@@ -167,10 +165,10 @@ l'<strong>union</strong> des ensembles de caractères (<code>x[i] | y[i]</code>)
 <p>La difficulté de l'implantation réside dans le fait que l'on ne dispose en 32 bits
 que de 6 registres généraux et que la fonction fait apparaître 6 variables :</p>
 <ul>
-<li>les séquences  $S1$4 ,</li>
-<li>la taille  $S1$5  des séquences,</li>
-<li>la variable de boucle  $S1$6 ,</li>
-<li>le nombre de  $S1$7 .</li>
+<li>les séquences $x,y,z$,</li>
+<li>la taille $size$ des séquences,</li>
+<li>la variable de boucle $i$,</li>
+<li>le nombre de $mutations$.</li>
 </ul>
 <p>Cependant il faudra réaliser des calculs comme <code>x[i] &amp; y[i]</code>, il est donc néces-
 saire de disposer d'au minimum un registre pour les calculs.
@@ -290,13 +288,9 @@ L'association variables / registres est celle de la Table 14.1. </p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 14.3.1 – Maximum de Parcimonie fonction de référence en assembleur</em></p>
-</blockquote>
-<blockquote>
 <p><strong>Temps de référence</strong>
 Pour l'implantation assembleur ci-dessus <code>(50 000 tics sur une matrice de 524 287)</code>, l'exécution dure environ 84,37 secondes sur un processeur Intel Core i7.</p>
-</blockquote>
 <h2 class="section">14.4 Suppression du branchement (Élimination du IF)</h2>
 
 <p>L'implantation précédente se révèle inefficace pour une simple raison que
@@ -317,7 +311,7 @@ On charge <code>x[i]</code> en partie basse de <code>eax</code> et <code>ebx</co
 <p>L'instruction <code>and eax, edx</code> met à jour le registre de <em>flags</em>, dès lors on peut utiliser
 deux instructions conditionnelles :</p>
 <ul>
-<li><code>setz dl</code> (donc <code>edx</code>) : fixe <code>dl</code> à  $S1$8  si <code>x[i] &amp; y[i] == 0</code>, sinon  $S1$9 .</li>
+<li><code>setz dl</code> (donc <code>edx</code>) : fixe <code>dl</code> à $1$ si <code>x[i] &amp; y[i] == 0</code>, sinon $0$.</li>
 <li><code>cmovz eax, ebx</code> : remonte <code>x[i] | y[i]</code> vers <code>eax</code> si le flag <code>Z</code> est actif.</li>
 </ul>
 <p>Ces deux instructions réalisent la conditionnelle <code>if</code> de la fonction de référence sans introduire la moindre notion de prédiction de pile.</p>
@@ -350,13 +344,9 @@ deux instructions conditionnelles :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 14.4.1 – Maximum de Parcimonie fonction de référence sans if</em></p>
-</blockquote>
-<blockquote>
 <p><strong>Amélioration sans if</strong>
 En éliminant le <code>if</code> on ne met plus que <strong>34,68 secondes</strong>, on va donc environ <strong>2,43 fois plus vite</strong> qu'avec les sauts non-prédictibles.</p>
-</blockquote>
 <p><strong>Optimisation supplémentaire</strong> (<code>Listing 14.5.1</code>) : En accédant aux pointeurs directement sur <code>esp</code> (sans <code>ebp</code>), on libère 7 registres. Remplacer les accès mémoire pour <code>mutations</code> par des registres pur diminue le temps jusqu'à <strong>5,24 secondes</strong>, soit <strong>16 fois plus vite</strong> que la référence.</p>
 <h2 class="section">14.6 Amélioration Vectorielle (SSE2 et SSE4.1)</h2>
 
@@ -405,13 +395,9 @@ chaque octet de <code>xmm1</code> et on le place dans un registre non-vectoriel 
 
 </details>
 
-<blockquote>
 <p><em>Listing 14.6.1 – Maximum de Parcimonie version SSE2</em></p>
-</blockquote>
-<blockquote>
 <p><strong>Amélioration SSE2</strong>
 On abaisse le temps d'exécution à <strong>2,70 secondes</strong>, soit un <strong>facteur d'amélioration de ~31</strong>.</p>
-</blockquote>
 <p>Sur les plateformes plus récentes, le <strong>SSE4.1</strong> a introduit l'instruction <code>pblendvb</code> (<em>Variable Blend Packed Bytes</em>). Elle permet de sélectionner des octets de chacune de ses deux opérandes suivant
 le masque de sélection contenu dans le registre <code>xmm0</code> de base.</p>
 
@@ -431,9 +417,7 @@ le masque de sélection contenu dans le registre <code>xmm0</code> de base.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 14.7.1 – Extrait de Parcimonie version SSE4.1</em> (2.60 secondes).</p>
-</blockquote>
 <h2 class="section">14.8/14.11 Amélioration Vectorielle AVX2 et AVX512</h2>
 
 <p>La version AVX utilise les registres <code>ymm</code> qui ont une taille de 32 octets (soit 256
@@ -453,10 +437,8 @@ bits). Le code est similaire à celui de la version SSE 4.1 mais traite 32 acide
 
 </details>
 
-<blockquote>
 <p><strong>Amélioration AVX2 et AVX512</strong>
 Le temps d'exécution est ramené à 1,35 secondes en AVX2 et 0,42 secondes en AVX512 natif (soit une divisibilité de performance de ×200 par rapport au code C).</p>
-</blockquote>
 <h2 class="section">14.10 Variante <em>C Intrinsics</em> : Directives Compilateur</h2>
 
 <p>La version <em>intrinsics</em> en AVX2 nécessite, pour être efficacement traduite par le
@@ -870,10 +852,10 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
 </div>
 <script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="data/graph.js"></script>
-<div class="chart-container" id="chart-auto-asm_maxpars_64-ancien-13" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_maxpars_64-ancien-21" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_maxpars_64-ancien-13';
+    var id = 'chart-auto-asm_maxpars_64-ancien-21';
     var data = {"CPUs":["Pentium D 925","Core 2 Q9300","Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Core i7 860","AMD X6 1090T","AMD Phenom II X6 1090T","Core i5 3570K","Intel Core i5 3570K 3.40GHz","Core i7 4790","Intel Core i7 4790 3.60GHz"],"Years":[2006,2008,2008,2008,2009,2010,2010,2012,2012,2014,2014],"Methods":[{"name":"asm","values":[235.32,185.4,null,null,126.4,118.98,null,114.89,null,96.59,null]},{"name":"no_if_asm","values":[133.48,98.36,null,null,67.72,52.67,null,48.67,null,41.62,null]},{"name":"no_if_opt_asm","values":[94.97,85.6,null,null,65.33,45.64,null,33.35,null,25.95,null]},{"name":"no_if_opt_ur4_asm","values":[70.15,87.67,null,null,51.68,38.16,null,28.95,null,22.52,null]},{"name":"no_if_opt_ur8_asm","values":[70.29,86.91,null,null,50.25,36.73,null,28.32,null,21.89,null]},{"name":"ref_v1_O2","values":[224.64,170.22,null,null,131.86,110.89,null,140.27,null,103.54,null]},{"name":"sse2_v1","values":[27.64,9.37,null,null,5.84,11.75,null,4.49,null,3.66,null]},{"name":"sse41","values":[null,9.25,null,null,5.72,null,null,4.42,null,3.73,null]},{"name":"maxpars_asm","values":[null,null,840836930925.714,690461533247.571,null,null,632890502798.857,null,665752618778.286,null,604367422689.429]},{"name":"maxpars_c_O2","values":[null,null,937801079149.429,716275028703,null,null,661035616589.857,null,714449027564.571,null,622073498849.714]},{"name":"maxpars_c_O3","values":[null,null,113383544445.1,109351620344.757,null,null,72310811218.386,null,37738753874.429,null,31997654121.914]},{"name":"maxpars_no_if_asm","values":[null,null,392985526258,328558610183.143,null,null,267122158781.571,null,198739673015.729,null,146856710409.957]},{"name":"maxpars_sse2","values":[null,null,94407976812,103051665000.514,null,null,78322568649.186,null,39763069897.314,null,36284291233.843]},{"name":"ref_v1_O3","values":[null,null,null,null,29.86,11.8,null,null,null,5.47,null]},{"name":"avx2","values":[null,null,null,null,null,null,null,null,null,1.86,null]},{"name":"avx2_intrinsics","values":[null,null,null,null,null,null,null,null,null,1.89,null]},{"name":"maxpars_avx2","values":[null,null,null,null,null,null,null,null,null,null,30007409540.271]},{"name":"maxpars_avx2_ez_ii","values":[null,null,null,null,null,null,null,null,null,null,30221990023.686]},{"name":"maxpars_avx2_intrinsics","values":[null,null,null,null,null,null,null,null,null,null,30453241776.871]},{"name":"maxpars_avx2_u2","values":[null,null,null,null,null,null,null,null,null,null,30648265102.143]},{"name":"maxpars_avx2_u4","values":[null,null,null,null,null,null,null,null,null,null,29960248588.586]},{"name":"maxpars_avx2_u4_vpblendvb","values":[null,null,null,null,null,null,null,null,null,null,29795877978.271]},{"name":"maxpars_avx2_u4_vpblendvb_nodep","values":[null,null,null,null,null,null,null,null,null,null,30410556237.086]},{"name":"maxpars_avx2_vpblendvb","values":[null,null,null,null,null,null,null,null,null,null,30183936888.657]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -1219,10 +1201,10 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
   <caption>TABLE Moderne – Benchmark asm maxpars 64</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_maxpars_64-moderne-14" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_maxpars_64-moderne-22" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_maxpars_64-moderne-14';
+    var id = 'chart-auto-asm_maxpars_64-moderne-22';
     var data = {"CPUs":["Core i3 6100","Core i5 7400","Core i7 8700","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","Ryzen 7 1700X","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core","Ryzen 5 3600","Xeon Silver 4208"],"Years":[2015,2017,2017,2017,2017,2017,2018,2019,2019,2019],"Methods":[{"name":"asm","values":[104.56,110.79,84.37,null,null,106.52,null,null,101.56,123]},{"name":"avx2_intrinsics","values":[1.81,1.82,1.39,null,null,1.39,null,null,1.09,3.03]},{"name":"no_if_asm","values":[42.58,45.42,34.68,null,null,53.86,null,null,47.03,42.45]},{"name":"no_if_opt_asm","values":[21.43,22.82,17.4,null,null,19.58,null,null,17.24,49.8]},{"name":"no_if_opt_ur4_asm","values":[19.67,20.95,15.92,null,null,18.85,null,null,16.75,23.04]},{"name":"no_if_opt_ur8_asm","values":[18.75,19.99,15.21,null,null,17.17,null,null,14.68,22.56]},{"name":"ref_v1_O2","values":[139.36,148.59,96.72,null,null,111.55,null,null,103.41,118.36]},{"name":"ref_v1_O3","values":[2.2,2.45,1.85,null,null,2.5,null,null,2.02,3.61]},{"name":"sse2_v1","values":[3.58,3.52,2.7,null,null,3.59,null,null,3.16,4.3]},{"name":"sse41","values":[3.58,3.46,2.6,null,null,3.61,null,null,3.19,4.28]},{"name":"avx2","values":[null,null,1.54,null,null,null,null,null,null,null]},{"name":"maxpars_asm","values":[null,null,null,671402169718.857,533562899840.571,null,704927369028.571,218.745,null,null]},{"name":"maxpars_avx2","values":[null,null,null,20835732439.686,15464808187.543,null,39585735080.686,7.578,null,null]},{"name":"maxpars_avx2_ez_ii","values":[null,null,null,19897284286.843,14956290683.543,null,39273031533.714,7.516,null,null]},{"name":"maxpars_avx2_intrinsics","values":[null,null,null,20751261601.5,15178474159.986,null,39309364783.543,7.524,null,null]},{"name":"maxpars_avx2_u2","values":[null,null,null,20171645291.514,15272134995.371,null,39281344990.629,7.561,null,null]},{"name":"maxpars_avx2_u4","values":[null,null,null,20047693200.671,15323142708.314,null,39439422065.371,7.581,null,null]},{"name":"maxpars_avx2_u4_vpblendvb","values":[null,null,null,19672267156.171,14963304093.914,null,39339218528.914,7.573,null,null]},{"name":"maxpars_avx2_u4_vpblendvb_nodep","values":[null,null,null,20156016662.757,15110403823.171,null,39323596628.114,7.615,null,null]},{"name":"maxpars_avx2_vpblendvb","values":[null,null,null,19978751847.386,15503090287.929,null,39313958789.486,7.575,null,null]},{"name":"maxpars_c_O2","values":[null,null,null,626238232338.143,491756065364.857,null,712870403200,223.079,null,null]},{"name":"maxpars_c_O3","values":[null,null,null,21729643915.586,17429345018.257,null,40929609091.2,8.258,null,null]},{"name":"maxpars_no_if_asm","values":[null,null,null,120206867563.686,96270516501.157,null,134335265083.886,42.275,null,null]},{"name":"maxpars_sse2","values":[null,null,null,26705727501.457,21385877157.8,null,41138680309.943,9.173,null,null]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -1327,11 +1309,63 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
   <caption>TABLE Recent – Benchmark asm maxpars 64</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_maxpars_64-recent-15" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_maxpars_64-recent-23" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_maxpars_64-recent-15';
+    var id = 'chart-auto-asm_maxpars_64-recent-23';
     var data = {"CPUs":["Core i7 10850H","Ryzen 5 5600g","Core i5 12400f","Ryzen 5 9600X"],"Years":[2020,2021,2022,2024],"Methods":[{"name":"asm","values":[79.75,82.38,100.53,70.65]},{"name":"avx2","values":[1.36,null,null,null]},{"name":"avx2_intrinsics","values":[1.36,null,null,null]},{"name":"no_if_asm","values":[27.44,29.31,44.54,13.06]},{"name":"no_if_opt_asm","values":[16.17,17.23,11.98,9.8]},{"name":"no_if_opt_ur4_asm","values":[14.81,14.96,11.06,8.3]},{"name":"no_if_opt_ur8_asm","values":[14.2,13.99,10.49,7.89]},{"name":"ref_v1_O2","values":[83.5,91.38,104.5,76.97]},{"name":"ref_v1_O3","values":[1.85,1.98,1.69,0.64]},{"name":"sse2_v1","values":[2.56,1.74,1.82,1.07]},{"name":"sse41","values":[2.53,1.75,1.81,1.08]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>
+<h3 class="subsection">Benchmark 32 bits</h3>
+
+<p>Les mêmes tests effectués en architecture 32 bits montrent des résultats comparables avec les limitations inhérentes à cette architecture (moins de registres disponibles).</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
+      <th>12th Gen Intel Core i5 12400F<br><small>2022</small></th>
+      <th>AMD Ryzen 5 9600X 6 Core<br><small>2024</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>maxpars_asm</strong></td>
+      <td>61.839</td>
+      <td>78.421</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>maxpars_ref_v1_O2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>16574648388.257</td>
+    </tr>
+    <tr>
+      <td><strong>maxpars_ref_v1_O3</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>137236321.114</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Recent – Benchmark asm maxpars 32</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_maxpars_32-recent-24" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_maxpars_32-recent-24';
+    var data = {"CPUs":["AMD Ryzen 5 5600G","12th Gen Intel Core i5 12400F","AMD Ryzen 5 9600X 6 Core"],"Years":[2021,2022,2024],"Methods":[{"name":"maxpars_asm","values":[61.839,78.421,null]},{"name":"maxpars_ref_v1_O2","values":[null,null,16574648388.257]},{"name":"maxpars_ref_v1_O3","values":[null,null,137236321.114]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");
