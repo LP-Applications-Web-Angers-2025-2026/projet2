@@ -509,9 +509,11 @@ De même pour les flottants :</p>
 </tr>
 </tbody>
 </table>
-<p><em>TABLE 10.3 – Caractéristiques des matériels : architectures récentes (2020 et suivantes)</em>
-<em>L'AMD Ryzen 5 9600X dispose des technologies AVX512 et FMA3 et utilise
+<p><em>TABLE 10.3 – Caractéristiques des matériels : architectures récentes (2020 et suivantes)</em></p>
+<blockquote>
+<p><em>L'AMD Ryzen 5 9600X dispose des technologies AVX512 et FMA3 et utilise
 également 32 Go de DDR5 Kingston (KF560C30-16) FURY Beast 6000 Mhz 30 CL.</em></p>
+</blockquote>
 <h3 class="subsection">10.4.2 Mesures et Protocole</h3>
 
 <p>Nous avons défini deux types de tests principaux :</p>
@@ -544,6 +546,7 @@ sudo apt-get install cpufrequtils
 echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
 sudo systemctl disable ondemand
 ```
+</div>
 <h3 class="subsection">10.4.3 Premiers Tests (Chapitre 2) en 32 bits</h3>
 
 <p>Le chapitre 2 s'est penché sur l'instruction <code>bsr</code> (cf. section Bit Scan Reverse) et sur le crible d'Ératosthène (nombres premiers). Voici les mesures de performance :</p>
@@ -691,7 +694,9 @@ sudo systemctl disable ondemand
 </tbody>
 </table>
 <p><em>TABLE 10.5 – Test des matériels modernes en architecture 32 bits</em></p>
+<blockquote>
 <p>Sur un Xeon Silver 4208, le temps de calcul extrêmement faible de <code>__builtin_clz</code> (0,21s ou ~0,09s en 64 bits) est dû à l'optimisation extrême du compilateur (usage de <code>vplzcntd</code> via AVX512-VL / AVX512-CD). Sur CPU AMD modernes, l'instruction assembleur pure <code>bsr</code> seule ne semble par contre pas spécialement efficace face aux CPUs Intel comparables.</p>
+</blockquote>
 <h4 class="subsubsection">Matériels récents (2020 et après) - Temps en ms/s</h4>
 
 <table class="data-table">

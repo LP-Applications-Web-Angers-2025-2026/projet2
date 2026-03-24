@@ -1,2 +1,2 @@
-richer@universe:~$ chmod 644 fichier
-richer@universe:~$ tr ':' '\012' < fichier
+richer@universe:~ $ chmod 644 fichier
+richer@universe:~$  tr ':' '\012' < fichier

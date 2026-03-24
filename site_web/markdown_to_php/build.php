@@ -140,6 +140,29 @@ function buildHtmlTableFromJson(string $jsonPath, string $legend): string {
     return $html;
 }
 
+/**
+ * Protège les formules mathématiques en les remplaçant par des placeholders
+ */
+function protectMath(string &$markdown, array &$mathStore): void {
+    $placeholderPrefix = "MATH_PLACEHOLDER_";
+    // On extrait les blocs $$...$$ et $...$
+    $markdown = preg_replace_callback('/(\$\$.*?\$\$|\$.*?\$)/s', function($m) use (&$mathStore, $placeholderPrefix) {
+        $id = count($mathStore);
+        $mathStore[] = $m[1];
+        return " " . $placeholderPrefix . $id . " ";
+    }, $markdown);
+}
+
+/**
+ * Restaure les formules mathématiques à la place des placeholders
+ */
+function restoreMath(string &$html, array $mathStore): void {
+    $placeholderPrefix = "MATH_PLACEHOLDER_";
+    foreach ($mathStore as $id => $math) {
+        $html = str_replace($placeholderPrefix . $id, $math, $html);
+    }
+}
+
 $sourceDir  = dirname(__DIR__) . '/pages-md';
 $outputDir  = dirname(__DIR__);
 $template   = __DIR__ . '/templates/layout.php';
@@ -187,16 +210,28 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
         }
     }
 
-    // ---- Nettoyage du Markdown avant parsing ----
+    // ---- Nettoyage et Protection avant parsing ----
 
-    // 1. Supprimer les lignes "# Chapitre N : Titre" répétées dans le corps
-    //    (le H1 reste en haut mais on supprime les occurrences supplémentaires)
+    // 1. Protection des formules mathématiques ($...$ et $$...$$)
+    $mathStore = [];
+    protectMath($markdown, $mathStore);
 
-    // 2. Convertir les blocs > **Keyword** : ... en div stylisés
-    $markdown = preg_replace_callback(
-        '/^>\s*\*\*(Définition|Note|Remarque|Attention|Exemple|Info|Important|Warning|Convention)\*\*\s*(?::?\s*(.*))?$/m',
-        function($m) {
-            $kw   = $m[1];
+    // 2. Supprimer les lignes "# Chapitre N : Titre" répétées dans le corps (déjà fait lors de l'extraction en théorie)
+
+    // 3. Traiter les blocs de citation personnalisés (cadre_...)
+    // On procède ligne par ligne pour gérer correctement l'ouverture et la fermeture
+    $lines = explode("\n", $markdown);
+    $newLines = [];
+    $inCustomCadre = false;
+    $cadreKeywords = 'Définition|Note|Remarque|Attention|Exemple|Info|Important|Warning|Convention';
+
+    foreach ($lines as $line) {
+        // Détecter un début de cadre : > **Keyword**
+        if (preg_match('/^>\s*\*\*(' . $cadreKeywords . ')\*\*\s*(?::?\s*(.*))?$/i', $line, $m)) {
+            if ($inCustomCadre) {
+                $newLines[] = "</div>"; // Fermer le précédent si nécessaire (peu probable avec une syntaxe propre)
+            }
+            $kw = $m[1];
             $rest = isset($m[2]) ? trim($m[2]) : '';
             $class = match(strtolower($kw)) {
                 'définition', 'definition' => 'definition',
@@ -209,15 +244,37 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
                 default                    => 'note',
             };
             $content = $rest !== '' ? "<strong>{$kw}</strong> : {$rest}" : "<strong>{$kw}</strong>";
-            return "<div class=\"cadre_{$class}\">{$content}";
-        },
-        $markdown
-    );
-    // Fermer les blocs > qui continuent
-    $markdown = preg_replace('/^>\s*$/m', '</div>', $markdown);
-    $markdown = preg_replace('/^> (.+)$/m', '$1', $markdown);
+            $newLines[] = "<div class=\"cadre_{$class}\">{$content}";
+            $inCustomCadre = true;
+        } 
+        // Si on est dans un cadre et que la ligne commence par ">"
+        elseif ($inCustomCadre && preg_match('/^>\s?(.*)$/', $line, $m)) {
+            $content = $m[1];
+            if (trim($content) === '') {
+                // Ligne "> " vide : on ferme le cadre
+                $newLines[] = "</div>";
+                $inCustomCadre = false;
+            } else {
+                $newLines[] = $content;
+            }
+        } 
+        // Si on est dans un cadre mais que la ligne ne commence plus par ">"
+        elseif ($inCustomCadre) {
+            $newLines[] = "</div>";
+            $inCustomCadre = false;
+            $newLines[] = $line;
+        } 
+        // Sinon, c'est une ligne normale ou un blockquote standard que Parsedown gérera
+        else {
+            $newLines[] = $line;
+        }
+    }
+    if ($inCustomCadre) {
+        $newLines[] = "</div>";
+    }
+    $markdown = implode("\n", $newLines);
 
-    // 3. Convertir les citations en italique des Listings
+    // 4. Convertir les citations en italique des Listings (Listing 17.X)
     $markdown = preg_replace(
         '/^> \*(Listing [\d.]+ [–—-] .+)\*$/m',
         "\n*$1*\n",
@@ -226,6 +283,9 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
 
     // ---- Parsing Markdown -> HTML ----
     $htmlContent = $Parsedown->text($markdown);
+
+    // ---- Restauration des formules mathématiques ----
+    restoreMath($htmlContent, $mathStore);
 
     // ---- Post-traitement du HTML ----
 

@@ -72,13 +72,13 @@ certaines images peuvent ne pas s'afficher.
 <p>Ce chapitre traite de l'implantation de la fonction <code>saxpy</code> et permet de mettre en
 pratique ce qui a été vu au Chapitre 7.</p>
 <p>Pour rappel, la fonction SAXPY (<em>Single-Precision A×X Plus Y</em>) consiste, étant
-donnés deux vecteurs de $n$ réels appelés $X$ et $Y$, à calculer :</p>
-<p>$Y = a \times X + Y$
-$y_i = a \times x_i + y_i, \forall i \in [1..n]$
-où $a$ est une constante réelle. </p>
+donnés deux vecteurs de  $n$  réels appelés  $X$  et  $Y$ , à calculer :</p>
+<p>$Y = a \times X + Y$ 
+$y_i = a \times x_i + y_i, \forall i \in [1..n]$ 
+où  $a$  est une constante réelle. </p>
 <p>Afin de complexifier la traduction pour le compilateur, nous avons décidé de modifier quelque peu la fonction en lui faisant retourner
-la somme des $y_i$ :</p>
-<p>$sum = \sum_{i=1}^{n} y_i$</p>
+la somme des  $y_i$  :</p>
+<p>$sum = \sum_{i=1}^{n} y_i$ </p>
 <p>Nous allons nous intéresser à des vecteurs de taille quelconque et programmer
 en architecture 32 bits. Les types C que nous allons utiliser sont :</p>
 <ul>
@@ -108,7 +108,9 @@ mètres qui sont les vecteurs <code>x</code> et <code>y</code>, la constante <co
 
 </details>
 
+<blockquote>
 <p><em>Listing 13.2.1 – SAXPY modifiée - fonction de référence</em></p>
+</blockquote>
 <h2 class="section">13.3 Implantation Assembleur (FPU 32 bits)</h2>
 
 <p>La première implantation en assembleur que nous allons réaliser (<em>Listing 13.3.1</em>) est la traduction de la fonction de référence en utilisant le coprocesseur
@@ -176,7 +178,7 @@ de la fonction, c'est-à-dire <code>st0</code>. Nous avons choisi de réaliser l
 modifiés pour le sous-programme appelant d'après les conventions d'appel du C en 32 bits.</p>
 <p>La traduction est présentée ci-dessous. En ligne 3, on
 initialise <code>sum</code> à <code>0</code> grâce à l'instruction <code>fldz</code>. Comme indiqué précédemment, <code>sum</code>
-sera en <code>st0</code>, puis décalé en <code>st1</code> lors du calcul $a \times x_i + y_i$.</p>
+sera en <code>st0</code>, puis décalé en <code>st1</code> lors du calcul  $a \times x_i + y_i$ .</p>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_13/code_002.asm" target="_blank">code/chapitre_13/code_002.asm</a></summary>
@@ -222,7 +224,9 @@ sera en <code>st0</code>, puis décalé en <code>st1</code> lors du calcul $a \t
 
 </details>
 
+<blockquote>
 <p><em>Listing 13.3.1 – SAXPY modifiée - implantation FPU</em></p>
+</blockquote>
 <p>On peut voir l'évolution de la pile du coprocesseur lors du calcul <em>Table 13.2</em>.</p>
 <table class="data-table">
 <thead>
@@ -249,33 +253,35 @@ sera en <code>st0</code>, puis décalé en <code>st1</code> lors du calcul $a \t
 <tr>
 <td>18</td>
 <td><code>fmul dword [ebp+16]</code></td>
-<td>$a \times x_i$</td>
+<td>$X$0</td>
 <td><code>sum</code></td>
 </tr>
 <tr>
 <td>19</td>
 <td><code>fadd dword [edi+ecx*4]</code></td>
-<td>$a \times x_i + y_i$</td>
+<td>$X$1</td>
 <td><code>sum</code></td>
 </tr>
 <tr>
 <td>20</td>
 <td><code>fst dword [edi+ecx*4]</code></td>
-<td>$a \times x_i + y_i$</td>
+<td>$X$2</td>
 <td><code>sum</code></td>
 </tr>
 <tr>
 <td>21</td>
 <td><code>faddp st1, st0</code></td>
-<td>$sum + (a \times x_i + y_i)$</td>
+<td>$X$3</td>
 <td>?</td>
 </tr>
 </tbody>
 </table>
 <p><em>TABLE 13.2 – Pile du calcul du coprocesseur FPU x87</em></p>
-<p>Afin de donner un ordre d'idée du temps d'exécution, le test effectué consistera à calculer <code>50_000</code> fois les fonctions appliquées sur des vecteurs initialisés aléatoirement de <code>524_287</code> éléments.
-<strong>Temps de référence</strong>
+<p>Afin de donner un ordre d'idée du temps d'exécution, le test effectué consistera à calculer <code>50_000</code> fois les fonctions appliquées sur des vecteurs initialisés aléatoirement de <code>524_287</code> éléments.</p>
+<blockquote>
+<p><strong>Temps de référence</strong>
 Pour l'implantation de référence pure C, l'exécution dure environ 22,95 secondes. En FPU via Assembleur on n'observe aucune amélioration probante (23.01s).</p>
+</blockquote>
 <h2 class="section">13.4 Amélioration avec dépliage FPU</h2>
 
 <p>Une fois que l'on dispose de la version FPU, on peut la modifier afin d'introduire
@@ -325,9 +331,11 @@ un <strong>dépliage par 4</strong> du corps de la boucle.</p>
 
 </details>
 
+<blockquote>
 <p><strong>Amélioration dépliage par 4</strong>
 En dépliant la boucle FPU par 4, on n'obtient aucune amélioration
 puisque l'exécution reste à 22,96 secondes.</p>
+</blockquote>
 <h2 class="section">13.5 Amélioration Vectorielle (SSE)</h2>
 
 <p>Après avoir déplié le corps de la boucle <code>for</code> par 4, il est relativement aisé d'écrire
@@ -337,8 +345,8 @@ de la boucle.</p>
 <p>On choisit les conventions suivantes :</p>
 <ul>
 <li><code>xmm0</code> contient les 4 sommes partielles cumulées</li>
-<li><code>xmm1</code> contient $x<em>i, x</em>{i+1}, x<em>{i+2}, x</em>{i+3}$</li>
-<li><code>xmm2</code> contient $y<em>i, y</em>{i+1}, y<em>{i+2}, y</em>{i+3}$</li>
+<li><code>xmm1</code> contient  $X$4 </li>
+<li><code>xmm2</code> contient  $X$5 </li>
 <li><code>xmm3</code> contient quatre fois la valeur de la constante <code>a</code> </li>
 </ul>
 <p>Le calcul est simple : multiplier <code>xmm1</code> par <code>xmm3</code> puis additionner à <code>xmm2</code>. On ajoute ensuite <code>xmm2</code> dans l'accumulateur <code>xmm0</code> avant d'enregistrer <code>xmm2</code> de retour dans la mémoire centrale. </p>
@@ -386,23 +394,29 @@ de la boucle.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 13.5.1 – SAXPY modifiée - implantation SSE</em></p>
+</blockquote>
 <p>On utilise <code>haddps</code> deux fois pour écraser vectoriellement <code>{A,B,C,D}</code> en <code>{A+B, C+D, A+B, C+D}</code> puis <code>{A+B+C+D, ...}</code>.</p>
+<blockquote>
 <p><strong>Amélioration SSE</strong>
 En vectorisant le code avec SSE on abaisse le temps d'exécution à <strong>7,93 secondes</strong>, on
 est donc <strong>2,89 fois plus rapide</strong> par rapport à la fonction de référence.</p>
+</blockquote>
 <h2 class="section">13.6 Amélioration Vectorielle (AVX)</h2>
 
 <p>La version AVX impose de traiter par paquets de 8 avec des registres de 256 bits (<code>ymmX</code>). </p>
 <p>L'utilisation de l'AVX apporte une légère amélioration par rapport au SSE, voire
 dans certains cas, une forte amélioration. Le problème résiduel vient de l'extraction de l'accumulateur final vers <code>st0</code>. L'instruction <code>haddps</code> n'ajoute horizontalement pas les blocs de 128 bits les uns avec les autres dans les registres rhomboïdes AVX de manière croisée, cela nécessite des <code>vextractf128</code>.</p>
+<blockquote>
 <p><strong>Amélioration AVX</strong>
 En vectorisant le code avec l'AVX on abaisse le temps d'exécution à <strong>5,26
 secondes</strong>, on est donc <strong>4,36 fois plus rapide</strong> par rapport à la fonction de
 référence. Le gain du C Intrinsics en AVX22 va même jusqu'à 4,93s.</p>
+</blockquote>
 <h2 class="section">13.7 Optimisation FMA (Fused Multiply–Add)</h2>
 
-<p>Le sigle <strong>FMA</strong> signifie <em>Fused Multiply–Add</em> et permet étant donné trois flottants $a, b, c$ de calculer $d = round(a + b \times c)$, c'est-à-dire qu'on n'utilise qu'un seul calcul
+<p>Le sigle <strong>FMA</strong> signifie <em>Fused Multiply–Add</em> et permet étant donné trois flottants  $X$6  de calculer  $X$7 , c'est-à-dire qu'on n'utilise qu'un seul calcul
 d'arrondi matériel. Cela fusionne <code>fmul</code> et <code>fadd</code>. L'instruction est <code>vfmadd231ps</code> (ou les autres formes numériques).</p>
 
 <details>
@@ -439,7 +453,9 @@ d'arrondi matériel. Cela fusionne <code>fmul</code> et <code>fadd</code>. L'ins
 
 </details>
 
+<blockquote>
 <p><em>Listing 13.7.1 – SAXPY version FMA</em></p>
+</blockquote>
 <h2 class="section">13.8 Benchmark Récapitulatif</h2>
 
 <p>Afin de simplifier et observer, voici les temps réalisés sur 50 000 passages. L'intêrét se porte sur les différentes implémentations Intrinsics du C par rapport au NASM pur.</p>
@@ -724,7 +740,9 @@ On note que les processeurs AMD ont une FPU non vectorielle archaïque peu perfo
 <p><em>TABLE 13.5 – Architectures récentes : temps d'exécution (SAXPY sur Ryzen série 9 / Intel Gen 12+)</em></p>
 <p>Pour les architectures récentes (Table 13.5), la version FMA3 est la plus
 efficace sans contestation mais elle gagne très peu contre de l'AVX2 intrinsics bien instancié. L'AMD Ryzen 5 9600X exécute les 50 000 appels ultra-massifs en moins d'1.54 secondes en AVX2, un temps astronomique.</p>
+<blockquote>
 <p><em>Note sur l'AMD Ryzen 5 9600X</em> : Sans le flag de compilation <code>-ffast-math</code>, il tombe à 97 secondes à cause du respect strict de la norme flottante IEEE754 lors des arrrondissement GCC.  Le compilateur va casser le FMA pour obéir à <code>-std=c++11</code>.</p>
+</blockquote>
 <h2 class="section">13.9 Bilan</h2>
 
 <p>Nous avons vu dans ce chapitre comment utiliser les instructions de la FPU ou purement C pour

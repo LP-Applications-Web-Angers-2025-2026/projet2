@@ -128,7 +128,9 @@ on devra réaliser six comparaisons.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 15.2.1 – Compter les voyelles avec un if</em></p>
+</blockquote>
 <p>La fonction implantée avec un <code>switch</code> tente de remédier au problème du <code>if</code>,
 elle est présentée <em>Listing 15.2.2</em>. Son codage en assembleur par un compilateur
 C/C++ génère un tableau de 25 adresses qui correspondent aux lettres <code>'a'</code> à <code>'y'</code>.
@@ -157,7 +159,9 @@ boucle s'il s'agit d'une consonne.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 15.2.2 – Compter les voyelles avec un switch</em></p>
+</blockquote>
 <p>La fonction implantée avec un tableau (<em>Listing 15.2.3</em>) consiste à compter
 toutes les lettres. Étant donné qu'il y a 26 lettres dans l'alphabet on crée un
 tableau temporaire (<code>letters</code>) de 26 entiers que l'on initialise à 0. L'écriture de
@@ -192,19 +196,23 @@ dans <code>v</code> le nombre d'occurrences de chaque voyelle.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 15.2.3 – Compter les voyelles avec un tableau</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Temps de référence</strong>
 Le test de référence consiste à exécuter <code>50_000</code> fois le dénombrement du
 nombre de voyelles pour une chaîne de <code>256_000</code> caractères, initialisée aléa-
 toirement, avec environ 20% de voyelles.</p>
-</div>
-Sur un AMD Ryzen 5 3600, on obtient :
-- pour la version `if` le test dure 57,09 secondes
-- pour la version `switch` le test s'effectue en 54,71 secondes
-- pour la version `tableau`, le temps d'exécution est de **4,64 secondes**
-</div>
-La méthode qui consiste à compter toutes les lettres est donc la plus efficace car
-elle ne contient pas de conditionnelle et elle peut être dépliée simplement.
+<p>Sur un AMD Ryzen 5 3600, on obtient :</p>
+<ul>
+<li>pour la version <code>if</code> le test dure 57,09 secondes</li>
+<li>pour la version <code>switch</code> le test s'effectue en 54,71 secondes</li>
+<li>pour la version <code>tableau</code>, le temps d'exécution est de <strong>4,64 secondes</strong></li>
+</ul>
+<p>La méthode qui consiste à compter toutes les lettres est donc la plus efficace car
+elle ne contient pas de conditionnelle et elle peut être dépliée simplement.</p>
+</blockquote>
 <h2 class="section">15.3 Traduction de la méthode du tableau en assembleur</h2>
 
 <p>On peut traduire la méthode du tableau directement en assembleur mais nous
@@ -266,7 +274,7 @@ de la Table 15.1.</p>
 
 <p>On commence par sauvegarder le registre <code>rbx</code> dans la <em>red zone</em> car il ne doit pas
 être modifié et sera donc préservé dans la pile car il va stocker l'adresse du tableau
-<code>letters</code>. Ensuite, on crée le tableau qui va occuper $26 \times 4 = 104$ octets, toujours
+<code>letters</code>. Ensuite, on crée le tableau qui va occuper  $26 \times 4 = 104$  octets, toujours
 dans la <em>red zone</em> en faisant en sorte que son adresse de début soit multiple de 32
 afin d'améliorer l'accès mémoire. L'adresse stockée dans <code>rbx</code> doit être diminuée de
 <code>8 + 104</code> octets puisqu'on sauvegarde le contenu de <code>rbx</code> en premier dans la pile.</p>
@@ -396,8 +404,10 @@ voyelle dans le tableau <code>v</code>.</p>
 
 </details>
 
-<p>On peut grandement accélérer l'assembleur natif en effectuant un <code>unroll 4</code> de cette boucle (<code>while_ur4</code>), où <code>s[i]...s[i+3]</code> sont chargés en un seul appel <code>mov eax, dword [rdi+rcx]</code> puis répartis dans <code>r8</code>, <code>r9</code>, <code>r10</code> via des <code>shr eax, 8</code>.
-<strong>Bug connu <code>inc</code> vs AMD Ryzen</strong> : l'emploi frénétique d'instructions <code>inc</code> mémoire en natif provoque un lourd goulot sur la version Ryzen qui exécute tantôt le job en 5 secondes, tantôt en 14 secondes. Remplacez par un <code>add dword [x], 1</code>.</p>
+<p>On peut grandement accélérer l'assembleur natif en effectuant un <code>unroll 4</code> de cette boucle (<code>while_ur4</code>), où <code>s[i]...s[i+3]</code> sont chargés en un seul appel <code>mov eax, dword [rdi+rcx]</code> puis répartis dans <code>r8</code>, <code>r9</code>, <code>r10</code> via des <code>shr eax, 8</code>.</p>
+<blockquote>
+<p><strong>Bug connu <code>inc</code> vs AMD Ryzen</strong> : l'emploi frénétique d'instructions <code>inc</code> mémoire en natif provoque un lourd goulot sur la version Ryzen qui exécute tantôt le job en 5 secondes, tantôt en 14 secondes. Remplacez par un <code>add dword [x], 1</code>.</p>
+</blockquote>
 <h2 class="section">15.4 Vectorisation SSE</h2>
 
 <p>Il est possible d'envisager une version utilisant les registres vectoriels. 
@@ -503,8 +513,10 @@ calculs. Les registres <code>xmm2</code> à <code>xmm7</code> contiennent des ve
 
 </details>
 
+<blockquote>
 <p><strong>Amélioration SSE</strong> :
 Pour la version SSE, le test (sur 256.000 car. à 20% de voyelles en 50_000 itérations) s'exécute en <strong>1,59 secondes</strong> contre les 4.64s de la méthode en C <code>tableau</code>.</p>
+</blockquote>
 <h2 class="section">15.5 Vectorisation AVX2 et AVX512</h2>
 
 <p>On suit le même principe que pour le SSE mais on va traiter la chaîne par paquets de 32 caractères dans les <code>ymm</code>, voire par paquets de 64 caractères avec la puissance des <code>zmm</code> d'AVX-512.</p>
@@ -545,8 +557,10 @@ Pour la version SSE, le test (sur 256.000 car. à 20% de voyelles en 50_000 ité
 
 </details>
 
+<blockquote>
 <p><strong>Amélioration AVX2 et AVX512</strong> :
-L'AVX2 exécute en <strong>0.79 secondes</strong>. L'AVX512 tombe à environ <strong>0.62 secondes</strong> (un facteur d'amélioration de $80 \times$ sur la base pure C).</p>
+L'AVX2 exécute en <strong>0.79 secondes</strong>. L'AVX512 tombe à environ <strong>0.62 secondes</strong> (un facteur d'amélioration de  $80 \times$  sur la base pure C).</p>
+</blockquote>
 <h2 class="section">15.6 Benchmark Récapitulatif</h2>
 
 <h3 class="subsection">15.8.1 Architectures Anciennes (Avant 2015)</h3>
@@ -702,7 +716,9 @@ L'AVX2 exécute en <strong>0.79 secondes</strong>. L'AVX512 tombe à environ <st
 </tbody>
 </table>
 <p><em>TABLE 15.5 – Architectures modernes : temps d'exécution en secondes (100_000 itérations)</em></p>
+<blockquote>
 <p>Sur processeur AMD (Ryzen 1700, 3600), la prédiction de branchement du <code>switch</code> s'est effondrée. AMD passe de <code>31s</code> en <code>If</code> à <code>56s</code> en <code>Switch</code> ! Intel gère mieux cette situation bien que le tableau soit toujours gagnant.</p>
+</blockquote>
 <h3 class="subsection">15.8.3 Architectures Récentes (2020+)</h3>
 
 <table class="data-table">

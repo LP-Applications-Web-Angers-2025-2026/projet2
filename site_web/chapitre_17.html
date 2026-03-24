@@ -120,34 +120,44 @@ auto-descriptif est 1210. En effet :</p>
 </tbody>
 </table>
 <p><em>TABLE 17.1 – Nombres auto-descriptifs</em></p>
-<p>Formalisons tout cela. On considère $x$ un nombre entier positif de $k$ chiffres de la forme :
-$$x = d<em>0 \times 10^{k-1} + \dots + d</em>{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$</p>
-<p>On définit pour ce nombre une suite de valeurs $c<em>0$ à $c</em>{k-1}$ où chaque $c_i$ représente le nombre d'occurrences du chiffre $i$ dans $x$ :
-$$c_i = \text{Card}({d_j \text{ tel que } d_j = i, \forall j \in [0, k-1]})$$</p>
+<p>Formalisons tout cela. On considère  $x$  un nombre entier positif de  $k$  chiffres de la forme :
+$$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$ </p>
+<p>On définit pour ce nombre une suite de valeurs  $c_0$  à  $c_{k-1}$  où chaque  $c_i$  représente le nombre d'occurrences du chiffre  $i$  dans  $x$  :
+$a(n)$0 </p>
 <p>On doit alors vérifier la contrainte suivante qui définit un nombre auto-descriptif :
-$$\forall i \in [0, k-1], c_i = d_i$$
-où $[0, k-1]$ représente l'intervalle de valeurs entre 0 et $k-1$. De ces définitions découlent les propriétés suivantes :</p>
+$a(n)$1 
+où  $a(n)$2  représente l'intervalle de valeurs entre 0 et  $a(n)$3 . De ces définitions découlent les propriétés suivantes :</p>
 <ul>
 <li><strong>propriété 1</strong> : un nombre auto-descriptif ne peut pas commencer par 0</li>
 <li><strong>propriété 2</strong> : un nombre auto-descriptif contient au moins un 0</li>
-<li><strong>propriété 3</strong> : la somme des $c_i$ est égale à $k$, et donc, la somme des $d_i$ est égale à $k$</li>
-<li><strong>propriété 4</strong> : un nombre auto-descriptif contient au moins un 0 en position $k-1$</li>
-<li><strong>propriété 5</strong> : un nombre auto-descriptif de $k$ chiffres ne peut pas avoir un chiffre supérieur à $k$</li>
+<li><strong>propriété 3</strong> : la somme des  $a(n)$4  est égale à  $a(n)$5 , et donc, la somme des  $a(n)$6  est égale à  $a(n)$7 </li>
+<li><strong>propriété 4</strong> : un nombre auto-descriptif contient au moins un 0 en position  $a(n)$8 </li>
+<li><strong>propriété 5</strong> : un nombre auto-descriptif de  $a(n)$9  chiffres ne peut pas avoir un chiffre supérieur à  $x$0 </li>
 </ul>
+<blockquote>
 <p><strong>Théorème 17.1.1.</strong> Un nombre auto-descriptif ne peut pas commencer par 0.
-<em>Démonstration.</em> En effet, si $d_0 = 0$ alors le nombre commence par 0 et par définition n'est pas valide.</p>
+<em>Démonstration.</em> En effet, si  $x$1  alors le nombre commence par 0 et par définition n'est pas valide.</p>
+</blockquote>
+<blockquote>
 <p><strong>Théorème 17.1.2.</strong> Un nombre auto-descriptif contient au moins un 0.
-<em>Démonstration.</em> En effet, si $c_0 = 0$ alors $d_0 = 0$ et le nombre commence par 0 et par définition n'est pas valide d'après le théorème précédent.</p>
-<p><strong>Théorème 17.1.3.</strong> $\sum_{i=0}^{k-1} c<em>i = \sum</em>{i=0}^{k-1} d_i = k$
-<em>Démonstration.</em> Si par définition les $c_i$ représentent le nombre d'occurrences de chaque chiffre, leur somme doit donc être égale à $k$. Étant donné que par définition $c_i = d_i$, on en déduit également que la somme des $d_i$ est égale à $k$.</p>
+<em>Démonstration.</em> En effet, si  $x$2  alors  $x$3  et le nombre commence par 0 et par définition n'est pas valide d'après le théorème précédent.</p>
+</blockquote>
+<blockquote>
+<p><strong>Théorème 17.1.3.</strong>  $x$4 
+<em>Démonstration.</em> Si par définition les  $x$5  représentent le nombre d'occurrences de chaque chiffre, leur somme doit donc être égale à  $x$6 . Étant donné que par définition  $x$7 , on en déduit également que la somme des  $x$8  est égale à  $x$9 .</p>
+</blockquote>
+<blockquote>
 <p><strong>Théorème 17.1.4.</strong> Un nombre auto-descriptif se termine par un 0.
-<em>Démonstration.</em> Appelons $S(k) = \sum_{i=0}^{k-1} d<em>i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d</em>{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d<em>{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d</em>{k-1} &gt; 0$, et on en déduit que $S(k-1) &lt; k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d<em>1$ à $d</em>{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d<em>{k-1}$, on a donc $S(k) - S(k-1) = d</em>{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.</p>
-<p><strong>Théorème 17.1.5.</strong> Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i &lt; k, \forall i \in [0, k-1]$
-<em>Démonstration.</em> Si $x$ possède $k$ chiffres alors $d<em>0$ à $d</em>{k-1}$ sont définis. Si $d_i \geq k$ cela implique que $c_i \geq k$ ce qui est en contradiction avec la définition du nombre.</p>
+<em>Démonstration.</em> Appelons  $k$0  et raisonnons par l'absurde pour montrer qu'il n'est pas possible que  $k$1  soit différent de 0. Par définition  $k$2  et donc  $k$3 . Supposons alors que  $k$4  ne se termine pas par 0, alors  $k$5 , et on en déduit que  $k$6  ou encore que  $k$7 . Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que  $k$8  et donc qu'il existe au moins un 0 parmi les  $k$9  à  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$0 . En conséquence  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$1 . Sachant que  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$2 , on a donc  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$3 . Mais comme  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$4  et que  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$5 , on en déduit que  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$6  et donc que  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$7 .</p>
+</blockquote>
+<blockquote>
+<p><strong>Théorème 17.1.5.</strong> Un nombre auto-descriptif de  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$8  chiffres ne peut par avoir un chiffre supérieur à  $$x = d_0 \times 10^{k-1} + \dots + d_{k-1} \times 10^0 = \sum_{i=0}^{k-1} d_i \times 10^{k-1-i}$$9 , i.e.  $c_0$0 
+<em>Démonstration.</em> Si  $c_0$1  possède  $c_0$2  chiffres alors  $c_0$3  à  $c_0$4  sont définis. Si  $c_0$5  cela implique que  $c_0$6  ce qui est en contradiction avec la définition du nombre.</p>
+</blockquote>
 <h2 class="section">17.2 Fonction de référence (<code>std::string</code>)</h2>
 
 <p>La fonction de référence à implanter est donnée <em>Listing 17.2.1</em>. Elle comporte un
-paramètre qui est le nombre entier non signé $x$ pour lequel on veut déterminer s'il
+paramètre qui est le nombre entier non signé  $c_0$7  pour lequel on veut déterminer s'il
 est auto-descriptif ou non. Nous n'allons pas utiliser certaines propriétés énoncées
 préalablement afin de garder un temps de calcul qui nous permettra de comparer
 les différentes améliorations proposées. En effet, si on utilise le fait qu'un nombre
@@ -156,11 +166,11 @@ par 10 pour trouver le premier chiffre et la recherche des nombres auto-descript
 en utilisant cette propriété, s'exécute en moins de 2 secondes.</p>
 <p>Nous allons donc nous focaliser sur les trois points suivants :</p>
 <ul>
-<li>conversion du paramètre $x$ en base 10 (détermination des $d_i$)</li>
-<li>détermination du nombre d'occurrences de chaque chiffre (les $c_i$)</li>
-<li>comparaison du nombre d'occurrences avec le $i$-ème chiffre (comparaison des $d_i$ avec les $c_i$)</li>
+<li>conversion du paramètre  $c_0$8  en base 10 (détermination des  $c_0$9 )</li>
+<li>détermination du nombre d'occurrences de chaque chiffre (les  $c_{k-1}$0 )</li>
+<li>comparaison du nombre d'occurrences avec le  $c_{k-1}$1 -ème chiffre (comparaison des  $c_{k-1}$2  avec les  $c_{k-1}$3 )</li>
 </ul>
-<p>Dans cette première version, on utilise les fonctionnalités du C++ pour transformer le nombre $x$ en caractères et déterminer les $d_i$.</p>
+<p>Dans cette première version, on utilise les fonctionnalités du C++ pour transformer le nombre  $c_{k-1}$4  en caractères et déterminer les  $c_{k-1}$5 .</p>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_001.cpp" target="_blank">code/chapitre_17/code_001.cpp</a></summary>
@@ -193,23 +203,28 @@ en utilisant cette propriété, s'exécute en moins de 2 secondes.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.2.1 – Nombre auto-descriptif, fonction de référence</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Fonction de référence</strong>
 Le temps d'exécution sur AMD Ryzen 5 5600g est de <strong>7,34 secondes</strong>.</p>
-</div>
-*Attention* : le compilateur `gcc` dans sa version 10 générait une fonction dont le temps d'exécution est d'environ 18 secondes alors que le même compilateur, dans sa version 12, génère du code qui ne s'exécute plus qu'en 7,6 secondes, soit près de deux fois plus rapide. La différence d'exécution tient à la conversion de $x$ en chaîne. Nous utilisons donc par la suite la version 12 de `gcc` quand cela est possible.
+<p><em>Attention</em> : le compilateur <code>gcc</code> dans sa version 10 générait une fonction dont le temps d'exécution est d'environ 18 secondes alors que le même compilateur, dans sa version 12, génère du code qui ne s'exécute plus qu'en 7,6 secondes, soit près de deux fois plus rapide. La différence d'exécution tient à la conversion de  $c_{k-1}$6  en chaîne. Nous utilisons donc par la suite la version 12 de <code>gcc</code> quand cela est possible.</p>
+</blockquote>
 <h2 class="section">17.3 Amélioration de la taille mémoire (8 bits)</h2>
 
 <p>Plutôt que d'utiliser un tableau d'entiers 32-bits pour compter les occurrences des 
 chiffres, on utilise un tableau d'octets. En effet, diminuer la taille des données 
 utilisées peut parfois apporter une amélioration.</p>
+<blockquote>
 <p><strong>Fonction de référence avec 8 bits</strong>
 Le temps d'exécution sur AMD Ryzen 5 5600g est de <strong>7,20 secondes</strong> en
 utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre.</p>
+</blockquote>
 <p>On en déduit donc qu'il vaut mieux travailler sur un tableau d'octets que sur un tableau d'entiers en général même si l'amélioration est faible.</p>
 <h2 class="section">17.4 Conversion directe (<code>x % 10</code>)</h2>
 
-<p>Plutôt que de convertir $x$ en chaîne de caractères, nous allons le convertir directement en chiffres que l'on va stocker dans un tableau (d'entiers ou d'octets) appelé <code>digits</code> en faisant des divisions par 10 afin d'obtenir chaque chiffre. A chaque nouveau reste trouvé on incrémente le tableau <code>counts</code> en conséquence et on stocke le reste dans le tableau <code>digits</code>.</p>
+<p>Plutôt que de convertir  $c_{k-1}$7  en chaîne de caractères, nous allons le convertir directement en chiffres que l'on va stocker dans un tableau (d'entiers ou d'octets) appelé <code>digits</code> en faisant des divisions par 10 afin d'obtenir chaque chiffre. A chaque nouveau reste trouvé on incrémente le tableau <code>counts</code> en conséquence et on stocke le reste dans le tableau <code>digits</code>.</p>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_002.cpp" target="_blank">code/chapitre_17/code_002.cpp</a></summary>
@@ -240,8 +255,10 @@ utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.4.1 – Nombre auto-descriptif, fonction de conversion en chiffres modulo 10</em></p>
-<p>Au final on obtient le remplissage des tableaux suivants (pour $x=21200$) :</p>
+</blockquote>
+<p>Au final on obtient le remplissage des tableaux suivants (pour  $c_{k-1}$8 ) :</p>
 <table class="data-table">
 <thead>
 <tr>
@@ -296,8 +313,10 @@ utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre
 </tr>
 </tbody>
 </table>
+<blockquote>
 <p><strong>Fonction avec conversion 8 bits</strong>
 C'est en fait cette version qui est la plus efficace lorsque traduite par le compilateur car elle ne prend que <strong>4,22 secondes</strong> pour s'exécuter et c'est elle qu'il va falloir tenter de battre. La version utilisant des entiers prend quant à elle 5,83 secondes.</p>
+</blockquote>
 <p>La raison de l'efficacité est assez simple : la conversion est rapide car elle est optimisée et la division par 10 est remplacée par une multiplication par un invariant, puis le calcul du reste de la division est effectué par multiplication du dividende et soustraction. En outre, la boucle de conversion est dépliée.</p>
 <h2 class="section">17.5 Approche Assembleur</h2>
 
@@ -319,7 +338,7 @@ C'est en fait cette version qui est la plus efficace lorsque traduite par le com
 <td><code>x</code></td>
 <td><code>u32</code></td>
 <td><code>[ebp+8]</code> (<code>eax</code>)</td>
-<td>Nombre $x$</td>
+<td>Nombre  $c_{k-1}$9</td>
 </tr>
 <tr>
 <td><code>counts</code></td>
@@ -364,8 +383,10 @@ C'est en fait cette version qui est la plus efficace lorsque traduite par le com
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.1 – Fonction assembleur - version 1 - initialisation</em></p>
-<p>Pour réaliser la conversion de $x$ en base 10, on réalise des 
+</blockquote>
+<p>Pour réaliser la conversion de  $c_i$0  en base 10, on réalise des 
 divisions successives par 10. En utilisant l'instruction <code>div</code>, on obtient le quotient 
 dans <code>eax</code> et le reste dans <code>edx</code>. On va stocker les chiffres (restes de la division) 
 dans l'ordre décroissant du tableau <code>digits</code> en commençant à l'indice 9 qui sera 
@@ -400,7 +421,9 @@ stocké dans <code>ecx</code>, puisque un entier non signé contient au maximum 
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.2 – Fonction assembleur - version 1 - conversion par boucle <code>div</code></em></p>
+</blockquote>
 <p>Pour la fin, s'il faut vérifier, on compare le bloc <code>counts</code> et le bloc <code>digits</code>.</p>
 
 <details>
@@ -435,9 +458,13 @@ stocké dans <code>ecx</code>, puisque un entier non signé contient au maximum 
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.3 – Fonction assembleur - version 1 - comparaison et sortie</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Assembleur version 1 avec conversion 8 bits</strong>
 Cette version assembleur s'exécute en <strong>5,59 secondes</strong>.</p>
+</blockquote>
 <h3 class="subsection">17.5.2 Remplacer la division par une multiplication (L'astuce de l'invariant)</h3>
 
 <p>Une première amélioration consiste à remplacer la division par une multiplication. 
@@ -445,7 +472,7 @@ On le sait, la division est très pénalisante par rapport à la multiplication.
 Cela est possible ici car on divise par une constante (10), on peut donc remplacer 
 la division par une multiplication par invariant.</p>
 <p>La constante <code>0xCCCCCCCD</code> correspond à <code>(2^35) / 10</code>. En l'utilisant et en faisant un décalage, <code>ebx</code> stocke l'invariant.
-L'astuce permet d'aller plus vite que <code>div 10</code>. On utilise ensuite <code>lea eax, [edx+edx*4]</code> (donc $x \times 5$) et <code>shl eax, 1</code> pour retrouver la base 10 du modulo par soustraction ! </p>
+L'astuce permet d'aller plus vite que <code>div 10</code>. On utilise ensuite <code>lea eax, [edx+edx*4]</code> (donc  $c_i$1 ) et <code>shl eax, 1</code> pour retrouver la base 10 du modulo par soustraction ! </p>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_17/code_006.asm" target="_blank">code/chapitre_17/code_006.asm</a></summary>
@@ -476,9 +503,13 @@ L'astuce permet d'aller plus vite que <code>div 10</code>. On utilise ensuite <c
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.4 – Fonction assembleur - version 2 - remplacement de la division</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Assembleur version 2 : multiplication au lieu d'une division</strong>
 Cette version assembleur demande plus d'opérations et s'exécute en <strong>5,69 secondes</strong>, soit une très légère dégradation théorique par rapport au <code>div</code> mais profitable sur les vieux CPU. En ajoutant un <em>Unroll</em> (dépliage) manuel par la suite, le temps tombe à <strong>4,32 secondes</strong>.</p>
+</blockquote>
 <h3 class="subsection">17.5.4 Comparaison finale Vectorielle SIMD (AVX/SSE)</h3>
 
 <p>Plutôt que de comparer les tableaux <code>digits</code> et <code>counts</code> élément par élément, on peut utiliser des registres 128/256 bits et une égalité AVX comme <code>vpcmpeqb</code>.</p>
@@ -499,9 +530,13 @@ Cette version assembleur demande plus d'opérations et s'exécute en <strong>5,6
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.4.b - L'égalité finale vectorisée.</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Assembleur version 4 : (Vectorielle SIMD)</strong>
 Avec l'Unroll mathématique et la fin SIMD, on descend à <strong>4,31 secondes</strong>.</p>
+</blockquote>
 <h3 class="subsection">17.5.5 L'invariant de Base 100 (<code>% 100</code>)</h3>
 
 <p>Au lieu de faire <code>% 10</code>, on peut faire <code>% 100</code> (soit 2 fois moins de divisions) grâce au magique <code>0x51EB851F</code> (<code>0.01</code> inverse). On utilise alors une table de correspondance pour décomposer <code>85</code> en <code>8</code> et <code>5</code>.
@@ -711,7 +746,7 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 </table>
 <h2 class="section">Annexe D : Implantation optimisée de la fonction Signe</h2>
 
-<p>Pour la fonction signe ($&lt;0 \rightarrow -1$, $&gt;0 \rightarrow 1$, $=0 \rightarrow 0$) :</p>
+<p>Pour la fonction signe ( $c_i$2 ,  $c_i$3 ,  $c_i$4 ) :</p>
 <p><strong>Solution SANS saut (cdq, neg, adc) :</strong></p>
 
 <details>
