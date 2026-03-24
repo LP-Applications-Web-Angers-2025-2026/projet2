@@ -2,18 +2,32 @@
 /**
  * Script d'extraction PDF -> Markdown par chapitre - v3
  * PDF: Programmation Assembleur x86 32 et 64 bits sous Linux Ubuntu
- * Usage: php extract_pdf_to_markdown.php
- * Output: ./chapitres_markdown/ avec un fichier .md par chapitre
+ * 
+ * Usage: php extract_pdf_to_markdown.php [--config] [--dry-run]
+ * 
+ * Configuration via .env :
+ *   PDF_PATH=chemin/vers/le.pdf
+ *   OUTPUT_DIR=chemin/vers/sortie
  */
 
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/config.php';
+require __DIR__ . '/../vendor/autoload.php';
 use Smalot\PdfParser\Parser;
+
+// ============================================================
+// TRAITEMENT DES ARGUMENTS
+// ============================================================
+$dryRun = in_array('--dry-run', $argv);
+if (in_array('--config', $argv)) {
+    showConfig();
+    exit(0);
+}
 
 // ============================================================
 // CONFIG
 // ============================================================
-$PDF_FILE   = __DIR__ . '/Programmation_Assembleur_x86_32_et_64_bits_sous_Linux_Ubuntu.pdf';
-$OUTPUT_DIR = __DIR__ . '/chapitres_markdown';
+$PDF_FILE   = PDF_PATH;
+$OUTPUT_DIR = OUTPUT_DIR;
 if (!is_dir($OUTPUT_DIR)) mkdir($OUTPUT_DIR, 0777, true);
 
 // ============================================================
@@ -349,7 +363,7 @@ function pagesToMarkdown(array $allPagesText, int $startPage, int $endPage, int 
             // Titre coupé: le titre continue sur la ligne suivante
             // On cherche à reconstruire le titre sur au max 2 lignes
             $nextLine = isset($allLines[$i + 1]) ? trim($allLines[$i + 1]) : '';
-            $fullTitle = rtrim($title, '-') . $nextLine;
+            $fullTitle = extract_pdf_to_markdown . phprtrim($title, '-') . $nextLine;
             if (strlen($fullTitle) <= 120 && !preg_match('/^\d+\./', $nextLine)) {
                 $md .= "\n## {$m[1]} {$fullTitle}\n\n";
                 $i += 2;

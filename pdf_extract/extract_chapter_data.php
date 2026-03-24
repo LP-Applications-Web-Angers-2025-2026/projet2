@@ -22,16 +22,26 @@
  * }
  *
  * Usage :
- *   php extract_chapter_data.php [--chapter=<num>] [--dry-run]
+ *   php extract_chapter_data.php [--chapter=<num>] [--dry-run] [--config]
  *
  *   --chapter=N  : ne générer que les données du chapitre N (11-16)
  *   --dry-run    : afficher les données sans écrire les fichiers
+ *   --config     : afficher la configuration actuelle
+ * 
+ * Configuration via .env :
+ *   DATA_DIR=chemin/vers/data
  */
 
 // ──────────────────────────────────────────────────────────────────
-// Constantes
+// Chargement de la configuration
 // ──────────────────────────────────────────────────────────────────
-define('DATA_DIR', __DIR__ . '/site_web/data');
+require_once __DIR__ . '/config.php';
+
+// Traitement de --config
+if (in_array('--config', $argv)) {
+    showConfig();
+    exit(0);
+}
 
 // ──────────────────────────────────────────────────────────────────
 // Fonctions utilitaires

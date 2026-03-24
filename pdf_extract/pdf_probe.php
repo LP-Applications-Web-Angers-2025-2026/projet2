@@ -1,10 +1,39 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+/**
+ * Script d'analyse de structure PDF
+ * Utile pour comprendre le format d'un PDF avant extraction
+ * 
+ * Usage: php pdf_probe.php [--config] [--output fichier.txt]
+ * 
+ * Configuration via .env :
+ *   PDF_PATH=chemin/vers/le.pdf
+ */
+
+require_once __DIR__ . '/config.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Smalot\PdfParser\Parser;
 
+// Traitement des arguments
+$outputFile = null;
+for ($i = 1; $i < count($argv); $i++) {
+    if ($argv[$i] === '--config') {
+        showConfig();
+        exit(0);
+    }
+    if ($argv[$i] === '--output' && isset($argv[$i + 1])) {
+        $outputFile = $argv[$i + 1];
+        $i++;
+    }
+}
+
+// Vérifier que le PDF existe
+if (!checkPdfExists()) {
+    exit(1);
+}
+
 $parser = new Parser();
-$pdf    = $parser->parseFile(__DIR__ . '/Programmation_Assembleur_x86_32_et_64_bits_sous_Linux_Ubuntu.pdf');
+$pdf    = $parser->parseFile(PDF_PATH);
 $pages  = $pdf->getPages();
 $total  = count($pages);
 
@@ -27,8 +56,14 @@ for ($i = 0; $i < min(50, $total); $i++) {
     $out .= "\n";
 }
 
-file_put_contents('pdf_analysis.txt', $out);
-echo "Analyse écrite dans pdf_analysis.txt\n";
+// Sortie
+if ($outputFile) {
+    file_put_contents($outputFile, $out);
+    echo "Analyse écrite dans $outputFile\n";
+} else {
+    file_put_contents('pdf_analysis.txt', $out);
+    echo "Analyse écrite dans pdf_analysis.txt\n";
+}
 
 // Recherche spécifique du mot "chapitre" ou "Chapitre" sur toutes les pages
 $out2 = "=== PAGES CONTENANT 'CHAPITRE' ===\n\n";
@@ -46,5 +81,7 @@ for ($i = 0; $i < $total; $i++) {
         }
     }
 }
-file_put_contents('pdf_chapters_scan.txt', $out2);
-echo "Scan chapitres écrit dans pdf_chapters_scan.txt\n";
+
+$chaptersFile = $outputFile ? str_replace('.txt', '_chapters.txt', $outputFile) : 'pdf_chapters_scan.txt';
+file_put_contents($chaptersFile, $out2);
+echo "Scan chapitres écrit dans $chaptersFile\n";
