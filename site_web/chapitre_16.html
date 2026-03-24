@@ -690,135 +690,299 @@ Les versions intrinsics (<code>C</code>) tournent autour de 2.47 sec. C'est l'as
 
 <p>Le code qui correspond à l'ensemble des résultats produits dans cette section
 comporte 34 implantations différentes.</p>
+<div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>N°</th>
-<th>Méthode</th>
-<th>Intel Core i3 6100</th>
-<th>AMD Ryzen 7 1700X</th>
-<th>Intel Core i7 8700</th>
-<th>Intel Core i5 8365U</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><code>gcc</code> (Référence -O3)</td>
-<td>4,11</td>
-<td>4,39</td>
-<td>3,23</td>
-<td>3,61</td>
-</tr>
-<tr>
-<td>5</td>
-<td><code>dyna. array</code> (malloc)</td>
-<td>18,57</td>
-<td>21,16</td>
-<td>15,79</td>
-<td>18,09</td>
-</tr>
-<tr>
-<td>6</td>
-<td><code>n recursive</code> (ASM natif)</td>
-<td>63,39</td>
-<td>82,48</td>
-<td>51,53</td>
-<td>112,24</td>
-</tr>
-<tr>
-<td>8</td>
-<td><code>while_v1</code> (ASM basique)</td>
-<td>7,52</td>
-<td>11,47</td>
-<td>5,78</td>
-<td>7,44</td>
-</tr>
-<tr>
-<td>11</td>
-<td><code>while_v1_ur8</code></td>
-<td>9,65</td>
-<td>5,14</td>
-<td>7,86</td>
-<td>9,95</td>
-</tr>
-<tr>
-<td>21</td>
-<td><code>while_v3_ur8</code> (<code>lea</code>)</td>
-<td>5,37</td>
-<td>4,39</td>
-<td>4,45</td>
-<td>4,96</td>
-</tr>
-<tr>
-<td>30</td>
-<td><code>SSE_v4_ur8</code></td>
-<td>-</td>
-<td>4,20</td>
-<td>3,17</td>
-<td>3,66</td>
-</tr>
-<tr>
-<td>33</td>
-<td><code>AVX_asm_ur8</code></td>
-<td>-</td>
-<td><strong>3,34</strong></td>
-<td><strong>2,46</strong></td>
-<td><strong>2,90</strong></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i3 6100<br><small>2015</small></th>
+      <th>Core i5 7400<br><small>2017</small></th>
+      <th>Core i7 8700<br><small>2017</small></th>
+      <th>Ryzen 7 1700X<br><small>2017</small></th>
+      <th>Core i5 8365U<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>AVX intrin v2</strong></td>
+      <td>4.200</td>
+      <td>4.380</td>
+      <td>3.210</td>
+      <td>5.730</td>
+      <td>3.930</td>
+    </tr>
+    <tr>
+      <td><strong>SSE intrin</strong></td>
+      <td>4.110</td>
+      <td>4.360</td>
+      <td>3.170</td>
+      <td>4.270</td>
+      <td>3.660</td>
+    </tr>
+    <tr>
+      <td><strong>dyna. array</strong></td>
+      <td>18.570</td>
+      <td>21.670</td>
+      <td>15.790</td>
+      <td>21.160</td>
+      <td>18.090</td>
+    </tr>
+    <tr>
+      <td><strong>gcc</strong></td>
+      <td>4.110</td>
+      <td>4.240</td>
+      <td>3.230</td>
+      <td>4.390</td>
+      <td>3.610</td>
+    </tr>
+    <tr>
+      <td><strong>icc</strong></td>
+      <td>7.970</td>
+      <td>8.560</td>
+      <td>6.490</td>
+      <td>11.310</td>
+      <td>7.390</td>
+    </tr>
+    <tr>
+      <td><strong>n recursive</strong></td>
+      <td>63.390</td>
+      <td>67.710</td>
+      <td>51.530</td>
+      <td>82.480</td>
+      <td>112.240</td>
+    </tr>
+    <tr>
+      <td><strong>stat. array</strong></td>
+      <td>8.990</td>
+      <td>9.120</td>
+      <td>7.370</td>
+      <td>8.840</td>
+      <td>8.300</td>
+    </tr>
+    <tr>
+      <td><strong>while v1</strong></td>
+      <td>7.520</td>
+      <td>8.990</td>
+      <td>5.780</td>
+      <td>11.470</td>
+      <td>7.440</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur2</strong></td>
+      <td>18.450</td>
+      <td>22.260</td>
+      <td>15.010</td>
+      <td>5.480</td>
+      <td>18.880</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur4</strong></td>
+      <td>12.560</td>
+      <td>16.070</td>
+      <td>10.210</td>
+      <td>5.250</td>
+      <td>12.790</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur8</strong></td>
+      <td>9.650</td>
+      <td>11.850</td>
+      <td>7.860</td>
+      <td>5.140</td>
+      <td>9.950</td>
+    </tr>
+    <tr>
+      <td><strong>while v3 ur8</strong></td>
+      <td>5.370</td>
+      <td>5.740</td>
+      <td>4.450</td>
+      <td>4.390</td>
+      <td>4.960</td>
+    </tr>
+    <tr>
+      <td><strong>while v6 ur8</strong></td>
+      <td>4.350</td>
+      <td>4.660</td>
+      <td>3.600</td>
+      <td>4.510</td>
+      <td>3.950</td>
+    </tr>
+    <tr>
+      <td><strong>AVX asm ur8</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>5.600</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm fibonacci</caption>
 </table>
-<p><em>TABLE 16.5 – Résultats comparatifs (Architectures &lt; 2019) (500 M itérations).</em></p>
-<p>L'AMD Ryzen 1700X s'étouffe sur l'ASM basique (11.47 sec) mais reprend la couronne avec un unroll (5.14 sec). La puissance totale s'obtient avec l'ASM AVX.</p>
+</div>
+<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+<script src="data/graph.js"></script>
+<div class="chart-container" id="chart-auto-asm_fibonacci-moderne-19" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_fibonacci-moderne-19';
+    var data = {"CPUs":["Core i3 6100","Core i5 7400","Core i7 8700","Ryzen 7 1700X","Core i5 8365U"],"Years":[2015,2017,2017,2017,2019],"Methods":[{"name":"AVX intrin v2","values":[4.2,4.38,3.21,5.73,3.93]},{"name":"SSE intrin","values":[4.11,4.36,3.17,4.27,3.66]},{"name":"dyna. array","values":[18.57,21.67,15.79,21.16,18.09]},{"name":"gcc","values":[4.11,4.24,3.23,4.39,3.61]},{"name":"icc","values":[7.97,8.56,6.49,11.31,7.39]},{"name":"n recursive","values":[63.39,67.71,51.53,82.48,112.24]},{"name":"stat. array","values":[8.99,9.12,7.37,8.84,8.3]},{"name":"while v1","values":[7.52,8.99,5.78,11.47,7.44]},{"name":"while v1 ur2","values":[18.45,22.26,15.01,5.48,18.88]},{"name":"while v1 ur4","values":[12.56,16.07,10.21,5.25,12.79]},{"name":"while v1 ur8","values":[9.65,11.85,7.86,5.14,9.95]},{"name":"while v3 ur8","values":[5.37,5.74,4.45,4.39,4.96]},{"name":"while v6 ur8","values":[4.35,4.66,3.6,4.51,3.95]},{"name":"AVX asm ur8","values":[null,null,null,5.6,null]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>N°</th>
-<th>Méthode</th>
-<th>Intel Core i7 10850H</th>
-<th>AMD Ryzen 5 5600g</th>
-<th>Intel Core i5 12400F</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><code>gcc</code> (Référence -O3)</td>
-<td>3,007</td>
-<td>2,853</td>
-<td>2,035</td>
-</tr>
-<tr>
-<td>8</td>
-<td><code>while_v1</code> (ASM basique)</td>
-<td>6,038</td>
-<td>6,304</td>
-<td>5,570</td>
-</tr>
-<tr>
-<td>21</td>
-<td><code>while_v3_ur8</code> (<code>lea</code>)</td>
-<td>4,121</td>
-<td>2,229</td>
-<td>4,795</td>
-</tr>
-<tr>
-<td>30</td>
-<td><code>SSE_v4_ur8</code></td>
-<td><strong>2,442</strong></td>
-<td>2,153</td>
-<td><strong>1,980</strong></td>
-</tr>
-<tr>
-<td>33</td>
-<td><code>AVX_asm_ur8</code></td>
-<td>-</td>
-<td><strong>1,982</strong></td>
-<td>-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i5 10400<br><small>2020</small></th>
+      <th>Core i7 10850H<br><small>2020</small></th>
+      <th>Core i7 1165G7<br><small>2020</small></th>
+      <th>Ryzen 5 5600g<br><small>2021</small></th>
+      <th>Core i5 12400F<br><small>2022</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>AVX intrin v2</strong></td>
+      <td>3.837</td>
+      <td>3.235</td>
+      <td>3.710</td>
+      <td>2.471</td>
+      <td>2.566</td>
+    </tr>
+    <tr>
+      <td><strong>SSE intrin</strong></td>
+      <td>3.584</td>
+      <td>3.076</td>
+      <td>3.470</td>
+      <td>2.393</td>
+      <td>2.480</td>
+    </tr>
+    <tr>
+      <td><strong>SSE v4 ur8</strong></td>
+      <td>2.153</td>
+      <td>2.442</td>
+      <td>2.700</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>dyna. array</strong></td>
+      <td>16.660</td>
+      <td>14.470</td>
+      <td>14.840</td>
+      <td>13.790</td>
+      <td>9.441</td>
+    </tr>
+    <tr>
+      <td><strong>gcc</strong></td>
+      <td>3.516</td>
+      <td>3.007</td>
+      <td>3.070</td>
+      <td>2.853</td>
+      <td>2.035</td>
+    </tr>
+    <tr>
+      <td><strong>icc</strong></td>
+      <td>5.610</td>
+      <td>5.365</td>
+      <td>5.810</td>
+      <td>3.990</td>
+      <td>4.489</td>
+    </tr>
+    <tr>
+      <td><strong>n recursive</strong></td>
+      <td>108.570</td>
+      <td>93.390</td>
+      <td>59.530</td>
+      <td>50.630</td>
+      <td>55.870</td>
+    </tr>
+    <tr>
+      <td><strong>stat. array</strong></td>
+      <td>7.478</td>
+      <td>6.446</td>
+      <td>5.960</td>
+      <td>6.380</td>
+      <td>4.871</td>
+    </tr>
+    <tr>
+      <td><strong>while v1</strong></td>
+      <td>7.322</td>
+      <td>6.038</td>
+      <td>11.940</td>
+      <td>6.304</td>
+      <td>5.570</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur2</strong></td>
+      <td>18.210</td>
+      <td>13.860</td>
+      <td>16.090</td>
+      <td>3.608</td>
+      <td>14.930</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur4</strong></td>
+      <td>13.140</td>
+      <td>9.510</td>
+      <td>11.070</td>
+      <td>3.500</td>
+      <td>11.250</td>
+    </tr>
+    <tr>
+      <td><strong>while v1 ur8</strong></td>
+      <td>9.583</td>
+      <td>7.254</td>
+      <td>8.690</td>
+      <td>3.497</td>
+      <td>8.197</td>
+    </tr>
+    <tr>
+      <td><strong>while v3 ur8</strong></td>
+      <td>4.823</td>
+      <td>4.121</td>
+      <td>5.020</td>
+      <td>2.229</td>
+      <td>4.795</td>
+    </tr>
+    <tr>
+      <td><strong>while v6 ur8</strong></td>
+      <td>3.832</td>
+      <td>3.286</td>
+      <td>3.410</td>
+      <td>2.271</td>
+      <td>2.807</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Recent – Benchmark asm fibonacci</caption>
 </table>
-<p><em>TABLE 16.6 – Résultats comparatifs (Architectures &gt; 2020) (500 M itérations).</em></p>
+</div>
+<div class="chart-container" id="chart-auto-asm_fibonacci-recent-20" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_fibonacci-recent-20';
+    var data = {"CPUs":["Core i5 10400","Core i7 10850H","Core i7 1165G7","Ryzen 5 5600g","Core i5 12400F"],"Years":[2020,2020,2020,2021,2022],"Methods":[{"name":"AVX intrin v2","values":[3.837,3.235,3.71,2.471,2.566]},{"name":"SSE intrin","values":[3.584,3.076,3.47,2.393,2.48]},{"name":"SSE v4 ur8","values":[2.153,2.442,2.7,null,null]},{"name":"dyna. array","values":[16.66,14.47,14.84,13.79,9.441]},{"name":"gcc","values":[3.516,3.007,3.07,2.853,2.035]},{"name":"icc","values":[5.61,5.365,5.81,3.99,4.489]},{"name":"n recursive","values":[108.57,93.39,59.53,50.63,55.87]},{"name":"stat. array","values":[7.478,6.446,5.96,6.38,4.871]},{"name":"while v1","values":[7.322,6.038,11.94,6.304,5.57]},{"name":"while v1 ur2","values":[18.21,13.86,16.09,3.608,14.93]},{"name":"while v1 ur4","values":[13.14,9.51,11.07,3.5,11.25]},{"name":"while v1 ur8","values":[9.583,7.254,8.69,3.497,8.197]},{"name":"while v3 ur8","values":[4.823,4.121,5.02,2.229,4.795]},{"name":"while v6 ur8","values":[3.832,3.286,3.41,2.271,2.807]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>
+<h3 class="subsection">16.9.3 Stabilité Matérielle (Bruit Quantique)</h3>
+
 <p>La méthode <code>gcc</code> (1) exécute 45 milliards d'instructions. L'ASM d'origine (6) exécute 352 milliards d'instructions (<code>call/ret</code> infernal). C'est pourquoi la méthode 6 coule. La méthode <code>AVX</code> natif (33) ne met que <strong>34 milliards d'instructions</strong> !</p>
 <h3 class="subsection">16.9.3 Stabilité Matérielle (Bruit Quantique)</h3>
 

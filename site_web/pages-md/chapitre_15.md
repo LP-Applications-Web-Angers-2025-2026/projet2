@@ -333,49 +333,7 @@ La boucle s'exprime comme en AVX, avec un `vpcmpeqb` suivi de `vpmovmskb`. Rendu
 
 ## 15.6 Benchmark Récapitulatif
 
-### 15.8.1 Architectures Anciennes (Avant 2015)
-
-| Méthode | Pentium D 925 | Core 2 Q9300 | Core i7 860 | AMD Phenom X6 | Core i5 3570K | Core i7 4790 |
-|---|---|---|---|---|---|---|
-| `C if` | 79.19 | 62.44 | 43.63 | 39.43 | 38.04 | 27.49 |
-| `C switch` | 126.15 | 102.51 | 57.28 | 47.88 | 54.41 | 39.72 |
-| `C tableau` | 12.57 | 14.80 | 29.91 | 21.91 | 8.37 | 6.36 |
-| `tableau asm`| 32.95 | 16.02 | 26.16 | 18.35 | 8.37 | 6.59 |
-| `SSE2` | - | 17.58 | 8.95 | - | 3.61 | - |
-| `AVX2 v1` | - | - | - | - | - | 1.82 |
-| `AVX2 intrinsics`| - | - | - | - | - | **1.14** |
-
-*TABLE 15.4 – Architectures anciennes : temps d'exécution en secondes (100_000 itérations, 256_000 caractères)*
-
-### 15.8.2 Architectures Modernes (2015 à 2019)
-
-| Méthode | Core i3 6100 | Ryzen 7 1700X | Core i5 7400 | Core i7 8700 | Ryzen 5 3600 | Xeon 4208 |
-|---|---|---|---|---|---|---|
-| `C if` | 35.89 | 31.33 | 38.19 | 29.33 | 29.95 | 45.47 |
-| `C switch` | 47.23 | 56.33 | 50.35 | 39.72 | 55.31 | 55.75 |
-| `C tableau` | 6.12 | 4.26 | 6.51 | 5.46 | 4.94 | 7.83 |
-| `tableau asm ur8`| 5.96 | 4.18 | 6.32 | 4.72 | 4.84 | 7.26 |
-| `SSE2` | 3.89 | 2.12 | 4.16 | 3.16 | 2.08 | 4.86 |
-| `AVX2 intrinsics`| **1.13** | **0.98** | **1.20** | **1.08** | **1.36** | **2.60** |
-
-*TABLE 15.5 – Architectures modernes : temps d'exécution en secondes (100_000 itérations)*
-
-> Sur processeur AMD (Ryzen 1700, 3600), la prédiction de branchement du `switch` s'est effondrée. AMD passe de `31s` en `If` à `56s` en `Switch` ! Intel gère mieux cette situation bien que le tableau soit toujours gagnant.
-
-### 15.8.3 Architectures Récentes (2020+)
-
-| Méthode | Core i7 10850H | AMD Ryzen 5 5600G | Core i5 12400f | AMD Ryzen 5 9600X |
-|---|---|---|---|---|
-| `C if` | 24.37 | 23.87 | 27.97 | 36.08 |
-| `C switch` | 35.14 | 43.75 | 35.87 | 34.93 |
-| `C tableau` | 4.71 | 3.90 | 3.66 | 2.73 |
-| `tableau asm ur8 v3` | 4.45 | 3.50 | 3.48 | 2.63 |
-| `SSE2` | 2.97 | 1.81 | 1.64 | 0.81 |
-| `AVX2 v2 ur8 / intrin.` | **0.92** | **0.89** | **0.88** | **0.33** |
-
-*TABLE 15.7 – Architectures récentes : temps d'exécution (100_000 itérations)*
-
-L'AMD Ryzen 5 9600X parvient à compacter le code de 36.08 secondes (branch `if`) en 0.33 secondes via `AVX2 Intrin / AVX512`, un rapport de compactage x110 purement basé sur comment le code aborde le problème (Vectoriel par masque vs Conditionnel).
+[BENCHMARK:asm_vowels_64]
 
 ### 15.8.4 Influence de la densité sur la prédiction de branchement :
 

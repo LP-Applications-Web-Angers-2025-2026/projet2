@@ -15,153 +15,173 @@ $Parsedown = new Parsedown();
 $Parsedown->setSafeMode(false);
 
 // ──────────────────────────────────────────────────────────────────────────
-// Correspondance TABLE[chap].[num] → catégorie d'architecture
+// Benchmark System Helpers
 // ──────────────────────────────────────────────────────────────────────────
-// Chaque entrée : numéro du sous-tableau → nom du sous-dossier dans data/
-define('TABLE_CATEGORY_MAP', [
-    // Chapitre 11 – Produit de matrices
-    11 => [ 4 => 'ancien', 5 => 'moderne', 6 => 'recent' ],
-    // Chapitre 12 – POPCNT
-    12 => [ 2 => 'ancien', 3 => 'moderne', 4 => 'recent' ],
-    // Chapitre 13 – SAXPY
-    13 => [ 3 => 'ancien', 4 => 'moderne', 5 => 'recent' ],
-    // Chapitre 14 – Fitch
-    14 => [ 3 => 'ancien', 4 => 'moderne', 5 => 'recent' ],
-    // Chapitre 15 – Voyelles
-    15 => [ 4 => 'ancien', 5 => 'moderne', 7 => 'recent' ],
-    // Chapitre 16 – Fibonacci
-    16 => [ 5 => 'moderne', 6 => 'recent' ],
-]);
 
 /**
- * Injecte un graphique Highcharts après chaque tableau de performance.
- *
- * Détecte dans $htmlContent les paragraphes de légende du type
- * «TABLE15.4 – …» et insère juste après le tableau HTML précédent
- * un bloc <div id="chart-chap15-ancien"> + <script type="module"> qui
- * charge data/chapitre_15/ancien/data.json et appelle createPerformanceChart.
- *
- * @param string $htmlContent  HTML généré par Parsedown
- * @param int    $chapNum      Numéro de chapitre (11, 12, …)
- * @return string HTML enrichi avec les blocs graphiques
+ * Récupère les données d'un benchmark depuis SQLite
  */
-function injectChartAfterTable(string $htmlContent, int $chapNum): string
-{
-    $map = constant('TABLE_CATEGORY_MAP')[$chapNum] ?? [];
-    if (empty($map)) {
-        return $htmlContent; // Pas de graphiques pour ce chapitre
+function getBenchmarkDataFromSqlite($benchName, $arch) {
+    $dbPath = dirname(__DIR__) . '/data/benchmarks.db';
+    if (!file_exists($dbPath)) return null;
+
+    try {
+        $db = new PDO("sqlite:$dbPath");
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $yearCondition = "1=1";
+        if ($arch === 'ancien') {
+            $yearCondition = "(annee < 2015)";
+        } elseif ($arch === 'moderne') {
+            $yearCondition = "(annee >= 2015 AND annee < 2020)";
+        } elseif ($arch === 'recent') {
+            $yearCondition = "(annee >= 2020)";
+        }
+
+        $sql = "
+            SELECT nom_cpu, annee, nom_test, AVG(valeur_resultat) as valeur_resultat
+            FROM v_resultats 
+            WHERE chapitre = :chapitre 
+              AND (type_test = 'temps moyen' OR type_test = 'performance')
+              AND $yearCondition
+            GROUP BY nom_cpu, nom_test
+            ORDER BY annee, nom_cpu, nom_test
+        ";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute([':chapitre' => $benchName]);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($results)) return null;
+
+        $cpus = [];
+        $years = [];
+        foreach ($results as $row) {
+            if (!in_array($row['nom_cpu'], $cpus)) {
+                $cpus[] = $row['nom_cpu'];
+                $years[] = (int)$row['annee'];
+            }
+        }
+
+        $methodsMap = [];
+        foreach ($results as $row) {
+            $methodName = $row['nom_test'];
+            $cpuIndex = array_search($row['nom_cpu'], $cpus);
+            if (!isset($methodsMap[$methodName])) {
+                $methodsMap[$methodName] = array_fill(0, count($cpus), null);
+            }
+            $methodsMap[$methodName][$cpuIndex] = round((float)$row['valeur_resultat'], 3);
+        }
+
+        $testNameMap = [
+            'cv_if'                 => 'C if',
+            'cv_switch'             => 'C switch',
+            'cv_letters'            => 'C tableau',
+            'cv_letters_asm'        => 'tableau asm',
+            'cv_letters_asm_ur4_v1' => 'tableau asm ur4 v1',
+            'cv_letters_asm_ur4_v2' => 'tableau asm ur4 v2',
+            'cv_letters_asm_ur8_v1' => 'tableau asm ur8 v1',
+            'cv_letters_asm_ur8_v2' => 'tableau asm ur8 v2',
+            'cv_letters_asm_ur8_v3' => 'tableau asm ur8 v3',
+            'cv_sse2_v1'            => 'SSE2 v1',
+            'cv_sse2_v2'            => 'SSE2 v2',
+            'cv_sse2_intrinsics'    => 'SSE2 intrinsics',
+            'cv_avx'                => 'AVX',
+            'cv_avx2_v1'            => 'AVX2 v1',
+            'cv_avx2_v2'            => 'AVX2 v2',
+            'cv_avx2_v3'            => 'AVX2 v3',
+            'cv_avx2_intrinsics'    => 'AVX2 intrinsics',
+        ];
+
+        $methodsArray = [];
+        foreach ($methodsMap as $name => $values) {
+            if ($name !== null && $name !== "") {
+                $displayName = $testNameMap[$name] ?? $name;
+                $methodsArray[] = ["name" => $displayName, "values" => $values];
+            }
+        }
+
+        $displayCPUs = array_map(function($cpu) {
+            $cpu = str_replace(['-Processor', '-with-Radeon-Graphics', '-with-Radeon-Vega-Graphics'], '', $cpu);
+            $cpu = str_replace('-', ' ', $cpu);
+            $cpu = str_replace('_', '.', $cpu);
+            return $cpu;
+        }, $cpus);
+
+        return [
+            "CPUs" => $displayCPUs,
+            "Years" => $years,
+            "Methods" => $methodsArray
+        ];
+    } catch (Exception $e) {
+        return null;
     }
+}
 
-    // Chemin relatif depuis public/ vers data/
-    // Les pages HTML sont dans public/, les données dans ../../data/
-    $dataBasePath = "data/chapitre_{$chapNum}";
-    $graphJsPath  = 'data/graph.js';
+/**
+ * Génère le composant complet (Tableau + Graphique) pour un benchmark
+ */
+function generateBenchmarkComponent($benchName) {
+    $architectures = ['ancien', 'moderne', 'recent'];
+    $html = "";
+    
+    // Compteur global pour les graphiques
+    static $compCounter = 0;
 
-    // Compteur global pour créer des IDs uniques par page
-    static $chartCounter = 0;
+    foreach ($architectures as $arch) {
+        $data = getBenchmarkDataFromSqlite($benchName, $arch);
+        if (!$data) continue;
 
-    // Chercher la balise finale de la table générée pour y accrocher le graphique juste après
-    // On repère le </table></div> qui correspond à notre tableau
-    foreach ($map as $tableNum => $category) {
-        $pattern = sprintf(
-            '/(<caption>TABLE%d\.%d\s*[–—\-][^<]*?<\/caption>\s*<\/table>\s*<\/div>)/us',
-            $chapNum,
-            $tableNum
-        );
+        $compCounter++;
+        $chartId = "chart-auto-{$benchName}-{$arch}-{$compCounter}";
+        $legend = "TABLE " . ucfirst($arch) . " – Benchmark " . str_replace('_', ' ', $benchName);
 
-        $htmlContent = preg_replace_callback(
-            $pattern,
-            function ($m) use ($chapNum, $category, $tableNum, $dataBasePath, $graphJsPath, &$chartCounter) {
-                $chartCounter++;
-                $chartId  = "chart-ch{$chapNum}-{$category}-{$chartCounter}";
-                
-                $absDataPath = dirname(__DIR__) . "/data/chapitre_{$chapNum}/{$category}/data.json";
-                $jsonData = '{}';
-                if (file_exists($absDataPath)) {
-                    $jsonData = file_get_contents($absDataPath);
-                }
+        // 1. Génération du Tableau
+        $html .= "<div class=\"center\">\n<table class=\"data-table\">\n";
+        $html .= "  <thead>\n    <tr>\n      <th>Méthode</th>\n";
+        foreach ($data['CPUs'] as $idx => $cpu) {
+            $year = isset($data['Years'][$idx]) ? "<br><small>{$data['Years'][$idx]}</small>" : "";
+            $html .= "      <th>{$cpu}{$year}</th>\n";
+        }
+        $html .= "    </tr>\n  </thead>\n  <tbody>\n";
 
-                $tableHtml = $m[1]; // Fin du tableau généré avec <caption> et </table></div>
-                $chartHtml = <<<HTML
+        foreach ($data['Methods'] as $m) {
+            $html .= "    <tr>\n      <td><strong>{$m['name']}</strong></td>\n";
+            foreach ($m['values'] as $val) {
+                $display = ($val === null) ? "-" : number_format((float)$val, 3, '.', '');
+                $html .= "      <td>{$display}</td>\n";
+            }
+            $html .= "    </tr>\n";
+        }
+        $html .= "  </tbody>\n";
+        $html .= "  <caption>{$legend}</caption>\n";
+        $html .= "</table>\n</div>\n";
+
+        // 2. Génération du Graphique Highcharts
+        $jsonData = json_encode($data);
+        $html .= <<<HTML
 <div class="chart-container" id="{$chartId}" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
     var id = '{$chartId}';
     var data = {$jsonData};
-    function drawChart(){
-      if (typeof window.createPerformanceChart === 'function') {
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
         window.createPerformanceChart(id, data);
-      } else {
-        console.error("createPerformanceChart est introuvable");
-      }
     }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', drawChart); }
-    else { drawChart(); }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
   })();
 </script>
 HTML;
-                return $tableHtml . "\n" . $chartHtml;
-            },
-            $htmlContent
-        );
     }
 
-    return $htmlContent;
-}
-
-/**
- * Lit le JSON et génère un tableau HTML propre
- */
-function buildHtmlTableFromJson(string $jsonPath, string $legend): string {
-    if (!file_exists($jsonPath)) return "<p><em>Données du tableau introuvables.</em></p> {$legend}";
-    $data = json_decode(file_get_contents($jsonPath), true);
-    if (!isset($data['CPUs']) || !isset($data['Methods'])) return "<p><em>Format JSON invalide.</em></p> {$legend}";
-
-    $html = "<div class=\"center\">\n<table class=\"data-table\">\n";
-    $html .= "  <thead>\n    <tr>\n      <th>Méthode</th>\n";
-    foreach ($data['CPUs'] as $idx => $cpu) {
-        $year = isset($data['Years'][$idx]) ? "<br><small>{$data['Years'][$idx]}</small>" : "";
-        $html .= "      <th>{$cpu}{$year}</th>\n";
-    }
-    $html .= "    </tr>\n  </thead>\n  <tbody>\n";
-
-    foreach ($data['Methods'] as $m) {
-        $html .= "    <tr>\n      <td><strong>{$m['name']}</strong></td>\n";
-        foreach ($m['values'] as $val) {
-            $display = ($val === null) ? "-" : number_format((float)$val, 2, '.', '');
-            $html .= "      <td>{$display}</td>\n";
-        }
-        $html .= "    </tr>\n";
-    }
-    $html .= "  </tbody>\n";
-    // On ajoute la légende issue du Markdown comme caption
-    $html .= "  <caption>{$legend}</caption>\n";
-    $html .= "</table>\n</div>\n";
     return $html;
 }
 
-/**
- * Protège les formules mathématiques en les remplaçant par des placeholders
- */
-function protectMath(string &$markdown, array &$mathStore): void {
-    $placeholderPrefix = "MATH_PLACEHOLDER_";
-    // On extrait les blocs $$...$$ et $...$
-    $markdown = preg_replace_callback('/(\$\$.*?\$\$|\$.*?\$)/s', function($m) use (&$mathStore, $placeholderPrefix) {
-        $id = count($mathStore);
-        $mathStore[] = $m[1];
-        return " " . $placeholderPrefix . $id . " ";
-    }, $markdown);
-}
-
-/**
- * Restaure les formules mathématiques à la place des placeholders
- */
-function restoreMath(string &$html, array $mathStore): void {
-    $placeholderPrefix = "MATH_PLACEHOLDER_";
-    foreach ($mathStore as $id => $math) {
-        $html = str_replace($placeholderPrefix . $id, $math, $html);
-    }
-}
 
 $sourceDir  = dirname(__DIR__) . '/pages-md';
 $outputDir  = dirname(__DIR__);
@@ -187,51 +207,21 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
 
     $markdown = file_get_contents($mdFile);
 
-    // ---- Reconstruction des tableaux depuis JSON (Optionnel par chapitre) ----
-    if ($chapNum >= 11 && $chapNum <= 16) {
-        $map = constant('TABLE_CATEGORY_MAP')[$chapNum] ?? [];
-        foreach ($map as $tableNum => $category) {
-            $jsonPath = dirname(__DIR__) . "/data/chapitre_{$chapNum}/{$category}/data.json";
-            
-            // On cherche n'importe quel texte résiduel du tableau corrompu
-            // L'assertion (?!TABLE\s*\d+\.\d+) empêche l'expression de déborder sur le tableau suivant
-            // tout en évitant d'échouer bêtement sur le mot "tableau" (case-insensitive) !!
-            $pattern = '/(?:N°Marque|n° Méthode|Méthode Temps)(?:(?!TABLE\s*\d+\.\d+).)*?(TABLE\s*' . $chapNum . '\.' . $tableNum . '\s*[–—\-].*?(?:\n|$))/isu';
-            
-            $markdown = preg_replace_callback($pattern, function($m) use ($jsonPath) {
-                // $m[1] contient la légende "TABLE X.Y - Titre..." qu'on a capturée
-                $legend = trim($m[1]);
-                $tableHtml = buildHtmlTableFromJson($jsonPath, $legend);
-                
-                // On remplace tout le texte corrompu par deux sauts de ligne + la balise de table brute 
-                // que Parsedown va laisser intacte car c'est de l'HTML
-                return "\n\n" . $tableHtml . "\n\n";
-            }, $markdown);
-        }
-    }
+    // ---- Parsing du balisage [BENCHMARK:name] ----
+    $markdown = preg_replace_callback('/\[BENCHMARK:(.*?)\]/i', function($m) {
+        return "\n\n" . generateBenchmarkComponent(trim($m[1])) . "\n\n";
+    }, $markdown);
 
-    // ---- Nettoyage et Protection avant parsing ----
+    // ---- Nettoyage du Markdown avant parsing ----
 
-    // 1. Protection des formules mathématiques ($...$ et $$...$$)
-    $mathStore = [];
-    protectMath($markdown, $mathStore);
+    // 1. Supprimer les lignes "# Chapitre N : Titre" répétées dans le corps
+    //    (le H1 reste en haut mais on supprime les occurrences supplémentaires)
 
-    // 2. Supprimer les lignes "# Chapitre N : Titre" répétées dans le corps (déjà fait lors de l'extraction en théorie)
-
-    // 3. Traiter les blocs de citation personnalisés (cadre_...)
-    // On procède ligne par ligne pour gérer correctement l'ouverture et la fermeture
-    $lines = explode("\n", $markdown);
-    $newLines = [];
-    $inCustomCadre = false;
-    $cadreKeywords = 'Définition|Note|Remarque|Attention|Exemple|Info|Important|Warning|Convention';
-
-    foreach ($lines as $line) {
-        // Détecter un début de cadre : > **Keyword**
-        if (preg_match('/^>\s*\*\*(' . $cadreKeywords . ')\*\*\s*(?::?\s*(.*))?$/i', $line, $m)) {
-            if ($inCustomCadre) {
-                $newLines[] = "</div>"; // Fermer le précédent si nécessaire (peu probable avec une syntaxe propre)
-            }
-            $kw = $m[1];
+    // 2. Convertir les blocs > **Keyword** : ... en div stylisés
+    $markdown = preg_replace_callback(
+        '/^>\s*\*\*(Définition|Note|Remarque|Attention|Exemple|Info|Important|Warning|Convention)\*\*\s*(?::?\s*(.*))?$/m',
+        function($m) {
+            $kw   = $m[1];
             $rest = isset($m[2]) ? trim($m[2]) : '';
             $class = match(strtolower($kw)) {
                 'définition', 'definition' => 'definition',
@@ -244,37 +234,15 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
                 default                    => 'note',
             };
             $content = $rest !== '' ? "<strong>{$kw}</strong> : {$rest}" : "<strong>{$kw}</strong>";
-            $newLines[] = "<div class=\"cadre_{$class}\">{$content}";
-            $inCustomCadre = true;
-        } 
-        // Si on est dans un cadre et que la ligne commence par ">"
-        elseif ($inCustomCadre && preg_match('/^>\s?(.*)$/', $line, $m)) {
-            $content = $m[1];
-            if (trim($content) === '') {
-                // Ligne "> " vide : on ferme le cadre
-                $newLines[] = "</div>";
-                $inCustomCadre = false;
-            } else {
-                $newLines[] = $content;
-            }
-        } 
-        // Si on est dans un cadre mais que la ligne ne commence plus par ">"
-        elseif ($inCustomCadre) {
-            $newLines[] = "</div>";
-            $inCustomCadre = false;
-            $newLines[] = $line;
-        } 
-        // Sinon, c'est une ligne normale ou un blockquote standard que Parsedown gérera
-        else {
-            $newLines[] = $line;
-        }
-    }
-    if ($inCustomCadre) {
-        $newLines[] = "</div>";
-    }
-    $markdown = implode("\n", $newLines);
+            return "<div class=\"cadre_{$class}\">{$content}";
+        },
+        $markdown
+    );
+    // Fermer les blocs > qui continuent
+    $markdown = preg_replace('/^>\s*$/m', '</div>', $markdown);
+    $markdown = preg_replace('/^> (.+)$/m', '$1', $markdown);
 
-    // 4. Convertir les citations en italique des Listings (Listing 17.X)
+    // 3. Convertir les citations en italique des Listings
     $markdown = preg_replace(
         '/^> \*(Listing [\d.]+ [–—-] .+)\*$/m',
         "\n*$1*\n",
@@ -283,9 +251,6 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
 
     // ---- Parsing Markdown -> HTML ----
     $htmlContent = $Parsedown->text($markdown);
-
-    // ---- Restauration des formules mathématiques ----
-    restoreMath($htmlContent, $mathStore);
 
     // ---- Post-traitement du HTML ----
 
@@ -437,12 +402,10 @@ HTML;
     $htmlContent = preg_replace('/<p>\s*\d{1,4}\s*<\/p>\n?/', '', $htmlContent);
 
     // 9. Détecter le numéro de chapitre depuis le nom du fichier Markdown
-    //    et injecter les graphiques Highcharts après les tableaux de performance
     if (preg_match('/chapitre_(\d+)/i', basename($mdFile, '.md'), $chapMatch)) {
         $chapNum     = (int) $chapMatch[1];
-        $htmlContent = injectChartAfterTable($htmlContent, $chapNum);
         // Injecter Highcharts + graph.js une seule fois si des graphiques ont été injectés
-        if (preg_match('/chart-ch\d+/', $htmlContent)) {
+        if (preg_match('/chart-(ch|auto)-/', $htmlContent)) {
             $scripts = '<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>' . "\n"
                      . '<script src="data/graph.js"></script>' . "\n";
             // Placer les scripts avant le premier div.chart-container

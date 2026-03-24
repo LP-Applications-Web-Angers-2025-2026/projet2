@@ -98,11 +98,11 @@ bool ad_ref(u32 x) {
     return true;
 }
 ```
+
 > *Listing 17.2.1 – Nombre auto-descriptif, fonction de référence*
 
 > **Fonction de référence**
 > Le temps d'exécution sur AMD Ryzen 5 5600g est de **7,34 secondes**.
-> 
 > *Attention* : le compilateur `gcc` dans sa version 10 générait une fonction dont le temps d'exécution est d'environ 18 secondes alors que le même compilateur, dans sa version 12, génère du code qui ne s'exécute plus qu'en 7,6 secondes, soit près de deux fois plus rapide. La différence d'exécution tient à la conversion de $x$ en chaîne. Nous utilisons donc par la suite la version 12 de `gcc` quand cela est possible.
 
 ## 17.3 Amélioration de la taille mémoire (8 bits)
@@ -218,6 +218,7 @@ stocké dans `ecx`, puisque un entier non signé contient au maximum 10 chiffres
     dec ecx                          ; digits[ --i ] = x
     mov [esp+ecx+16], al
 ```
+
 > *Listing 17.5.2 – Fonction assembleur - version 1 - conversion par boucle `div`*
 
 Pour la fin, s'il faut vérifier, on compare le bloc `counts` et le bloc `digits`.
@@ -284,6 +285,7 @@ ad_asm_v2:
     cmp eax, 10
     jge .while_x_ge_10
 ```
+
 > *Listing 17.5.4 – Fonction assembleur - version 2 - remplacement de la division*
 
 > **Assembleur version 2 : multiplication au lieu d'une division**
@@ -319,6 +321,7 @@ Le Binary Coded Decimal est un ancien système qui consiste à coder un nombre e
     fild dword [ebp+8]
     fbstp [esp+32]
 ```
+
 Par exemple, `1234567890` devient `0x00...1234567890`. Malheureusement, le circuit FPU mathématique met un temps monstrueux au XXIe siècle (plus de **23 secondes** à s'exécuter, jusqu'à 108 sec sur de vieux Intel !), rendant l'astuce archaïque inopérante.
 
 ## 17.6 Benchmark Final Multi-Architecture
@@ -389,7 +392,7 @@ L'instruction `bsr` (Bit Scan Reverse) recherche le bit le plus significatif, ta
 
 ## Annexe D : Implantation optimisée de la fonction Signe
 
-Pour la fonction signe ($<0 \rightarrow -1$, $>0 \rightarrow 1$, $=0 \rightarrow 0$) :
+Pour la fonction signe ($x < 0 \rightarrow -1$, $x > 0 \rightarrow 1$, $x = 0 \rightarrow 0$) :
 
 **Solution SANS saut (cdq, neg, adc) :**
 ```nasm

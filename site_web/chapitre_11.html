@@ -621,204 +621,432 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
 <li><code>mp_tile_4x4</code></li>
 <li><code>mp_tile_bxb_v1 → v4</code> avec <code>b=64</code>.</li>
 </ol>
-<h3 class="subsection">11.9.1 Architectures Anciennes (Avant 2015)</h3>
-
+<div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>Méthode</th>
-<th>Pentium D 925</th>
-<th>Core 2 Q9300</th>
-<th>Core i7 860</th>
-<th>Phenom II 1090T</th>
-<th>Core i5 3570K</th>
-<th>Core i7 4790</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1. <em>Reference</em></td>
-<td>363.91</td>
-<td>257.74</td>
-<td>90.53</td>
-<td>172.35</td>
-<td>78.62</td>
-<td>64.46</td>
-</tr>
-<tr>
-<td>2. ASM FPU</td>
-<td>380.06</td>
-<td>190.83</td>
-<td>74.86</td>
-<td>180.55</td>
-<td>78.33</td>
-<td>63.05</td>
-</tr>
-<tr>
-<td>4. Inv JK (O2)</td>
-<td>23.07</td>
-<td>14.94</td>
-<td>8.25</td>
-<td>10.35</td>
-<td>6.27</td>
-<td>5.00</td>
-</tr>
-<tr>
-<td>5. Inv JK (O3)</td>
-<td>8.51</td>
-<td>8.09</td>
-<td>2.63</td>
-<td>4.79</td>
-<td>2.16</td>
-<td>2.07</td>
-</tr>
-<tr>
-<td>6. Inv SSE</td>
-<td>85.23</td>
-<td>32.28</td>
-<td>4.36</td>
-<td>17.06</td>
-<td>4.32</td>
-<td>4.96</td>
-</tr>
-<tr>
-<td>7. Inv AVX</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>2.33</td>
-<td>1.93</td>
-</tr>
-<tr>
-<td>12. Tile BxB v4</td>
-<td>14.11</td>
-<td>7.70</td>
-<td>3.74</td>
-<td>6.36</td>
-<td>2.82</td>
-<td>1.55</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Pentium D 925<br><small>2006</small></th>
+      <th>Core 2 Q9300<br><small>2008</small></th>
+      <th>Core i7 860<br><small>2009</small></th>
+      <th>AMD X6 1090T<br><small>2010</small></th>
+      <th>Core i5 3570k<br><small>2012</small></th>
+      <th>Core i7 4790<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>mp_asm_fpu</strong></td>
+      <td>380.060</td>
+      <td>190.830</td>
+      <td>74.860</td>
+      <td>180.550</td>
+      <td>78.330</td>
+      <td>63.050</td>
+    </tr>
+    <tr>
+      <td><strong>mp_asm_fpu_ur4</strong></td>
+      <td>379.900</td>
+      <td>197.350</td>
+      <td>74.400</td>
+      <td>179.280</td>
+      <td>79.180</td>
+      <td>63.020</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_O2</strong></td>
+      <td>23.070</td>
+      <td>14.940</td>
+      <td>8.250</td>
+      <td>10.350</td>
+      <td>6.270</td>
+      <td>5.000</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_sse</strong></td>
+      <td>85.230</td>
+      <td>32.280</td>
+      <td>4.360</td>
+      <td>17.060</td>
+      <td>4.320</td>
+      <td>4.960</td>
+    </tr>
+    <tr>
+      <td><strong>mp_reference</strong></td>
+      <td>363.910</td>
+      <td>257.740</td>
+      <td>90.530</td>
+      <td>172.350</td>
+      <td>78.620</td>
+      <td>64.460</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_4x4</strong></td>
+      <td>35.770</td>
+      <td>28.710</td>
+      <td>10.190</td>
+      <td>21.240</td>
+      <td>7.980</td>
+      <td>6.760</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v1</strong></td>
+      <td>28.190</td>
+      <td>178.390</td>
+      <td>23.820</td>
+      <td>60.460</td>
+      <td>19.250</td>
+      <td>16.820</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v2</strong></td>
+      <td>25.740</td>
+      <td>33.680</td>
+      <td>23.150</td>
+      <td>49.140</td>
+      <td>15.200</td>
+      <td>11.670</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v3</strong></td>
+      <td>12.620</td>
+      <td>7.990</td>
+      <td>3.980</td>
+      <td>7.620</td>
+      <td>2.970</td>
+      <td>1.860</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v4</strong></td>
+      <td>14.110</td>
+      <td>7.700</td>
+      <td>3.740</td>
+      <td>6.360</td>
+      <td>2.820</td>
+      <td>1.550</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>8.510</td>
+      <td>8.090</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_avx</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>2.330</td>
+      <td>1.930</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Ancien – Benchmark asm matprod 32</caption>
 </table>
-<p><em>TABLE 11.4 – Architectures anciennes : temps d'exécution (2048×2048)</em></p>
-<h3 class="subsection">11.9.2 Architectures Modernes (2015 à 2019)</h3>
-
+</div>
+<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+<script src="data/graph.js"></script>
+<div class="chart-container" id="chart-auto-asm_matprod_32-ancien-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_matprod_32-ancien-4';
+    var data = {"CPUs":["Pentium D 925","Core 2 Q9300","Core i7 860","AMD X6 1090T","Core i5 3570k","Core i7 4790"],"Years":[2006,2008,2009,2010,2012,2014],"Methods":[{"name":"mp_asm_fpu","values":[380.06,190.83,74.86,180.55,78.33,63.05]},{"name":"mp_asm_fpu_ur4","values":[379.9,197.35,74.4,179.28,79.18,63.02]},{"name":"mp_inv_jk_O2","values":[23.07,14.94,8.25,10.35,6.27,5]},{"name":"mp_inv_jk_sse","values":[85.23,32.28,4.36,17.06,4.32,4.96]},{"name":"mp_reference","values":[363.91,257.74,90.53,172.35,78.62,64.46]},{"name":"mp_tile_4x4","values":[35.77,28.71,10.19,21.24,7.98,6.76]},{"name":"mp_tile_bxb_v1","values":[28.19,178.39,23.82,60.46,19.25,16.82]},{"name":"mp_tile_bxb_v2","values":[25.74,33.68,23.15,49.14,15.2,11.67]},{"name":"mp_tile_bxb_v3","values":[12.62,7.99,3.98,7.62,2.97,1.86]},{"name":"mp_tile_bxb_v4","values":[14.11,7.7,3.74,6.36,2.82,1.55]},{"name":"mp_inv_jk","values":[null,null,null,null,8.51,8.09]},{"name":"mp_inv_jk_avx","values":[null,null,null,null,2.33,1.93]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>Méthode</th>
-<th>Core i3 6100</th>
-<th>Ryzen 7 1700X</th>
-<th>Core i5 7400</th>
-<th>Core i7 8700</th>
-<th>Ryzen 5 3600</th>
-<th>Xeon 4208</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1. <em>Reference</em></td>
-<td>60.08</td>
-<td>57.66</td>
-<td>49.10</td>
-<td>50.13</td>
-<td>43.62</td>
-<td>53.63</td>
-</tr>
-<tr>
-<td>4. Inv JK (O2)</td>
-<td>10.22</td>
-<td>6.84</td>
-<td>10.32</td>
-<td>8.01</td>
-<td>6.16</td>
-<td>11.28</td>
-</tr>
-<tr>
-<td>5. Inv JK (O3)</td>
-<td>2.11</td>
-<td>1.53</td>
-<td>1.56</td>
-<td>0.92</td>
-<td>1.03</td>
-<td>2.22</td>
-</tr>
-<tr>
-<td>6. Inv SSE</td>
-<td>5.84</td>
-<td>5.53</td>
-<td>5.81</td>
-<td>4.53</td>
-<td>4.39</td>
-<td>4.33</td>
-</tr>
-<tr>
-<td>7. Inv AVX</td>
-<td>2.18</td>
-<td>1.76</td>
-<td>1.63</td>
-<td>1.40</td>
-<td>1.03</td>
-<td>2.51</td>
-</tr>
-<tr>
-<td>12. Tile BxB v4</td>
-<td>1.48</td>
-<td>1.72</td>
-<td>2.48</td>
-<td>0.81</td>
-<td>0.82</td>
-<td>1.51</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i3 6100<br><small>2015</small></th>
+      <th>Core i5 7400<br><small>2017</small></th>
+      <th>Core i7 8700<br><small>2017</small></th>
+      <th>Ryzen 7 1700X<br><small>2017</small></th>
+      <th>Ryzen 5 3600<br><small>2019</small></th>
+      <th>Xeon Silver 4208<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>mp_asm_fpu</strong></td>
+      <td>59.770</td>
+      <td>49.280</td>
+      <td>46.850</td>
+      <td>52.460</td>
+      <td>34.420</td>
+      <td>53.230</td>
+    </tr>
+    <tr>
+      <td><strong>mp_asm_fpu_ur4</strong></td>
+      <td>60.630</td>
+      <td>48.360</td>
+      <td>42.570</td>
+      <td>55.260</td>
+      <td>45.580</td>
+      <td>52.220</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk</strong></td>
+      <td>2.110</td>
+      <td>1.530</td>
+      <td>1.560</td>
+      <td>-</td>
+      <td>0.920</td>
+      <td>2.220</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_O2</strong></td>
+      <td>10.220</td>
+      <td>10.320</td>
+      <td>8.010</td>
+      <td>6.840</td>
+      <td>6.160</td>
+      <td>11.280</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_avx</strong></td>
+      <td>2.180</td>
+      <td>1.630</td>
+      <td>1.400</td>
+      <td>1.760</td>
+      <td>1.030</td>
+      <td>2.510</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_sse</strong></td>
+      <td>5.840</td>
+      <td>5.810</td>
+      <td>4.530</td>
+      <td>5.530</td>
+      <td>4.390</td>
+      <td>4.330</td>
+    </tr>
+    <tr>
+      <td><strong>mp_reference</strong></td>
+      <td>60.080</td>
+      <td>49.100</td>
+      <td>50.130</td>
+      <td>57.660</td>
+      <td>43.620</td>
+      <td>53.630</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_4x4</strong></td>
+      <td>6.890</td>
+      <td>5.270</td>
+      <td>4.710</td>
+      <td>6.350</td>
+      <td>4.620</td>
+      <td>7.740</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v1</strong></td>
+      <td>17.310</td>
+      <td>18.050</td>
+      <td>14.030</td>
+      <td>122.130</td>
+      <td>37.540</td>
+      <td>21.310</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v2</strong></td>
+      <td>12.490</td>
+      <td>12.700</td>
+      <td>10.570</td>
+      <td>27.390</td>
+      <td>27.600</td>
+      <td>13.400</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v3</strong></td>
+      <td>1.840</td>
+      <td>1.850</td>
+      <td>-</td>
+      <td>1.780</td>
+      <td>2.480</td>
+      <td>0.970</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v4</strong></td>
+      <td>1.480</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.720</td>
+      <td>2.480</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm matprod 32</caption>
 </table>
-<p><em>TABLE 11.5 – Architectures modernes : temps d'exécution (2048×2048)</em></p>
-<h3 class="subsection">11.9.3 Architectures Récentes (2020+)</h3>
-
+</div>
+<div class="chart-container" id="chart-auto-asm_matprod_32-moderne-5" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_matprod_32-moderne-5';
+    var data = {"CPUs":["Core i3 6100","Core i5 7400","Core i7 8700","Ryzen 7 1700X","Ryzen 5 3600","Xeon Silver 4208"],"Years":[2015,2017,2017,2017,2019,2019],"Methods":[{"name":"mp_asm_fpu","values":[59.77,49.28,46.85,52.46,34.42,53.23]},{"name":"mp_asm_fpu_ur4","values":[60.63,48.36,42.57,55.26,45.58,52.22]},{"name":"mp_inv_jk","values":[2.11,1.53,1.56,null,0.92,2.22]},{"name":"mp_inv_jk_O2","values":[10.22,10.32,8.01,6.84,6.16,11.28]},{"name":"mp_inv_jk_avx","values":[2.18,1.63,1.4,1.76,1.03,2.51]},{"name":"mp_inv_jk_sse","values":[5.84,5.81,4.53,5.53,4.39,4.33]},{"name":"mp_reference","values":[60.08,49.1,50.13,57.66,43.62,53.63]},{"name":"mp_tile_4x4","values":[6.89,5.27,4.71,6.35,4.62,7.74]},{"name":"mp_tile_bxb_v1","values":[17.31,18.05,14.03,122.13,37.54,21.31]},{"name":"mp_tile_bxb_v2","values":[12.49,12.7,10.57,27.39,27.6,13.4]},{"name":"mp_tile_bxb_v3","values":[1.84,1.85,null,1.78,2.48,0.97]},{"name":"mp_tile_bxb_v4","values":[1.48,null,null,null,1.72,2.48]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>Méthode</th>
-<th>Core i7 10850H</th>
-<th>Ryzen 5 5600G</th>
-<th>Ryzen 5 9600X</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1. <em>Reference</em></td>
-<td>39.18</td>
-<td>46.48</td>
-<td>36.25</td>
-</tr>
-<tr>
-<td>4. Inv JK (O2)</td>
-<td>7.71</td>
-<td>4.19</td>
-<td>3.22</td>
-</tr>
-<tr>
-<td>5. Inv JK (O3)</td>
-<td>1.26</td>
-<td>0.80</td>
-<td>0.29</td>
-</tr>
-<tr>
-<td>7. Inv AVX</td>
-<td>1.33</td>
-<td>0.90</td>
-<td>0.34</td>
-</tr>
-<tr>
-<td>12. Tile BxB v4</td>
-<td>1.23</td>
-<td>0.97</td>
-<td>0.28</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i7 10850H<br><small>2020</small></th>
+      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
+      <th>Ryzen 5 5600g<br><small>2021</small></th>
+      <th>12th Gen Intel Core i5 12400F<br><small>2022</small></th>
+      <th>AMD Ryzen 5 9600X 6 Core<br><small>2024</small></th>
+      <th>Ryzen 5 9600X<br><small>2024</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>mp_asm_fpu</strong></td>
+      <td>39.700</td>
+      <td>28080787281.950</td>
+      <td>39.270</td>
+      <td>-</td>
+      <td>26.362</td>
+      <td>35.070</td>
+    </tr>
+    <tr>
+      <td><strong>mp_asm_fpu_ur4</strong></td>
+      <td>37.560</td>
+      <td>33070352965.000</td>
+      <td>46.590</td>
+      <td>-</td>
+      <td>29.048</td>
+      <td>38.730</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk</strong></td>
+      <td>1.260</td>
+      <td>566348754.400</td>
+      <td>0.800</td>
+      <td>-</td>
+      <td>2.397</td>
+      <td>0.290</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_O2</strong></td>
+      <td>7.710</td>
+      <td>3126718752.950</td>
+      <td>4.190</td>
+      <td>-</td>
+      <td>2.407</td>
+      <td>3.220</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_avx</strong></td>
+      <td>1.330</td>
+      <td>645422698.050</td>
+      <td>0.900</td>
+      <td>-</td>
+      <td>0.252</td>
+      <td>0.340</td>
+    </tr>
+    <tr>
+      <td><strong>mp_inv_jk_sse</strong></td>
+      <td>2.760</td>
+      <td>1997163282.400</td>
+      <td>2.680</td>
+      <td>-</td>
+      <td>0.640</td>
+      <td>0.750</td>
+    </tr>
+    <tr>
+      <td><strong>mp_reference</strong></td>
+      <td>39.180</td>
+      <td>32999719123.800</td>
+      <td>46.480</td>
+      <td>-</td>
+      <td>29.766</td>
+      <td>36.250</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_4x4</strong></td>
+      <td>4.590</td>
+      <td>3572158682.300</td>
+      <td>4.910</td>
+      <td>-</td>
+      <td>1.851</td>
+      <td>2.470</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v1</strong></td>
+      <td>13.180</td>
+      <td>12657222594.161</td>
+      <td>28.610</td>
+      <td>5.729</td>
+      <td>20.318</td>
+      <td>14.540</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v2</strong></td>
+      <td>9.760</td>
+      <td>9503641060.531</td>
+      <td>21.360</td>
+      <td>4.015</td>
+      <td>16.919</td>
+      <td>13.570</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v3</strong></td>
+      <td>1.470</td>
+      <td>435286250.798</td>
+      <td>0.970</td>
+      <td>1.181</td>
+      <td>2.391</td>
+      <td>0.700</td>
+    </tr>
+    <tr>
+      <td><strong>mp_tile_bxb_v4</strong></td>
+      <td>1.230</td>
+      <td>345151812.957</td>
+      <td>-</td>
+      <td>0.761</td>
+      <td>2.385</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Recent – Benchmark asm matprod 32</caption>
 </table>
-<p><em>TABLE 11.6 – Architectures récentes : temps d'exécution (2048×2048)</em></p>
+</div>
+<div class="chart-container" id="chart-auto-asm_matprod_32-recent-6" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_matprod_32-recent-6';
+    var data = {"CPUs":["Core i7 10850H","AMD Ryzen 5 5600G","Ryzen 5 5600g","12th Gen Intel Core i5 12400F","AMD Ryzen 5 9600X 6 Core","Ryzen 5 9600X"],"Years":[2020,2021,2021,2022,2024,2024],"Methods":[{"name":"mp_asm_fpu","values":[39.7,28080787281.95,39.27,null,26.362,35.07]},{"name":"mp_asm_fpu_ur4","values":[37.56,33070352965,46.59,null,29.048,38.73]},{"name":"mp_inv_jk","values":[1.26,566348754.4,0.8,null,2.397,0.29]},{"name":"mp_inv_jk_O2","values":[7.71,3126718752.95,4.19,null,2.407,3.22]},{"name":"mp_inv_jk_avx","values":[1.33,645422698.05,0.9,null,0.252,0.34]},{"name":"mp_inv_jk_sse","values":[2.76,1997163282.4,2.68,null,0.64,0.75]},{"name":"mp_reference","values":[39.18,32999719123.8,46.48,null,29.766,36.25]},{"name":"mp_tile_4x4","values":[4.59,3572158682.3,4.91,null,1.851,2.47]},{"name":"mp_tile_bxb_v1","values":[13.18,12657222594.161,28.61,5.729,20.318,14.54]},{"name":"mp_tile_bxb_v2","values":[9.76,9503641060.531,21.36,4.015,16.919,13.57]},{"name":"mp_tile_bxb_v3","values":[1.47,435286250.798,0.97,1.181,2.391,0.7]},{"name":"mp_tile_bxb_v4","values":[1.23,345151812.957,null,0.761,2.385,null]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>
 <p><em>(Note: la compilation <code>-std=c++11</code> modifie fortement les optimisations en virgule flottante. L'emploi du flag <code>-ffast-math</code> libère GCC de ces restrictions FPU).</em></p>
 <h2 class="section">11.10 Bilan</h2>
 
