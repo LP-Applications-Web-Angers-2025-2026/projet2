@@ -201,8 +201,10 @@ plusieurs données différentes stockées dans un registre de type MMX (64 bits)
 </tbody>
 </table>
 <p><em>TABLE 8.1 – Suffixes des instructions SSE</em></p>
+<blockquote>
 <p><strong>Notation pseudo-code</strong> : pour décrire les comportements, on utilise la notation <code>xmm0.T[i]</code> où <code>T</code> est le type (<code>b</code>, <code>w</code>, <code>d</code>, <code>q</code>, <code>ps</code>, <code>pd</code>) et <code>i</code> l'index. Ainsi <code>xmm0.b[15]</code> est le dernier octet de <code>xmm0</code> (poids fort), et <code>xmm0.b[0]</code> celui de poids faible.
 Dans la doc Intel, on parle plutôt en bits : <code>xmm0[127:120]</code>.</p>
+</blockquote>
 <h3 class="subsection">8.2.1 Chargement des données</h3>
 
 <p>Pour les entiers, on utilise <code>movdqu</code> (<em>Unaligned</em>) ou <code>movdqa</code> (<em>Aligned</em>).</p>
@@ -235,6 +237,7 @@ Dans la doc Intel, on parle plutôt en bits : <code>xmm0[127:120]</code>.</p>
 </details>
 
 <div class="cadre_warning"><strong>Attention</strong> : avec `movss`, on ne peut charger une valeur que depuis la mémoire (ou un autre registre xmm), pas depuis un registre général.
+</div>
 <h3 class="subsection">8.2.2 Opérations arithmétiques</h3>
 
 <p>Pour les entiers : <code>padd</code> (addition), <code>psub</code> (soustraction), <code>pmull</code> (multiplication), suffixées par la quantité (<code>b</code>, <code>w</code>, <code>d</code>, <code>q</code>). Il n'y a pas d'instruction (<code>pdiv</code>) pour la division entière vectorielle.
@@ -581,7 +584,9 @@ Pour les flottants : <code>addps</code>, <code>subps</code>, <code>mulps</code>,
 </tbody>
 </table>
 <p><em>TABLE 8.2 – Fichiers d'entête SIMD</em></p>
+<blockquote>
 <p>Il est grandement recommandé d'utiliser l'<strong>Intel Intrinsics Guide</strong> (outil web) pour trouver la documentation précise pour chaque fonction.</p>
+</blockquote>
 <h3 class="subsection">8.5.1 Les Types Intrinsics et Suffixes</h3>
 
 <p>Il faut indiquer au compilateur C les types que l'on manipule :</p>
@@ -765,7 +770,9 @@ Pour les flottants : <code>addps</code>, <code>subps</code>, <code>mulps</code>,
 </ul>
 <p><strong>Registres masques (<code>k0</code> à <code>k7</code>)</strong> : Un ajout majeur. Ces 8 registres (jusqu'à 64 bits de taille avec BW) permettent de <em>masquer</em> opérationnellement des "voies" (<em>lanes</em>) d'un vecteur, appliquant une instruction de manière conditionnelle sans avoir à utiliser l'astuce de fusion <code>blendps</code>.
 Toutes ces opérations commencent par la lettre <code>k</code> (<code>kadd</code>, <code>kand</code>, <code>kmov</code>, <code>ktest</code>).</p>
+<blockquote>
 <p><strong>Pénalités AVX-512</strong> : Le processeur abaisse parfois sa fréquence (downclock) lors de très lourds calculs AVX-512 pour éviter la surchauffe. Sur d'anciennes architectures, il est en effet recommandé d'émettre un <code>vzeroupper</code> (mise à zéro de l'état étendu du registre) avant de revenir aux exécutions SSE standards, pour éviter des délais (pénalités causées par des états CPU incompatibles). AMD a commencé le support de AVX-512 à partir de Zen 4.</p>
+</blockquote>
 <h3 class="subsection">8.6.2 Exemples avec Masques et Opérations AVX-512 (zmm)</h3>
 
 <p>Exemple d'opération de type <code>if(x[i] &gt; 0.0) y[k++] = x[i]</code> pour <em>compresser</em> un tableau en sélectionnant uniquement les valeurs voulues.

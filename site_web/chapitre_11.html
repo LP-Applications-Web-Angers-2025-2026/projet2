@@ -78,6 +78,7 @@ ne possèdant qu'un cache L1 et L2, le temps d'exécution est anormalement plus
 long.</p>
 <div class="cadre_important"><strong>Important</strong> : Les architectures multicoeurs disposant d'un cache L3 se révèlent en
 général moins sensibles à ces variations.
+</div>
 <p>On rappelle qu'une matrice est un tableau à deux dimensions de <code>n</code> lignes et
 <code>p</code> colonnes de réels. On notera <code>A(n,p)</code> la matrice <code>A</code> composée de <code>n</code> lignes et <code>p</code>
 colonnes. Le produit d'une matrice <code>A</code> avec une matrice <code>B</code> n'est possible que si le
@@ -85,10 +86,10 @@ nombre de lignes de <code>B</code> est égal au nombre de colonnes de <code>A</c
 matrice <code>C</code> dont le nombre de lignes est celles de <code>A</code>, et le nombre
 de colonnes celles de <code>B</code>. En d'autres termes, on a :</p>
 <p><code>C(n,q) = A(n,p) × B(p,q)</code></p>
-<p>On note $c_i^j$ le coefficient de la matrice <code>C</code> en ligne <code>i</code> colonne <code>j</code>, dont la formule
+<p>On note  $c_i^j$  le coefficient de la matrice <code>C</code> en ligne <code>i</code> colonne <code>j</code>, dont la formule
 de calcul est donnée par la somme des produits de la ligne <code>i</code> de <code>A</code> par la colonne <code>j</code>
 de <code>B</code> :</p>
-<p>$c<em>i^j = \sum</em>{k=1}^p a_i^k \times b_k^j$</p>
+<p>$c_i^j = \sum_{k=1}^p a_i^k \times b_k^j$ </p>
 <p>Afin de simplifier la compréhension des calculs nous allons nous cantonner
 à des matrices carrées pour lesquelles le nombre de lignes est égal au nombre
 de colonnes, soit <code>n = p = q</code> et nous appelerons donc dimension (ou taille) de la
@@ -238,13 +239,15 @@ matrices <code>dim</code>. Il s'agit de l'implantation directe de la formule mat
 
 </details>
 
+<blockquote>
 <p><em>Listing 11.3.1 – Produit de matrice, fonction de référence</em></p>
+</blockquote>
 <p>Afin de simplifier l'écriture, on a créé trois macro instructions <code>a()</code>, <code>b()</code> et <code>c()</code> qui
-font référence aux coefficients $a_i^j$, $b_i^j$ et $c_i^j$. Plutôt que d'écrire <code>A[i*dim+j]</code>, 
+font référence aux coefficients  $a_i^j$ ,  $b_i^j$  et  $c_i^j$ . Plutôt que d'écrire <code>A[i*dim+j]</code>, 
 on préfère utiliser <code>a(i,j)</code> plus lisible.</p>
 <h2 class="section">11.4 Défauts de cache et inefficacité (Complexité O(n³))</h2>
 
-<p>Cette implantation de référence possède une compléxité en $O(n^3)$ étant donné
+<p>Cette implantation de référence possède une compléxité en  $O(n^3)$  étant donné
 que l'on a trois boucles <code>for</code> imbriquées de taille <code>dim</code>.
 On observe pour des processeurs, et en particulier sur un modèle Intel Celeron N3050, que pour certaines tailles de
 matrices, le temps de calcul est bien plus important que la normale.</p>
@@ -354,9 +357,9 @@ matrices, le temps de calcul est bien plus important que la normale.</p>
 <p>Ce phénomène pour les puissances de 2 (1024, 2048...) peut être expliqué par de <strong>nombreux défauts de cache (Cache misses)</strong>. Les
 matrices étant de grande taille elles ne tiennent pas dans le cache L1 ou L2. Un autre facteur important de ralentissement est l'accès aux coefficients de
 la matrice <code>B</code>. En effet, on accède la matrice <code>A</code> par ligne, ce qui est efficace, car
-quand on charge $a_i^k$, les données suivantes comme $a_i^{k+1}$ à $a_i^{k+7}$ sont déjà dans le
+quand on charge  $a_i^k$ , les données suivantes comme  $a_i^{k+1}$  à  $a_i^{k+7}$  sont déjà dans le
 cache. Par contre l'accès aux coefficients de la matrice <code>B</code> est pénalisant car lorsque
-l'on charge $b<em>k^j$, le coefficient suivant $b</em>{k+1}^j$ se trouve <code>dim * 4</code> octets plus loin en
+l'on charge  $b_k^j$ , le coefficient suivant  $c_i^j = \sum_{k=1}^p a_i^k \times b_k^j$0  se trouve <code>dim * 4</code> octets plus loin en
 mémoire et ne sera donc probablement pas dans le cache.</p>
 <h2 class="section">11.5 Profiling avec <code>perf</code> sous Linux</h2>
 
@@ -415,7 +418,9 @@ réaliser le produit.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 11.6.1 – Produit de matrice, Inversion de boucles j et k</em></p>
+</blockquote>
 <p>On observe au <em>Listing 11.6.1</em> que <code>j</code> étant maintenant la boucle la plus interne :
 <code>a(i,k)</code> reste constant (pour le scope de <code>k</code>).
 Les coefficients <code>b(k,j)</code> et <code>c(i,j)</code> sont accédés consécutivement (pas d'allers-retours brutaux en mémoire). On va donc environ 29 fois plus vite sur de grosses configurations.</p>
@@ -508,7 +513,9 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 11.8.1 – Produit de matrice - Tuilage 4x4</em></p>
+</blockquote>
 <p>En utilisant le tuilage <code>4x4</code> on met environ 8 fois moins de temps. Ce n'est en fait pas très efficace par rapport à <code>j,k</code>.</p>
 <h3 class="subsection">11.8.2 Tuilage <code>b × b</code> de manière générale (Facteur de Blocage)</h3>
 
@@ -541,7 +548,9 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 11.8.2 – Produit de matrice - Tuilage (version 4)</em></p>
+</blockquote>
 <p>Cette valeur de <code>BLOCK_DIM</code> (facteur de tuilage) doit être choisie (typ. 16, 32, 64) en fonction du processeur. Plus on augmente le facteur <code>b</code>, plus on augmente la présence du cache jusqu'à atteindre un sweetspot qui le redimininue (lorsque la tuile excède la taille du cache du CPU).</p>
 <table class="data-table">
 <thead>

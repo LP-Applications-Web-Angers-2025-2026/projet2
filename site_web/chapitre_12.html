@@ -267,9 +267,11 @@ cependant l'éliminer en écrivant la fonction comme suit :</p>
 
 </details>
 
+<blockquote>
 <p><strong>Version de référence, élimination du if</strong>
 La version de référence améliorée en supprimant le <code>if</code> s'exécute en 48,78
 secondes contre 54,96 s ce qui constitue une faible mais notable amélioration.</p>
+</blockquote>
 <h2 class="section">12.2 Améliorations de pop_count</h2>
 
 <p>Malheureusement la fonction de référence n'est pas très efficace et on peut
@@ -299,9 +301,11 @@ du tableau égal à 189 est 6 car <code>189 = 1011_1101</code> (binaire), soit 6
 
 </details>
 
+<blockquote>
 <p><strong>Amélioration table de conversion</strong>
 En utilisant une table de conversion, on
 ne met plus que 2,76 secondes, on va donc environ 20 fois plus vite. (à condition qu'elle tienne en L1).</p>
+</blockquote>
 <h3 class="subsection">12.2.2 Comptage arithmétique (Population Count sans l'instruction)</h3>
 
 <p>On désire redéfinir une fonction <code>pop_count_8</code> mathématiquement. La première étape consiste à compter le nombre de bits à 1 dans une paire de bits. On a quatre cas possibles :</p>
@@ -386,9 +390,11 @@ mots. Le masque évolue comme présenté Table 12.1.</p>
 
 </details>
 
+<blockquote>
 <p><strong>Amélioration en comptant les bits par paires, quartets, etc</strong>
 En utilisant des décalages et additions, le temps d'exécution est de 2,83
 secondes, on va donc environ 19 fois plus vite.</p>
+</blockquote>
 <p>Il existe une ruse (<em>version 2</em>) qui permet de gagner une instruction en remplaçant la première ligne par : <code>x = x - ((x &gt;&gt; 1) &amp; m1);</code>.</p>
 
 <details>

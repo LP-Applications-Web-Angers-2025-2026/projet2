@@ -196,12 +196,15 @@ appelé ne modifie pas certains registres. Ces registres sont <code>ebp</code>, 
 Il est donc nécessaire, une fois entré dans le sous-programme appelé, de <strong>sauvegarder
 ces registres dans la pile</strong> si on a l'intention de les modifier.</p>
 <p>Les registres qui peuvent être modifiés librement sont : <code>eax</code>, <code>ecx</code> et <code>edx</code>.</p>
+<blockquote>
 <p><em>Moyen mnémotechnique</em> :
 <strong>AuX CieuX, les DieuX,</strong>
 <strong>BaPtisent des DIsSIdents BelliqueuX.</strong></p>
-</div>
-- 1ère ligne → registres modifiables : `ax`, `cx`, `dx` (soit `eax`, `ecx`, `edx`)
-- 2ème ligne → registres à préserver : `bp`, `di`, `si`, `bx` (soit `ebp`, `edi`, `esi`, `ebx`)
+<ul>
+<li>1ère ligne → registres modifiables : <code>ax</code>, <code>cx</code>, <code>dx</code> (soit <code>eax</code>, <code>ecx</code>, <code>edx</code>)</li>
+<li>2ème ligne → registres à préserver : <code>bp</code>, <code>di</code>, <code>si</code>, <code>bx</code> (soit <code>ebp</code>, <code>edi</code>, <code>esi</code>, <code>ebx</code>)</li>
+</ul>
+</blockquote>
 <h3 class="subsection">6.2.4 Valeur de retour</h3>
 
 <p>Lorsqu'un sous-programme retourne une valeur il doit le faire en suivant la
@@ -253,10 +256,14 @@ convention du langage C :</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 6.2.1 – Appelant en 32 bits</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Convention — ordre des paramètres</strong> : par convention en C (architecture 32 bits),
 on place le <strong>dernier</strong> paramètre en premier dans la pile et le <strong>premier</strong> paramètre en
 dernier. Pour notre exemple : on commence par 5 et on termine par 4.</p>
+</blockquote>
 <h4 class="subsubsection">6.2.5.2 Le sous-programme sum (callee)</h4>
 
 
@@ -284,7 +291,9 @@ dernier. Pour notre exemple : on commence par 5 et on termine par 4.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 6.2.2 – Appelé en 32 bits</em></p>
+</blockquote>
 <p><strong>Entrée dans la fonction</strong> (3 étapes) :</p>
 <ol>
 <li>Sauvegarder <code>ebp</code> puis affecter à <code>ebp</code> la valeur de <code>esp</code> — cela permet d'accéder
@@ -299,8 +308,10 @@ aux paramètres et aux variables locales via <code>ebp</code></li>
 <li>nème paramètre : <code>[ebp + 4×(n+1)]</code></li>
 <li>Variables locales : <code>[ebp - x]</code></li>
 </ul>
+<blockquote>
 <p><strong>Taille des paramètres</strong> : que le paramètre soit un octet ou un mot, on le stocke
 sur 32 bits. S'il s'agit d'une chaîne ou d'un tableau, on passe son adresse (32 bits).</p>
+</blockquote>
 <p><strong>Sortie de la fonction</strong> (ordre inverse) :</p>
 <ol>
 <li>Placer la valeur de retour dans <code>eax</code></li>
@@ -310,6 +321,7 @@ sur 32 bits. S'il s'agit d'une chaîne ou d'un tableau, on passe son adresse (32
 </ol>
 <div class="cadre_note"><strong>Note</strong> : il n'est pas nécessaire de supprimer explicitement la variable locale `r`
 car l'instruction `mov esp, ebp` (étape 3 de la sortie) le fait automatiquement.
+</div>
 <h4 class="subsubsection">6.2.5.3 Suppression des paramètres</h4>
 
 <p>Les paramètres mis dans la pile dans <code>main</code> doivent être supprimés après l'appel.
@@ -472,6 +484,7 @@ juste après l'appel d'un sous-programme (la <strong><em>red zone</em></strong>)
 les interruptions. On peut donc l'utiliser pour stocker temporairement des valeurs,
 à condition de ne pas faire de <code>push</code> ou de <code>call</code>.</p>
 <div class="cadre_note"><strong>Note</strong> : sous Windows cette zone n'est **pas** disponible.
+</div>
 <h3 class="subsection">6.3.3 Adressage en 64 bits</h3>
 
 <p>Les adresses doivent être précisées en utilisant les registres 64 bits uniquement.
@@ -534,7 +547,9 @@ tableau <code>t</code> avec <code>a</code> une constante :</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 6.3.1 – Traduction en 64 bits de la fonction sum</em></p>
+</blockquote>
 <p>Version plus concise (Listing 6.3.2) :</p>
 
 <details>
@@ -562,9 +577,12 @@ tableau <code>t</code> avec <code>a</code> une constante :</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 6.3.2 – Traduction en 64 bits de la fonction sum — version améliorée</em></p>
+</blockquote>
 <div class="cadre_note"><strong>Note</strong> : puisque `a` est une constante, la division peut être sortie de la boucle :
 `∑ t[i]/a = (1/a) × ∑ t[i]`
+</div>
 <h3 class="subsection">6.3.5 Points importants en 64 bits</h3>
 
 <h4 class="subsubsection">6.3.5.1 Appel de fonctions externes (PLT)</h4>
