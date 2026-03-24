@@ -338,6 +338,12 @@ L'étude est poussée sur 15 implémentations (référence C, optimisation manue
 
 [BENCHMARK:asm_popcnt_64]
 
+## 12.6 Benchmark Compactage 32 bits
+
+Le compactage de données booléennes (stocker `true`/`false` dans des bits plutôt que des octets) permet de réduire l'empreinte mémoire de 87,5%. Les tests suivants comparent les performances des différentes implémentations de compactage sur architecture 32 bits.
+
+[BENCHMARK:asm_cmpack32]
+
 ## 12.7 Bilan
 
 Ce problème révèle deux choses importantes. La première est que le traitement

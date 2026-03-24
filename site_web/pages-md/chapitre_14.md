@@ -344,6 +344,12 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
 
 [BENCHMARK:asm_maxpars_64]
 
+### Benchmark 32 bits
+
+Les mêmes tests effectués en architecture 32 bits montrent des résultats comparables avec les limitations inhérentes à cette architecture (moins de registres disponibles).
+
+[BENCHMARK:asm_maxpars_32]
+
 ## 14.13 Bilan
 
 Dans cette étude de cas, la fonction de référence peut être optimisée de manière
