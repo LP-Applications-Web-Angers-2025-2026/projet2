@@ -525,93 +525,201 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 
 <p>Voici le résumé des performances des différentes architectures :</p>
 <ul>
-<li><strong>1</strong> : version C++ standard</li>
-<li><strong>4</strong> : version C++ avec conversion manuelle et divisions / tableau 8-bit.</li>
-<li><strong>8</strong> : Assembleur sans division (<code>mul inv</code>) avec <em>Unroll</em></li>
-<li><strong>12</strong> : Assembleur sans division + <em>Unroll</em> + fin vectorielle SIMD AVX</li>
-<li><strong>14</strong> : Assembleur division par 100 (<code>mul inv</code>)</li>
-<li><strong>16</strong> : ASM archaïque BCD <code>fbstp</code></li>
-<li><strong>23</strong> : Assembleur division par 10_000</li>
+<li><strong>1</strong> : version C++ standard (<code>cpp_std_to_string</code>)</li>
+<li><strong>4</strong> : version C++ avec conversion manuelle et divisions / tableau 8-bit (<code>cpp_divs_8bits</code>)</li>
+<li><strong>8</strong> : Assembleur sans division (<code>mul inv</code>) avec <em>Unroll</em> (<code>asm_unroll</code>)</li>
+<li><strong>12</strong> : Assembleur sans division + <em>Unroll</em> + fin vectorielle SIMD AVX (<code>asm_simd_avx</code>)</li>
+<li><strong>14</strong> : Assembleur division par 100 (<code>mul inv</code>) (<code>asm_div_100</code>)</li>
+<li><strong>16</strong> : ASM archaïque BCD <code>fbstp</code> (<code>asm_bcd_fbstp</code>)</li>
+<li><strong>23</strong> : Assembleur division par 10_000 (<code>asm_div_10000</code>)</li>
 </ul>
+<div class="center">
 <table class="data-table">
-<thead>
-<tr>
-<th>N°</th>
-<th>Méthode</th>
-<th>Intel Core i5 7400</th>
-<th>Intel Core i7 4790</th>
-<th>Intel Core i7 8700</th>
-<th>Intel Core i5 12400F</th>
-<th>AMD Ryzen 5 5600g</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><code>cpp std::to_string</code></td>
-<td>15.91</td>
-<td>16.83</td>
-<td>13.35</td>
-<td>6.25</td>
-<td>12.34</td>
-</tr>
-<tr>
-<td>4</td>
-<td><code>cpp divs (8bits)</code></td>
-<td>7.08</td>
-<td>7.53</td>
-<td>5.78</td>
-<td>3.88</td>
-<td>5.09</td>
-</tr>
-<tr>
-<td>8</td>
-<td><code>asm (unroll)</code></td>
-<td>6.87</td>
-<td>7.28</td>
-<td>5.73</td>
-<td>3.51</td>
-<td>4.44</td>
-</tr>
-<tr>
-<td>12</td>
-<td><code>asm SIMD (AVX)</code></td>
-<td>8.41</td>
-<td>9.22</td>
-<td>6.87</td>
-<td>5.17</td>
-<td>5.48</td>
-</tr>
-<tr>
-<td>14</td>
-<td><code>asm div_100</code></td>
-<td>6.02</td>
-<td>6.38</td>
-<td>4.86</td>
-<td>2.87</td>
-<td>3.66</td>
-</tr>
-<tr>
-<td>16</td>
-<td><code>asm BCD (fbstp)</code></td>
-<td>~ 100 s</td>
-<td>108.34</td>
-<td>36.89</td>
-<td>?</td>
-<td>35.83</td>
-</tr>
-<tr>
-<td>23</td>
-<td><code>asm div_10000</code></td>
-<td>-</td>
-<td>20.56</td>
-<td>4.00</td>
-<td>-</td>
-<td>8.77</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i7 4790<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>asm_bcd_fbstp</strong></td>
+      <td>108.340</td>
+    </tr>
+    <tr>
+      <td><strong>asm_div_100</strong></td>
+      <td>6.380</td>
+    </tr>
+    <tr>
+      <td><strong>asm_div_10000</strong></td>
+      <td>20.560</td>
+    </tr>
+    <tr>
+      <td><strong>asm_simd_avx</strong></td>
+      <td>9.220</td>
+    </tr>
+    <tr>
+      <td><strong>asm_unroll</strong></td>
+      <td>7.280</td>
+    </tr>
+    <tr>
+      <td><strong>cpp_divs_8bits</strong></td>
+      <td>7.530</td>
+    </tr>
+    <tr>
+      <td><strong>cpp_std_to_string</strong></td>
+      <td>16.830</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Ancien – Benchmark asm selfdesc</caption>
 </table>
-<p><em>TABLE 17.3-17.5 – Résultats comparatifs agglomérés (en secondes).</em></p>
+</div>
+<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
+<script src="data/graph.js"></script>
+<div class="chart-container" id="chart-auto-asm_selfdesc-ancien-30" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_selfdesc-ancien-30';
+    var data = {"CPUs":["Core i7 4790"],"Years":[2014],"Methods":[{"name":"asm_bcd_fbstp","values":[108.34]},{"name":"asm_div_100","values":[6.38]},{"name":"asm_div_10000","values":[20.56]},{"name":"asm_simd_avx","values":[9.22]},{"name":"asm_unroll","values":[7.28]},{"name":"cpp_divs_8bits","values":[7.53]},{"name":"cpp_std_to_string","values":[16.83]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Core i5 7400<br><small>2017</small></th>
+      <th>Core i7 8700<br><small>2017</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>asm_bcd_fbstp</strong></td>
+      <td>100.000</td>
+      <td>36.890</td>
+    </tr>
+    <tr>
+      <td><strong>asm_div_100</strong></td>
+      <td>6.020</td>
+      <td>4.860</td>
+    </tr>
+    <tr>
+      <td><strong>asm_simd_avx</strong></td>
+      <td>8.410</td>
+      <td>6.870</td>
+    </tr>
+    <tr>
+      <td><strong>asm_unroll</strong></td>
+      <td>6.870</td>
+      <td>5.730</td>
+    </tr>
+    <tr>
+      <td><strong>cpp_divs_8bits</strong></td>
+      <td>7.080</td>
+      <td>5.780</td>
+    </tr>
+    <tr>
+      <td><strong>cpp_std_to_string</strong></td>
+      <td>15.910</td>
+      <td>13.350</td>
+    </tr>
+    <tr>
+      <td><strong>asm_div_10000</strong></td>
+      <td>-</td>
+      <td>4.000</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm selfdesc</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_selfdesc-moderne-31" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_selfdesc-moderne-31';
+    var data = {"CPUs":["Core i5 7400","Core i7 8700"],"Years":[2017,2017],"Methods":[{"name":"asm_bcd_fbstp","values":[100,36.89]},{"name":"asm_div_100","values":[6.02,4.86]},{"name":"asm_simd_avx","values":[8.41,6.87]},{"name":"asm_unroll","values":[6.87,5.73]},{"name":"cpp_divs_8bits","values":[7.08,5.78]},{"name":"cpp_std_to_string","values":[15.91,13.35]},{"name":"asm_div_10000","values":[null,4]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
+      <th>Core i5 12400F<br><small>2022</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>asm_bcd_fbstp</strong></td>
+      <td>35.830</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>asm_div_100</strong></td>
+      <td>3.660</td>
+      <td>2.870</td>
+    </tr>
+    <tr>
+      <td><strong>asm_div_10000</strong></td>
+      <td>8.770</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>asm_simd_avx</strong></td>
+      <td>5.480</td>
+      <td>5.170</td>
+    </tr>
+    <tr>
+      <td><strong>asm_unroll</strong></td>
+      <td>4.440</td>
+      <td>3.510</td>
+    </tr>
+    <tr>
+      <td><strong>cpp_divs_8bits</strong></td>
+      <td>5.090</td>
+      <td>3.880</td>
+    </tr>
+    <tr>
+      <td><strong>cpp_std_to_string</strong></td>
+      <td>12.340</td>
+      <td>6.250</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Recent – Benchmark asm selfdesc</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_selfdesc-recent-32" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_selfdesc-recent-32';
+    var data = {"CPUs":["AMD Ryzen 5 5600G","Core i5 12400F"],"Years":[2021,2022],"Methods":[{"name":"asm_bcd_fbstp","values":[35.83,null]},{"name":"asm_div_100","values":[3.66,2.87]},{"name":"asm_div_10000","values":[8.77,null]},{"name":"asm_simd_avx","values":[5.48,5.17]},{"name":"asm_unroll","values":[4.44,3.51]},{"name":"cpp_divs_8bits","values":[5.09,3.88]},{"name":"cpp_std_to_string","values":[12.34,6.25]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>
 <p>La méthode <code>cpp divs</code> (version 4) bat la méthode naïve C++ de loin, et les astuces assembleurs à macro-base de modulo avec invariance (<code>div_10000</code> / <code>div_100</code>) finissent par emporter la médaille d'or toutes configurations confondues.</p>
 <hr />
 <h1 class="chapter">ANNEXES</h1>

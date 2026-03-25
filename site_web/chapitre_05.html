@@ -381,9 +381,7 @@ un ordre de grandeur de <em>18 × 10¹⁸</em>, soit <em>18 Eo</em> (Exa octets)
 <li><code>destination</code> est une donnée en écriture (registre ou adresse mémoire)</li>
 </ul>
 <p>En fait la syntaxe traduit le traitement :</p>
-<blockquote>
 <p><em>destination = destination operation source</em></p>
-</blockquote>
 <p>Ainsi <code>add eax, ebx</code> signifie <code>eax = eax + ebx</code>.</p>
 <p>Il existe une contrainte imposée par le format de codage des instructions x86 : on
 ne peut avoir <strong>qu'une seule référence mémoire</strong>. On ne peut donc pas écrire :</p>
@@ -526,7 +524,6 @@ avec des registres 16 bits :</p>
 <div class="cadre_note"><strong>Note</strong> : Il est conseillé de ne pas utiliser `inc` et `dec` car elles peuvent produire
 dans certaines situations des *false dependencies* et des *partial flag register stalls*.
 On préférera `add reg, 1`.
-</div>
 <h4 class="subsubsection">5.3.2.3 mul</h4>
 
 <p>L'instruction <code>mul</code> n'accepte qu'une seule opérande source et réalise la multiplication
@@ -644,7 +641,6 @@ est également calculé (modulo).</p>
 <div class="cadre_warning"><strong>Attention</strong> : si `edx` n'est pas mis à zéro avant la division, le résultat sera
 incorrect car c'est `edx:eax` qui est divisé. Si le résultat dépasse `0xFFFFFFFF`,
 le microprocesseur lève une exception.
-</div>
 <p>Pour une division <strong>signée</strong> on utilise <code>idiv</code> avec <code>cdq</code> pour convertir <code>eax</code> en <code>edx:eax</code> :</p>
 
 <details>
@@ -684,7 +680,6 @@ Pour diviser 23 par −7 :</p>
 <p>L'instruction <code>neg</code> réalise le <strong>complément à deux</strong> (<em>Two's Complement Negation</em>).
 Si <code>eax</code> contient la valeur −1 alors <code>neg eax</code> produira la valeur 1.</p>
 <div class="cadre_warning"><strong>Attention</strong> : `neg` met le *Carry Flag* à 0 si la valeur initiale est 0, sinon CF = 1.
-</div>
 <h4 class="subsubsection">5.3.2.8 lea</h4>
 
 <p>L'instruction <code>lea</code> (<em>Load Effective Address</em>) réalise une multiplication et une
@@ -1041,7 +1036,6 @@ afin de modifier le pointeur d'instruction. Elles sont de la forme <code>jCC adr
 <p><em>TABLE 5.8 – Instructions de branchement conditionnel et FLAGS affectés</em></p>
 <div class="cadre_note"><strong>Note</strong> : les termes *less* et *greater* sont utilisés pour des entiers **signés**,
 *below* et *above* pour des entiers **non signés**.
-</div>
 <p>Il existe également l'instruction <code>loop</code> qui décrémente <code>ecx</code> et se branche si
 <code>ecx ≠ 0</code>. Elle est équivalente à :</p>
 
@@ -1107,7 +1101,6 @@ tableau vers <code>ds:edi</code> depuis <code>al</code>, <code>ax</code>, <code>
 </details>
 
 <div class="cadre_warning"><strong>Attention</strong> : après exécution de `rep movsd`, `ecx` est à 0 et `edi`/`esi` sont modifiés.
-</div>
 <h4 class="subsubsection">5.3.7.4 scas(b/w/d)</h4>
 
 <p><em>Scan String</em> — permet de comparer le registre <code>AL</code> (pour <code>scasb</code>) avec l'octet à
@@ -1293,12 +1286,8 @@ vraies. On se branche en <code>.endif</code> dès qu'une condition est fausse.</
 
 </details>
 
-<blockquote>
 <p><em>Listing 5.4.2 – Si Alors avec conjonction de conditions</em></p>
-</blockquote>
-<blockquote>
 <p><strong>Optimisation</strong> : placer la condition qui a le plus de chance d'échouer en premier.</p>
-</blockquote>
 <h3 class="subsection">5.4.6 Si alors avec disjonction (ou)</h3>
 
 <p>Pour une condition avec des <code>||</code>, il suffit qu'une seule condition soit vraie pour
@@ -1357,9 +1346,7 @@ exécuter le bloc alors. On se branche en <code>.then</code> dès qu'une conditi
 
 </details>
 
-<blockquote>
 <p><em>Listing 5.4.3 – Tant que</em></p>
-</blockquote>
 <h3 class="subsection">5.4.9 Pour (for)</h3>
 
 <p>L'instruction <code>for</code>, soit <em>pour</em> en langage C, est en fait un <code>while</code> déguisé (sucre syntaxique).</p>
@@ -1422,9 +1409,7 @@ n'exécute que 3 instructions par itération au lieu de 4 :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 5.4.5 – Traduction améliorée du for</em></p>
-</blockquote>
 <h3 class="subsection">5.4.10 Selon cas (switch)</h3>
 
 <p>La structure <code>switch</code> est dans le cas général difficile à traduire.
@@ -1454,9 +1439,7 @@ Dans certains cas les données sont consécutives et il est facile de remplacer 
 
 </details>
 
-<blockquote>
 <p><em>Listing 5.4.6 – Exemple de switch simplifiable par une expression</em></p>
-</blockquote>
 <p>Pour un <code>switch</code> avec des valeurs non consécutives, on passe par une table de
 conversion :</p>
 
@@ -1499,9 +1482,7 @@ conversion :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 5.4.8 – Exemple de switch avec table de conversion en assembleur 32 bits</em></p>
-</blockquote>
 <h3 class="subsection">5.4.11 Optimisation des boucles</h3>
 
 <h4 class="subsubsection">5.4.11.1 Dépliage de boucle (loop unrolling)</h4>
@@ -1554,9 +1535,7 @@ plusieurs fois (par une puissance de 2 : 2, 4, 8 ou 16). Le but est :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 5.4.9 – Dépliage de boucle</em></p>
-</blockquote>
 <p>Pour masquer les bits de poids faible et obtenir le multiple de 8 le plus proche :</p>
 
 <details>
@@ -1610,9 +1589,7 @@ plusieurs fois (par une puissance de 2 : 2, 4, 8 ou 16). Le but est :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 5.4.10 – Dépliage de boucle avec macro instruction</em></p>
-</blockquote>
 <p>On peut également utiliser les répétitions <code>nasm</code> :</p>
 
 <details>
@@ -1632,7 +1609,6 @@ plusieurs fois (par une puissance de 2 : 2, 4, 8 ou 16). Le but est :</p>
 <div class="cadre_warning"><strong>Attention</strong> : en C l'utilisation des parenthèses est primordiale :
 `for (i = 0; i < (N & ~3); i++)` et non `for (i = 0; i < N & ~3; i++)`
 car dans ce cas la condition sera toujours fausse.
-</div>
 <h4 class="subsubsection">5.4.11.2 Tuilage (loop tiling / loop blocking)</h4>
 
 <p>La technique du <strong>tuilage</strong> décompose un traitement sur un grand tableau en plusieurs
@@ -1752,7 +1728,6 @@ en fonction des bits du registre <code>eflags</code></li>
 
 <div class="cadre_note"><strong>Note</strong> : il est nécessaire de mettre 0 dans `eax` avant `setnz` pour que le résultat
 soit 0 ou 1. Ou alors utiliser `movzx eax, al` après `setnz`.
-</div>
 <h3 class="subsection">5.4.13 Latence et débit</h3>
 
 <p>Lorsqu'on évoque le temps de traitement des instructions on distingue :</p>
@@ -1762,11 +1737,9 @@ ait ses données disponibles pour une autre instruction</li>
 <li><strong>Débit</strong> (<em>throughput</em>) : le nombre de cycles processeur pour qu'une instruction
 puisse s'exécuter</li>
 </ul>
-<blockquote>
 <p><strong>Chaîne de dépendance</strong> : quand une instruction a besoin du résultat d'une
 instruction qui la précède, on parle de dépendance. Réduire le nombre de
 dépendances améliore les performances.</p>
-</blockquote>
 <p>Par exemple pour <code>a = a + b + c + d</code> avec <code>eax = a</code>, <code>ebx = b</code>, <code>ecx = c</code>, <code>edx = d</code> :</p>
 <p>Version avec dépendances :</p>
 
@@ -1929,7 +1902,6 @@ pour briser la chaîne de dépendances :</p>
 <p><em>TABLE 5.11 – Nombre de millions de cycles pour la somme des éléments d'un tableau, architectures AMD</em></p>
 <div class="cadre_warning"><strong>Attention</strong> : dans la version v2 avec 4 dépendances, si on les place côte à côte,
 on obtient sur AMD Ryzen 5 5600g un temps moyen de 32 millions de cycles et non 23.
-</div>
 <h2 class="section">5.5 Bilan</h2>
 
 <p>Nous avons vu dans ce chapitre comment traduire les structures de contrôle du
@@ -2016,7 +1988,6 @@ il faut être en mesure de le supprimer soit par <code>setCC</code>/<code>cmovCC
 <li>Traduire avec un dépliage de boucle par 8</li>
 </ol>
 <div class="cadre_warning"><strong>Attention</strong> : lors de la traduction avec dépliage, il faut augmenter `i` à chaque itération du dépliage.
-</div>
 <p><strong>Exercice 25</strong> – Que se passe t-il si on réalise le traitement suivant ?</p>
 
 <details>

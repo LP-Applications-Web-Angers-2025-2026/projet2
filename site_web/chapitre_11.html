@@ -78,7 +78,6 @@ ne possèdant qu'un cache L1 et L2, le temps d'exécution est anormalement plus
 long.</p>
 <div class="cadre_important"><strong>Important</strong> : Les architectures multicoeurs disposant d'un cache L3 se révèlent en
 général moins sensibles à ces variations.
-</div>
 <p>On rappelle qu'une matrice est un tableau à deux dimensions de <code>n</code> lignes et
 <code>p</code> colonnes de réels. On notera <code>A(n,p)</code> la matrice <code>A</code> composée de <code>n</code> lignes et <code>p</code>
 colonnes. Le produit d'une matrice <code>A</code> avec une matrice <code>B</code> n'est possible que si le
@@ -86,10 +85,10 @@ nombre de lignes de <code>B</code> est égal au nombre de colonnes de <code>A</c
 matrice <code>C</code> dont le nombre de lignes est celles de <code>A</code>, et le nombre
 de colonnes celles de <code>B</code>. En d'autres termes, on a :</p>
 <p><code>C(n,q) = A(n,p) × B(p,q)</code></p>
-<p>On note  $c_i^j$  le coefficient de la matrice <code>C</code> en ligne <code>i</code> colonne <code>j</code>, dont la formule
+<p>On note $c_i^j$ le coefficient de la matrice <code>C</code> en ligne <code>i</code> colonne <code>j</code>, dont la formule
 de calcul est donnée par la somme des produits de la ligne <code>i</code> de <code>A</code> par la colonne <code>j</code>
 de <code>B</code> :</p>
-<p>$c_i^j = \sum_{k=1}^p a_i^k \times b_k^j$ </p>
+<p>$c<em>i^j = \sum</em>{k=1}^p a_i^k \times b_k^j$</p>
 <p>Afin de simplifier la compréhension des calculs nous allons nous cantonner
 à des matrices carrées pour lesquelles le nombre de lignes est égal au nombre
 de colonnes, soit <code>n = p = q</code> et nous appelerons donc dimension (ou taille) de la
@@ -239,15 +238,13 @@ matrices <code>dim</code>. Il s'agit de l'implantation directe de la formule mat
 
 </details>
 
-<blockquote>
 <p><em>Listing 11.3.1 – Produit de matrice, fonction de référence</em></p>
-</blockquote>
 <p>Afin de simplifier l'écriture, on a créé trois macro instructions <code>a()</code>, <code>b()</code> et <code>c()</code> qui
-font référence aux coefficients  $a_i^j$ ,  $b_i^j$  et  $c_i^j$ . Plutôt que d'écrire <code>A[i*dim+j]</code>, 
+font référence aux coefficients $a_i^j$, $b_i^j$ et $c_i^j$. Plutôt que d'écrire <code>A[i*dim+j]</code>, 
 on préfère utiliser <code>a(i,j)</code> plus lisible.</p>
 <h2 class="section">11.4 Défauts de cache et inefficacité (Complexité O(n³))</h2>
 
-<p>Cette implantation de référence possède une compléxité en  $O(n^3)$  étant donné
+<p>Cette implantation de référence possède une compléxité en $O(n^3)$ étant donné
 que l'on a trois boucles <code>for</code> imbriquées de taille <code>dim</code>.
 On observe pour des processeurs, et en particulier sur un modèle Intel Celeron N3050, que pour certaines tailles de
 matrices, le temps de calcul est bien plus important que la normale.</p>
@@ -357,9 +354,9 @@ matrices, le temps de calcul est bien plus important que la normale.</p>
 <p>Ce phénomène pour les puissances de 2 (1024, 2048...) peut être expliqué par de <strong>nombreux défauts de cache (Cache misses)</strong>. Les
 matrices étant de grande taille elles ne tiennent pas dans le cache L1 ou L2. Un autre facteur important de ralentissement est l'accès aux coefficients de
 la matrice <code>B</code>. En effet, on accède la matrice <code>A</code> par ligne, ce qui est efficace, car
-quand on charge  $a_i^k$ , les données suivantes comme  $a_i^{k+1}$  à  $a_i^{k+7}$  sont déjà dans le
+quand on charge $a_i^k$, les données suivantes comme $a_i^{k+1}$ à $a_i^{k+7}$ sont déjà dans le
 cache. Par contre l'accès aux coefficients de la matrice <code>B</code> est pénalisant car lorsque
-l'on charge  $b_k^j$ , le coefficient suivant  $c_i^j = \sum_{k=1}^p a_i^k \times b_k^j$0  se trouve <code>dim * 4</code> octets plus loin en
+l'on charge $b<em>k^j$, le coefficient suivant $b</em>{k+1}^j$ se trouve <code>dim * 4</code> octets plus loin en
 mémoire et ne sera donc probablement pas dans le cache.</p>
 <h2 class="section">11.5 Profiling avec <code>perf</code> sous Linux</h2>
 
@@ -418,9 +415,7 @@ réaliser le produit.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 11.6.1 – Produit de matrice, Inversion de boucles j et k</em></p>
-</blockquote>
 <p>On observe au <em>Listing 11.6.1</em> que <code>j</code> étant maintenant la boucle la plus interne :
 <code>a(i,k)</code> reste constant (pour le scope de <code>k</code>).
 Les coefficients <code>b(k,j)</code> et <code>c(i,j)</code> sont accédés consécutivement (pas d'allers-retours brutaux en mémoire). On va donc environ 29 fois plus vite sur de grosses configurations.</p>
@@ -513,9 +508,7 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 11.8.1 – Produit de matrice - Tuilage 4x4</em></p>
-</blockquote>
 <p>En utilisant le tuilage <code>4x4</code> on met environ 8 fois moins de temps. Ce n'est en fait pas très efficace par rapport à <code>j,k</code>.</p>
 <h3 class="subsection">11.8.2 Tuilage <code>b × b</code> de manière générale (Facteur de Blocage)</h3>
 
@@ -548,9 +541,7 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 11.8.2 – Produit de matrice - Tuilage (version 4)</em></p>
-</blockquote>
 <p>Cette valeur de <code>BLOCK_DIM</code> (facteur de tuilage) doit être choisie (typ. 16, 32, 64) en fonction du processeur. Plus on augmente le facteur <code>b</code>, plus on augmente la présence du cache jusqu'à atteindre un sweetspot qui le redimininue (lorsque la tuile excède la taille du cache du CPU).</p>
 <table class="data-table">
 <thead>
@@ -749,10 +740,10 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
 </div>
 <script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="data/graph.js"></script>
-<div class="chart-container" id="chart-auto-asm_matprod_32-ancien-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_matprod_32-ancien-10" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_matprod_32-ancien-4';
+    var id = 'chart-auto-asm_matprod_32-ancien-10';
     var data = {"CPUs":["Pentium D 925","Core 2 Q9300","Core i7 860","AMD X6 1090T","Core i5 3570k","Core i7 4790"],"Years":[2006,2008,2009,2010,2012,2014],"Methods":[{"name":"mp_asm_fpu","values":[380.06,190.83,74.86,180.55,78.33,63.05]},{"name":"mp_asm_fpu_ur4","values":[379.9,197.35,74.4,179.28,79.18,63.02]},{"name":"mp_inv_jk_O2","values":[23.07,14.94,8.25,10.35,6.27,5]},{"name":"mp_inv_jk_sse","values":[85.23,32.28,4.36,17.06,4.32,4.96]},{"name":"mp_reference","values":[363.91,257.74,90.53,172.35,78.62,64.46]},{"name":"mp_tile_4x4","values":[35.77,28.71,10.19,21.24,7.98,6.76]},{"name":"mp_tile_bxb_v1","values":[28.19,178.39,23.82,60.46,19.25,16.82]},{"name":"mp_tile_bxb_v2","values":[25.74,33.68,23.15,49.14,15.2,11.67]},{"name":"mp_tile_bxb_v3","values":[12.62,7.99,3.98,7.62,2.97,1.86]},{"name":"mp_tile_bxb_v4","values":[14.11,7.7,3.74,6.36,2.82,1.55]},{"name":"mp_inv_jk","values":[null,null,null,null,8.51,8.09]},{"name":"mp_inv_jk_avx","values":[null,null,null,null,2.33,1.93]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -890,10 +881,10 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
   <caption>TABLE Moderne – Benchmark asm matprod 32</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_matprod_32-moderne-5" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_matprod_32-moderne-11" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_matprod_32-moderne-5';
+    var id = 'chart-auto-asm_matprod_32-moderne-11';
     var data = {"CPUs":["Core i3 6100","Core i5 7400","Core i7 8700","Ryzen 7 1700X","Ryzen 5 3600","Xeon Silver 4208"],"Years":[2015,2017,2017,2017,2019,2019],"Methods":[{"name":"mp_asm_fpu","values":[59.77,49.28,46.85,52.46,34.42,53.23]},{"name":"mp_asm_fpu_ur4","values":[60.63,48.36,42.57,55.26,45.58,52.22]},{"name":"mp_inv_jk","values":[2.11,1.53,1.56,null,0.92,2.22]},{"name":"mp_inv_jk_O2","values":[10.22,10.32,8.01,6.84,6.16,11.28]},{"name":"mp_inv_jk_avx","values":[2.18,1.63,1.4,1.76,1.03,2.51]},{"name":"mp_inv_jk_sse","values":[5.84,5.81,4.53,5.53,4.39,4.33]},{"name":"mp_reference","values":[60.08,49.1,50.13,57.66,43.62,53.63]},{"name":"mp_tile_4x4","values":[6.89,5.27,4.71,6.35,4.62,7.74]},{"name":"mp_tile_bxb_v1","values":[17.31,18.05,14.03,122.13,37.54,21.31]},{"name":"mp_tile_bxb_v2","values":[12.49,12.7,10.57,27.39,27.6,13.4]},{"name":"mp_tile_bxb_v3","values":[1.84,1.85,null,1.78,2.48,0.97]},{"name":"mp_tile_bxb_v4","values":[1.48,null,null,null,1.72,2.48]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -952,7 +943,7 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
       <td>3126718752.950</td>
       <td>4.190</td>
       <td>-</td>
-      <td>2.407</td>
+      <td>2.408</td>
       <td>3.220</td>
     </tr>
     <tr>
@@ -1031,11 +1022,11 @@ mémoires ce qui permet de les charger dans le cache L1 et les réutiliser.</p>
   <caption>TABLE Recent – Benchmark asm matprod 32</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_matprod_32-recent-6" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_matprod_32-recent-12" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_matprod_32-recent-6';
-    var data = {"CPUs":["Core i7 10850H","AMD Ryzen 5 5600G","Ryzen 5 5600g","12th Gen Intel Core i5 12400F","AMD Ryzen 5 9600X 6 Core","Ryzen 5 9600X"],"Years":[2020,2021,2021,2022,2024,2024],"Methods":[{"name":"mp_asm_fpu","values":[39.7,28080787281.95,39.27,null,26.362,35.07]},{"name":"mp_asm_fpu_ur4","values":[37.56,33070352965,46.59,null,29.048,38.73]},{"name":"mp_inv_jk","values":[1.26,566348754.4,0.8,null,2.397,0.29]},{"name":"mp_inv_jk_O2","values":[7.71,3126718752.95,4.19,null,2.407,3.22]},{"name":"mp_inv_jk_avx","values":[1.33,645422698.05,0.9,null,0.252,0.34]},{"name":"mp_inv_jk_sse","values":[2.76,1997163282.4,2.68,null,0.64,0.75]},{"name":"mp_reference","values":[39.18,32999719123.8,46.48,null,29.766,36.25]},{"name":"mp_tile_4x4","values":[4.59,3572158682.3,4.91,null,1.851,2.47]},{"name":"mp_tile_bxb_v1","values":[13.18,12657222594.161,28.61,5.729,20.318,14.54]},{"name":"mp_tile_bxb_v2","values":[9.76,9503641060.531,21.36,4.015,16.919,13.57]},{"name":"mp_tile_bxb_v3","values":[1.47,435286250.798,0.97,1.181,2.391,0.7]},{"name":"mp_tile_bxb_v4","values":[1.23,345151812.957,null,0.761,2.385,null]}]};
+    var id = 'chart-auto-asm_matprod_32-recent-12';
+    var data = {"CPUs":["Core i7 10850H","AMD Ryzen 5 5600G","Ryzen 5 5600g","12th Gen Intel Core i5 12400F","AMD Ryzen 5 9600X 6 Core","Ryzen 5 9600X"],"Years":[2020,2021,2021,2022,2024,2024],"Methods":[{"name":"mp_asm_fpu","values":[39.7,28080787281.95,39.27,null,26.362,35.07]},{"name":"mp_asm_fpu_ur4","values":[37.56,33070352965,46.59,null,29.048,38.73]},{"name":"mp_inv_jk","values":[1.26,566348754.4,0.8,null,2.397,0.29]},{"name":"mp_inv_jk_O2","values":[7.71,3126718752.95,4.19,null,2.408,3.22]},{"name":"mp_inv_jk_avx","values":[1.33,645422698.05,0.9,null,0.252,0.34]},{"name":"mp_inv_jk_sse","values":[2.76,1997163282.4,2.68,null,0.64,0.75]},{"name":"mp_reference","values":[39.18,32999719123.8,46.48,null,29.766,36.25]},{"name":"mp_tile_4x4","values":[4.59,3572158682.3,4.91,null,1.851,2.47]},{"name":"mp_tile_bxb_v1","values":[13.18,12657222594.161,28.61,5.729,20.318,14.54]},{"name":"mp_tile_bxb_v2","values":[9.76,9503641060.531,21.36,4.015,16.919,13.57]},{"name":"mp_tile_bxb_v3","values":[1.47,435286250.798,0.97,1.181,2.391,0.7]},{"name":"mp_tile_bxb_v4","values":[1.23,345151812.957,null,0.761,2.385,null]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");

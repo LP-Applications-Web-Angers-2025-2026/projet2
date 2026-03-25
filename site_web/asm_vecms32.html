@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Annexe : Opérations vectorielles (32 bits)</h1>
+
+<h2 class="section">Introduction</h2>
+
+<p>Cette étude de cas explore différentes approches pour effectuer des opérations sur des vecteurs de données en architecture 32 bits. Les tests comparent les performances des sections <code>.data</code>, <code>.text</code>, <code>.case</code> et les opérations de tri (<code>sort</code>).</p>
+<hr />
+<h2 class="section">Contexte</h2>
+
+<p>Les opérations vectorielles de base incluent :</p>
+<ul>
+<li>L'initialisation de données (<code>.data</code>)</li>
+<li>Le traitement dans la section code (<code>.text</code>)</li>
+<li>Les structures de contrôle conditionnelles (<code>.case</code> / switch)</li>
+<li>Les algorithmes de tri (<code>sort</code>)</li>
+</ul>
+<hr />
+<h2 class="section">Implémentations</h2>
+
+<h3 class="subsection">Section .data</h3>
+
+<p>Utilisation de données pré-initialisées en mémoire pour accélérer les accès :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_001.asm" target="_blank">code/commun/code_001.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.data</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #0000ff; font-weight: bold;">align</span> <span style="color: #ff0000;">16</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; vec_data<span style="color: #339933;">:</span> <span style="color: #0000ff; font-weight: bold;">dd</span> <span style="color: #ff0000;">1.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">2.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">3.0</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">4.0</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">Section .text</h3>
+
+<p>Code optimisé utilisant les registres pour minimiser les accès mémoire :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_002.asm" target="_blank">code/commun/code_002.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #0000ff; font-weight: bold;">section</span> <span style="color: #0000ff; font-weight: bold;">.text</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">vec_process<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">mov</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">esp</span><span style="color: #339933;">+</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Pointeur vers le vecteur</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">movaps</span> <span style="color: #46aa03; font-weight: bold;">xmm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp;<span style="color: #666666; font-style: italic;">; Charger 4 floats</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Traitement...</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">Structure switch/case</h3>
+
+<p>Optimisation des branchements conditionnels par table de sauts :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_003.asm" target="_blank">code/commun/code_003.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span>case<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">cmp</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">,</span> MAX_CASE</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">ja</span> <span style="color: #339933;">.</span><span style="color: #0000ff; font-weight: bold;">default</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jmp</span> <span style="color: #009900; font-weight: bold;">&#91;</span>jump_table <span style="color: #339933;">+</span> <span style="color: #46aa03; font-weight: bold;">eax</span><span style="color: #339933;">*</span><span style="color: #ff0000;">4</span><span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<h3 class="subsection">Tri (sort)</h3>
+
+<p>Implémentation optimisée d'algorithmes de tri sur des vecteurs de données.</p>
+<hr />
+<h2 class="section">Benchmark</h2>
+
+<p>Les résultats comparent les différentes approches d'organisation du code et des données pour les opérations vectorielles en 32 bits.</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Intel Core2 Quad Q9300 2.50GHz<br><small>2008</small></th>
+      <th>Pentium Dual Core E5300 2.60GHz<br><small>2008</small></th>
+      <th>Intel Core i7 860 2.80GHz<br><small>2009</small></th>
+      <th>AMD Phenom II X6 1090T<br><small>2010</small></th>
+      <th>Intel Core i5 3570K 3.40GHz<br><small>2012</small></th>
+      <th>Intel Core i7 4790 3.60GHz<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>.case</strong></td>
+      <td>2.207</td>
+      <td>2.368</td>
+      <td>3.520</td>
+      <td>1.607</td>
+      <td>1.252</td>
+      <td>0.995</td>
+    </tr>
+    <tr>
+      <td><strong>.data</strong></td>
+      <td>2.728</td>
+      <td>2.996</td>
+      <td>4.292</td>
+      <td>2.675</td>
+      <td>1.699</td>
+      <td>1.455</td>
+    </tr>
+    <tr>
+      <td><strong>.text</strong></td>
+      <td>3.002</td>
+      <td>3.013</td>
+      <td>5.031</td>
+      <td>2.861</td>
+      <td>1.608</td>
+      <td>1.220</td>
+    </tr>
+    <tr>
+      <td><strong>sort</strong></td>
+      <td>2.298</td>
+      <td>2.400</td>
+      <td>3.420</td>
+      <td>1.677</td>
+      <td>1.281</td>
+      <td>1.005</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Ancien – Benchmark asm vecms32</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_vecms32-ancien-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_vecms32-ancien-4';
+    var data = {"CPUs":["Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Intel Core i7 860 2.80GHz","AMD Phenom II X6 1090T","Intel Core i5 3570K 3.40GHz","Intel Core i7 4790 3.60GHz"],"Years":[2008,2008,2009,2010,2012,2014],"Methods":[{"name":".case","values":[2.207,2.368,3.52,1.607,1.252,0.995]},{"name":".data","values":[2.728,2.996,4.292,2.675,1.699,1.455]},{"name":".text","values":[3.002,3.013,5.031,2.861,1.608,1.22]},{"name":"sort","values":[2.298,2.4,3.42,1.677,1.281,1.005]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Intel Core i3 6100 3.70GHz<br><small>2015</small></th>
+      <th>AMD Ryzen 7 1700X Eight Core<br><small>2017</small></th>
+      <th>Intel Core i5 7400 3.00GHz<br><small>2017</small></th>
+      <th>Intel Core i7 8700 3.20GHz<br><small>2017</small></th>
+      <th>AMD Athlon 200GE<br><small>2018</small></th>
+      <th>AMD Ryzen 5 3600 6 Core<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>.case</strong></td>
+      <td>0.896</td>
+      <td>0.882</td>
+      <td>1.174</td>
+      <td>0.873</td>
+      <td>1.097</td>
+      <td>0.706</td>
+    </tr>
+    <tr>
+      <td><strong>.data</strong></td>
+      <td>1.414</td>
+      <td>1.032</td>
+      <td>1.773</td>
+      <td>1.308</td>
+      <td>1.254</td>
+      <td>0.855</td>
+    </tr>
+    <tr>
+      <td><strong>.text</strong></td>
+      <td>1.605</td>
+      <td>0.959</td>
+      <td>1.682</td>
+      <td>1.242</td>
+      <td>1.190</td>
+      <td>0.831</td>
+    </tr>
+    <tr>
+      <td><strong>sort</strong></td>
+      <td>0.893</td>
+      <td>0.935</td>
+      <td>1.180</td>
+      <td>0.892</td>
+      <td>1.142</td>
+      <td>0.745</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm vecms32</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_vecms32-moderne-5" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_vecms32-moderne-5';
+    var data = {"CPUs":["Intel Core i3 6100 3.70GHz","AMD Ryzen 7 1700X Eight Core","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core"],"Years":[2015,2017,2017,2017,2018,2019],"Methods":[{"name":".case","values":[0.896,0.882,1.174,0.873,1.097,0.706]},{"name":".data","values":[1.414,1.032,1.773,1.308,1.254,0.855]},{"name":".text","values":[1.605,0.959,1.682,1.242,1.19,0.831]},{"name":"sort","values":[0.893,0.935,1.18,0.892,1.142,0.745]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>.case</strong></td>
+      <td>0.555</td>
+    </tr>
+    <tr>
+      <td><strong>.data</strong></td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <td><strong>.text</strong></td>
+      <td>0.714</td>
+    </tr>
+    <tr>
+      <td><strong>sort</strong></td>
+      <td>0.575</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Recent – Benchmark asm vecms32</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_vecms32-recent-6" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_vecms32-recent-6';
+    var data = {"CPUs":["AMD Ryzen 5 5600G"],"Years":[2021],"Methods":[{"name":".case","values":[0.555]},{"name":".data","values":[0]},{"name":".text","values":[0.714]},{"name":"sort","values":[0.575]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

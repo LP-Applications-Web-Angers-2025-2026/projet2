@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Enseignement, Recherche, Université, Angers, Jean-Michel, Richer, JMR70" />
+<meta name="author" content="Jean-Michel Richer" />
+<meta name="description" content="Site de Jean-Michel RICHER Maître de Conférence en Informatique JMR70" />
+<title>Site de Jean-Michel RICHER</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="icon" type="image/png" href="img/classroom.png" />
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css">
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/STIX/mathfonts.css">
+
+<link rel="stylesheet" href="javascript/mathscribe/jqmath-0.4.3.css">
+<script src="javascript/jquery-3.4.1.min.js"></script>
+<script src="javascript/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+<script>M.MathPlayer = false; M.trustHtml = true;</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+math {
+  font-size: 110%;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Site de Jean-Michel RICHER</h1>
+  <p>Maître de Conférences en Informatique à l'Université d'Angers</p>
+</header>
+
+<div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
+
+<nav id="main_menu_nav">
+  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
+  <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
+  <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
+  <a href="dev.php"><i class="material-icons">build</i>Développement</a>
+  <a href="div.php"><i class="material-icons">category</i>Divers</a>
+  <a href="contact.php"><i class="material-icons">mail</i>Contact</a>
+</nav><main>
+<div class="row">
+
+<div class="cadre_alerte" style="display: flex;">
+<p style="margin: 10px auto; text-align: center; padding: 20px;">
+Ce site est en cours de reconstruction certains liens peuvent ne pas fonctionner ou 
+certaines images peuvent ne pas s'afficher.
+</p>
+</div>
+<br/>
+</div>
+    <div class="row">
+        <section class="cours">
+            <h1 class="chapter">Annexe : Remplacement de caractères (64 bits)</h1>
+
+<h2 class="section">Introduction</h2>
+
+<p>Cette étude de cas traite de l'optimisation d'une fonction de remplacement de caractères dans une chaîne. L'objectif est de remplacer toutes les occurrences d'un caractère donné par un autre caractère, de manière performante en architecture 64 bits.</p>
+<hr />
+<h2 class="section">Principe de fonctionnement</h2>
+
+<p>La fonction de référence parcourt la chaîne caractère par caractère et effectue le remplacement lorsque le caractère cible est trouvé :</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_001.c" target="_blank">code/commun/code_001.c</a></summary>
+
+<div class="code-container">
+<div class="c" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #993333;">void</span> chr_replace_ref<span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">*</span>str<span style="color: #339933;">,</span> <span style="color: #993333;">size_t</span> len<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> old_char<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> new_char<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">size_t</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> len<span style="color: #339933;">;</span> <span style="color: #339933;">++</span>i<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> old_char<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> new_char<span style="color: #339933;">;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #009900;">&#125;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #009900;">&#125;</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<hr />
+<h2 class="section">Optimisations</h2>
+
+<h3 class="subsection">Vectorisation SSE</h3>
+
+<p>En utilisant les registres SSE (128 bits), on peut traiter 16 caractères simultanément :</p>
+<ul>
+<li>Charger 16 octets avec <code>movdqu</code></li>
+<li>Comparer avec <code>pcmpeqb</code> pour créer un masque</li>
+<li>Appliquer le remplacement avec <code>pblendvb</code> ou des opérations logiques</li>
+</ul>
+<h3 class="subsection">Vectorisation AVX2</h3>
+
+<p>Avec les registres AVX2 (256 bits), on traite 32 caractères par itération, doublant ainsi le débit théorique.</p>
+
+<details>
+<summary>Afficher le code &nbsp;&nbsp; <a href="code/commun/code_002.asm" target="_blank">code/commun/code_002.asm</a></summary>
+
+<div class="code-container">
+<div class="asm" style="font-family:monospace;"><ol><li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">chr_repl_avx2<span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Broadcast du caractère à chercher dans ymm1</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpbroadcastb</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>old_char<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Broadcast du caractère de remplacement dans ymm2</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpbroadcastb</span> <span style="color: #46aa03; font-weight: bold;">ymm2</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span>new_char<span style="color: #009900; font-weight: bold;">&#93;</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp;</div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;"><span style="color: #339933;">.</span><span style="color: #00007f; font-weight: bold;">loop</span><span style="color: #339933;">:</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovdqu</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #009900; font-weight: bold;">&#93;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Charger 32 octets</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vpcmpeqb</span> <span style="color: #46aa03; font-weight: bold;">ymm3</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm1</span> &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Comparer avec old_char</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; vpblendvb <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm2</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm3</span> &nbsp;<span style="color: #666666; font-style: italic;">; Remplacer si match</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #b00040;">vmovdqu</span> <span style="color: #009900; font-weight: bold;">&#91;</span><span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #009900; font-weight: bold;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #46aa03; font-weight: bold;">ymm0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #666666; font-style: italic;">; Stocker le résultat</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">add</span> <span style="color: #46aa03; font-weight: bold;">rsi</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">sub</span> <span style="color: #46aa03; font-weight: bold;">rcx</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">32</span></div></li>
+<li style="font-weight: normal; vertical-align:top;"><div style="font: normal normal 14px monospace; margin:0; padding:0; background:none; vertical-align:top;">&nbsp; &nbsp; <span style="color: #00007f; font-weight: bold;">jnz</span> <span style="color: #339933;">.</span><span style="color: #00007f; font-weight: bold;">loop</span></div></li>
+</ol></div>
+</div>
+
+</details>
+
+<hr />
+<h2 class="section">Benchmark</h2>
+
+<p>Les tests comparent la référence C compilée avec différents niveaux d'optimisation (<code>-O2</code>, <code>-O3</code>) avec les versions assembleur SSE et AVX2, incluant différents niveaux de dépliage de boucle.</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Intel Core2 Quad Q9300 2.50GHz<br><small>2008</small></th>
+      <th>Pentium Dual Core E5300 2.60GHz<br><small>2008</small></th>
+      <th>Intel Core i7 860 2.80GHz<br><small>2009</small></th>
+      <th>AMD Phenom II X6 1090T<br><small>2010</small></th>
+      <th>Intel Core i5 3570K 3.40GHz<br><small>2012</small></th>
+      <th>Intel Core i7 4790 3.60GHz<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>chr_repl_ref_O2</strong></td>
+      <td>91274638598.200</td>
+      <td>68142419650.500</td>
+      <td>128855542291.567</td>
+      <td>49870824643.033</td>
+      <td>40407309236.533</td>
+      <td>26011336693.167</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_reference</strong></td>
+      <td>21085804807.267</td>
+      <td>22986620677.800</td>
+      <td>15208270622.933</td>
+      <td>15245903845.700</td>
+      <td>8228140587.967</td>
+      <td>7139685780.267</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_sse20</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>20604534353.800</td>
+      <td>15903960710.400</td>
+      <td>7636503015.467</td>
+      <td>6936533057.300</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_sse20_u2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>18831544451.067</td>
+      <td>15475373184.967</td>
+      <td>7592066188.467</td>
+      <td>6965971726.100</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_sse20_u2_switch</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>25173050039.300</td>
+      <td>15907875194.933</td>
+      <td>7567423281.200</td>
+      <td>6946957958.300</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_avx20</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>6869532651.067</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_avx20_u2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>6912675551.400</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Ancien – Benchmark asm replcar 64</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_replcar_64-ancien-2" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_replcar_64-ancien-2';
+    var data = {"CPUs":["Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Intel Core i7 860 2.80GHz","AMD Phenom II X6 1090T","Intel Core i5 3570K 3.40GHz","Intel Core i7 4790 3.60GHz"],"Years":[2008,2008,2009,2010,2012,2014],"Methods":[{"name":"chr_repl_ref_O2","values":[91274638598.2,68142419650.5,128855542291.567,49870824643.033,40407309236.533,26011336693.167]},{"name":"chr_repl_reference","values":[21085804807.267,22986620677.8,15208270622.933,15245903845.7,8228140587.967,7139685780.267]},{"name":"chr_repl_sse20","values":[null,null,20604534353.8,15903960710.4,7636503015.467,6936533057.3]},{"name":"chr_repl_sse20_u2","values":[null,null,18831544451.067,15475373184.967,7592066188.467,6965971726.1]},{"name":"chr_repl_sse20_u2_switch","values":[null,null,25173050039.3,15907875194.933,7567423281.2,6946957958.3]},{"name":"chr_repl_avx20","values":[null,null,null,null,null,6869532651.067]},{"name":"chr_repl_avx20_u2","values":[null,null,null,null,null,6912675551.4]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Intel Core i3 6100 3.70GHz<br><small>2015</small></th>
+      <th>AMD Ryzen 7 1700X Eight Core<br><small>2017</small></th>
+      <th>Intel Core i5 7400 3.00GHz<br><small>2017</small></th>
+      <th>Intel Core i7 8700 3.20GHz<br><small>2017</small></th>
+      <th>AMD Athlon 200GE<br><small>2018</small></th>
+      <th>AMD Ryzen 5 3600 6 Core<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>chr_repl_avx20</strong></td>
+      <td>5815095240.467</td>
+      <td>6041849776.000</td>
+      <td>4935176136.800</td>
+      <td>3703655292.000</td>
+      <td>8820549814.400</td>
+      <td>4273377082.800</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_avx20_u2</strong></td>
+      <td>5817191657.333</td>
+      <td>6263832682.000</td>
+      <td>4776057397.467</td>
+      <td>3697499281.000</td>
+      <td>8923239953.067</td>
+      <td>4214601693.600</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_ref_O2</strong></td>
+      <td>37847810754.867</td>
+      <td>17950945717.800</td>
+      <td>28235828752.467</td>
+      <td>16345662480.400</td>
+      <td>20574325990.400</td>
+      <td>28325615306.400</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_reference</strong></td>
+      <td>6249053498.667</td>
+      <td>6459703461.067</td>
+      <td>5322701747.933</td>
+      <td>4324603964.200</td>
+      <td>9085427618.133</td>
+      <td>4998132232.800</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_sse20</strong></td>
+      <td>6023477350.333</td>
+      <td>6121888151.467</td>
+      <td>5248774690.433</td>
+      <td>4060947697.100</td>
+      <td>8822105550.933</td>
+      <td>4463392718.400</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_sse20_u2</strong></td>
+      <td>5986860314.400</td>
+      <td>6158040856.933</td>
+      <td>5006976450.633</td>
+      <td>4000349360.467</td>
+      <td>8844284064.000</td>
+      <td>4373419053.600</td>
+    </tr>
+    <tr>
+      <td><strong>chr_repl_sse20_u2_switch</strong></td>
+      <td>6078423804.000</td>
+      <td>6168876441.600</td>
+      <td>5089423091.900</td>
+      <td>4035727718.667</td>
+      <td>8841437872.000</td>
+      <td>4386746179.200</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm replcar 64</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_replcar_64-moderne-3" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_replcar_64-moderne-3';
+    var data = {"CPUs":["Intel Core i3 6100 3.70GHz","AMD Ryzen 7 1700X Eight Core","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core"],"Years":[2015,2017,2017,2017,2018,2019],"Methods":[{"name":"chr_repl_avx20","values":[5815095240.467,6041849776,4935176136.8,3703655292,8820549814.4,4273377082.8]},{"name":"chr_repl_avx20_u2","values":[5817191657.333,6263832682,4776057397.467,3697499281,8923239953.067,4214601693.6]},{"name":"chr_repl_ref_O2","values":[37847810754.867,17950945717.8,28235828752.467,16345662480.4,20574325990.4,28325615306.4]},{"name":"chr_repl_reference","values":[6249053498.667,6459703461.067,5322701747.933,4324603964.2,9085427618.133,4998132232.8]},{"name":"chr_repl_sse20","values":[6023477350.333,6121888151.467,5248774690.433,4060947697.1,8822105550.933,4463392718.4]},{"name":"chr_repl_sse20_u2","values":[5986860314.4,6158040856.933,5006976450.633,4000349360.467,8844284064,4373419053.6]},{"name":"chr_repl_sse20_u2_switch","values":[6078423804,6168876441.6,5089423091.9,4035727718.667,8841437872,4386746179.2]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>        </section>
+    </div>
+
+<br /><br /><br />
+</main>
+<footer>
+    <p>2000-2026 (&copy;) Jean-Michel Richer - All rights reserved</p>
+</footer>
+<script>
+  function toggleMenu() {
+    document.getElementById('main_menu_nav').classList.toggle('show');
+  }
+</script></body>
+</html>

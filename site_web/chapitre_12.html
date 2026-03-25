@@ -267,11 +267,9 @@ cependant l'éliminer en écrivant la fonction comme suit :</p>
 
 </details>
 
-<blockquote>
 <p><strong>Version de référence, élimination du if</strong>
 La version de référence améliorée en supprimant le <code>if</code> s'exécute en 48,78
 secondes contre 54,96 s ce qui constitue une faible mais notable amélioration.</p>
-</blockquote>
 <h2 class="section">12.2 Améliorations de pop_count</h2>
 
 <p>Malheureusement la fonction de référence n'est pas très efficace et on peut
@@ -301,11 +299,9 @@ du tableau égal à 189 est 6 car <code>189 = 1011_1101</code> (binaire), soit 6
 
 </details>
 
-<blockquote>
 <p><strong>Amélioration table de conversion</strong>
 En utilisant une table de conversion, on
 ne met plus que 2,76 secondes, on va donc environ 20 fois plus vite. (à condition qu'elle tienne en L1).</p>
-</blockquote>
 <h3 class="subsection">12.2.2 Comptage arithmétique (Population Count sans l'instruction)</h3>
 
 <p>On désire redéfinir une fonction <code>pop_count_8</code> mathématiquement. La première étape consiste à compter le nombre de bits à 1 dans une paire de bits. On a quatre cas possibles :</p>
@@ -390,11 +386,9 @@ mots. Le masque évolue comme présenté Table 12.1.</p>
 
 </details>
 
-<blockquote>
 <p><strong>Amélioration en comptant les bits par paires, quartets, etc</strong>
 En utilisant des décalages et additions, le temps d'exécution est de 2,83
 secondes, on va donc environ 19 fois plus vite.</p>
-</blockquote>
 <p>Il existe une ruse (<em>version 2</em>) qui permet de gagner une instruction en remplaçant la première ligne par : <code>x = x - ((x &gt;&gt; 1) &amp; m1);</code>.</p>
 
 <details>
@@ -1081,10 +1075,10 @@ L'étude est poussée sur 15 implémentations (référence C, optimisation manue
 </div>
 <script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="data/graph.js"></script>
-<div class="chart-container" id="chart-auto-asm_popcnt_64-ancien-7" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_popcnt_64-ancien-13" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_popcnt_64-ancien-7';
+    var id = 'chart-auto-asm_popcnt_64-ancien-13';
     var data = {"CPUs":["Pentium D 925","Core 2 Q9300","Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Core i7 860","Intel Core i7 860 2.80GHz","AMD X6 1090T","AMD Phenom II X6 1090T","Core i5 3570K","Intel Core i5 3570K 3.40GHz","Core i7 4790","Intel Core i7 4790 3.60GHz"],"Years":[2006,2008,2008,2008,2009,2009,2010,2010,2012,2012,2014,2014],"Methods":[{"name":"u32_reference","values":[126.41,105.45,null,null,60.91,null,43.46,null,53.34,null,39.42,null]},{"name":"u32_reference_opt","values":[73.51,88.36,null,null,60.81,null,43.31,null,48.68,null,33.4,null]},{"name":"u32_shift_v1","values":[8.01,4.25,null,null,2.05,null,2.5,null,1.29,null,0.56,null]},{"name":"u32_shift_v2","values":[7.76,3.13,null,null,1.82,null,1.86,null,1.06,null,0.49,null]},{"name":"u8_intrinsics","values":[4.55,null,null,null,0.92,null,1.35,null,0.76,null,0.61,null]},{"name":"u8_reference","values":[150.22,170.2,null,null,110.19,null,80.21,null,72.58,null,54.99,null]},{"name":"u8_reference_opt","values":[111.73,161.63,null,null,102.39,null,64.68,null,65.12,null,47.38,null]},{"name":"u8_shift_v1","values":[16.5,7.77,null,null,4.52,null,4.31,null,3.23,null,1.98,null]},{"name":"u8_shift_v2","values":[16.45,7.66,null,null,4.76,null,4.62,null,3.2,null,2.02,null]},{"name":"u32_popcnt_shift_v1","values":[null,null,217440402.4,176352295.6,null,260701938.233,null,180724815.2,null,103939919.833,null,48050576.75]},{"name":"u32_popcnt_shift_v2","values":[null,null,168996325.067,154376521.217,null,247201095,null,126878201.55,null,86314044.533,null,42486938.317]},{"name":"u32_popcnt_table_v1","values":[null,null,565951333.2,477750777.833,null,1094132504.683,null,460701635,null,320221486.067,null,280957109.567]},{"name":"u32_popcnt_table_v2","values":[null,null,322535775.733,279215583.833,null,532890310.217,null,300843304.85,null,209298880.1,null,181401009.85]},{"name":"u32_popcnt_wegner","values":[null,null,2805289900.567,2390680745.917,null,5104977751.083,null,133486759.05,null,133954845.05,null,117205667.367]},{"name":"u8_popcnt_intrinsics","values":[null,null,99261342.217,93129364.9,null,166677526.067,null,84331233.45,null,58599451.6,null,47349477.167]},{"name":"u8_popcnt_reference","values":[null,null,7922992619.767,7503202067.617,null,15207584341.95,null,5643741115.9,null,5405477346.933,null,4561624179.617]},{"name":"u8_popcnt_shift_v1","values":[null,null,375211573.633,327891273.667,null,622516433.417,null,269486923.233,null,252324371.617,null,161029957.1]},{"name":"u8_popcnt_shift_v2","values":[null,null,395123980.267,330862127.7,null,597129972.533,null,275182361.717,null,249539851.35,null,163504065.05]},{"name":"u8_popcnt_wegner","values":[null,null,6728793854.65,5917124901.35,null,11755074725.033,null,4498721961.883,null,4536096866.167,null,4120116149.417]},{"name":"u32_asm","values":[null,null,null,null,1.27,null,1.65,null,1.16,null,0.71,null]},{"name":"u32_sse_v1","values":[null,null,null,null,0.96,null,1.52,null,0.92,null,0.74,null]},{"name":"u8_asm","values":[null,null,null,null,6.88,null,10.94,null,4.65,null,2.96,null]},{"name":"u32_asm_popcnt","values":[null,null,null,null,null,173512847.083,null,126548832.6,null,97539682.567,null,62268972.2]},{"name":"u32_asm_popcnt_ur2","values":[null,null,null,null,null,122869996.817,null,89132300.9,null,80039061.817,null,47466320.55]},{"name":"u32_asm_popcnt_ur4","values":[null,null,null,null,null,140487780.7,null,68239334.533,null,75806509.967,null,43852216.25]},{"name":"u32_sse_popcnt","values":[null,null,null,null,null,97852617.933,null,77502971.183,null,74619962.067,null,62657976.467]},{"name":"u64_asm_popcnt","values":[null,null,null,null,null,91101414.933,null,69950525.033,null,50375999,null,33583915.267]},{"name":"u64_asm_popcnt_ur2","values":[null,null,null,null,null,67967256.133,null,49726696.8,null,42338028.8,null,33181473.467]},{"name":"u64_asm_popcnt_ur4","values":[null,null,null,null,null,72712631.183,null,41628540.017,null,42094223.65,null,34671139.2]},{"name":"u8_asm_popcnt","values":[null,null,null,null,null,985352447.7,null,628320459.033,null,357508336.483,null,241981917.017]},{"name":"u32_asm_ur4","values":[null,null,null,null,null,null,0.89,null,0.88,null,0.49,null]},{"name":"u32_sse_v2","values":[null,null,null,null,null,null,null,null,1.06,null,0.81,null]},{"name":"u32_avx2_v1","values":[null,null,null,null,null,null,null,null,null,null,0.71,null]},{"name":"u32_avx2_popcnt_v1","values":[null,null,null,null,null,null,null,null,null,null,null,61636099.8]},{"name":"u32_avx2_popcnt_v2","values":[null,null,null,null,null,null,null,null,null,null,null,1501175693.1]},{"name":"u32_avx2_popcnt_v3","values":[null,null,null,null,null,null,null,null,null,null,null,1496379811.5]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -1660,10 +1654,10 @@ L'étude est poussée sur 15 implémentations (référence C, optimisation manue
   <caption>TABLE Moderne – Benchmark asm popcnt 64</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_popcnt_64-moderne-8" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_popcnt_64-moderne-14" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_popcnt_64-moderne-8';
+    var id = 'chart-auto-asm_popcnt_64-moderne-14';
     var data = {"CPUs":["Core i3 6100","Intel Core i3 6100 3.70GHz","AMD Ryzen 7 1700X Eight Core","Core i5 7400","Core i7 8700","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","Ryzen 7 1700X","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core","Ryzen 5 3600","Xeon Silver 4208"],"Years":[2015,2015,2017,2017,2017,2017,2017,2017,2018,2019,2019,2019],"Methods":[{"name":"u32_asm","values":[1.07,null,null,1.14,0.86,null,null,0.68,null,null,0.62,0.91]},{"name":"u32_asm_ur4","values":[0.54,null,null,0.59,0.45,null,null,0.51,null,null,0.47,0.74]},{"name":"u32_avx2_v1","values":[0.87,null,null,0.95,0.7,null,null,0.83,null,null,0.69,1.02]},{"name":"u32_reference","values":[36.39,null,null,39.89,29.53,null,null,44.72,null,null,35.36,54.49]},{"name":"u32_reference_opt","values":[32.65,null,null,35.83,26.47,null,null,28.77,null,null,23.67,46.18]},{"name":"u32_shift_v1","values":[0.61,null,null,0.64,0.49,null,null,1,null,null,0.44,0.72]},{"name":"u32_shift_v2","values":[0.5,null,null,null,0.8,null,null,null,null,null,0.54,null]},{"name":"u32_sse_v1","values":[0.9,null,null,0.96,0.72,null,null,0.9,null,null,0.83,1.05]},{"name":"u32_sse_v2","values":[0.87,null,null,0.92,0.7,null,null,0.74,null,null,0.64,1.05]},{"name":"u8_asm","values":[6.39,null,null,6.83,5.2,null,null,3.24,null,null,3.06,7.53]},{"name":"u8_intrinsics","values":[0.64,null,null,0.68,0.52,null,null,0.64,null,null,0.56,0.76]},{"name":"u8_reference","values":[57.99,null,null,64.81,47.28,null,null,59.13,null,null,54.96,71.73]},{"name":"u8_reference_opt","values":[53.14,null,null,58.58,43.03,null,null,54.11,null,null,48.78,74.7]},{"name":"u8_shift_v1","values":[2.17,null,null,2.32,1.75,null,null,2.51,null,null,2.83,2.49]},{"name":"u8_shift_v2","values":[2.11,null,null,2.23,1.7,null,null,2.51,null,null,2.84,2.5]},{"name":"u32_asm_popcnt","values":[null,63073539.533,67148747.1,null,null,76990025.017,62126334.933,null,67610903.467,38032602.249,null,null]},{"name":"u32_asm_popcnt_ur2","values":[null,45551165.767,55333150.4,null,null,41121424.733,34217108.85,null,54758323.733,32434036.667,null,null]},{"name":"u32_asm_popcnt_ur4","values":[null,44941610.367,51183139.3,null,null,41839000.167,35672070.267,null,49447531.2,29680377.935,null,null]},{"name":"u32_avx2_popcnt_v1","values":[null,70752653.667,76322087.633,null,null,63158545.2,52416535.433,null,77443653.867,41528020.457,null,null]},{"name":"u32_avx2_popcnt_v2","values":[null,64713505.933,48460105.367,null,null,57593693.05,47210718.583,null,46219654.4,1491387753.745,null,null]},{"name":"u32_avx2_popcnt_v3","values":[null,34494438.933,48702792.833,null,null,31204970.467,26048291.133,null,46544763.733,1522578436.855,null,null]},{"name":"u32_popcnt_shift_v1","values":[null,46656870.4,88279517.033,null,null,41199826.6,34468687.267,null,90195126.4,26341555.764,null,null]},{"name":"u32_popcnt_shift_v2","values":[null,40459874.5,74247174.733,null,null,35666611.917,30384985.2,null,74244492.267,22658733.432,null,null]},{"name":"u32_popcnt_table_v1","values":[null,335299245.033,332677869.933,null,null,265577510.783,209199640.183,null,360472335.467,173890951.22,null,null]},{"name":"u32_popcnt_table_v2","values":[null,178135056.533,206020672.133,null,null,164296456.317,127033949.033,null,215811464,107552637.055,null,null]},{"name":"u32_popcnt_wegner","values":[null,95936037.133,91988267.633,null,null,83755009.967,68588275.5,null,94175006.933,52227778.866,null,null]},{"name":"u32_sse_popcnt","values":[null,64712647.333,50518864.867,null,null,57657010.217,46881178.45,null,49360383.467,28472894.37,null,null]},{"name":"u64_asm_popcnt","values":[null,64813070,37366745.167,null,null,57887564.433,47639896.25,null,35201057.6,21300676.985,null,null]},{"name":"u64_asm_popcnt_ur2","values":[null,32477002.533,30021928.6,null,null,29194959.4,24975271.15,null,29654787.2,17779663.131,null,null]},{"name":"u64_asm_popcnt_ur4","values":[null,32471519.833,28328930.333,null,null,29103102.167,23570878.117,null,27053350.4,16675132.005,null,null]},{"name":"u8_asm_popcnt","values":[null,344967910.067,264686118.333,null,null,308551140.85,244455978.5,null,285264992,190854149.078,null,null]},{"name":"u8_popcnt_intrinsics","values":[null,46006668.233,51611818.667,null,null,41642710.833,35472589.5,null,49676600,27981480.327,null,null]},{"name":"u8_popcnt_reference","values":[null,4831083444.1,4458468871.6,null,null,4517083166.85,3533457143.3,null,5073437459.733,2595296810.323,null,null]},{"name":"u8_popcnt_shift_v1","values":[null,167750105.233,208631372.333,null,null,149182748.35,119521855.067,null,221434535.467,138384625.499,null,null]},{"name":"u8_popcnt_shift_v2","values":[null,171391030.933,207956899.6,null,null,150612429.817,122954902.667,null,220867740.8,143905316.969,null,null]},{"name":"u8_popcnt_wegner","values":[null,5312155458.567,4207290301.6,null,null,4753157757.683,3740496978.583,null,4792616714.133,2483045395.957,null,null]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -1796,11 +1790,225 @@ L'étude est poussée sur 15 implémentations (référence C, optimisation manue
   <caption>TABLE Recent – Benchmark asm popcnt 64</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_popcnt_64-recent-9" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_popcnt_64-recent-15" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_popcnt_64-recent-9';
+    var id = 'chart-auto-asm_popcnt_64-recent-15';
     var data = {"CPUs":["Core i7 10850H","Ryzen 5 5600g","Core i5 12400F","Ryzen 5 9600X"],"Years":[2020,2021,2022,2024],"Methods":[{"name":"u32_asm","values":[0.8,0.45,0.5,0.36]},{"name":"u32_asm_ur4","values":[0.41,0.44,0.44,0.36]},{"name":"u32_avx2_v1","values":[0.65,0.73,0.69,0.36]},{"name":"u32_reference","values":[27.42,25.91,35.64,18.39]},{"name":"u32_reference_opt","values":[24.5,21.25,28.58,17.8]},{"name":"u32_shift_v1","values":[0.48,0.37,0.31,0.15]},{"name":"u32_shift_v2","values":[0.39,null,null,null]},{"name":"u32_sse_v1","values":[0.67,0.79,0.65,0.36]},{"name":"u32_sse_v2","values":[0.66,0.53,0.63,0.47]},{"name":"u8_asm","values":[2.45,3.6,1.79,1.46]},{"name":"u8_intrinsics","values":[0.49,0.47,0.44,0.32]},{"name":"u8_reference","values":[43.82,46.19,51.75,21.68]},{"name":"u8_reference_opt","values":[40.06,42.72,49.1,20.69]},{"name":"u8_shift_v1","values":[1.65,2.28,0.73,0.2]},{"name":"u8_shift_v2","values":[1.61,2.29,0.73,0.19]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script>
+<h2 class="section">12.6 Benchmark Compactage 32 bits</h2>
+
+<p>Le compactage de données booléennes (stocker <code>true</code>/<code>false</code> dans des bits plutôt que des octets) permet de réduire l'empreinte mémoire de 87,5%. Les tests suivants comparent les performances des différentes implémentations de compactage sur architecture 32 bits.</p>
+<div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Intel Core2 Quad Q9300 2.50GHz<br><small>2008</small></th>
+      <th>Pentium Dual Core E5300 2.60GHz<br><small>2008</small></th>
+      <th>Intel Core i7 860 2.80GHz<br><small>2009</small></th>
+      <th>AMD Phenom II X6 1090T<br><small>2010</small></th>
+      <th>Intel Core i5 3570K 3.40GHz<br><small>2012</small></th>
+      <th>Intel Core i7 4790 3.60GHz<br><small>2014</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>cmpack_compact</strong></td>
+      <td>3467902574.167</td>
+      <td>3346461906.017</td>
+      <td>3296664196.783</td>
+      <td>2614435096.017</td>
+      <td>1661568769.417</td>
+      <td>1474325934.067</td>
+    </tr>
+    <tr>
+      <td><strong>cmpack_reference</strong></td>
+      <td>2195668606.733</td>
+      <td>2081154107.933</td>
+      <td>1710194546.500</td>
+      <td>2068169327.033</td>
+      <td>1403131251.400</td>
+      <td>1211959574.950</td>
+    </tr>
+    <tr>
+      <td><strong>cmpack_reference_rew</strong></td>
+      <td>821278866.817</td>
+      <td>636461117.500</td>
+      <td>564355956.800</td>
+      <td>564420422.783</td>
+      <td>441135018.167</td>
+      <td>244101925.800</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_sse_compact</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>1511751938.483</td>
+      <td>1148917406.450</td>
+      <td>600100736.033</td>
+      <td>506492245.200</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_sse_v1</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>1054059558.267</td>
+      <td>648613059.300</td>
+      <td>474482036.133</td>
+      <td>374937654.633</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_sse_v2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>248290912.317</td>
+      <td>204859770.167</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_avx2</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>151748716.417</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_avx2_compact</strong></td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>125666556.867</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Ancien – Benchmark asm cmpack32</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_cmpack32-ancien-16" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_cmpack32-ancien-16';
+    var data = {"CPUs":["Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Intel Core i7 860 2.80GHz","AMD Phenom II X6 1090T","Intel Core i5 3570K 3.40GHz","Intel Core i7 4790 3.60GHz"],"Years":[2008,2008,2009,2010,2012,2014],"Methods":[{"name":"cmpack_compact","values":[3467902574.167,3346461906.017,3296664196.783,2614435096.017,1661568769.417,1474325934.067]},{"name":"cmpack_reference","values":[2195668606.733,2081154107.933,1710194546.5,2068169327.033,1403131251.4,1211959574.95]},{"name":"cmpack_reference_rew","values":[821278866.817,636461117.5,564355956.8,564420422.783,441135018.167,244101925.8]},{"name":"asm_cmpack_sse_compact","values":[null,null,1511751938.483,1148917406.45,600100736.033,506492245.2]},{"name":"asm_cmpack_sse_v1","values":[null,null,1054059558.267,648613059.3,474482036.133,374937654.633]},{"name":"asm_cmpack_sse_v2","values":[null,null,null,null,248290912.317,204859770.167]},{"name":"asm_cmpack_avx2","values":[null,null,null,null,null,151748716.417]},{"name":"asm_cmpack_avx2_compact","values":[null,null,null,null,null,125666556.867]}]};
+    function draw() {
+        if (typeof window.createPerformanceChart !== 'function') {
+            console.error("createPerformanceChart est introuvable");
+            return;
+        }
+        window.createPerformanceChart(id, data);
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
+    else { draw(); }
+  })();
+</script><div class="center">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Intel Core i3 6100 3.70GHz<br><small>2015</small></th>
+      <th>AMD Ryzen 7 1700X Eight Core<br><small>2017</small></th>
+      <th>Intel Core i5 7400 3.00GHz<br><small>2017</small></th>
+      <th>Intel Core i7 8700 3.20GHz<br><small>2017</small></th>
+      <th>AMD Athlon 200GE<br><small>2018</small></th>
+      <th>AMD Ryzen 5 3600 6 Core<br><small>2019</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>asm_cmpack_avx2</strong></td>
+      <td>125708689.900</td>
+      <td>117621567.467</td>
+      <td>118598936.433</td>
+      <td>94071380.500</td>
+      <td>121230218.133</td>
+      <td>88058505.600</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_avx2_compact</strong></td>
+      <td>114376360.200</td>
+      <td>133327915.633</td>
+      <td>100636489.067</td>
+      <td>81577500.367</td>
+      <td>135670715.200</td>
+      <td>90482634.600</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_sse_compact</strong></td>
+      <td>542249348.700</td>
+      <td>434558329.333</td>
+      <td>425058834.083</td>
+      <td>341180281.783</td>
+      <td>520616282.667</td>
+      <td>368212558.800</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_sse_v1</strong></td>
+      <td>377729857.867</td>
+      <td>309909451.467</td>
+      <td>346625455.050</td>
+      <td>278344963.767</td>
+      <td>329449648.000</td>
+      <td>283829786.400</td>
+    </tr>
+    <tr>
+      <td><strong>asm_cmpack_sse_v2</strong></td>
+      <td>271404010.033</td>
+      <td>162692978.400</td>
+      <td>169692499.167</td>
+      <td>137201611.167</td>
+      <td>201575361.600</td>
+      <td>156215799.600</td>
+    </tr>
+    <tr>
+      <td><strong>cmpack_compact</strong></td>
+      <td>1367111082.933</td>
+      <td>1645050078.900</td>
+      <td>1325023953.317</td>
+      <td>1041635725.517</td>
+      <td>1733964329.600</td>
+      <td>1416370326.000</td>
+    </tr>
+    <tr>
+      <td><strong>cmpack_reference</strong></td>
+      <td>1508938516.133</td>
+      <td>1580024454.433</td>
+      <td>1362908683.033</td>
+      <td>1082841104.633</td>
+      <td>1666875166.400</td>
+      <td>1147599516.600</td>
+    </tr>
+    <tr>
+      <td><strong>cmpack_reference_rew</strong></td>
+      <td>248036940.900</td>
+      <td>291263177.133</td>
+      <td>236139672.633</td>
+      <td>179775546.200</td>
+      <td>305694476.267</td>
+      <td>256230414.600</td>
+    </tr>
+  </tbody>
+  <caption>TABLE Moderne – Benchmark asm cmpack32</caption>
+</table>
+</div>
+<div class="chart-container" id="chart-auto-asm_cmpack32-moderne-17" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<script>
+  (function(){
+    var id = 'chart-auto-asm_cmpack32-moderne-17';
+    var data = {"CPUs":["Intel Core i3 6100 3.70GHz","AMD Ryzen 7 1700X Eight Core","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core"],"Years":[2015,2017,2017,2017,2018,2019],"Methods":[{"name":"asm_cmpack_avx2","values":[125708689.9,117621567.467,118598936.433,94071380.5,121230218.133,88058505.6]},{"name":"asm_cmpack_avx2_compact","values":[114376360.2,133327915.633,100636489.067,81577500.367,135670715.2,90482634.6]},{"name":"asm_cmpack_sse_compact","values":[542249348.7,434558329.333,425058834.083,341180281.783,520616282.667,368212558.8]},{"name":"asm_cmpack_sse_v1","values":[377729857.867,309909451.467,346625455.05,278344963.767,329449648,283829786.4]},{"name":"asm_cmpack_sse_v2","values":[271404010.033,162692978.4,169692499.167,137201611.167,201575361.6,156215799.6]},{"name":"cmpack_compact","values":[1367111082.933,1645050078.9,1325023953.317,1041635725.517,1733964329.6,1416370326]},{"name":"cmpack_reference","values":[1508938516.133,1580024454.433,1362908683.033,1082841104.633,1666875166.4,1147599516.6]},{"name":"cmpack_reference_rew","values":[248036940.9,291263177.133,236139672.633,179775546.2,305694476.267,256230414.6]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");

@@ -20,3 +20,9 @@
 - [Chapitre 15 : Étude de cas (Comptage des voyelles)](chapitre_15.html)
 - [Chapitre 16 : Étude de cas (Suite de Fibonacci)](chapitre_16.html)
 - [Chapitre 17 : Étude de cas (Nombres auto-descriptifs)](chapitre_17.html)
+
+### Annexes
+- [Annexe 1 : Utilisation de l'instruction POPCNT 32 bits](asm_popcnt_32.html)
+- [Annexe 2 : Compter les voyelles en assembleur 64 bits](asm_vowels_64.html)
+- [Annexe 3 : Opérations vectorielles en assembleur 32 bits](asm_vecms32.html)
+- [Annexe 4 : Opérations de remplacement de caractères (64 bits)](asm_replcar_64.html)

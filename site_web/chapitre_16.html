@@ -78,19 +78,19 @@ attribuée à Fibonacci dans le monde occidental. La suite qui prend donc son no
 est une suite d'entiers naturels construite en calculant la somme des deux termes
 précédents et est définie de manière récursive comme suit :</p>
 <ul>
-<li>$F_0 = 0$ </li>
-<li>$F_1 = 1$ </li>
-<li>$F_n = F_{n-1} + F_{n-2}$ </li>
+<li>$F_0 = 0$</li>
+<li>$F_1 = 1$</li>
+<li>$F<em>n = F</em>{n-1} + F_{n-2}$</li>
 </ul>
 <p>Les premiers termes de la suite sont donc : 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
 144, 233, 377, 610, 987, 1597, 2584, 4181.</p>
 <p>La suite de Fibonacci possède de nombreuses propriétés mathématiques singu-
 lières ainsi que des ramifications dans le domaine du vivant (choux romanesco,
 pomme de pin), ou de la dynamique des populations. La suite de Fibonacci est éga-
-lement liée au nombre d'or  $\phi$  qui s'exprime par  $(1 + \sqrt{5})/2 \simeq 1,618033$ . Le nombre
+lement liée au nombre d'or $\phi$ qui s'exprime par $(1 + \sqrt{5})/2 \simeq 1,618033$. Le nombre
 d'or est qualifié de <em>divine proportion</em> car nombre de choses dans la nature sont liées
 à cette valeur. A mesure que l'on calcule les termes de la suite de Fibonacci, le ratio
-$F_{n+1}/F_n$  tend vers  $\phi$ .</p>
+$F_{n+1}/F_n$ tend vers $\phi$.</p>
 <h3 class="subsection">16.1.1 Modèle Diachronique</h3>
 
 <p>On considère des couples de lapins qui sont à maturité sexuelle, que l'on notera
@@ -99,12 +99,12 @@ n'est pas à maturité sexuelle et que l'on notera <code>N</code>. Les couples q
 maturité sexuelle doivent attendre avant de parvenir à maturité et pourront alors
 se reproduire. L'évolution d'une population est donc la suivante :</p>
 <ul>
-<li>au temps  $t = 0$ , il n'y a aucun couple</li>
-<li>au temps  $t = 1$ , on a un couple qui n'est pas à maturité sexuelle</li>
-<li>au temps  $t = 2$ , on a un couple parvenu à maturité sexuelle</li>
-<li>au temps  $F_1 = 1$0 , on a deux couples : un couple à maturité sexuelle, un couple
+<li>au temps $t = 0$, il n'y a aucun couple</li>
+<li>au temps $t = 1$, on a un couple qui n'est pas à maturité sexuelle</li>
+<li>au temps $t = 2$, on a un couple parvenu à maturité sexuelle</li>
+<li>au temps $t = 3$, on a deux couples : un couple à maturité sexuelle, un couple
 issu de la reproduction du couple à maturité et qui n'est donc pas à maturité sexuelle</li>
-<li>au temps  $F_1 = 1$1 , on a trois couples : deux couples à maturité sexuelle et un
+<li>au temps $t = 4$, on a trois couples : deux couples à maturité sexuelle et un
 couple non mature</li>
 <li>etc.</li>
 </ul>
@@ -119,37 +119,37 @@ couple non mature</li>
 </thead>
 <tbody>
 <tr>
-<td>$F_1 = 1$2</td>
-<td>$F_1 = 1$3</td>
+<td>$t = 0$</td>
+<td>$\emptyset$</td>
 <td>0</td>
 </tr>
 <tr>
-<td>$F_1 = 1$4</td>
+<td>$t = 1$</td>
 <td><code>N</code></td>
 <td>1</td>
 </tr>
 <tr>
-<td>$F_1 = 1$5</td>
+<td>$t = 2$</td>
 <td><code>S</code></td>
 <td>1</td>
 </tr>
 <tr>
-<td>$F_1 = 1$6</td>
+<td>$t = 3$</td>
 <td><code>SN</code></td>
 <td>2</td>
 </tr>
 <tr>
-<td>$F_1 = 1$7</td>
+<td>$t = 4$</td>
 <td><code>SNS</code></td>
 <td>3</td>
 </tr>
 <tr>
-<td>$F_1 = 1$8</td>
+<td>$t = 5$</td>
 <td><code>SNSSN</code></td>
 <td>5</td>
 </tr>
 <tr>
-<td>$F_1 = 1$9</td>
+<td>$t = 6$</td>
 <td><code>SNSSNSNS</code></td>
 <td>8</td>
 </tr>
@@ -159,8 +159,8 @@ couple non mature</li>
 <p>Du point de vue de l'informatique, on peut voir cette évolution comme un
 système de réécriture :</p>
 <ul>
-<li><code>N</code>  $F_n = F_{n-1} + F_{n-2}$0  <code>S</code></li>
-<li><code>S</code>  $F_n = F_{n-1} + F_{n-2}$1  <code>SN</code></li>
+<li><code>N</code> $\rightarrow$ <code>S</code></li>
+<li><code>S</code> $\rightarrow$ <code>SN</code></li>
 </ul>
 <p>Du point de vue de la biologie, la suite de Fibonacci est en rapport avec la
 phyllotaxie des plantes, c'est à dire, l'organisation en spirale des organes autour
@@ -198,22 +198,20 @@ structures de données du même nom (<em>Fibonacci Heap</em>).</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 16.2.1 – Fibonacci - fonction récursive</em></p>
-</blockquote>
 <p>Si on réalise quelques tests de performance, on s'aperçoit rapidement que le
 nombre d'appels récursifs devient prohibitif (voir <em>Table 16.2</em>, ci-après) et la fonction
 devient de moins en moins efficace. Par exemple sur un AMD Ryzen 5 5600g dont
-la fréquence de fonctionnement en mode boost est de 4440 MHz,  $F_n = F_{n-1} + F_{n-2}$2 ,  $F_n = F_{n-1} + F_{n-2}$3  et  $F_n = F_{n-1} + F_{n-2}$4 
+la fréquence de fonctionnement en mode boost est de 4440 MHz, $F<em>{44}$, $F</em>{45}$ et $F_{46}$
 s'exécutent respectivement en 1.685, 2.559 et 4.365 secondes.
-Comme on peut s'en rendre compte, le nombre d'appels récursifs est proportionnel à  $F_n = F_{n-1} + F_{n-2}$5 , le nombre d'or. Il tend vers  $F_n = F_{n-1} + F_{n-2}$6  à
-mesure que n tend vers  $F_n = F_{n-1} + F_{n-2}$7 . Notons que  $F_n = F_{n-1} + F_{n-2}$8 .</p>
+Comme on peut s'en rendre compte, le nombre d'appels récursifs est proportionnel à $\phi$, le nombre d'or. Il tend vers $1,447214 \times \phi^n$ à
+mesure que n tend vers $\infty$. Notons que $1,447214 \simeq 1 + 1 / \sqrt{5}$.</p>
 <p>Il existe cependant une autre implantation récursive mais qui se base sur les
 propriétés suivantes. Elle permet de casser la complexité initiale du problème. Le
 code correspondant est donné <em>Listing 16.2.2</em> :</p>
 <ul>
-<li>Si  $F_n = F_{n-1} + F_{n-2}$9  est pair,  $\phi$0 ,  $\phi$1 </li>
-<li>Si  $\phi$2  est impair,  $\phi$3 ,  $\phi$4 </li>
+<li>Si $n$ est pair, $k = n/2$, $F<em>n = (2 \times F</em>{k-1} + F_k) \times F_k$</li>
+<li>Si $n$ est impair, $k = (n+1)/2$, $F<em>n = F</em>{k-1}^2 + F_k^2$</li>
 </ul>
 
 <details>
@@ -239,50 +237,48 @@ code correspondant est donné <em>Listing 16.2.2</em> :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 16.2.2 – Fibonacci - fonction récursive améliorée</em></p>
-</blockquote>
 <table class="data-table">
 <thead>
 <tr>
-<th>$\phi$5</th>
+<th>$F_i$</th>
 <th><code>fib_rec</code></th>
 <th><code>fib_rec_improved</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>$\phi$6</td>
+<td>$F_{10}$</td>
 <td>177</td>
 <td>15</td>
 </tr>
 <tr>
-<td>$\phi$7</td>
+<td>$F_{20}$</td>
 <td>21 891</td>
 <td>31</td>
 </tr>
 <tr>
-<td>$\phi$8</td>
+<td>$F_{25}$</td>
 <td>242 785</td>
 <td>41</td>
 </tr>
 <tr>
-<td>$\phi$9</td>
+<td>$F_{30}$</td>
 <td>2 692 537</td>
 <td>45</td>
 </tr>
 <tr>
-<td>$(1 + \sqrt{5})/2 \simeq 1,618033$0</td>
+<td>$F_{35}$</td>
 <td>29 860 703</td>
 <td>55</td>
 </tr>
 <tr>
-<td>$(1 + \sqrt{5})/2 \simeq 1,618033$1</td>
+<td>$F_{40}$</td>
 <td>331 160 281</td>
 <td>63</td>
 </tr>
 <tr>
-<td>$(1 + \sqrt{5})/2 \simeq 1,618033$2</td>
+<td>$F_{45}$</td>
 <td>3 672 623 805</td>
 <td>75</td>
 </tr>
@@ -290,11 +286,11 @@ code correspondant est donné <em>Listing 16.2.2</em> :</p>
 </table>
 <p><em>TABLE 16.2 – Nombre d'appels des fonctions récursives de Fibonacci</em></p>
 <p>Pour la version récursive améliorée, le nombre d'appels récursifs est nettement
-plus petit et d'une complexité en  $(1 + \sqrt{5})/2 \simeq 1,618033$3  comme on peut le constater.</p>
+plus petit et d'une complexité en $\mathcal{O}(n)$ comme on peut le constater.</p>
 <h2 class="section">16.3 Approximation Mathématique</h2>
 
-<p>On peut calculer  $(1 + \sqrt{5})/2 \simeq 1,618033$4  en utilisant l'arrondi de l'expression suivante :
-$(1 + \sqrt{5})/2 \simeq 1,618033$5 </p>
+<p>On peut calculer $F_n$ en utilisant l'arrondi de l'expression suivante :
+$$F_n \simeq \frac{\phi^n}{\sqrt{5}}$$</p>
 <p>Le temps de calcul du test que nous réaliserons et qui est décrit ci-après est
 de l'ordre de 22,58 secondes via <code>math.h</code>. Nous ne nous intéresserons donc pas aux temps de
 calculs obtenus grâce à cette formule même s'ils sont parfois inférieurs à d'autres
@@ -303,8 +299,8 @@ implantations (notamment la traduction directe non-optimisée de la référence 
 
 <p>La version de référence à laquelle nous allons nous intéresser (<em>Listing 16.4.1</em>),
 est une variante de la version récursive. Elle est à la fois récursive puisqu'elle s'ap-
-pelle, mais également linéaire puisque seulement  $(1 + \sqrt{5})/2 \simeq 1,618033$6  appels seront réalisés.
-Elle prend en paramètres la valeur du nombre à calculer  $(1 + \sqrt{5})/2 \simeq 1,618033$7  ainsi que  $(1 + \sqrt{5})/2 \simeq 1,618033$8  et  $(1 + \sqrt{5})/2 \simeq 1,618033$9 
+pelle, mais également linéaire puisque seulement $n$ appels seront réalisés.
+Elle prend en paramètres la valeur du nombre à calculer $n$ ainsi que $F_0$ et $F_1$
 représentés respectivement par <code>f0</code> et <code>f1</code>. L'appel est réalisé en prenant <code>f0 = 0</code> et
 <code>f1 = 1</code>.</p>
 
@@ -326,28 +322,24 @@ représentés respectivement par <code>f0</code> et <code>f1</code>. L'appel est
 
 </details>
 
-<blockquote>
 <p><em>Listing 16.4.1 – Fibonacci - fonction de référence linéaire</em></p>
-</blockquote>
 <p>Cette fonction de référence est traduite par le compilateur <code>g++</code> en utilisant les
 options de compilation suivantes : <code>-O3</code> (Optimisation niveau 3) et <code>-funroll-loops</code> (dépliage de boucle).
 Le compilateur parvient à éliminer la récursivité et produit une version très performante. Il transforme la récursivité en une boucle <code>while</code> avec un dépliage
 par 8. De plus, il utilise <code>esp</code> plutôt que <code>ebp</code> pour récupérer les paramètres de la
 fonction.</p>
-<blockquote>
 <p><strong>Temps de référence</strong>
-Le test de référence consiste à réaliser <code>500_000_000</code> fois le calcul de  $F_{n+1}/F_n$0 . Les
+Le test de référence consiste à réaliser <code>500_000_000</code> fois le calcul de $F_{43}$. Les
 tests sont réalisés sur un AMD Ryzen 5 5600g. Pour l'implantation par le
 compilateur <code>g++</code>, l'exécution dure environ <strong>2,853 secondes</strong>, ce qui représente
 un temps d'exécution très performant qui va se révéler difficile à battre, mais
 à cœur vaillant, rien d'impossible.</p>
-</blockquote>
 <h2 class="section">16.5 Fonction Récursive (Assembleur natif)</h2>
 
 <p>La traduction de la fonction de référence en assembleur est facile à réaliser. Un
 rapide examen permet de déterminer qu'il est intéressant de charger <code>f0</code> dans <code>eax</code>
-puisque c'est la valeur qui sera retournée dans le cas où la variable  $F_{n+1}/F_n$1  est égale à 0.
-On utilise également <code>edx</code> pour stocker <code>f1</code> et <code>ecx</code> pour  $F_{n+1}/F_n$2 .</p>
+puisque c'est la valeur qui sera retournée dans le cas où la variable $n$ est égale à 0.
+On utilise également <code>edx</code> pour stocker <code>f1</code> et <code>ecx</code> pour $n$.</p>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_004.asm" target="_blank">code/chapitre_16/code_004.asm</a></summary>
@@ -379,21 +371,17 @@ On utilise également <code>edx</code> pour stocker <code>f1</code> et <code>ecx
 
 </details>
 
-<blockquote>
 <p><em>Listing 16.5.1 – Fibonacci - fonction de référence en assembleur</em></p>
-</blockquote>
-<blockquote>
 <p><strong>Echec en assembleur natif (Call Hell)</strong>
 La version de référence implantée en assembleur (traduction
 directe) s'exécute en <strong>50,630 secondes</strong>, ce qui est énorme par rapport à la
 version optimisée par le compilateur (2,853s). Les accès mémoires de la pile <code>call/ret</code> sont la cause du ralentissement.</p>
-</blockquote>
 <h2 class="section">16.6 Approche algorithmique (Tableau dynamique vs statique)</h2>
 
 <p>Pour calculer les nombres de la suite de Fibonacci, on peut utiliser un tableau
-de  $F_{n+1}/F_n$3  entiers et on commence par remplir les deux premiers éléments par les
-valeurs 0 et 1 qui correspondent à  $F_{n+1}/F_n$4  et  $F_{n+1}/F_n$5 . Chaque élément d'indice  $F_{n+1}/F_n$6  du tableau
-correspond à la valeur de  $F_{n+1}/F_n$7 . On applique ensuite la formule de récurrence sur les
+de $n+1$ entiers et on commence par remplir les deux premiers éléments par les
+valeurs 0 et 1 qui correspondent à $F_0$ et $F_1$. Chaque élément d'indice $i$ du tableau
+correspond à la valeur de $F_i$. On applique ensuite la formule de récurrence sur les
 éléments du tableau.</p>
 
 <details>
@@ -417,15 +405,11 @@ correspond à la valeur de  $F_{n+1}/F_n$7 . On applique ensuite la formule de r
 
 </details>
 
-<blockquote>
 <p><em>Listing 16.6.1 – Fibonacci - fonction itérative avec tableau</em></p>
-</blockquote>
-<blockquote>
 <p><strong>Version Tableau Dynamique vs Statique</strong>
 La version basée sur un tableau dynamique (<code>malloc</code>) alloué à chaque appel de la
 fonction prend <strong>13,790 secondes</strong> pour s'exécuter. Alors que si on utilise un
 tableau statique (<code>u32 data[48]</code>) le temps d'exécution passe à <strong>6,380 secondes</strong>.</p>
-</blockquote>
 <h2 class="section">16.7 Approche Itérative (<code>while</code> direct)</h2>
 
 <p>Nous allons à présent nous concentrer sur des versions itératives et remplacer
@@ -451,11 +435,9 @@ dans les registres <code>eax</code> et <code>edx</code> principalement.</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 16.7.1 – Fibonacci - fonction itérative avec boucle while</em></p>
-</blockquote>
-<p>Si  $F_{n+1}/F_n$8  est égal à 0, on retourne <code>f0</code> (donc 0). Sinon on calcule  $F_{n+1}/F_n$9 , puis  $\phi$0 , jusqu'à
-$\phi$1 . La variable <code>f0</code> devient <code>f1</code> et <code>f1</code> devient <code>f1+f0</code> ( $\phi$2 ). Pour faire ce
+<p>Si $n$ est égal à 0, on retourne <code>f0</code> (donc 0). Sinon on calcule $F_1$, puis $F_2$, jusqu'à
+$F_n$. La variable <code>f0</code> devient <code>f1</code> et <code>f1</code> devient <code>f1+f0</code> ($F_2$). Pour faire ce
 transfert de valeurs il est nécessaire d'utiliser une variable temporaire <code>tmp</code>.</p>
 <p>On peut traduire ce code directement en assembleur en
 utilisant le registre <code>ebx</code> pour stocker temporairement la valeur de <code>f1</code>. On se doit
@@ -492,16 +474,12 @@ alors de sauvegarder <code>ebx</code> dans la pile, puis de le restaurer par la 
 
 </details>
 
-<blockquote>
 <p><em>Listing 16.7.2 – Fibonacci - fonction itérative avec while en assembleur</em></p>
-</blockquote>
-<blockquote>
 <p><strong>Version itérative avec while</strong>
 La version itérative ne prend alors plus que <strong>6,30 secondes</strong> pour s'exécuter.
 Avec <code>unroll 2</code> : 5,26s.
 Avec <code>unroll 4</code> : 3,54s.
 Avec <code>unroll 8</code> : <strong>3,47s</strong>.</p>
-</blockquote>
 <h3 class="subsection">16.7.1 Amélioration d'assignement (XCHG)</h3>
 
 <p>On peut s'apercevoir que le corps de la boucle <code>while</code> peut être optimisé. Au lieu
@@ -545,18 +523,18 @@ de coder une transition via registre tampon :</p>
 <tbody>
 <tr>
 <td><em>Initialement</em></td>
-<td>$\phi$3</td>
-<td>$\phi$4</td>
+<td>$F_i$</td>
+<td>$F_{i+1}$</td>
 </tr>
 <tr>
 <td><code>add eax, edx</code></td>
-<td>$\phi$5</td>
-<td>$\phi$6</td>
+<td>$F_{i+2}$</td>
+<td>$F_{i+1}$</td>
 </tr>
 <tr>
 <td><code>add edx, eax</code></td>
-<td>$\phi$7</td>
-<td>$\phi$8</td>
+<td>$F_{i+2}$</td>
+<td>$F_{i+3}$</td>
 </tr>
 </tbody>
 </table>
@@ -606,13 +584,13 @@ de la suite de Fibonacci et on fait de même avec <code>xmm1</code> avec un déc
 <tbody>
 <tr>
 <td><em>Initialement</em></td>
-<td>$\phi$9</td>
-<td>$t = 0$0</td>
+<td>$F_3,F_2,F_1,F_0$</td>
+<td>$F_4,F_3,F_2,F_1$</td>
 </tr>
 <tr>
 <td><code>paddd xmm0, xmm1</code></td>
-<td>$t = 0$1</td>
-<td>$t = 0$2</td>
+<td>$F_7,F_5,F_3,F_1$</td>
+<td>$F_4,F_3,F_2,F_1$</td>
 </tr>
 <tr>
 <td><code>paddd xmm1, xmm0</code></td>
@@ -622,7 +600,7 @@ de la suite de Fibonacci et on fait de même avec <code>xmm1</code> avec un déc
 </tbody>
 </table>
 <p><em>TABLE 16.4 – Evolution vectorielle pure : (Les vecteurs s'additionnent localement en déphasé).</em></p>
-<p><em>(Note : le mécanisme vectoriel s'appuie sur un système spécifique. En SSE, l'addition entre XMM entraîne un saut de multiples suites d'un trait, ce qui se résout par <code>[0,1,1,2] + [1,1,2,3] = [1,2,3,5]</code> (le terme  $t = 0$3 ). On va pouvoir faire des sauts par 4 sans déplier en dur).</em></p>
+<p><em>(Note : le mécanisme vectoriel s'appuie sur un système spécifique. En SSE, l'addition entre XMM entraîne un saut de multiples suites d'un trait, ce qui se résout par <code>[0,1,1,2] + [1,1,2,3] = [1,2,3,5]</code> (le terme $n+4$). On va pouvoir faire des sauts par 4 sans déplier en dur).</em></p>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_16/code_011.asm" target="_blank">code/chapitre_16/code_011.asm</a></summary>
@@ -677,7 +655,6 @@ de la suite de Fibonacci et on fait de même avec <code>xmm1</code> avec un déc
 
 </details>
 
-<blockquote>
 <p><strong>Amélioration Vectorielle SSE / AVX</strong>
 Les temps d'exécution tombent à :</p>
 <ul>
@@ -685,7 +662,6 @@ Les temps d'exécution tombent à :</p>
 <li>Version AVX Assembleur (unroll 16) : <strong>1,973 sec</strong>.
 Les versions intrinsics (<code>C</code>) tournent autour de 2.47 sec. C'est l'assembleur pur qui surpasse grandement la version compilo (2.85s).</li>
 </ul>
-</blockquote>
 <h2 class="section">16.9 Benchmark Final Multi-Architecture</h2>
 
 <p>Le code qui correspond à l'ensemble des résultats produits dans cette section
@@ -821,10 +797,10 @@ comporte 34 implantations différentes.</p>
 </div>
 <script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="data/graph.js"></script>
-<div class="chart-container" id="chart-auto-asm_fibonacci-moderne-19" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_fibonacci-moderne-28" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_fibonacci-moderne-19';
+    var id = 'chart-auto-asm_fibonacci-moderne-28';
     var data = {"CPUs":["Core i3 6100","Core i5 7400","Core i7 8700","Ryzen 7 1700X","Core i5 8365U"],"Years":[2015,2017,2017,2017,2019],"Methods":[{"name":"AVX intrin v2","values":[4.2,4.38,3.21,5.73,3.93]},{"name":"SSE intrin","values":[4.11,4.36,3.17,4.27,3.66]},{"name":"dyna. array","values":[18.57,21.67,15.79,21.16,18.09]},{"name":"gcc","values":[4.11,4.24,3.23,4.39,3.61]},{"name":"icc","values":[7.97,8.56,6.49,11.31,7.39]},{"name":"n recursive","values":[63.39,67.71,51.53,82.48,112.24]},{"name":"stat. array","values":[8.99,9.12,7.37,8.84,8.3]},{"name":"while v1","values":[7.52,8.99,5.78,11.47,7.44]},{"name":"while v1 ur2","values":[18.45,22.26,15.01,5.48,18.88]},{"name":"while v1 ur4","values":[12.56,16.07,10.21,5.25,12.79]},{"name":"while v1 ur8","values":[9.65,11.85,7.86,5.14,9.95]},{"name":"while v3 ur8","values":[5.37,5.74,4.45,4.39,4.96]},{"name":"while v6 ur8","values":[4.35,4.66,3.6,4.51,3.95]},{"name":"AVX asm ur8","values":[null,null,null,5.6,null]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -965,10 +941,10 @@ comporte 34 implantations différentes.</p>
   <caption>TABLE Recent – Benchmark asm fibonacci</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_fibonacci-recent-20" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_fibonacci-recent-29" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_fibonacci-recent-20';
+    var id = 'chart-auto-asm_fibonacci-recent-29';
     var data = {"CPUs":["Core i5 10400","Core i7 10850H","Core i7 1165G7","Ryzen 5 5600g","Core i5 12400F"],"Years":[2020,2020,2020,2021,2022],"Methods":[{"name":"AVX intrin v2","values":[3.837,3.235,3.71,2.471,2.566]},{"name":"SSE intrin","values":[3.584,3.076,3.47,2.393,2.48]},{"name":"SSE v4 ur8","values":[2.153,2.442,2.7,null,null]},{"name":"dyna. array","values":[16.66,14.47,14.84,13.79,9.441]},{"name":"gcc","values":[3.516,3.007,3.07,2.853,2.035]},{"name":"icc","values":[5.61,5.365,5.81,3.99,4.489]},{"name":"n recursive","values":[108.57,93.39,59.53,50.63,55.87]},{"name":"stat. array","values":[7.478,6.446,5.96,6.38,4.871]},{"name":"while v1","values":[7.322,6.038,11.94,6.304,5.57]},{"name":"while v1 ur2","values":[18.21,13.86,16.09,3.608,14.93]},{"name":"while v1 ur4","values":[13.14,9.51,11.07,3.5,11.25]},{"name":"while v1 ur8","values":[9.583,7.254,8.69,3.497,8.197]},{"name":"while v3 ur8","values":[4.823,4.121,5.02,2.229,4.795]},{"name":"while v6 ur8","values":[3.832,3.286,3.41,2.271,2.807]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {

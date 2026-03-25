@@ -7,18 +7,26 @@
  *   php import_benchmark.php                    # Import des données codées en dur
  *   php import_benchmark.php --extract <pdf>    # Extraction du texte d'un PDF
  *   php import_benchmark.php --analyze <pdf>    # Analyse des tableaux de benchmark
+ *   php import_benchmark.php --config           # Affiche la configuration
  *   php import_benchmark.php --help             # Affiche l'aide
+ * 
+ * Configuration via .env :
+ *   PDF_PATH=chemin/vers/le.pdf
+ *   DB_PATH=chemin/vers/benchmarks.db
  * 
  * Prérequis: pdftotext (paquet poppler-utils)
  *   sudo apt install poppler-utils
  */
 
 // ============================================================================
-// CONFIGURATION
+// CHARGEMENT DE LA CONFIGURATION
 // ============================================================================
 
-$dbPath = __DIR__ . '/site_web/data/benchmarks.db';
-$defaultPdf = __DIR__ . '/Programmation_Assembleur_x86_32_et_64_bits_sous_Linux_Ubuntu.pdf';
+require_once __DIR__ . '/config.php';
+
+// Variables globales pour compatibilité
+$dbPath = DB_PATH;
+$defaultPdf = PDF_PATH;
 
 // ============================================================================
 // FONCTIONS UTILITAIRES
@@ -36,20 +44,26 @@ Usage:
   php import_benchmark.php --extract <pdf>    Extrait le texte d'un PDF
   php import_benchmark.php --analyze <pdf>    Analyse les tableaux de benchmark
   php import_benchmark.php --chapters <pdf>   Liste les chapitres du PDF
+  php import_benchmark.php --config           Affiche la configuration actuelle
   php import_benchmark.php --help             Affiche cette aide
 
 Options:
-  --extract <pdf>   Extrait tout le texte du PDF vers stdout
+  --extract <pdf>   Extrait tout le texte du PDF vers stdout (utilise .env si omis)
   --analyze <pdf>   Cherche et affiche les tableaux de performances
   --chapters <pdf>  Liste les chapitres détectés
   --page <n>        Avec --extract, extrait uniquement la page n
   --range <d-f>     Avec --extract, extrait les pages d à f
   --output <file>   Sauvegarde la sortie dans un fichier
+  --config          Affiche les chemins configurés dans .env
+
+Configuration (.env):
+  PDF_PATH=chemin/vers/le.pdf
+  DB_PATH=chemin/vers/benchmarks.db
 
 Exemples:
-  php import_benchmark.php --extract livre.pdf --page 150
-  php import_benchmark.php --analyze livre.pdf --output analysis.txt
-  php import_benchmark.php --chapters livre.pdf
+  php import_benchmark.php --extract --page 150
+  php import_benchmark.php --analyze --output analysis.txt
+  php import_benchmark.php --chapters
 
 HELP;
 }
@@ -82,13 +96,7 @@ function extractPdfText($pdfPath, $page = null, $range = null) {
     return shell_exec($cmd);
 }
 
-/**
- * Compte le nombre de pages d'un PDF
- */
-function getPdfPageCount($pdfPath) {
-    $cmd = "pdfinfo " . escapeshellarg($pdfPath) . " 2>/dev/null | grep 'Pages:' | awk '{print $2}'";
-    return (int)trim(shell_exec($cmd));
-}
+
 
 /**
  * Analyse le texte pour trouver les tableaux de benchmark
@@ -206,23 +214,27 @@ while (count($args) > 0) {
             showHelp();
             exit(0);
             
+        case '--config':
+            showConfig();
+            exit(0);
+            
         case '--extract':
             $mode = 'extract';
-            if (count($args) > 0 && $args[0][0] !== '-') {
+            if (count($args) > 0 && isset($args[0][0]) && $args[0][0] !== '-') {
                 $pdfPath = array_shift($args);
             }
             break;
             
         case '--analyze':
             $mode = 'analyze';
-            if (count($args) > 0 && $args[0][0] !== '-') {
+            if (count($args) > 0 && isset($args[0][0]) && $args[0][0] !== '-') {
                 $pdfPath = array_shift($args);
             }
             break;
             
         case '--chapters':
             $mode = 'chapters';
-            if (count($args) > 0 && $args[0][0] !== '-') {
+            if (count($args) > 0 && isset($args[0][0]) && $args[0][0] !== '-') {
                 $pdfPath = array_shift($args);
             }
             break;

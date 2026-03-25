@@ -130,9 +130,7 @@ chiffre unité du nombre et le comparer à 1, 3, 5, 7 ou 9 :</p>
 
 </details>
 
-<blockquote>
 <p><em>Listing 2.1.1 – Déterminer si un entier est impair, méthode 1</em></p>
-</blockquote>
 <p>Voici le code assembleur x86 64 bits qui correspondrait au code C précédent
 pour la partie comparaison. Ici, on retourne la valeur <code>1</code> dans le registre <code>eax</code> pour
 indiquer que le nombre est impair et <code>0</code> pour indiquer qu'il est pair :</p>
@@ -170,7 +168,6 @@ indiquer que le nombre est impair et <code>0</code> pour indiquer qu'il est pair
 
 </details>
 
-<blockquote>
 <p><em>Listing 2.1.2 – Déterminer si un entier est impair, assembleur méthode 1</em>
 Comme nous n’avons pas encore vu d’instructions assembleur, quelques explica-
 tions s’imposent. Les lignes 9 à 12 calculent le reste de la division de n par 10, le
@@ -189,7 +186,6 @@ est différent de 0, ce qui revient au même :
 1#include
 2using ;
 4int (int ,char*argv[]</p>
-</blockquote>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_2/code_003.c" target="_blank">code/chapitre_2/code_003.c</a></summary>
@@ -296,7 +292,6 @@ représenter de grandes quantités ou de faire des calculs.</p>
 <p>Dans la notation binaire, également appelée base 2, on ne dispose que de deux
 chiffres 0 et 1. Par exemple <code>11001</code>₂ représente la valeur décimale 25 :</p>
 <p><em>11001₂ = 1×2⁴ + 1×2³ + 0×2² + 0×2¹ + 1×2⁰ = 16₁₀ + 8₁₀ + 1₁₀ = 25₁₀</em></p>
-<blockquote>
 <p><strong>Notation</strong>
 J'ai choisi de mettre en indice de chaque nombre la base à laquelle il se
 rapporte. Quand on ne le précise pas il s'agit par défaut de la base 10.
@@ -304,7 +299,6 @@ Dans la suite de l'ouvrage, afin d'améliorer la lisibilité des nombres j'utili
 le symbole souligné (<code>_</code>) après chaque quartet pour les nombres binaires ou
 chaque triplet pour les nombres décimaux :
 <code>110101010102</code> = <code>110_1010_1010</code>₂ = 1706₁₀ = <code>1_706</code>₁₀ = <code>1_706</code></p>
-</blockquote>
 <p>On pourra également utiliser la notation suivante :</p>
 <ul>
 <li><code>b</code> pour le binaire : <code>1011_0001b</code> ou <code>1011_0001</code>₂</li>
@@ -469,8 +463,8 @@ Voici, par exemple, deux commandes Unix qui utilisent l'octal :</p>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_2/code_004.txt" target="_blank">code/chapitre_2/code_004.txt</a></summary>
-<pre class="code-block"><code>richer@universe:~ $ chmod 644 fichier
-richer@universe:~$  tr &#039;:&#039; &#039;\012&#039; &lt; fichier</code></pre>
+<pre class="code-block"><code>richer@universe:~$ chmod 644 fichier
+richer@universe:~$ tr &#039;:&#039; &#039;\012&#039; &lt; fichier</code></pre>
 </details>
 
 <p>La première ligne donne au propriétaire les droits de modification et lecture,
@@ -634,12 +628,10 @@ x̅   = 1111_1110₂
   = 1111_1111̅₂</code></pre>
 </details>
 
-<blockquote>
 <p><strong>Notation</strong> : On remarque alors que si le bit de poids fort est à 0, il s'agit d'une valeur
 positive ou nulle. Par contre si le bit de poids fort est à 1, il s'agit d'une valeur négative.
 On notera <em>x̅₂</em> un nombre en notation en complément à 2 afin de le différencier
 avec un nombre en notation binaire.</p>
-</blockquote>
 <p>La Table 2.6 montre pour un nombre fixé <em>n</em> de bits quelles sont les valeurs
 minimum, maximum et le nombre de valeurs différentes que l'on peut représenter.
 On peut résumer la table en disant qu'avec <em>n</em> bits on peut représenter <em>2ⁿ</em>
@@ -1320,9 +1312,7 @@ précision.</li>
 
 </details>
 
-<blockquote>
 <p><em>Listing 2.4.1 – Précision et nombres flottants</em></p>
-</blockquote>
 <ul>
 <li><strong>Le second</strong> découle du premier et tient au fait que la taille de la mantisse peut
 être trop petite pour représenter certains nombres qui comportent beaucoup
@@ -1348,13 +1338,11 @@ v3 = v4</code></pre>
 </ul>
 <p>Cela est dû au fait qu'il est impossible de coder exactement certaines valeurs
 comme nous l'avons expérimenté pour représenter <em>0,3</em>.</p>
-<div class="cadre_warning"><strong>Attention</strong>
-Le problème lié aux erreurs de précision implique que pour comparer deux
+<div class="cadre_warning"><strong>Attention</strong> : > Le problème lié aux erreurs de précision implique que pour comparer deux
 valeurs en virgule flottante on ne peut pas utiliser l'opérateur d'égalité (`==`)
 du langage C comme on le ferait pour des entiers, il est nécessaire d'utiliser
 la valeur absolue de la différence des deux valeurs (ligne 20 du Listing 2.4.1)
 et de vérifier que cette différence est bien inférieure à un *ϵ* donné (ligne 23).
-</div>
 <p>Si on utilise une précision plus grande de 64 bits, c'est à dire un <code>double</code> en
 langage C, on obtient un résultat qui correspond à un calcul exact :</p>
 
@@ -1629,9 +1617,7 @@ pas parcourir la chaîne deux fois (à cause du <code>strlen</code>). Il vaut mi
 
 </details>
 
-<blockquote>
 <p><em>Listing 2.5.1 – Convertir une chaine en majuscules (inefficace)</em></p>
-</blockquote>
 <p>Il vaut mieux cependant passer par des pointeurs, en évitant le double parcours :</p>
 
 <details>
@@ -1648,9 +1634,7 @@ pas parcourir la chaîne deux fois (à cause du <code>strlen</code>). Il vaut mi
 
 </details>
 
-<blockquote>
 <p><em>Listing 2.5.2 – Convertir une chaine en majuscules (avec pointeurs)</em></p>
-</blockquote>
 <h3 class="subsection">2.5.2 Unicode et UTF</h3>
 
 <p>Le problème de l'ASCII est qu'il ne permet de coder que 256 caractères différents
