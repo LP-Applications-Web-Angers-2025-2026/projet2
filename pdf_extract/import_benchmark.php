@@ -544,6 +544,98 @@ try {
     }
     
     echo "  -> $insertCount résultats insérés, $skipCount déjà existants\n";
+
+    // ================================================================
+    // ANNEXE C : BSR vs LZCNT
+    // ================================================================
+
+    // Vérifier si le chapitre existe déjà
+    $stmt = $db->query("SELECT id_chapitre FROM Chapitre WHERE nom_chapitre = 'asm_bsr_lzcnt'");
+    $chapitre = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$chapitre) {
+        echo "\nAjout du chapitre 'asm_bsr_lzcnt' (annexe C)...\n";
+        $db->exec("INSERT INTO Chapitre (nom_chapitre) VALUES ('asm_bsr_lzcnt')");
+        $annexeCChapitreId = $db->lastInsertId();
+        echo "  -> Chapitre créé avec ID: $annexeCChapitreId\n";
+    } else {
+        $annexeCChapitreId = $chapitre['id_chapitre'];
+        echo "\nChapitre 'asm_bsr_lzcnt' existe déjà (ID: $annexeCChapitreId)\n";
+    }
+
+    $annexeCMethods = [
+        'bsr_builtin_clz',
+        'bsr_inline',
+        'asm_bsr',
+        'asm_lzcnt',
+        'asm_avx512_vplzcntd',
+    ];
+
+    echo "Ajout des méthodes de test (annexe C)...\n";
+    foreach ($annexeCMethods as $method) {
+        $stmt = $db->prepare("SELECT id_test FROM Test WHERE nom_test = ? AND id_chapitre = ?");
+        $stmt->execute([$method, $annexeCChapitreId]);
+        $test = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$test) {
+            $stmt = $db->prepare("INSERT INTO Test (nom_test, id_type_test, id_chapitre) VALUES (?, ?, ?)");
+            $stmt->execute([$method, $typeTestId, $annexeCChapitreId]);
+            echo "  -> Méthode ajoutée: $method\n";
+        } else {
+            echo "  -> Méthode existe déjà: $method\n";
+        }
+    }
+
+    $annexeCBenchmarkData = [
+        ['Ryzen 5 5600G', 'bsr_builtin_clz', 1.19],
+        ['Core i5 7400', 'bsr_builtin_clz', 1.15],
+        ['Ryzen 5 5600G', 'bsr_inline', 0.95],
+        ['Core i5 7400', 'bsr_inline', 0.31],
+        ['Ryzen 5 5600G', 'asm_bsr', 0.95],
+        ['Core i5 7400', 'asm_bsr', 0.60],
+        ['Ryzen 5 5600G', 'asm_lzcnt', 0.44],
+        ['Core i5 7400', 'asm_lzcnt', 0.62],
+        ['Ryzen 5 5600G', 'asm_avx512_vplzcntd', null],
+        ['Core i5 7400', 'asm_avx512_vplzcntd', 0.00],
+    ];
+
+    echo "Insertion des résultats de benchmark (annexe C)...\n";
+    $insertCount = 0;
+    $skipCount = 0;
+
+    foreach ($annexeCBenchmarkData as $data) {
+        list($cpuName, $methodName, $value) = $data;
+
+        if (!isset($cpuMapping[$cpuName])) {
+            echo "  ATTENTION: CPU non trouvé: $cpuName\n";
+            continue;
+        }
+        $cpuId = $cpuMapping[$cpuName];
+
+        $stmt = $db->prepare("SELECT id_test FROM Test WHERE nom_test = ? AND id_chapitre = ?");
+        $stmt->execute([$methodName, $annexeCChapitreId]);
+        $test = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$test) {
+            echo "  ATTENTION: Méthode non trouvée: $methodName\n";
+            continue;
+        }
+        $testId = $test['id_test'];
+
+        $stmt = $db->prepare("SELECT id_resultat FROM Resultat WHERE id_cpu = ? AND id_test = ?");
+        $stmt->execute([$cpuId, $testId]);
+        $existing = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$existing) {
+            $stmt = $db->prepare("INSERT INTO Resultat (id_cpu, id_test, valeur_resultat) VALUES (?, ?, ?)");
+            $stmt->execute([$cpuId, $testId, $value]);
+            $insertCount++;
+        } else {
+            $skipCount++;
+        }
+    }
+
+    echo "  -> $insertCount résultats insérés, $skipCount déjà existants\n";
     
     // ================================================================
     // Résumé

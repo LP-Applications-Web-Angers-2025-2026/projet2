@@ -339,8 +339,6 @@ Voici le résumé des performances des différentes architectures :
 
 La méthode `cpp divs` (version 4) bat la méthode naïve C++ de loin, et les astuces assembleurs à macro-base de modulo avec invariance (`div_10000` / `div_100`) finissent par emporter la médaille d'or toutes configurations confondues.
 
----
-
 # ANNEXES
 
 ## Annexe A : Conventions d'appel Linux (x86 / x64)
@@ -372,13 +370,7 @@ L'outil **Electric Fence** (`libefence.so`) peut être *pre-loaded* afin de traq
 
 L'instruction `bsr` (Bit Scan Reverse) recherche le bit le plus significatif, tandis que `lzcnt` compte le nombre de 0 significatifs. Le processeur résout `31 - lzcnt(X) = bsr(X)`.
 
-| Méthode | AMD Ryzen 5 | Intel Core i5 7400 |
-|---|---|---|
-| C builtin `__builtin_clz` | 1.19 s | 1.15 s |
-| C `bsr` inline | 0.95 s | 0.31 s |
-| ASM `bsr` | 0.95 s | 0.60 s |
-| ASM `lzcnt` | 0.44 s | 0.62 s |
-| ASM AVX512 `vplzcntd` | N/A | ~0.00 s |
+[BENCHMARK:asm_bsr_lzcnt]
 
 ## Annexe D : Implantation optimisée de la fonction Signe
 
@@ -412,7 +404,6 @@ Pour la fonction signe ($x < 0 \rightarrow -1$, $x > 0 \rightarrow 1$, $x = 0 \r
 **Glossaire des Instructions ASM :**
 `add` (Addition), `cmov` (Conditional Move), `cdq` (Sign Extension), `div` (Division), `je/jnz/jg` (Sauts), `lea` (Load Effective Address mathématique sans appel mémoire), `sar` (Shift Right Arithmétique).
 
----
 ## Bibliographie (Extraits de l'original)
 1. AGNER, Fog : Calling conventions for compilers (2018).
 2. AGNER, Fog : The microarchitecture of Intel, AMD and VIA CPUs (2018).

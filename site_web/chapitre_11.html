@@ -45,7 +45,7 @@ math {
 <div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
 
 <nav id="main_menu_nav">
-  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="/"><i class="material-icons">home</i>Accueil</a>
   <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
   <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
   <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
@@ -88,7 +88,7 @@ de colonnes celles de <code>B</code>. En d'autres termes, on a :</p>
 <p>On note $c_i^j$ le coefficient de la matrice <code>C</code> en ligne <code>i</code> colonne <code>j</code>, dont la formule
 de calcul est donnée par la somme des produits de la ligne <code>i</code> de <code>A</code> par la colonne <code>j</code>
 de <code>B</code> :</p>
-<p>$c<em>i^j = \sum</em>{k=1}^p a_i^k \times b_k^j$</p>
+<p>$c_i^j = \sum_{k=1}^p a_i^k \times b_k^j$</p>
 <p>Afin de simplifier la compréhension des calculs nous allons nous cantonner
 à des matrices carrées pour lesquelles le nombre de lignes est égal au nombre
 de colonnes, soit <code>n = p = q</code> et nous appelerons donc dimension (ou taille) de la
@@ -356,7 +356,7 @@ matrices étant de grande taille elles ne tiennent pas dans le cache L1 ou L2. U
 la matrice <code>B</code>. En effet, on accède la matrice <code>A</code> par ligne, ce qui est efficace, car
 quand on charge $a_i^k$, les données suivantes comme $a_i^{k+1}$ à $a_i^{k+7}$ sont déjà dans le
 cache. Par contre l'accès aux coefficients de la matrice <code>B</code> est pénalisant car lorsque
-l'on charge $b<em>k^j$, le coefficient suivant $b</em>{k+1}^j$ se trouve <code>dim * 4</code> octets plus loin en
+l'on charge $b_k^j$, le coefficient suivant $b_{k+1}^j$ se trouve <code>dim * 4</code> octets plus loin en
 mémoire et ne sera donc probablement pas dans le cache.</p>
 <h2 class="section">11.5 Profiling avec <code>perf</code> sous Linux</h2>
 

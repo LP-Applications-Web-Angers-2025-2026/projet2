@@ -57,7 +57,7 @@ HEREDOC;
 <div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
 
 <nav id="main_menu_nav">
-  <a href="{$root_path}index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="/"><i class="material-icons">home</i>Accueil</a>
   <a href="{$root_path}ens.php"><i class="material-icons">school</i>Enseignement</a>
   <a href="{$root_path}rec.php"><i class="material-icons">science</i>Recherche</a>
   <a href="{$root_path}conferences.php"><i class="material-icons">public</i>Conférences IA</a>

@@ -14,6 +14,31 @@ require dirname(__DIR__) . '/ez_web.php';
 $Parsedown = new Parsedown();
 $Parsedown->setSafeMode(false);
 
+/**
+ * Protège les expressions mathématiques ($...$ et $$...$$) du parser Markdown.
+ * Parsedown interprète sinon les '_' comme de l'emphase et corrompt les formules.
+ */
+function protectMathExpressions($markdown, &$mathPlaceholders) {
+    $idx = 0;
+    $mathPlaceholders = [];
+
+    $markdown = preg_replace_callback('/\$\$(.+?)\$\$/s', function($m) use (&$mathPlaceholders, &$idx) {
+        $token = "@@MATH_BLOCK_{$idx}@@";
+        $mathPlaceholders[$token] = $m[0];
+        $idx++;
+        return $token;
+    }, $markdown);
+
+    $markdown = preg_replace_callback('/(?<!\$)\$(?!\$)(.+?)(?<!\$)\$(?!\$)/s', function($m) use (&$mathPlaceholders, &$idx) {
+        $token = "@@MATH_INLINE_{$idx}@@";
+        $mathPlaceholders[$token] = $m[0];
+        $idx++;
+        return $token;
+    }, $markdown);
+
+    return $markdown;
+}
+
 // ──────────────────────────────────────────────────────────────────────────
 // Benchmark System Helpers
 // ──────────────────────────────────────────────────────────────────────────
@@ -70,7 +95,8 @@ function getBenchmarkDataFromSqlite($benchName, $arch) {
             if (!isset($methodsMap[$methodName])) {
                 $methodsMap[$methodName] = array_fill(0, count($cpus), null);
             }
-            $methodsMap[$methodName][$cpuIndex] = round((float)$row['valeur_resultat'], 3);
+            $value = $row['valeur_resultat'];
+            $methodsMap[$methodName][$cpuIndex] = ($value === null) ? null : round((float)$value, 3);
         }
 
         $testNameMap = [
@@ -91,6 +117,11 @@ function getBenchmarkDataFromSqlite($benchName, $arch) {
             'cv_avx2_v2'            => 'AVX2 v2',
             'cv_avx2_v3'            => 'AVX2 v3',
             'cv_avx2_intrinsics'    => 'AVX2 intrinsics',
+            'bsr_builtin_clz'       => 'C builtin __builtin_clz',
+            'bsr_inline'            => 'C bsr inline',
+            'asm_bsr'               => 'ASM bsr',
+            'asm_lzcnt'             => 'ASM lzcnt',
+            'asm_avx512_vplzcntd'   => 'ASM AVX512 vplzcntd',
         ];
 
         $methodsArray = [];
@@ -123,6 +154,9 @@ function getBenchmarkDataFromSqlite($benchName, $arch) {
  */
 function generateBenchmarkComponent($benchName) {
     $architectures = ['ancien', 'moderne', 'recent'];
+    if ($benchName === 'asm_bsr_lzcnt') {
+        $architectures = ['all'];
+    }
     $html = "";
     
     // Compteur global pour les graphiques
@@ -134,7 +168,8 @@ function generateBenchmarkComponent($benchName) {
 
         $compCounter++;
         $chartId = "chart-auto-{$benchName}-{$arch}-{$compCounter}";
-        $legend = "TABLE " . ucfirst($arch) . " – Benchmark " . str_replace('_', ' ', $benchName);
+        $archLabel = ($arch === 'all') ? 'Global' : ucfirst($arch);
+        $legend = "TABLE " . $archLabel . " – Benchmark " . str_replace('_', ' ', $benchName);
 
         // 1. Génération du Tableau
         $html .= "<div class=\"center\">\n<table class=\"data-table\">\n";
@@ -249,8 +284,17 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
         $markdown
     );
 
+    // Protéger les formules mathématiques avant le parsing Markdown
+    $mathPlaceholders = [];
+    $markdown = protectMathExpressions($markdown, $mathPlaceholders);
+
     // ---- Parsing Markdown -> HTML ----
     $htmlContent = $Parsedown->text($markdown);
+
+    // Restaurer les expressions mathématiques dans le HTML généré
+    if (!empty($mathPlaceholders)) {
+        $htmlContent = strtr($htmlContent, $mathPlaceholders);
+    }
 
     // ---- Post-traitement du HTML ----
 

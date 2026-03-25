@@ -45,7 +45,7 @@ math {
 <div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
 
 <nav id="main_menu_nav">
-  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="/"><i class="material-icons">home</i>Accueil</a>
   <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
   <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
   <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
@@ -80,7 +80,7 @@ précédents et est définie de manière récursive comme suit :</p>
 <ul>
 <li>$F_0 = 0$</li>
 <li>$F_1 = 1$</li>
-<li>$F<em>n = F</em>{n-1} + F_{n-2}$</li>
+<li>$F_n = F_{n-1} + F_{n-2}$</li>
 </ul>
 <p>Les premiers termes de la suite sont donc : 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
 144, 233, 377, 610, 987, 1597, 2584, 4181.</p>
@@ -202,7 +202,7 @@ structures de données du même nom (<em>Fibonacci Heap</em>).</p>
 <p>Si on réalise quelques tests de performance, on s'aperçoit rapidement que le
 nombre d'appels récursifs devient prohibitif (voir <em>Table 16.2</em>, ci-après) et la fonction
 devient de moins en moins efficace. Par exemple sur un AMD Ryzen 5 5600g dont
-la fréquence de fonctionnement en mode boost est de 4440 MHz, $F<em>{44}$, $F</em>{45}$ et $F_{46}$
+la fréquence de fonctionnement en mode boost est de 4440 MHz, $F_{44}$, $F_{45}$ et $F_{46}$
 s'exécutent respectivement en 1.685, 2.559 et 4.365 secondes.
 Comme on peut s'en rendre compte, le nombre d'appels récursifs est proportionnel à $\phi$, le nombre d'or. Il tend vers $1,447214 \times \phi^n$ à
 mesure que n tend vers $\infty$. Notons que $1,447214 \simeq 1 + 1 / \sqrt{5}$.</p>
@@ -210,8 +210,8 @@ mesure que n tend vers $\infty$. Notons que $1,447214 \simeq 1 + 1 / \sqrt{5}$.<
 propriétés suivantes. Elle permet de casser la complexité initiale du problème. Le
 code correspondant est donné <em>Listing 16.2.2</em> :</p>
 <ul>
-<li>Si $n$ est pair, $k = n/2$, $F<em>n = (2 \times F</em>{k-1} + F_k) \times F_k$</li>
-<li>Si $n$ est impair, $k = (n+1)/2$, $F<em>n = F</em>{k-1}^2 + F_k^2$</li>
+<li>Si $n$ est pair, $k = n/2$, $F_n = (2 \times F_{k-1} + F_k) \times F_k$</li>
+<li>Si $n$ est impair, $k = (n+1)/2$, $F_n = F_{k-1}^2 + F_k^2$</li>
 </ul>
 
 <details>

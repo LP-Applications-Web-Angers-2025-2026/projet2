@@ -45,7 +45,7 @@ math {
 <div id="main_menu" class="menu-btn material-icons" onclick="toggleMenu()">menu</div>
 
 <nav id="main_menu_nav">
-  <a href="index.php"><i class="material-icons">home</i>Accueil</a>
+  <a href="/"><i class="material-icons">home</i>Accueil</a>
   <a href="ens.php"><i class="material-icons">school</i>Enseignement</a>
   <a href="rec.php"><i class="material-icons">science</i>Recherche</a>
   <a href="conferences.php"><i class="material-icons">public</i>Conférences IA</a>
@@ -337,8 +337,8 @@ de la boucle.</p>
 <p>On choisit les conventions suivantes :</p>
 <ul>
 <li><code>xmm0</code> contient les 4 sommes partielles cumulées</li>
-<li><code>xmm1</code> contient $x<em>i, x</em>{i+1}, x<em>{i+2}, x</em>{i+3}$</li>
-<li><code>xmm2</code> contient $y<em>i, y</em>{i+1}, y<em>{i+2}, y</em>{i+3}$</li>
+<li><code>xmm1</code> contient $x_i, x_{i+1}, x_{i+2}, x_{i+3}$</li>
+<li><code>xmm2</code> contient $y_i, y_{i+1}, y_{i+2}, y_{i+3}$</li>
 <li><code>xmm3</code> contient quatre fois la valeur de la constante <code>a</code> </li>
 </ul>
 <p>Le calcul est simple : multiplier <code>xmm1</code> par <code>xmm3</code> puis additionner à <code>xmm2</code>. On ajoute ensuite <code>xmm2</code> dans l'accumulateur <code>xmm0</code> avant d'enregistrer <code>xmm2</code> de retour dans la mémoire centrale. </p>
