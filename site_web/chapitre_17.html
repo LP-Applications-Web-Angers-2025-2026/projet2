@@ -134,16 +134,26 @@ où $[0, k-1]$ représente l'intervalle de valeurs entre 0 et $k-1$. De ces déf
 <li><strong>propriété 4</strong> : un nombre auto-descriptif contient au moins un 0 en position $k-1$</li>
 <li><strong>propriété 5</strong> : un nombre auto-descriptif de $k$ chiffres ne peut pas avoir un chiffre supérieur à $k$</li>
 </ul>
+<blockquote>
 <p><strong>Théorème 17.1.1.</strong> Un nombre auto-descriptif ne peut pas commencer par 0.
 <em>Démonstration.</em> En effet, si $d_0 = 0$ alors le nombre commence par 0 et par définition n'est pas valide.</p>
+</blockquote>
+<blockquote>
 <p><strong>Théorème 17.1.2.</strong> Un nombre auto-descriptif contient au moins un 0.
 <em>Démonstration.</em> En effet, si $c_0 = 0$ alors $d_0 = 0$ et le nombre commence par 0 et par définition n'est pas valide d'après le théorème précédent.</p>
+</blockquote>
+<blockquote>
 <p><strong>Théorème 17.1.3.</strong> $\sum_{i=0}^{k-1} c_i = \sum_{i=0}^{k-1} d_i = k$
 <em>Démonstration.</em> Si par définition les $c_i$ représentent le nombre d'occurrences de chaque chiffre, leur somme doit donc être égale à $k$. Étant donné que par définition $c_i = d_i$, on en déduit également que la somme des $d_i$ est égale à $k$.</p>
+</blockquote>
+<blockquote>
 <p><strong>Théorème 17.1.4.</strong> Un nombre auto-descriptif se termine par un 0.
 <em>Démonstration.</em> Appelons $S(k) = \sum_{i=0}^{k-1} d_i$ et raisonnons par l'absurde pour montrer qu'il n'est pas possible que $d_{k-1}$ soit différent de 0. Par définition $S(k) = k$ et donc $S(k) = S(k-1) + d_{k-1}$. Supposons alors que $x$ ne se termine pas par 0, alors $d_{k-1} > 0$, et on en déduit que $S(k-1) < k$ ou encore que $S(k-1) \leq k-1$. Le fait qu'un nombre auto-descriptif ne commence pas par un 0 mais contient au moins un 0, implique que $d_0 \neq 0$ et donc qu'il existe au moins un 0 parmi les $d_1$ à $d_{k-1}$. En conséquence $S(k) \geq k-1$. Sachant que $S(k) = S(k-1) + d_{k-1}$, on a donc $S(k) - S(k-1) = d_{k-1}$. Mais comme $S(k) \geq k-1$ et que $S(k-1) \leq k-1$, on en déduit que $S(k) - S(k-1) = 0$ et donc que $d_{k-1} = 0$.</p>
+</blockquote>
+<blockquote>
 <p><strong>Théorème 17.1.5.</strong> Un nombre auto-descriptif de $k$ chiffres ne peut par avoir un chiffre supérieur à $k$, i.e. $d_i < k, \forall i \in [0, k-1]$
 <em>Démonstration.</em> Si $x$ possède $k$ chiffres alors $d_0$ à $d_{k-1}$ sont définis. Si $d_i \geq k$ cela implique que $c_i \geq k$ ce qui est en contradiction avec la définition du nombre.</p>
+</blockquote>
 <h2 class="section">17.2 Fonction de référence (<code>std::string</code>)</h2>
 
 <p>La fonction de référence à implanter est donnée <em>Listing 17.2.1</em>. Elle comporte un
@@ -193,18 +203,24 @@ en utilisant cette propriété, s'exécute en moins de 2 secondes.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.2.1 – Nombre auto-descriptif, fonction de référence</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Fonction de référence</strong>
 Le temps d'exécution sur AMD Ryzen 5 5600g est de <strong>7,34 secondes</strong>.
 <em>Attention</em> : le compilateur <code>gcc</code> dans sa version 10 générait une fonction dont le temps d'exécution est d'environ 18 secondes alors que le même compilateur, dans sa version 12, génère du code qui ne s'exécute plus qu'en 7,6 secondes, soit près de deux fois plus rapide. La différence d'exécution tient à la conversion de $x$ en chaîne. Nous utilisons donc par la suite la version 12 de <code>gcc</code> quand cela est possible.</p>
+</blockquote>
 <h2 class="section">17.3 Amélioration de la taille mémoire (8 bits)</h2>
 
 <p>Plutôt que d'utiliser un tableau d'entiers 32-bits pour compter les occurrences des 
 chiffres, on utilise un tableau d'octets. En effet, diminuer la taille des données 
 utilisées peut parfois apporter une amélioration.</p>
+<blockquote>
 <p><strong>Fonction de référence avec 8 bits</strong>
 Le temps d'exécution sur AMD Ryzen 5 5600g est de <strong>7,20 secondes</strong> en
 utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre.</p>
+</blockquote>
 <p>On en déduit donc qu'il vaut mieux travailler sur un tableau d'octets que sur un tableau d'entiers en général même si l'amélioration est faible.</p>
 <h2 class="section">17.4 Conversion directe (<code>x % 10</code>)</h2>
 
@@ -239,7 +255,9 @@ utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.4.1 – Nombre auto-descriptif, fonction de conversion en chiffres modulo 10</em></p>
+</blockquote>
 <p>Au final on obtient le remplissage des tableaux suivants (pour $x=21200$) :</p>
 <table class="data-table">
 <thead>
@@ -295,8 +313,10 @@ utilisant des octets pour représenter le nombre d'occurrences de chaque chiffre
 </tr>
 </tbody>
 </table>
+<blockquote>
 <p><strong>Fonction avec conversion 8 bits</strong>
 C'est en fait cette version qui est la plus efficace lorsque traduite par le compilateur car elle ne prend que <strong>4,22 secondes</strong> pour s'exécuter et c'est elle qu'il va falloir tenter de battre. La version utilisant des entiers prend quant à elle 5,83 secondes.</p>
+</blockquote>
 <p>La raison de l'efficacité est assez simple : la conversion est rapide car elle est optimisée et la division par 10 est remplacée par une multiplication par un invariant, puis le calcul du reste de la division est effectué par multiplication du dividende et soustraction. En outre, la boucle de conversion est dépliée.</p>
 <h2 class="section">17.5 Approche Assembleur</h2>
 
@@ -363,7 +383,9 @@ C'est en fait cette version qui est la plus efficace lorsque traduite par le com
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.1 – Fonction assembleur - version 1 - initialisation</em></p>
+</blockquote>
 <p>Pour réaliser la conversion de $x$ en base 10, on réalise des 
 divisions successives par 10. En utilisant l'instruction <code>div</code>, on obtient le quotient 
 dans <code>eax</code> et le reste dans <code>edx</code>. On va stocker les chiffres (restes de la division) 
@@ -399,7 +421,9 @@ stocké dans <code>ecx</code>, puisque un entier non signé contient au maximum 
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.2 – Fonction assembleur - version 1 - conversion par boucle <code>div</code></em></p>
+</blockquote>
 <p>Pour la fin, s'il faut vérifier, on compare le bloc <code>counts</code> et le bloc <code>digits</code>.</p>
 
 <details>
@@ -434,9 +458,13 @@ stocké dans <code>ecx</code>, puisque un entier non signé contient au maximum 
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.3 – Fonction assembleur - version 1 - comparaison et sortie</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Assembleur version 1 avec conversion 8 bits</strong>
 Cette version assembleur s'exécute en <strong>5,59 secondes</strong>.</p>
+</blockquote>
 <h3 class="subsection">17.5.2 Remplacer la division par une multiplication (L'astuce de l'invariant)</h3>
 
 <p>Une première amélioration consiste à remplacer la division par une multiplication. 
@@ -475,9 +503,13 @@ L'astuce permet d'aller plus vite que <code>div 10</code>. On utilise ensuite <c
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.4 – Fonction assembleur - version 2 - remplacement de la division</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Assembleur version 2 : multiplication au lieu d'une division</strong>
 Cette version assembleur demande plus d'opérations et s'exécute en <strong>5,69 secondes</strong>, soit une très légère dégradation théorique par rapport au <code>div</code> mais profitable sur les vieux CPU. En ajoutant un <em>Unroll</em> (dépliage) manuel par la suite, le temps tombe à <strong>4,32 secondes</strong>.</p>
+</blockquote>
 <h3 class="subsection">17.5.4 Comparaison finale Vectorielle SIMD (AVX/SSE)</h3>
 
 <p>Plutôt que de comparer les tableaux <code>digits</code> et <code>counts</code> élément par élément, on peut utiliser des registres 128/256 bits et une égalité AVX comme <code>vpcmpeqb</code>.</p>
@@ -498,9 +530,13 @@ Cette version assembleur demande plus d'opérations et s'exécute en <strong>5,6
 
 </details>
 
+<blockquote>
 <p><em>Listing 17.5.4.b - L'égalité finale vectorisée.</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Assembleur version 4 : (Vectorielle SIMD)</strong>
 Avec l'Unroll mathématique et la fin SIMD, on descend à <strong>4,31 secondes</strong>.</p>
+</blockquote>
 <h3 class="subsection">17.5.5 L'invariant de Base 100 (<code>% 100</code>)</h3>
 
 <p>Au lieu de faire <code>% 10</code>, on peut faire <code>% 100</code> (soit 2 fois moins de divisions) grâce au magique <code>0x51EB851F</code> (<code>0.01</code> inverse). On utilise alors une table de correspondance pour décomposer <code>85</code> en <code>8</code> et <code>5</code>.
@@ -533,193 +569,6 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 <li><strong>16</strong> : ASM archaïque BCD <code>fbstp</code> (<code>asm_bcd_fbstp</code>)</li>
 <li><strong>23</strong> : Assembleur division par 10_000 (<code>asm_div_10000</code>)</li>
 </ul>
-<div class="center">
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>Méthode</th>
-      <th>Core i7 4790<br><small>2014</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>asm_bcd_fbstp</strong></td>
-      <td>108.340</td>
-    </tr>
-    <tr>
-      <td><strong>asm_div_100</strong></td>
-      <td>6.380</td>
-    </tr>
-    <tr>
-      <td><strong>asm_div_10000</strong></td>
-      <td>20.560</td>
-    </tr>
-    <tr>
-      <td><strong>asm_simd_avx</strong></td>
-      <td>9.220</td>
-    </tr>
-    <tr>
-      <td><strong>asm_unroll</strong></td>
-      <td>7.280</td>
-    </tr>
-    <tr>
-      <td><strong>cpp_divs_8bits</strong></td>
-      <td>7.530</td>
-    </tr>
-    <tr>
-      <td><strong>cpp_std_to_string</strong></td>
-      <td>16.830</td>
-    </tr>
-  </tbody>
-  <caption>TABLE Ancien – Benchmark asm selfdesc</caption>
-</table>
-</div>
-<script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
-<script src="data/graph.js"></script>
-<div class="chart-container" id="chart-auto-asm_selfdesc-ancien-30" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-auto-asm_selfdesc-ancien-30';
-    var data = {"CPUs":["Core i7 4790"],"Years":[2014],"Methods":[{"name":"asm_bcd_fbstp","values":[108.34]},{"name":"asm_div_100","values":[6.38]},{"name":"asm_div_10000","values":[20.56]},{"name":"asm_simd_avx","values":[9.22]},{"name":"asm_unroll","values":[7.28]},{"name":"cpp_divs_8bits","values":[7.53]},{"name":"cpp_std_to_string","values":[16.83]}]};
-    function draw() {
-        if (typeof window.createPerformanceChart !== 'function') {
-            console.error("createPerformanceChart est introuvable");
-            return;
-        }
-        window.createPerformanceChart(id, data);
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
-    else { draw(); }
-  })();
-</script><div class="center">
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>Méthode</th>
-      <th>Core i5 7400<br><small>2017</small></th>
-      <th>Core i7 8700<br><small>2017</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>asm_bcd_fbstp</strong></td>
-      <td>100.000</td>
-      <td>36.890</td>
-    </tr>
-    <tr>
-      <td><strong>asm_div_100</strong></td>
-      <td>6.020</td>
-      <td>4.860</td>
-    </tr>
-    <tr>
-      <td><strong>asm_simd_avx</strong></td>
-      <td>8.410</td>
-      <td>6.870</td>
-    </tr>
-    <tr>
-      <td><strong>asm_unroll</strong></td>
-      <td>6.870</td>
-      <td>5.730</td>
-    </tr>
-    <tr>
-      <td><strong>cpp_divs_8bits</strong></td>
-      <td>7.080</td>
-      <td>5.780</td>
-    </tr>
-    <tr>
-      <td><strong>cpp_std_to_string</strong></td>
-      <td>15.910</td>
-      <td>13.350</td>
-    </tr>
-    <tr>
-      <td><strong>asm_div_10000</strong></td>
-      <td>-</td>
-      <td>4.000</td>
-    </tr>
-  </tbody>
-  <caption>TABLE Moderne – Benchmark asm selfdesc</caption>
-</table>
-</div>
-<div class="chart-container" id="chart-auto-asm_selfdesc-moderne-31" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-auto-asm_selfdesc-moderne-31';
-    var data = {"CPUs":["Core i5 7400","Core i7 8700"],"Years":[2017,2017],"Methods":[{"name":"asm_bcd_fbstp","values":[100,36.89]},{"name":"asm_div_100","values":[6.02,4.86]},{"name":"asm_simd_avx","values":[8.41,6.87]},{"name":"asm_unroll","values":[6.87,5.73]},{"name":"cpp_divs_8bits","values":[7.08,5.78]},{"name":"cpp_std_to_string","values":[15.91,13.35]},{"name":"asm_div_10000","values":[null,4]}]};
-    function draw() {
-        if (typeof window.createPerformanceChart !== 'function') {
-            console.error("createPerformanceChart est introuvable");
-            return;
-        }
-        window.createPerformanceChart(id, data);
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
-    else { draw(); }
-  })();
-</script><div class="center">
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>Méthode</th>
-      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
-      <th>Core i5 12400F<br><small>2022</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>asm_bcd_fbstp</strong></td>
-      <td>35.830</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>asm_div_100</strong></td>
-      <td>3.660</td>
-      <td>2.870</td>
-    </tr>
-    <tr>
-      <td><strong>asm_div_10000</strong></td>
-      <td>8.770</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>asm_simd_avx</strong></td>
-      <td>5.480</td>
-      <td>5.170</td>
-    </tr>
-    <tr>
-      <td><strong>asm_unroll</strong></td>
-      <td>4.440</td>
-      <td>3.510</td>
-    </tr>
-    <tr>
-      <td><strong>cpp_divs_8bits</strong></td>
-      <td>5.090</td>
-      <td>3.880</td>
-    </tr>
-    <tr>
-      <td><strong>cpp_std_to_string</strong></td>
-      <td>12.340</td>
-      <td>6.250</td>
-    </tr>
-  </tbody>
-  <caption>TABLE Recent – Benchmark asm selfdesc</caption>
-</table>
-</div>
-<div class="chart-container" id="chart-auto-asm_selfdesc-recent-32" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-auto-asm_selfdesc-recent-32';
-    var data = {"CPUs":["AMD Ryzen 5 5600G","Core i5 12400F"],"Years":[2021,2022],"Methods":[{"name":"asm_bcd_fbstp","values":[35.83,null]},{"name":"asm_div_100","values":[3.66,2.87]},{"name":"asm_div_10000","values":[8.77,null]},{"name":"asm_simd_avx","values":[5.48,5.17]},{"name":"asm_unroll","values":[4.44,3.51]},{"name":"cpp_divs_8bits","values":[5.09,3.88]},{"name":"cpp_std_to_string","values":[12.34,6.25]}]};
-    function draw() {
-        if (typeof window.createPerformanceChart !== 'function') {
-            console.error("createPerformanceChart est introuvable");
-            return;
-        }
-        window.createPerformanceChart(id, data);
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
-    else { draw(); }
-  })();
-</script>
 <p>La méthode <code>cpp divs</code> (version 4) bat la méthode naïve C++ de loin, et les astuces assembleurs à macro-base de modulo avec invariance (<code>div_10000</code> / <code>div_100</code>) finissent par emporter la médaille d'or toutes configurations confondues.</p>
 <h1 class="chapter">ANNEXES</h1>
 
@@ -779,61 +628,6 @@ Ceci permet de tomber à <strong>3,56 secondes</strong> ! (Le grand gagnant Asse
 <h2 class="section">Annexe C : Analyse de <code>bsr</code> vs <code>lzcnt</code></h2>
 
 <p>L'instruction <code>bsr</code> (Bit Scan Reverse) recherche le bit le plus significatif, tandis que <code>lzcnt</code> compte le nombre de 0 significatifs. Le processeur résout <code>31 - lzcnt(X) = bsr(X)</code>.</p>
-<div class="center">
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>Méthode</th>
-      <th>Core i5 7400<br><small>2017</small></th>
-      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>ASM AVX512 vplzcntd</strong></td>
-      <td>0.000</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>ASM bsr</strong></td>
-      <td>0.600</td>
-      <td>0.950</td>
-    </tr>
-    <tr>
-      <td><strong>ASM lzcnt</strong></td>
-      <td>0.620</td>
-      <td>0.440</td>
-    </tr>
-    <tr>
-      <td><strong>C builtin __builtin_clz</strong></td>
-      <td>1.150</td>
-      <td>1.190</td>
-    </tr>
-    <tr>
-      <td><strong>C bsr inline</strong></td>
-      <td>0.310</td>
-      <td>0.950</td>
-    </tr>
-  </tbody>
-  <caption>TABLE Global – Benchmark asm bsr lzcnt</caption>
-</table>
-</div>
-<div class="chart-container" id="chart-auto-asm_bsr_lzcnt-all-33" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-auto-asm_bsr_lzcnt-all-33';
-    var data = {"CPUs":["Core i5 7400","AMD Ryzen 5 5600G"],"Years":[2017,2021],"Methods":[{"name":"ASM AVX512 vplzcntd","values":[0,null]},{"name":"ASM bsr","values":[0.6,0.95]},{"name":"ASM lzcnt","values":[0.62,0.44]},{"name":"C builtin __builtin_clz","values":[1.15,1.19]},{"name":"C bsr inline","values":[0.31,0.95]}]};
-    function draw() {
-        if (typeof window.createPerformanceChart !== 'function') {
-            console.error("createPerformanceChart est introuvable");
-            return;
-        }
-        window.createPerformanceChart(id, data);
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
-    else { draw(); }
-  })();
-</script>
 <h2 class="section">Annexe D : Implantation optimisée de la fonction Signe</h2>
 
 <p>Pour la fonction signe ($x < 0 \rightarrow -1$, $x > 0 \rightarrow 1$, $x = 0 \rightarrow 0$) :</p>

@@ -146,16 +146,18 @@ descendant du signal d'horloge.</li>
 <li>Enfin le nombre <code>x</code> situé après <code>DDR</code> est un facteur qui définit le nombre d'octets
 que l'on peut lire ou écrire lors du transfert des données.</li>
 </ul>
+<blockquote>
 <p><strong>Débit mémoire</strong>
 Le débit ou bande passante (<em>bandwidth</em> en anglais) de la mémoire est donné
 par la formule suivante en Mo/s :</p>
-</div>
-*bandwidth = [frequency × 2 × 2^(x−1)] × 8*  &emsp; (3.1)
-</div>
-- `frequency` est la fréquence de fonctionnement de la mémoire exprimée en MHz
-- Le facteur 2 correspond à la DDR qui double le taux de transfert
-- `x` correspond au type de `DDRx`
-- 8 est la largeur du bus de données en octets (soit 64 bits)
+<p><em>bandwidth = [frequency × 2 × 2^(x−1)] × 8</em>  &emsp; (3.1)</p>
+<ul>
+<li><code>frequency</code> est la fréquence de fonctionnement de la mémoire exprimée en MHz</li>
+<li>Le facteur 2 correspond à la DDR qui double le taux de transfert</li>
+<li><code>x</code> correspond au type de <code>DDRx</code></li>
+<li>8 est la largeur du bus de données en octets (soit 64 bits)</li>
+</ul>
+</blockquote>
 <p>Par exemple une <strong>DDR4-SDRAM</strong> fonctionnant à 100 MHz possède un débit
 théorique de <em>100 × 2 × 2^(4−1) × 8 = 12 800 Mo/s</em>. On désigne également ce type de
 mémoire par les sigles :</p>
@@ -251,12 +253,14 @@ d'accéder à des données non alignées ralentissait l'exécution des programme
 avec la DDR4-SDRAM et les contrôleurs mémoire dédiés ce ralentissement
 n'est plus perceptible et ne constitue plus dans la plupart des cas un facteur de
 ralentissement.</p>
+<blockquote>
 <p><strong>Alignement mémoire</strong>
 <strong>Aligner les données</strong> signifie les placer à une adresse multiple d'une puissance
 de 2 qui dépend du type de mémoire ou des données accédées. En général
 on prendra un multiple de 16 ou de 32 pour les tableaux. Si on manipule
 des données qui seront placées dans des registres vectoriels on utilisera un
 multiple de 16 pour le SSE, de 32 pour l'AVX et de 64 pour l'AVX-512.</p>
+</blockquote>
 <p><em>Figure 3.2 – Bancs mémoire</em></p>
 <p>Lorsque l'on requête un entier de type <code>int</code> qui
 occupe 4 octets à l'adresse <code>04</code> la lecture des données peut se faire en une seule fois
@@ -545,6 +549,7 @@ en français. Pour donner un ordre de grandeur, déterminer si une donnée est d
 le cache L1 prend de l'ordre de 4 à 5 ns, dans le cache L2 environ une dizaine voire
 une vingtaine de ns, puis dans le cache L3 entre 30 et 70 ns et finalement l'obtenir
 depuis la mémoire une centaine de ns.</p>
+<blockquote>
 <p><strong>Facteur d'amélioration</strong>
 Un programme s'exécutera donc plus vite si les données sont déjà présentes
 dans le cache et d'autant plus vite que les données sont présentes dans un
@@ -552,13 +557,13 @@ cache de niveau faible (L1), c'est à dire, le plus proche du coeur de calcul.
 C'est le <strong><em>premier facteur d'amélioration</em></strong> de la vitesse d'exécution des
 programmes : faire en sorte, quand cela est possible, que les données soient
 présentes dans le cache au moment où on les traite car elles seront accessibles rapidement.</p>
-</div>
-La mémoire cache possède une influence très importante pour certains traitements
+<p>La mémoire cache possède une influence très importante pour certains traitements
 liés à la lecture et l'écriture en mémoire. Un exemple typique de cette
 influence est celui du produit de matrices où des techniques d'inversion de
-boucles, ou de **blocage de boucles** (*loop blocking*) associée au **tuilage** (*tiling*)
+boucles, ou de <strong>blocage de boucles</strong> (<em>loop blocking</em>) associée au <strong>tuilage</strong> (<em>tiling</em>)
 permettent de diminuer le temps de calcul de manière drastique par rapport
-à une implantation directe de la formule de calcul.
+à une implantation directe de la formule de calcul.</p>
+</blockquote>
 <p>Le produit de matrices est la première étude de cas de ce livre (cf. Cha-
 pitre).</p>
 <h2 class="section">3.3 Les microprocesseurs x86</h2>
@@ -982,7 +987,9 @@ Pointer</em>) qui stocke l'adresse mémoire de la prochaine instruction à exéc
 d'un registre, soit par une combinaison de registres qui permet une correspondance
 avec les expressions liées aux tableaux ou aux structures de données.</p>
 <p>Une adresse a donc la forme suivante :</p>
+<blockquote>
 <p><em>adresse = [base + index × scale + offset]</em></p>
+</blockquote>
 <ul>
 <li><code>base</code> et <code>index</code> sont des registres avec une restriction concernant <code>index</code> qui ne
 peut être le registre <code>esp</code></li>
@@ -1011,7 +1018,9 @@ associé à <code>cs</code>. Le registre <code>edi</code> est associé à <code>
 et <code>ebp</code> sont liés au segment de pile <code>ss</code>. Lorsque l'on accède à la prochaine instruction
 au travers de <code>ip</code> (ou <code>eip</code> en 32 bits), on fait implicitement référence au segment <code>cs</code>,
 l'adresse que l'on accède est donc calculée par :</p>
+<blockquote>
 <p><em>address = segment × 16 + offset = cs × 16 + ip</em></p>
+</blockquote>
 <p>Le fait de multiplier par 16 le registre <code>cs</code> consiste à réaliser un décalage à gauche
 de 4 bits du registre <code>cs</code> car <em>16 = 2⁴</em>, ce qui donne une adresse sur <em>16 + 4 = 20 bits</em>.</p>
 <p>Notons que les programmes que nous allons écrire par la suite feront référence à
@@ -1021,14 +1030,18 @@ programmes et les segments seront gérés par l'assembleur <code>nasm</code> et 
 <h2 class="section">3.4 Temps d'exécution et améliorations</h2>
 
 <p>Le temps d'exécution d'un programme est donné par les deux formules suivantes :</p>
+<blockquote>
 <p><em>Te = Σ(CPIi × Tc) = N × CPIm × Tc</em> &emsp; (3.2)</p>
+</blockquote>
 <p>La première exprime que le temps d'exécution en secondes (<em>Te</em>) d'un programme
 de <em>N</em> instructions est donné par la somme du nombre de cycles que nécessite chaque
 instruction (<em>CPIi = Cycles Per Instruction</em>) pour s'exécuter multiplié par le temps de
 cycle (<em>Tc</em>) qui est l'inverse de la fréquence de fonctionnement du microprocesseur.</p>
 <p>La seconde est une version synthétique pour laquelle on calcule un nombre
 moyen de cycles par instruction (<em>CPIm</em>) pour <em>N</em> instructions :</p>
+<blockquote>
 <p><em>CPIm = (1/N) × Σ CPIi</em> &emsp; (3.3)</p>
+</blockquote>
 <p>Par exemple, si un sous-programme est composé de :</p>
 <ul>
 <li>3 instructions qui s'exécutent en 2 cycles</li>
@@ -1157,7 +1170,9 @@ avec et sans pipeline pour traiter <em>n</em> instructions :</p>
 </ul>
 <p>Le gain obtenu est donné par le rapport du temps d'exécution sans pipeline par
 le temps d'exécution avec pipeline :</p>
+<blockquote>
 <p><em>gain = lim(n→∞) [5n / (5 + n − 1)] ≈ 5n/n ≈ 5</em> &emsp; (3.4)</p>
+</blockquote>
 <table class="data-table">
 <thead>
 <tr>

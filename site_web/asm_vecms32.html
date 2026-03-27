@@ -195,10 +195,10 @@ certaines images peuvent ne pas s'afficher.
   <caption>TABLE Ancien – Benchmark asm vecms32</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_vecms32-ancien-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_vecms32-ancien-3" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_vecms32-ancien-4';
+    var id = 'chart-auto-asm_vecms32-ancien-3';
     var data = {"CPUs":["Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Intel Core i7 860 2.80GHz","AMD Phenom II X6 1090T","Intel Core i5 3570K 3.40GHz","Intel Core i7 4790 3.60GHz"],"Years":[2008,2008,2009,2010,2012,2014],"Methods":[{"name":".case","values":[2.207,2.368,3.52,1.607,1.252,0.995]},{"name":".data","values":[2.728,2.996,4.292,2.675,1.699,1.455]},{"name":".text","values":[3.002,3.013,5.031,2.861,1.608,1.22]},{"name":"sort","values":[2.298,2.4,3.42,1.677,1.281,1.005]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
@@ -264,55 +264,11 @@ certaines images peuvent ne pas s'afficher.
   <caption>TABLE Moderne – Benchmark asm vecms32</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_vecms32-moderne-5" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_vecms32-moderne-4" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_vecms32-moderne-5';
+    var id = 'chart-auto-asm_vecms32-moderne-4';
     var data = {"CPUs":["Intel Core i3 6100 3.70GHz","AMD Ryzen 7 1700X Eight Core","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core"],"Years":[2015,2017,2017,2017,2018,2019],"Methods":[{"name":".case","values":[0.896,0.882,1.174,0.873,1.097,0.706]},{"name":".data","values":[1.414,1.032,1.773,1.308,1.254,0.855]},{"name":".text","values":[1.605,0.959,1.682,1.242,1.19,0.831]},{"name":"sort","values":[0.893,0.935,1.18,0.892,1.142,0.745]}]};
-    function draw() {
-        if (typeof window.createPerformanceChart !== 'function') {
-            console.error("createPerformanceChart est introuvable");
-            return;
-        }
-        window.createPerformanceChart(id, data);
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
-    else { draw(); }
-  })();
-</script><div class="center">
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>Méthode</th>
-      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>.case</strong></td>
-      <td>0.555</td>
-    </tr>
-    <tr>
-      <td><strong>.data</strong></td>
-      <td>0.000</td>
-    </tr>
-    <tr>
-      <td><strong>.text</strong></td>
-      <td>0.714</td>
-    </tr>
-    <tr>
-      <td><strong>sort</strong></td>
-      <td>0.575</td>
-    </tr>
-  </tbody>
-  <caption>TABLE Recent – Benchmark asm vecms32</caption>
-</table>
-</div>
-<div class="chart-container" id="chart-auto-asm_vecms32-recent-6" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-auto-asm_vecms32-recent-6';
-    var data = {"CPUs":["AMD Ryzen 5 5600G"],"Years":[2021],"Methods":[{"name":".case","values":[0.555]},{"name":".data","values":[0]},{"name":".text","values":[0.714]},{"name":"sort","values":[0.575]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");

@@ -39,6 +39,67 @@ function protectMathExpressions($markdown, &$mathPlaceholders) {
     return $markdown;
 }
 
+/**
+ * Transforme uniquement les blockquotes "callout" ciblés en <div class="cadre_*">.
+ *
+ * On évite les regex globales sur toutes les lignes commençant par '>' qui
+ * produisaient des balises </div> orphelines quand un callout contenait des
+ * lignes vides internes (cas observé dans les chapitres 3 et 15).
+ */
+function transformCalloutBlocks($markdown) {
+    $lines = preg_split('/\R/', $markdown);
+    $out = [];
+    $inCallout = false;
+
+    $keywordToClass = function($kw) {
+        return match(strtolower($kw)) {
+            'définition', 'definition' => 'definition',
+            'note', 'info'             => 'note',
+            'attention', 'warning'     => 'warning',
+            'remarque'                 => 'remark',
+            'exemple'                  => 'example',
+            'important'                => 'important',
+            'convention'               => 'convention',
+            default                    => 'note',
+        };
+    };
+
+    foreach ($lines as $line) {
+        if (!$inCallout) {
+            if (preg_match('/^>\s*\*\*(Définition|Definition|Note|Remarque|Attention|Exemple|Info|Important|Warning|Convention)\*\*\s*(?::?\s*(.*))?$/u', $line, $m)) {
+                $kw = $m[1];
+                $rest = isset($m[2]) ? trim($m[2]) : '';
+                $class = $keywordToClass($kw);
+
+                $out[] = "<div class=\"cadre_{$class}\">";
+                $out[] = ($rest !== '') ? "**{$kw}** : {$rest}" : "**{$kw}**";
+                $inCallout = true;
+                continue;
+            }
+
+            $out[] = $line;
+            continue;
+        }
+
+        if (preg_match('/^>\s?(.*)$/', $line, $m)) {
+            // Conserver le Markdown interne du callout (y compris lignes vides).
+            $out[] = $m[1];
+            continue;
+        }
+
+        // Fin du callout dès qu'on sort du blockquote.
+        $out[] = '</div>';
+        $inCallout = false;
+        $out[] = $line;
+    }
+
+    if ($inCallout) {
+        $out[] = '</div>';
+    }
+
+    return implode("\n", $out);
+}
+
 // ──────────────────────────────────────────────────────────────────────────
 // Benchmark System Helpers
 // ──────────────────────────────────────────────────────────────────────────
@@ -252,30 +313,8 @@ foreach (glob("$sourceDir/*.md") as $mdFile) {
     // 1. Supprimer les lignes "# Chapitre N : Titre" répétées dans le corps
     //    (le H1 reste en haut mais on supprime les occurrences supplémentaires)
 
-    // 2. Convertir les blocs > **Keyword** : ... en div stylisés
-    $markdown = preg_replace_callback(
-        '/^>\s*\*\*(Définition|Note|Remarque|Attention|Exemple|Info|Important|Warning|Convention)\*\*\s*(?::?\s*(.*))?$/m',
-        function($m) {
-            $kw   = $m[1];
-            $rest = isset($m[2]) ? trim($m[2]) : '';
-            $class = match(strtolower($kw)) {
-                'définition', 'definition' => 'definition',
-                'note', 'info'             => 'note',
-                'attention', 'warning'     => 'warning',
-                'remarque'                 => 'remark',
-                'exemple'                  => 'example',
-                'important'                => 'important',
-                'convention'               => 'convention',
-                default                    => 'note',
-            };
-            $content = $rest !== '' ? "<strong>{$kw}</strong> : {$rest}" : "<strong>{$kw}</strong>";
-            return "<div class=\"cadre_{$class}\">{$content}";
-        },
-        $markdown
-    );
-    // Fermer les blocs > qui continuent
-    $markdown = preg_replace('/^>\s*$/m', '</div>', $markdown);
-    $markdown = preg_replace('/^> (.+)$/m', '$1', $markdown);
+    // 2. Convertir les callouts (> **Note**, > **Attention**, ...) en div stylisés
+    $markdown = transformCalloutBlocks($markdown);
 
     // 3. Convertir les citations en italique des Listings
     $markdown = preg_replace(

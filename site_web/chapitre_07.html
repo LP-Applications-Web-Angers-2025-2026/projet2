@@ -101,9 +101,11 @@ directement. On y accède au travers d'une pile dotée de 8 registres appelés <
 <code>st0</code> à <code>st6</code> sont <strong>déplacées</strong> vers <code>st1</code> à <code>st7</code>.</p>
 <p>Les registres <code>st0</code> à <code>st7</code> occupent chacun <strong>80 bits</strong> ce qui permet de disposer d'une
 grande précision. L'exposant occupe alors 15 bits et la mantisse 64 bits.</p>
-<div class="cadre_warning"><strong>Attention</strong> : si on charge plus de huit valeurs dans la pile du coprocesseur, on
+<div class="cadre_warning">
+**Attention** : si on charge plus de huit valeurs dans la pile du coprocesseur, on
 génère une exception. Il faut prendre l'habitude de ne laisser qu'une valeur dans
 `st0` et de la supprimer lorsqu'on n'en a plus besoin.
+</div>
 <h3 class="subsection">7.3.1 Chargement (fld, fild)</h3>
 
 <p>Le chargement des données se fait grâce à l'instruction <code>fld</code> (<em>Floating point LoaD</em>) :</p>
@@ -113,8 +115,10 @@ génère une exception. Il faut prendre l'habitude de ne laisser qu'une valeur d
 </ul>
 <p>Il existe également <code>fild</code> (<em>Floating point Integer LoaD</em>) qui permet de charger une
 valeur entière qui sera convertie en nombre flottant.</p>
-<div class="cadre_warning"><strong>Attention</strong> : on ne peut pas charger une donnée depuis un registre général,
+<div class="cadre_warning">
+**Attention** : on ne peut pas charger une donnée depuis un registre général,
 uniquement depuis la mémoire ou à partir d'un autre registre du coprocesseur.
+</div>
 
 <details>
 <summary>Afficher le code &nbsp;&nbsp; <a href="code/chapitre_7/code_001.asm" target="_blank">code/chapitre_7/code_001.asm</a></summary>
@@ -268,8 +272,10 @@ uniquement depuis la mémoire ou à partir d'un autre registre du coprocesseur.
 
 <p>Le stockage fonctionne comme le chargement, on indique l'emplacement mémoire
 au format <code>dword</code> ou <code>qword</code> vers lequel on désire stocker la valeur en sommet.</p>
-<div class="cadre_note"><strong>Note</strong> : la plupart des instructions disposent d'un suffixe `p` (ex. `fstp`).
+<div class="cadre_note">
+**Note** : la plupart des instructions disposent d'un suffixe `p` (ex. `fstp`).
 Ajouter le suffixe `p` signifie qu'on **dépile** (*pop*) le résultat après le stockage.
+</div>
 <p>Exemple :</p>
 
 <details>
@@ -336,9 +342,11 @@ utiliser avec la FPU.</p>
 </tbody>
 </table>
 <p><em>TABLE 7.3 – Description de l'instruction fadd</em></p>
-<div class="cadre_warning"><strong>Attention</strong> : `fadd` et `faddp` ont un comportement différent :
+<div class="cadre_warning">
+**Attention** : `fadd` et `faddp` ont un comportement différent :
 - `fadd` : `st0 += sti`
 - `faddp` : `sti += st0`, puis `st0` est dépilé
+</div>
 <p>On dispose également d'opérations complémentaires :</p>
 <ul>
 <li><code>fabs</code> — valeur absolue</li>
@@ -575,9 +583,11 @@ On utilise <code>jbe</code> (<em>Jump Below or Equal</em>) pour le <code>.else</
 
 </details>
 
+<blockquote>
 <p><strong>Instructions de saut pour les flottants</strong> : pour des raisons historiques, les
 instructions de comparaison sur les flottants ne mettent pas à jour les mêmes bits
 que <code>cmp</code>. On utilise donc <code>jb</code> (au lieu de <code>jl</code>), <code>ja</code> (au lieu de <code>jg</code>), <code>jbe</code> et <code>jae</code>.</p>
+</blockquote>
 <h3 class="subsection">7.6.2 Comparaison en 64 bits avec les registres SSE</h3>
 
 <p>En 64 bits, ce sont les registres SSE qui sont utilisés pour les calculs flottants.
@@ -673,8 +683,10 @@ valeurs flottantes 32 bits. La constante <code>imm8</code> indique le type de co
 </table>
 <p><em>TABLE 7.5 – Comparaison avec cmpss/cmpsd</em></p>
 <p>Le résultat est stocké dans <code>xmm1.ps[0]</code> : <code>0xFFFFFFFF</code> si vrai, <code>0x00000000</code> si faux.</p>
-<div class="cadre_note"><strong>Note</strong> : `cmpsd` peut signifier *Compare Scalar Double-Precision Floating-Point*
+<div class="cadre_note">
+**Note** : `cmpsd` peut signifier *Compare Scalar Double-Precision Floating-Point*
 (registres vectoriels) ou *Compare String Operands* (pas d'opérande). Ne pas les confondre.
+</div>
 <h2 class="section">7.7 Traduction d'expressions en assembleur FPU</h2>
 
 <p>Pour traduire une expression en utilisant les instructions du coprocesseur :</p>
@@ -683,8 +695,10 @@ valeurs flottantes 32 bits. La constante <code>imm8</code> indique le type de co
 <li>Réaliser un <strong>parcours postfixe</strong> de l'arbre pour obtenir la notation polonaise inverse (RPN)</li>
 <li>Traduire la version RPN en instructions FPU</li>
 </ol>
+<blockquote>
 <p><strong>Notation Polonaise Inverse (RPN)</strong> : notation post-fixée qui permet d'écrire
 de façon non ambiguë les formules arithmétiques sans utiliser de parenthèses.</p>
+</blockquote>
 <p><strong>Règles de traduction RPN → assembleur FPU</strong> :</p>
 <ul>
 <li>Si constante ou variable → <code>fld [variable]</code></li>
@@ -736,8 +750,10 @@ de façon non ambiguë les formules arithmétiques sans utiliser de parenthèses
 
 </details>
 
-<div class="cadre_note"><strong>Note</strong> : dans le cas des constantes, si la constante n'est pas prédéfinie dans le
+<div class="cadre_note">
+**Note** : dans le cas des constantes, si la constante n'est pas prédéfinie dans le
 coprocesseur, il est nécessaire de la stocker en mémoire avant de la charger.
+</div>
 <h2 class="section">7.8 Affichage de valeurs flottantes avec printf</h2>
 
 <h3 class="subsection">7.8.1 Affichage en 32 bits</h3>

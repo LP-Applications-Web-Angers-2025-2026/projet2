@@ -143,7 +143,9 @@ donne le nombre de mutations trouvées.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 14.2.1 – Maximum de Parcimonie fonction de référence en C</em></p>
+</blockquote>
 <p>Les séquences sont modélisées sous forme de tableaux d'octets et pour coder
 efficacement la possibilité d'avoir des combinaisons d'acides nucléiques comme 'A
 ou C', 'A ou C ou T', on utilise des puissances de 2 :</p>
@@ -288,9 +290,13 @@ L'association variables / registres est celle de la Table 14.1. </p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 14.3.1 – Maximum de Parcimonie fonction de référence en assembleur</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Temps de référence</strong>
 Pour l'implantation assembleur ci-dessus <code>(50 000 tics sur une matrice de 524 287)</code>, l'exécution dure environ 84,37 secondes sur un processeur Intel Core i7.</p>
+</blockquote>
 <h2 class="section">14.4 Suppression du branchement (Élimination du IF)</h2>
 
 <p>L'implantation précédente se révèle inefficace pour une simple raison que
@@ -344,9 +350,13 @@ deux instructions conditionnelles :</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 14.4.1 – Maximum de Parcimonie fonction de référence sans if</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Amélioration sans if</strong>
 En éliminant le <code>if</code> on ne met plus que <strong>34,68 secondes</strong>, on va donc environ <strong>2,43 fois plus vite</strong> qu'avec les sauts non-prédictibles.</p>
+</blockquote>
 <p><strong>Optimisation supplémentaire</strong> (<code>Listing 14.5.1</code>) : En accédant aux pointeurs directement sur <code>esp</code> (sans <code>ebp</code>), on libère 7 registres. Remplacer les accès mémoire pour <code>mutations</code> par des registres pur diminue le temps jusqu'à <strong>5,24 secondes</strong>, soit <strong>16 fois plus vite</strong> que la référence.</p>
 <h2 class="section">14.6 Amélioration Vectorielle (SSE2 et SSE4.1)</h2>
 
@@ -395,9 +405,13 @@ chaque octet de <code>xmm1</code> et on le place dans un registre non-vectoriel 
 
 </details>
 
+<blockquote>
 <p><em>Listing 14.6.1 – Maximum de Parcimonie version SSE2</em></p>
+</blockquote>
+<blockquote>
 <p><strong>Amélioration SSE2</strong>
 On abaisse le temps d'exécution à <strong>2,70 secondes</strong>, soit un <strong>facteur d'amélioration de ~31</strong>.</p>
+</blockquote>
 <p>Sur les plateformes plus récentes, le <strong>SSE4.1</strong> a introduit l'instruction <code>pblendvb</code> (<em>Variable Blend Packed Bytes</em>). Elle permet de sélectionner des octets de chacune de ses deux opérandes suivant
 le masque de sélection contenu dans le registre <code>xmm0</code> de base.</p>
 
@@ -417,7 +431,9 @@ le masque de sélection contenu dans le registre <code>xmm0</code> de base.</p>
 
 </details>
 
+<blockquote>
 <p><em>Listing 14.7.1 – Extrait de Parcimonie version SSE4.1</em> (2.60 secondes).</p>
+</blockquote>
 <h2 class="section">14.8/14.11 Amélioration Vectorielle AVX2 et AVX512</h2>
 
 <p>La version AVX utilise les registres <code>ymm</code> qui ont une taille de 32 octets (soit 256
@@ -437,8 +453,10 @@ bits). Le code est similaire à celui de la version SSE 4.1 mais traite 32 acide
 
 </details>
 
+<blockquote>
 <p><strong>Amélioration AVX2 et AVX512</strong>
 Le temps d'exécution est ramené à 1,35 secondes en AVX2 et 0,42 secondes en AVX512 natif (soit une divisibilité de performance de ×200 par rapport au code C).</p>
+</blockquote>
 <h2 class="section">14.10 Variante <em>C Intrinsics</em> : Directives Compilateur</h2>
 
 <p>La version <em>intrinsics</em> en AVX2 nécessite, pour être efficacement traduite par le
@@ -496,252 +514,56 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
   <thead>
     <tr>
       <th>Méthode</th>
-      <th>Pentium D 925<br><small>2006</small></th>
-      <th>Core 2 Q9300<br><small>2008</small></th>
       <th>Intel Core2 Quad Q9300 2.50GHz<br><small>2008</small></th>
       <th>Pentium Dual Core E5300 2.60GHz<br><small>2008</small></th>
-      <th>Core i7 860<br><small>2009</small></th>
-      <th>AMD X6 1090T<br><small>2010</small></th>
       <th>AMD Phenom II X6 1090T<br><small>2010</small></th>
-      <th>Core i5 3570K<br><small>2012</small></th>
       <th>Intel Core i5 3570K 3.40GHz<br><small>2012</small></th>
-      <th>Core i7 4790<br><small>2014</small></th>
       <th>Intel Core i7 4790 3.60GHz<br><small>2014</small></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>asm</strong></td>
-      <td>235.320</td>
-      <td>185.400</td>
-      <td>-</td>
-      <td>-</td>
-      <td>126.400</td>
-      <td>118.980</td>
-      <td>-</td>
-      <td>114.890</td>
-      <td>-</td>
-      <td>96.590</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_asm</strong></td>
-      <td>133.480</td>
-      <td>98.360</td>
-      <td>-</td>
-      <td>-</td>
-      <td>67.720</td>
-      <td>52.670</td>
-      <td>-</td>
-      <td>48.670</td>
-      <td>-</td>
-      <td>41.620</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_asm</strong></td>
-      <td>94.970</td>
-      <td>85.600</td>
-      <td>-</td>
-      <td>-</td>
-      <td>65.330</td>
-      <td>45.640</td>
-      <td>-</td>
-      <td>33.350</td>
-      <td>-</td>
-      <td>25.950</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_ur4_asm</strong></td>
-      <td>70.150</td>
-      <td>87.670</td>
-      <td>-</td>
-      <td>-</td>
-      <td>51.680</td>
-      <td>38.160</td>
-      <td>-</td>
-      <td>28.950</td>
-      <td>-</td>
-      <td>22.520</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_ur8_asm</strong></td>
-      <td>70.290</td>
-      <td>86.910</td>
-      <td>-</td>
-      <td>-</td>
-      <td>50.250</td>
-      <td>36.730</td>
-      <td>-</td>
-      <td>28.320</td>
-      <td>-</td>
-      <td>21.890</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>ref_v1_O2</strong></td>
-      <td>224.640</td>
-      <td>170.220</td>
-      <td>-</td>
-      <td>-</td>
-      <td>131.860</td>
-      <td>110.890</td>
-      <td>-</td>
-      <td>140.270</td>
-      <td>-</td>
-      <td>103.540</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>sse2_v1</strong></td>
-      <td>27.640</td>
-      <td>9.370</td>
-      <td>-</td>
-      <td>-</td>
-      <td>5.840</td>
-      <td>11.750</td>
-      <td>-</td>
-      <td>4.490</td>
-      <td>-</td>
-      <td>3.660</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>sse41</strong></td>
-      <td>-</td>
-      <td>9.250</td>
-      <td>-</td>
-      <td>-</td>
-      <td>5.720</td>
-      <td>-</td>
-      <td>-</td>
-      <td>4.420</td>
-      <td>-</td>
-      <td>3.730</td>
-      <td>-</td>
-    </tr>
-    <tr>
       <td><strong>maxpars_asm</strong></td>
-      <td>-</td>
-      <td>-</td>
       <td>840836930925.714</td>
       <td>690461533247.571</td>
-      <td>-</td>
-      <td>-</td>
       <td>632890502798.857</td>
-      <td>-</td>
       <td>665752618778.286</td>
-      <td>-</td>
       <td>604367422689.429</td>
     </tr>
     <tr>
       <td><strong>maxpars_c_O2</strong></td>
-      <td>-</td>
-      <td>-</td>
       <td>937801079149.429</td>
       <td>716275028703.000</td>
-      <td>-</td>
-      <td>-</td>
       <td>661035616589.857</td>
-      <td>-</td>
       <td>714449027564.571</td>
-      <td>-</td>
       <td>622073498849.714</td>
     </tr>
     <tr>
       <td><strong>maxpars_c_O3</strong></td>
-      <td>-</td>
-      <td>-</td>
       <td>113383544445.100</td>
       <td>109351620344.757</td>
-      <td>-</td>
-      <td>-</td>
       <td>72310811218.386</td>
-      <td>-</td>
       <td>37738753874.429</td>
-      <td>-</td>
       <td>31997654121.914</td>
     </tr>
     <tr>
       <td><strong>maxpars_no_if_asm</strong></td>
-      <td>-</td>
-      <td>-</td>
       <td>392985526258.000</td>
       <td>328558610183.143</td>
-      <td>-</td>
-      <td>-</td>
       <td>267122158781.571</td>
-      <td>-</td>
       <td>198739673015.729</td>
-      <td>-</td>
       <td>146856710409.957</td>
     </tr>
     <tr>
       <td><strong>maxpars_sse2</strong></td>
-      <td>-</td>
-      <td>-</td>
       <td>94407976812.000</td>
       <td>103051665000.514</td>
-      <td>-</td>
-      <td>-</td>
       <td>78322568649.186</td>
-      <td>-</td>
       <td>39763069897.314</td>
-      <td>-</td>
       <td>36284291233.843</td>
     </tr>
     <tr>
-      <td><strong>ref_v1_O3</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>29.860</td>
-      <td>11.800</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>5.470</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>avx2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>1.860</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>avx2_intrinsics</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>1.890</td>
-      <td>-</td>
-    </tr>
-    <tr>
       <td><strong>maxpars_avx2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>-</td>
       <td>-</td>
       <td>-</td>
@@ -754,22 +576,10 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
       <td>-</td>
       <td>-</td>
       <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>30221990023.686</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_intrinsics</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>-</td>
       <td>-</td>
       <td>-</td>
@@ -782,22 +592,10 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
       <td>-</td>
       <td>-</td>
       <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>30648265102.143</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_u4</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>-</td>
       <td>-</td>
       <td>-</td>
@@ -810,22 +608,10 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
       <td>-</td>
       <td>-</td>
       <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>29795877978.271</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_u4_vpblendvb_nodep</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>-</td>
       <td>-</td>
       <td>-</td>
@@ -838,12 +624,6 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
       <td>-</td>
       <td>-</td>
       <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>30183936888.657</td>
     </tr>
   </tbody>
@@ -852,11 +632,11 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
 </div>
 <script src="javascript/Highcharts-3.0.10/js/highcharts.js"></script>
 <script src="data/graph.js"></script>
-<div class="chart-container" id="chart-auto-asm_maxpars_64-ancien-21" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_maxpars_64-ancien-9" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_maxpars_64-ancien-21';
-    var data = {"CPUs":["Pentium D 925","Core 2 Q9300","Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","Core i7 860","AMD X6 1090T","AMD Phenom II X6 1090T","Core i5 3570K","Intel Core i5 3570K 3.40GHz","Core i7 4790","Intel Core i7 4790 3.60GHz"],"Years":[2006,2008,2008,2008,2009,2010,2010,2012,2012,2014,2014],"Methods":[{"name":"asm","values":[235.32,185.4,null,null,126.4,118.98,null,114.89,null,96.59,null]},{"name":"no_if_asm","values":[133.48,98.36,null,null,67.72,52.67,null,48.67,null,41.62,null]},{"name":"no_if_opt_asm","values":[94.97,85.6,null,null,65.33,45.64,null,33.35,null,25.95,null]},{"name":"no_if_opt_ur4_asm","values":[70.15,87.67,null,null,51.68,38.16,null,28.95,null,22.52,null]},{"name":"no_if_opt_ur8_asm","values":[70.29,86.91,null,null,50.25,36.73,null,28.32,null,21.89,null]},{"name":"ref_v1_O2","values":[224.64,170.22,null,null,131.86,110.89,null,140.27,null,103.54,null]},{"name":"sse2_v1","values":[27.64,9.37,null,null,5.84,11.75,null,4.49,null,3.66,null]},{"name":"sse41","values":[null,9.25,null,null,5.72,null,null,4.42,null,3.73,null]},{"name":"maxpars_asm","values":[null,null,840836930925.714,690461533247.571,null,null,632890502798.857,null,665752618778.286,null,604367422689.429]},{"name":"maxpars_c_O2","values":[null,null,937801079149.429,716275028703,null,null,661035616589.857,null,714449027564.571,null,622073498849.714]},{"name":"maxpars_c_O3","values":[null,null,113383544445.1,109351620344.757,null,null,72310811218.386,null,37738753874.429,null,31997654121.914]},{"name":"maxpars_no_if_asm","values":[null,null,392985526258,328558610183.143,null,null,267122158781.571,null,198739673015.729,null,146856710409.957]},{"name":"maxpars_sse2","values":[null,null,94407976812,103051665000.514,null,null,78322568649.186,null,39763069897.314,null,36284291233.843]},{"name":"ref_v1_O3","values":[null,null,null,null,29.86,11.8,null,null,null,5.47,null]},{"name":"avx2","values":[null,null,null,null,null,null,null,null,null,1.86,null]},{"name":"avx2_intrinsics","values":[null,null,null,null,null,null,null,null,null,1.89,null]},{"name":"maxpars_avx2","values":[null,null,null,null,null,null,null,null,null,null,30007409540.271]},{"name":"maxpars_avx2_ez_ii","values":[null,null,null,null,null,null,null,null,null,null,30221990023.686]},{"name":"maxpars_avx2_intrinsics","values":[null,null,null,null,null,null,null,null,null,null,30453241776.871]},{"name":"maxpars_avx2_u2","values":[null,null,null,null,null,null,null,null,null,null,30648265102.143]},{"name":"maxpars_avx2_u4","values":[null,null,null,null,null,null,null,null,null,null,29960248588.586]},{"name":"maxpars_avx2_u4_vpblendvb","values":[null,null,null,null,null,null,null,null,null,null,29795877978.271]},{"name":"maxpars_avx2_u4_vpblendvb_nodep","values":[null,null,null,null,null,null,null,null,null,null,30410556237.086]},{"name":"maxpars_avx2_vpblendvb","values":[null,null,null,null,null,null,null,null,null,null,30183936888.657]}]};
+    var id = 'chart-auto-asm_maxpars_64-ancien-9';
+    var data = {"CPUs":["Intel Core2 Quad Q9300 2.50GHz","Pentium Dual Core E5300 2.60GHz","AMD Phenom II X6 1090T","Intel Core i5 3570K 3.40GHz","Intel Core i7 4790 3.60GHz"],"Years":[2008,2008,2010,2012,2014],"Methods":[{"name":"maxpars_asm","values":[840836930925.714,690461533247.571,632890502798.857,665752618778.286,604367422689.429]},{"name":"maxpars_c_O2","values":[937801079149.429,716275028703,661035616589.857,714449027564.571,622073498849.714]},{"name":"maxpars_c_O3","values":[113383544445.1,109351620344.757,72310811218.386,37738753874.429,31997654121.914]},{"name":"maxpars_no_if_asm","values":[392985526258,328558610183.143,267122158781.571,198739673015.729,146856710409.957]},{"name":"maxpars_sse2","values":[94407976812,103051665000.514,78322568649.186,39763069897.314,36284291233.843]},{"name":"maxpars_avx2","values":[null,null,null,null,30007409540.271]},{"name":"maxpars_avx2_ez_ii","values":[null,null,null,null,30221990023.686]},{"name":"maxpars_avx2_intrinsics","values":[null,null,null,null,30453241776.871]},{"name":"maxpars_avx2_u2","values":[null,null,null,null,30648265102.143]},{"name":"maxpars_avx2_u4","values":[null,null,null,null,29960248588.586]},{"name":"maxpars_avx2_u4_vpblendvb","values":[null,null,null,null,29795877978.271]},{"name":"maxpars_avx2_u4_vpblendvb_nodep","values":[null,null,null,null,30410556237.086]},{"name":"maxpars_avx2_vpblendvb","values":[null,null,null,null,30183936888.657]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");
@@ -872,448 +652,113 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
   <thead>
     <tr>
       <th>Méthode</th>
-      <th>Core i3 6100<br><small>2015</small></th>
-      <th>Core i5 7400<br><small>2017</small></th>
-      <th>Core i7 8700<br><small>2017</small></th>
       <th>Intel Core i5 7400 3.00GHz<br><small>2017</small></th>
       <th>Intel Core i7 8700 3.20GHz<br><small>2017</small></th>
-      <th>Ryzen 7 1700X<br><small>2017</small></th>
       <th>AMD Athlon 200GE<br><small>2018</small></th>
       <th>AMD Ryzen 5 3600 6 Core<br><small>2019</small></th>
-      <th>Ryzen 5 3600<br><small>2019</small></th>
-      <th>Xeon Silver 4208<br><small>2019</small></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>asm</strong></td>
-      <td>104.560</td>
-      <td>110.790</td>
-      <td>84.370</td>
-      <td>-</td>
-      <td>-</td>
-      <td>106.520</td>
-      <td>-</td>
-      <td>-</td>
-      <td>101.560</td>
-      <td>123.000</td>
-    </tr>
-    <tr>
-      <td><strong>avx2_intrinsics</strong></td>
-      <td>1.810</td>
-      <td>1.820</td>
-      <td>1.390</td>
-      <td>-</td>
-      <td>-</td>
-      <td>1.390</td>
-      <td>-</td>
-      <td>-</td>
-      <td>1.090</td>
-      <td>3.030</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_asm</strong></td>
-      <td>42.580</td>
-      <td>45.420</td>
-      <td>34.680</td>
-      <td>-</td>
-      <td>-</td>
-      <td>53.860</td>
-      <td>-</td>
-      <td>-</td>
-      <td>47.030</td>
-      <td>42.450</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_asm</strong></td>
-      <td>21.430</td>
-      <td>22.820</td>
-      <td>17.400</td>
-      <td>-</td>
-      <td>-</td>
-      <td>19.580</td>
-      <td>-</td>
-      <td>-</td>
-      <td>17.240</td>
-      <td>49.800</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_ur4_asm</strong></td>
-      <td>19.670</td>
-      <td>20.950</td>
-      <td>15.920</td>
-      <td>-</td>
-      <td>-</td>
-      <td>18.850</td>
-      <td>-</td>
-      <td>-</td>
-      <td>16.750</td>
-      <td>23.040</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_ur8_asm</strong></td>
-      <td>18.750</td>
-      <td>19.990</td>
-      <td>15.210</td>
-      <td>-</td>
-      <td>-</td>
-      <td>17.170</td>
-      <td>-</td>
-      <td>-</td>
-      <td>14.680</td>
-      <td>22.560</td>
-    </tr>
-    <tr>
-      <td><strong>ref_v1_O2</strong></td>
-      <td>139.360</td>
-      <td>148.590</td>
-      <td>96.720</td>
-      <td>-</td>
-      <td>-</td>
-      <td>111.550</td>
-      <td>-</td>
-      <td>-</td>
-      <td>103.410</td>
-      <td>118.360</td>
-    </tr>
-    <tr>
-      <td><strong>ref_v1_O3</strong></td>
-      <td>2.200</td>
-      <td>2.450</td>
-      <td>1.850</td>
-      <td>-</td>
-      <td>-</td>
-      <td>2.500</td>
-      <td>-</td>
-      <td>-</td>
-      <td>2.020</td>
-      <td>3.610</td>
-    </tr>
-    <tr>
-      <td><strong>sse2_v1</strong></td>
-      <td>3.580</td>
-      <td>3.520</td>
-      <td>2.700</td>
-      <td>-</td>
-      <td>-</td>
-      <td>3.590</td>
-      <td>-</td>
-      <td>-</td>
-      <td>3.160</td>
-      <td>4.300</td>
-    </tr>
-    <tr>
-      <td><strong>sse41</strong></td>
-      <td>3.580</td>
-      <td>3.460</td>
-      <td>2.600</td>
-      <td>-</td>
-      <td>-</td>
-      <td>3.610</td>
-      <td>-</td>
-      <td>-</td>
-      <td>3.190</td>
-      <td>4.280</td>
-    </tr>
-    <tr>
-      <td><strong>avx2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>1.540</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-    <tr>
       <td><strong>maxpars_asm</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>671402169718.857</td>
       <td>533562899840.571</td>
-      <td>-</td>
       <td>704927369028.571</td>
       <td>218.745</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>20835732439.686</td>
       <td>15464808187.543</td>
-      <td>-</td>
       <td>39585735080.686</td>
       <td>7.578</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_ez_ii</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>19897284286.843</td>
       <td>14956290683.543</td>
-      <td>-</td>
       <td>39273031533.714</td>
       <td>7.516</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_intrinsics</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>20751261601.500</td>
       <td>15178474159.986</td>
-      <td>-</td>
       <td>39309364783.543</td>
       <td>7.524</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_u2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>20171645291.514</td>
       <td>15272134995.371</td>
-      <td>-</td>
       <td>39281344990.629</td>
       <td>7.561</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_u4</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>20047693200.671</td>
       <td>15323142708.314</td>
-      <td>-</td>
       <td>39439422065.371</td>
       <td>7.581</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_u4_vpblendvb</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>19672267156.171</td>
       <td>14963304093.914</td>
-      <td>-</td>
       <td>39339218528.914</td>
       <td>7.573</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_u4_vpblendvb_nodep</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>20156016662.757</td>
       <td>15110403823.171</td>
-      <td>-</td>
       <td>39323596628.114</td>
       <td>7.615</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_avx2_vpblendvb</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>19978751847.386</td>
       <td>15503090287.929</td>
-      <td>-</td>
       <td>39313958789.486</td>
       <td>7.575</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_c_O2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>626238232338.143</td>
       <td>491756065364.857</td>
-      <td>-</td>
       <td>712870403200.000</td>
       <td>223.079</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_c_O3</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>21729643915.586</td>
       <td>17429345018.257</td>
-      <td>-</td>
       <td>40929609091.200</td>
       <td>8.258</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_no_if_asm</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>120206867563.686</td>
       <td>96270516501.157</td>
-      <td>-</td>
       <td>134335265083.886</td>
       <td>42.275</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
     <tr>
       <td><strong>maxpars_sse2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
       <td>26705727501.457</td>
       <td>21385877157.800</td>
-      <td>-</td>
       <td>41138680309.943</td>
       <td>9.173</td>
-      <td>-</td>
-      <td>-</td>
     </tr>
   </tbody>
   <caption>TABLE Moderne – Benchmark asm maxpars 64</caption>
 </table>
 </div>
-<div class="chart-container" id="chart-auto-asm_maxpars_64-moderne-22" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
+<div class="chart-container" id="chart-auto-asm_maxpars_64-moderne-10" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
 <script>
   (function(){
-    var id = 'chart-auto-asm_maxpars_64-moderne-22';
-    var data = {"CPUs":["Core i3 6100","Core i5 7400","Core i7 8700","Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","Ryzen 7 1700X","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core","Ryzen 5 3600","Xeon Silver 4208"],"Years":[2015,2017,2017,2017,2017,2017,2018,2019,2019,2019],"Methods":[{"name":"asm","values":[104.56,110.79,84.37,null,null,106.52,null,null,101.56,123]},{"name":"avx2_intrinsics","values":[1.81,1.82,1.39,null,null,1.39,null,null,1.09,3.03]},{"name":"no_if_asm","values":[42.58,45.42,34.68,null,null,53.86,null,null,47.03,42.45]},{"name":"no_if_opt_asm","values":[21.43,22.82,17.4,null,null,19.58,null,null,17.24,49.8]},{"name":"no_if_opt_ur4_asm","values":[19.67,20.95,15.92,null,null,18.85,null,null,16.75,23.04]},{"name":"no_if_opt_ur8_asm","values":[18.75,19.99,15.21,null,null,17.17,null,null,14.68,22.56]},{"name":"ref_v1_O2","values":[139.36,148.59,96.72,null,null,111.55,null,null,103.41,118.36]},{"name":"ref_v1_O3","values":[2.2,2.45,1.85,null,null,2.5,null,null,2.02,3.61]},{"name":"sse2_v1","values":[3.58,3.52,2.7,null,null,3.59,null,null,3.16,4.3]},{"name":"sse41","values":[3.58,3.46,2.6,null,null,3.61,null,null,3.19,4.28]},{"name":"avx2","values":[null,null,1.54,null,null,null,null,null,null,null]},{"name":"maxpars_asm","values":[null,null,null,671402169718.857,533562899840.571,null,704927369028.571,218.745,null,null]},{"name":"maxpars_avx2","values":[null,null,null,20835732439.686,15464808187.543,null,39585735080.686,7.578,null,null]},{"name":"maxpars_avx2_ez_ii","values":[null,null,null,19897284286.843,14956290683.543,null,39273031533.714,7.516,null,null]},{"name":"maxpars_avx2_intrinsics","values":[null,null,null,20751261601.5,15178474159.986,null,39309364783.543,7.524,null,null]},{"name":"maxpars_avx2_u2","values":[null,null,null,20171645291.514,15272134995.371,null,39281344990.629,7.561,null,null]},{"name":"maxpars_avx2_u4","values":[null,null,null,20047693200.671,15323142708.314,null,39439422065.371,7.581,null,null]},{"name":"maxpars_avx2_u4_vpblendvb","values":[null,null,null,19672267156.171,14963304093.914,null,39339218528.914,7.573,null,null]},{"name":"maxpars_avx2_u4_vpblendvb_nodep","values":[null,null,null,20156016662.757,15110403823.171,null,39323596628.114,7.615,null,null]},{"name":"maxpars_avx2_vpblendvb","values":[null,null,null,19978751847.386,15503090287.929,null,39313958789.486,7.575,null,null]},{"name":"maxpars_c_O2","values":[null,null,null,626238232338.143,491756065364.857,null,712870403200,223.079,null,null]},{"name":"maxpars_c_O3","values":[null,null,null,21729643915.586,17429345018.257,null,40929609091.2,8.258,null,null]},{"name":"maxpars_no_if_asm","values":[null,null,null,120206867563.686,96270516501.157,null,134335265083.886,42.275,null,null]},{"name":"maxpars_sse2","values":[null,null,null,26705727501.457,21385877157.8,null,41138680309.943,9.173,null,null]}]};
-    function draw() {
-        if (typeof window.createPerformanceChart !== 'function') {
-            console.error("createPerformanceChart est introuvable");
-            return;
-        }
-        window.createPerformanceChart(id, data);
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
-    else { draw(); }
-  })();
-</script><div class="center">
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>Méthode</th>
-      <th>Core i7 10850H<br><small>2020</small></th>
-      <th>Ryzen 5 5600g<br><small>2021</small></th>
-      <th>Core i5 12400f<br><small>2022</small></th>
-      <th>Ryzen 5 9600X<br><small>2024</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>asm</strong></td>
-      <td>79.750</td>
-      <td>82.380</td>
-      <td>100.530</td>
-      <td>70.650</td>
-    </tr>
-    <tr>
-      <td><strong>avx2</strong></td>
-      <td>1.360</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>avx2_intrinsics</strong></td>
-      <td>1.360</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_asm</strong></td>
-      <td>27.440</td>
-      <td>29.310</td>
-      <td>44.540</td>
-      <td>13.060</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_asm</strong></td>
-      <td>16.170</td>
-      <td>17.230</td>
-      <td>11.980</td>
-      <td>9.800</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_ur4_asm</strong></td>
-      <td>14.810</td>
-      <td>14.960</td>
-      <td>11.060</td>
-      <td>8.300</td>
-    </tr>
-    <tr>
-      <td><strong>no_if_opt_ur8_asm</strong></td>
-      <td>14.200</td>
-      <td>13.990</td>
-      <td>10.490</td>
-      <td>7.890</td>
-    </tr>
-    <tr>
-      <td><strong>ref_v1_O2</strong></td>
-      <td>83.500</td>
-      <td>91.380</td>
-      <td>104.500</td>
-      <td>76.970</td>
-    </tr>
-    <tr>
-      <td><strong>ref_v1_O3</strong></td>
-      <td>1.850</td>
-      <td>1.980</td>
-      <td>1.690</td>
-      <td>0.640</td>
-    </tr>
-    <tr>
-      <td><strong>sse2_v1</strong></td>
-      <td>2.560</td>
-      <td>1.740</td>
-      <td>1.820</td>
-      <td>1.070</td>
-    </tr>
-    <tr>
-      <td><strong>sse41</strong></td>
-      <td>2.530</td>
-      <td>1.750</td>
-      <td>1.810</td>
-      <td>1.080</td>
-    </tr>
-  </tbody>
-  <caption>TABLE Recent – Benchmark asm maxpars 64</caption>
-</table>
-</div>
-<div class="chart-container" id="chart-auto-asm_maxpars_64-recent-23" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-auto-asm_maxpars_64-recent-23';
-    var data = {"CPUs":["Core i7 10850H","Ryzen 5 5600g","Core i5 12400f","Ryzen 5 9600X"],"Years":[2020,2021,2022,2024],"Methods":[{"name":"asm","values":[79.75,82.38,100.53,70.65]},{"name":"avx2","values":[1.36,null,null,null]},{"name":"avx2_intrinsics","values":[1.36,null,null,null]},{"name":"no_if_asm","values":[27.44,29.31,44.54,13.06]},{"name":"no_if_opt_asm","values":[16.17,17.23,11.98,9.8]},{"name":"no_if_opt_ur4_asm","values":[14.81,14.96,11.06,8.3]},{"name":"no_if_opt_ur8_asm","values":[14.2,13.99,10.49,7.89]},{"name":"ref_v1_O2","values":[83.5,91.38,104.5,76.97]},{"name":"ref_v1_O3","values":[1.85,1.98,1.69,0.64]},{"name":"sse2_v1","values":[2.56,1.74,1.82,1.07]},{"name":"sse41","values":[2.53,1.75,1.81,1.08]}]};
+    var id = 'chart-auto-asm_maxpars_64-moderne-10';
+    var data = {"CPUs":["Intel Core i5 7400 3.00GHz","Intel Core i7 8700 3.20GHz","AMD Athlon 200GE","AMD Ryzen 5 3600 6 Core"],"Years":[2017,2017,2018,2019],"Methods":[{"name":"maxpars_asm","values":[671402169718.857,533562899840.571,704927369028.571,218.745]},{"name":"maxpars_avx2","values":[20835732439.686,15464808187.543,39585735080.686,7.578]},{"name":"maxpars_avx2_ez_ii","values":[19897284286.843,14956290683.543,39273031533.714,7.516]},{"name":"maxpars_avx2_intrinsics","values":[20751261601.5,15178474159.986,39309364783.543,7.524]},{"name":"maxpars_avx2_u2","values":[20171645291.514,15272134995.371,39281344990.629,7.561]},{"name":"maxpars_avx2_u4","values":[20047693200.671,15323142708.314,39439422065.371,7.581]},{"name":"maxpars_avx2_u4_vpblendvb","values":[19672267156.171,14963304093.914,39339218528.914,7.573]},{"name":"maxpars_avx2_u4_vpblendvb_nodep","values":[20156016662.757,15110403823.171,39323596628.114,7.615]},{"name":"maxpars_avx2_vpblendvb","values":[19978751847.386,15503090287.929,39313958789.486,7.575]},{"name":"maxpars_c_O2","values":[626238232338.143,491756065364.857,712870403200,223.079]},{"name":"maxpars_c_O3","values":[21729643915.586,17429345018.257,40929609091.2,8.258]},{"name":"maxpars_no_if_asm","values":[120206867563.686,96270516501.157,134335265083.886,42.275]},{"name":"maxpars_sse2","values":[26705727501.457,21385877157.8,41138680309.943,9.173]}]};
     function draw() {
         if (typeof window.createPerformanceChart !== 'function') {
             console.error("createPerformanceChart est introuvable");
@@ -1328,55 +773,6 @@ ner les résultats obtenus (50_000 répétitions, chaînes de 524_287 bases) en 
 <h3 class="subsection">Benchmark 32 bits</h3>
 
 <p>Les mêmes tests effectués en architecture 32 bits montrent des résultats comparables avec les limitations inhérentes à cette architecture (moins de registres disponibles).</p>
-<div class="center">
-<table class="data-table">
-  <thead>
-    <tr>
-      <th>Méthode</th>
-      <th>AMD Ryzen 5 5600G<br><small>2021</small></th>
-      <th>12th Gen Intel Core i5 12400F<br><small>2022</small></th>
-      <th>AMD Ryzen 5 9600X 6 Core<br><small>2024</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>maxpars_asm</strong></td>
-      <td>61.839</td>
-      <td>78.421</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>maxpars_ref_v1_O2</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>16574648388.257</td>
-    </tr>
-    <tr>
-      <td><strong>maxpars_ref_v1_O3</strong></td>
-      <td>-</td>
-      <td>-</td>
-      <td>137236321.114</td>
-    </tr>
-  </tbody>
-  <caption>TABLE Recent – Benchmark asm maxpars 32</caption>
-</table>
-</div>
-<div class="chart-container" id="chart-auto-asm_maxpars_32-recent-24" style="width:100%;height:420px;margin:1.5rem 0 2.5rem;"></div>
-<script>
-  (function(){
-    var id = 'chart-auto-asm_maxpars_32-recent-24';
-    var data = {"CPUs":["AMD Ryzen 5 5600G","12th Gen Intel Core i5 12400F","AMD Ryzen 5 9600X 6 Core"],"Years":[2021,2022,2024],"Methods":[{"name":"maxpars_asm","values":[61.839,78.421,null]},{"name":"maxpars_ref_v1_O2","values":[null,null,16574648388.257]},{"name":"maxpars_ref_v1_O3","values":[null,null,137236321.114]}]};
-    function draw() {
-        if (typeof window.createPerformanceChart !== 'function') {
-            console.error("createPerformanceChart est introuvable");
-            return;
-        }
-        window.createPerformanceChart(id, data);
-    }
-    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', draw); }
-    else { draw(); }
-  })();
-</script>
 <h2 class="section">14.13 Bilan</h2>
 
 <p>Dans cette étude de cas, la fonction de référence peut être optimisée de manière
